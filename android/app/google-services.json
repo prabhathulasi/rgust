@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "13096477619",
+    "project_id": "prabhakaranprofile-46368",
+    "storage_bucket": "prabhakaranprofile-46368.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:13096477619:android:07ca43c03ea5da8fffa1c6",
+        "android_client_info": {
+          "package_name": "com.edu.rugst_alliance_academia"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "13096477619-sflv71rc5s5n1r4oaul7ck783eos5g43.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBxMOT74k4-8GDLcRrJfNIe_hlP43jgkrg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "13096477619-sflv71rc5s5n1r4oaul7ck783eos5g43.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
