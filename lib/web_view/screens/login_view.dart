@@ -1,11 +1,25 @@
+
+import 'dart:developer';
+
+import 'package:animated_text_kit/animated_text_kit.dart';
+
 import 'package:flutter/material.dart';
-import 'package:rugst_alliance_academia/routes/named_routes.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import 'package:rugst_alliance_academia/data/provider/login_provider.dart';
+
+
+
 import 'package:rugst_alliance_academia/theme/app_colors.dart';
 import 'package:rugst_alliance_academia/util/index.dart';
+import 'package:rugst_alliance_academia/util/validator.dart';
 import 'package:rugst_alliance_academia/widgets/app_elevatedbutton.dart';
 import 'package:rugst_alliance_academia/widgets/app_formfield.dart';
 import 'package:rugst_alliance_academia/widgets/app_richtext.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+
+
 
 class WebLoginView extends StatefulWidget {
   const WebLoginView({super.key});
@@ -17,18 +31,33 @@ class WebLoginView extends StatefulWidget {
 class _WebLoginViewState extends State<WebLoginView> {
   String? userName;
   String? password;
+
+
+
   final _formKey = GlobalKey<FormState>();
+  var colorizeColors = [
+    AppColors.color927,
+    AppColors.color582,
+    AppColors.colorWhite,
+    AppColors.colorRed,
+  ];
+  var colorizeTextStyle =
+      GoogleFonts.oswald(fontSize: 45.sp, fontWeight: FontWeight.w600);
+
+
+
 
   @override
   Widget build(BuildContext context) {
+  
     var size = MediaQuery.sizeOf(context);
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 100.h,
-        backgroundColor: AppColors.color3e3,
+        backgroundColor: AppColors.color927,
         title: AppRichTextView(
             title: "Alliance academia",
-            textColor: AppColors.colorf85,
+            textColor: AppColors.colorWhite,
             fontSize: 45.sp,
             fontWeight: FontWeight.w400),
       ),
@@ -44,7 +73,7 @@ class _WebLoginViewState extends State<WebLoginView> {
               decoration: BoxDecoration(
                 borderRadius:
                     BorderRadius.only(topRight: Radius.circular(30.sp)),
-                color: AppColors.color3e3,
+                color: AppColors.color927,
               ),
               child: Padding(
                 padding: EdgeInsets.all(20.0.sp),
@@ -63,83 +92,126 @@ class _WebLoginViewState extends State<WebLoginView> {
                   children: [
                     AppRichTextView(
                         title: "Login",
-                        textColor: AppColors.colorf85,
+                        textColor: AppColors.color927,
                         fontSize: 45.sp,
                         fontWeight: FontWeight.w400),
-                    AppRichTextView(
-                        title: "Welcome to Our Web Portal",
-                        textColor: AppColors.colorf85,
-                        fontSize: 45.sp,
-                        fontWeight: FontWeight.w600),
-                    AppRichTextView(
-                        maxLines: 2,
-                        title:
-                            "Thank you for get back to Univeristy Management System,\nlets access your account",
-                        textColor: AppColors.colorGrey,
+                    AnimatedTextKit(totalRepeatCount: 100, animatedTexts: [
+                      ColorizeAnimatedText(
+                        'Welcome to Our Web Portal',
+                        textStyle: colorizeTextStyle,
+                        colors: colorizeColors,
+                      ),
+                    ]),
+                    DefaultTextStyle(
+                      style: GoogleFonts.oswald(
                         fontSize: 30.sp,
-                        fontWeight: FontWeight.w400),
+                        fontWeight: FontWeight.w400,
+                        color: AppColors.color582,
+                      ),
+                      child: AnimatedTextKit(
+                        isRepeatingAnimation: false,
+                        pause: const Duration(seconds: 10),
+                        animatedTexts: [
+                          TypewriterAnimatedText(
+                              'Thank you for get back to Univeristy Management System,\nlets access your account'),
+                        ],
+                      ),
+                    ),
                     SizedBox(
                       height: 30.h,
                     ),
-                    AppTextFormFieldWidget(
-                      onSaved: (p0) => userName = p0,
-                      obscureText: false,
-                      inputDecoration: InputDecoration(
-                        floatingLabelBehavior: FloatingLabelBehavior.always,
-                        label: AppRichTextView(
-                            title: "Enter Username",
-                            textColor: AppColors.colorBlack,
-                            fontSize: 25.sp,
-                            fontWeight: FontWeight.w400),
-                        contentPadding: EdgeInsets.symmetric(
-                            vertical: 25.0.h, horizontal: 10.0.w),
-                        border: OutlineInputBorder(
-                            borderSide: BorderSide(width: 2.sp),
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(15.sp))),
+                    Container(
+                      
+                      decoration: BoxDecoration(
+                        color: AppColors.color927,
+                        borderRadius: BorderRadius.circular(18.sp)
+                      ),
+                      child: AppTextFormFieldWidget(
+                        textStyle: GoogleFonts.oswald(
+                          color: AppColors.colorWhite,
+                          
+                        ),
+                        validator:(value) {
+                          return EmailFormFieldValidator.validate(value!);
+                        }, 
+                        onSaved: (p0) => userName = p0,
+                        obscureText: false,
+                        inputDecoration: InputDecoration(
+                          errorStyle:GoogleFonts.oswald(color: AppColors.colorRed, fontWeight: FontWeight.bold),
+                          floatingLabelBehavior: FloatingLabelBehavior.always,
+                          hintText: "Enter Username",
+                          hintStyle:GoogleFonts.oswald(color: AppColors.colorWhite),
+                          contentPadding: EdgeInsets.symmetric(
+                              vertical: 25.0.h, horizontal: 10.0.w),
+                       border: InputBorder.none
+                        ),
                       ),
                     ),
                     SizedBox(
                       height: 20.h,
                     ),
-                    AppTextFormFieldWidget(
-                      onSaved: (p0) => password = p0,
-                      // textValidator: (value) {
-                      //   // return PasswordFormFieldValidator.validate(value!);
-                      // },
-                      obscureText: true,
-                      inputDecoration: InputDecoration(
-                        floatingLabelBehavior: FloatingLabelBehavior.always,
-                        label: AppRichTextView(
-                            title: "Enter Password",
-                            textColor: AppColors.colorBlack,
-                            fontSize: 25.sp,
-                            fontWeight: FontWeight.w400),
-                        contentPadding: EdgeInsets.symmetric(
-                            vertical: 25.0.h, horizontal: 10.0.w),
-                        border: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(15.sp))),
+                    Container(
+                        decoration: BoxDecoration(
+                        color: AppColors.color927,
+                        borderRadius: BorderRadius.circular(18.sp)
+                      ),
+                      child: AppTextFormFieldWidget(
+                         textStyle: GoogleFonts.oswald(
+                          color: AppColors.colorWhite,
+                          
+                        ),
+                        onSaved: (p0) => password = p0,
+                        validator: (value) {
+                           return PasswordFormFieldValidator.validate(value!);
+                        },
+                        obscureText: true,
+                        inputDecoration: InputDecoration(
+                          errorStyle:GoogleFonts.oswald(color: AppColors.colorRed, fontWeight: FontWeight.bold),
+                          floatingLabelBehavior: FloatingLabelBehavior.always,
+                        hintText: "Enter Password",
+                          hintStyle:GoogleFonts.oswald(color: AppColors.colorWhite),
+                          contentPadding: EdgeInsets.symmetric(
+                              vertical: 25.0.h, horizontal: 10.0.w),
+                          border:  InputBorder.none,
+                        ),
                       ),
                     ),
                     SizedBox(
                       height: 15.h,
                     ),
                     Center(
-                      child: AppElevatedButon(
-                        title: "Login",
-                        buttonColor: AppColors.colorPurple,
-                        height: 100.h,
-                        width: size.width / 4,
-                        onPressed: (context) async {
-                          Navigator.pushNamed(context, RouteNames.welcome);
-                          // if (_formKey.currentState!.validate()) {
-                          //   _formKey.currentState!.save();
-                          // }
-                        },
-                        textColor: AppColors.colorWhite,
+                      child: Consumer<LoginProvider>(
+                        builder: (context, authProvider,child) {
+                          return AppElevatedButon(
+                            loading: authProvider.isLoading,
+                            title: "Login",
+                            buttonColor: AppColors.color927,
+                            height: 70.h,
+                            width: size.width / 6,
+                            onPressed: (context) async {
+                              
+                              if (_formKey.currentState!.validate()) {
+                                _formKey.currentState!.save();
+                                authProvider.login(userName!, password!,context);
+                              
+                              }
+                            },
+                            textColor: AppColors.colorWhite,
+                          );
+                        }
                       ),
                     ),
+                   
+
+              //       SignInWithEmailButton(
+              //   caller: client,
+              //   onSignedIn: () async{
+                 
+              //   var addUser = await client.userEndPoint.createUser(User(email: emailController.text, userType: "Student",name: usernameController.text));
+              //   log(addUser.toString());
+              //      Fluttertoast.showToast(msg: "Account Created Successfully");
+              //   },
+              // ),
                   ],
                 ),
               ),

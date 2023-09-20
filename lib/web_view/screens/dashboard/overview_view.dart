@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
+import 'package:rugst_alliance_academia/data/provider/login_provider.dart';
 import 'package:rugst_alliance_academia/theme/app_colors.dart';
 import 'package:rugst_alliance_academia/widgets/app_elevatedbutton.dart';
 import 'package:rugst_alliance_academia/widgets/app_linechart.dart';
@@ -115,13 +117,19 @@ class _OverviewViewState extends State<OverviewView> {
                       ),
                       SizedBox(
                           height: 35.h,
-                          child: AppElevatedButon(
-                            title: "Filter",
-                            buttonColor: AppColors.color582,
-                            height: 50.h,
-                            width: 100.w,
-                            onPressed: (context) {},
-                            textColor: AppColors.colorWhite,
+                          child: Consumer<LoginProvider>(
+                            builder: (context, loginProvider, child) {
+                              return AppElevatedButon(
+                                title: "Filter",
+                                buttonColor: AppColors.color582,
+                                height: 50.h,
+                                width: 100.w,
+                                onPressed: (context) {
+                                  loginProvider.validate(context);
+                                },
+                                textColor: AppColors.colorWhite,
+                              );
+                            }
                           ))
                     ],
                   ),

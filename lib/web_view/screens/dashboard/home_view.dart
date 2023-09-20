@@ -3,11 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:rugst_alliance_academia/theme/app_colors.dart';
 import 'package:rugst_alliance_academia/util/image_path.dart';
+import 'package:rugst_alliance_academia/web_view/screens/dashboard/overview_view.dart';
+import 'package:rugst_alliance_academia/web_view/screens/department/filterd_student_list.dart';
+import 'package:rugst_alliance_academia/web_view/screens/department/program_view.dart';
 
-import 'package:rugst_alliance_academia/web_view/screens/department/dept_view.dart';
 import 'package:rugst_alliance_academia/web_view/screens/faculty/faculty_list_view.dart';
 
-import 'package:rugst_alliance_academia/web_view/screens/student/student_detail_view.dart';
 
 import 'package:rugst_alliance_academia/web_view/screens/student/student_list_view.dart';
 
@@ -30,7 +31,7 @@ class _SidebarPageState extends State<SidebarPage> {
     super.initState();
     _items = _generateItems;
 
-    bodywidget = const StudentDetailView();
+    bodywidget = const  FacultyListView();
   }
 
   List<CollapsibleItem> get _generateItems {
@@ -41,7 +42,7 @@ class _SidebarPageState extends State<SidebarPage> {
           ImagePath.webDashboardLogo,
         ),
         onPressed: () => setState(() {
-          bodywidget = const StudentDetailView();
+          bodywidget = const OverviewView();
         }),
         isSelected: true,
       ),
@@ -72,7 +73,7 @@ class _SidebarPageState extends State<SidebarPage> {
         text: 'Department',
         iconImage: const AssetImage(ImagePath.webdeptLogo),
         onPressed: () => setState(() {
-          bodywidget = const DepartmentView();
+          bodywidget =  const ProgramView();
         }),
         onHold: () => ScaffoldMessenger.of(context)
             .showSnackBar(const SnackBar(content: Text("Alarm"))),
@@ -117,7 +118,7 @@ class _SidebarPageState extends State<SidebarPage> {
           isCollapsed: false,
           screenPadding: 0,
           borderRadius: 0,
-          minWidth: size.width * 0.14,
+          minWidth: 240.w,
           items: _items!,
           collapseOnBodyTap: false,
           showToggleButton: false,

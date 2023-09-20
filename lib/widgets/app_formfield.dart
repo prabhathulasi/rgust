@@ -8,7 +8,7 @@ class AppTextFormFieldWidget extends StatelessWidget {
   final bool obscureText;
   final Function(String)? onChanged;
   final void Function(String?)? onSaved;
-
+final String? Function(String?)? validator;
   final InputDecoration? inputDecoration;
   final int? maxLines;
 
@@ -23,11 +23,14 @@ class AppTextFormFieldWidget extends StatelessWidget {
     this.onSaved,
     this.maxLines,
     this.textStyle,
+    this.validator
   });
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      
+      validator:validator ,
       style: textStyle,
       initialValue: initialValue,
       keyboardType: keyboardType,

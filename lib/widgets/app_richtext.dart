@@ -30,7 +30,7 @@ class AppRichTextView extends StatelessWidget {
         maxLines: maxLines,
         text: TextSpan(
             text: title,
-            style: GoogleFonts.oswald(
+            style: GoogleFonts.roboto(
                 fontSize: fontSize,
                 fontWeight: fontWeight,
                 color: textColor,
