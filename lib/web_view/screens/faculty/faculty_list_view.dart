@@ -8,6 +8,7 @@ import 'package:rugst_alliance_academia/data/provider/faculty_provider.dart';
 import 'package:rugst_alliance_academia/theme/app_colors.dart';
 
 import 'package:rugst_alliance_academia/web_view/screens/faculty/add_new_faculty_view.dart';
+import 'package:rugst_alliance_academia/web_view/screens/faculty/faculty_detail_view.dart';
 
 import 'package:rugst_alliance_academia/web_view/screens/student/student_detail_view.dart';
 import 'package:rugst_alliance_academia/widgets/app_formfield.dart';
@@ -27,25 +28,29 @@ class _FacultyListViewState extends State<FacultyListView> {
   showDetailAlertDialog(BuildContext context) {
     // set up the AlertDialog
     Dialog alert = Dialog(
-      child: Stack(
-        children: [
-          const StudentDetailView(),
-          Transform.translate(
-            offset: Offset(10.w, -13.h),
-            child: GestureDetector(
-                onTap: () {
-                  Navigator.of(context).pop();
-                },
-                child: const Align(
-                  alignment: Alignment.topRight,
-                  child: CircleAvatar(
-                    radius: 14.0,
-                    backgroundColor: AppColors.color927,
-                    child: Icon(Icons.close, color: AppColors.color582),
-                  ),
-                )),
-          )
-        ],
+      child: Container(
+        height: MediaQuery.sizeOf(context).height,
+        width: MediaQuery.sizeOf(context).width*0.68,
+        child: Stack(
+          children: [
+            const FacultyDetailView(),
+            Transform.translate(
+              offset: Offset(10.w, -13.h),
+              child: GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Align(
+                    alignment: Alignment.topRight,
+                    child: CircleAvatar(
+                      radius: 14.0,
+                      backgroundColor: AppColors.color927,
+                      child: Icon(Icons.close, color: AppColors.color582),
+                    ),
+                  )),
+            )
+          ],
+        ),
       ),
     );
 
@@ -206,26 +211,31 @@ class _FacultyListViewState extends State<FacultyListView> {
             childAspectRatio: (itemWidth / itemHeight)
           ), itemBuilder: (context, index) {
            var facultydata =  facultyProvider.facultyModel.facultyList![index];
-                  return Card(
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18.sp)),
-                    child: Container(
-                      height: 530.h,
-                      width:330.w ,
-                      decoration: BoxDecoration(
-                        color: AppColors.color927,
-                        borderRadius: BorderRadius.circular(18.sp)
+                  return InkWell(
+                    onTap: () {
+                      showDetailAlertDialog(context);
+                    },
+                    child: Card(
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18.sp)),
+                      child: Container(
+                        height: 530.h,
+                        width:330.w ,
+                        decoration: BoxDecoration(
+                          color: AppColors.color927,
+                          borderRadius: BorderRadius.circular(18.sp)
+                        ),
+                        child:  FacultyCardWidget(
+                          userImage: facultydata.userImage!,
+                          facultyName:facultydata.firstName!+facultydata.lastName! , assignedSubject: facultydata.courseName!, facultyType: facultydata.jobType!, 
+                        gender: facultydata.gender!,
+                        mobileNumber: facultydata.mobile!, 
+                        email: facultydata.email!, 
+                        citizenship: facultydata.citizenship!, 
+                        dob: facultydata.dob!, 
+                        batch: facultydata.batch!,
+                        address: facultydata.address!, 
+                        pasportNumber: facultydata.passportNumber!),
                       ),
-                      child:  FacultyCardWidget(
-                        userImage: facultydata.userImage!,
-                        facultyName:facultydata.firstName!+facultydata.lastName! , assignedSubject: facultydata.courseName!, facultyType: facultydata.jobType!, 
-                      gender: facultydata.gender!,
-                      mobileNumber: facultydata.mobile!, 
-                      email: facultydata.email!, 
-                      citizenship: facultydata.citizenship!, 
-                      dob: facultydata.dob!, 
-                      batch: facultydata.batch!,
-                      address: facultydata.address!, 
-                      pasportNumber: facultydata.passportNumber!),
                     ),
                   );
           

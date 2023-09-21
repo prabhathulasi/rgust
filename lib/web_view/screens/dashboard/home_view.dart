@@ -4,8 +4,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:rugst_alliance_academia/theme/app_colors.dart';
 import 'package:rugst_alliance_academia/util/image_path.dart';
 import 'package:rugst_alliance_academia/web_view/screens/dashboard/overview_view.dart';
-import 'package:rugst_alliance_academia/web_view/screens/department/filterd_student_list.dart';
+
 import 'package:rugst_alliance_academia/web_view/screens/department/program_view.dart';
+import 'package:rugst_alliance_academia/web_view/screens/faculty/faculty_detail_view.dart';
 
 import 'package:rugst_alliance_academia/web_view/screens/faculty/faculty_list_view.dart';
 
@@ -31,7 +32,7 @@ class _SidebarPageState extends State<SidebarPage> {
     super.initState();
     _items = _generateItems;
 
-    bodywidget = const  FacultyListView();
+    bodywidget = const  OverviewView();
   }
 
   List<CollapsibleItem> get _generateItems {

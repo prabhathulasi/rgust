@@ -17,5 +17,6 @@ class ImagePath {
   static const String webelibfLogo = "assets/elib.png";
   static const String webadmissionLogo = "assets/admission.png";
    static const String webtestLogo = "assets/test.jpg";
+    static const String webrgustLogo = "assets/rgust.png";
 
 }
