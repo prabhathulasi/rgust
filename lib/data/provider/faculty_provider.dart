@@ -5,6 +5,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:rugst_alliance_academia/data/model/faculty_model.dart';
 import 'package:rugst_alliance_academia/routes/named_routes.dart';
 import 'package:rugst_alliance_academia/util/api_service.dart';
+import 'package:rugst_alliance_academia/util/toast_helper.dart';
 
 class FacultyProvider extends ChangeNotifier {
   FacultyModel facultyModel = FacultyModel();
@@ -33,31 +34,34 @@ class FacultyProvider extends ChangeNotifier {
   String get cizizen => citizenshipcontroller!;
 
 //  getFaculty list
-  Future<void> getFaculty(BuildContext context) async {
-    await ApiHelper.get("GetFaculty").then((value) {
-      setLoading(false);
-// if 200 return response
-      if (value.statusCode == 200) {
-        var data = json.decode(value.body);
+  Future getFaculty(String token) async {
+    setLoading(true);
+    try {
+      var result = await ApiHelper.get("GetFaculty", token);
+      if (result.statusCode == 200) {
+        setLoading(false);
+        var data = json.decode(result.body);
 
         facultyModel = FacultyModel.fromJson(data);
 
         notifyListeners();
 
         return facultyModel;
-      }
-      // if 401 or 402 return token expired
-      else {
-        Fluttertoast.showToast(msg: "Token Expired Please Login Again");
-        Navigator.pushNamed(context, RouteNames.login);
+      } else if (result.statusCode == 204) {
+        setLoading(false);
+        notifyListeners();
+        return null;
+      } else {
+        setLoading(false);
+        notifyListeners();
+        ToastHelper().errorToast("Internal Server Error");
         return null;
       }
-      // catch error
-    }).catchError((onError) {
+    } catch (e) {
       setLoading(false);
-      Fluttertoast.showToast(msg: "Internal Server Error");
-      return null;
-    });
+      Fluttertoast.showToast(msg: e.toString());
+      return e.toString();
+    }
   }
 
   Future<void> addFaculty(BuildContext context,
@@ -72,7 +76,7 @@ class FacultyProvider extends ChangeNotifier {
       required String joiningDate,
       required String userImage,
       required String jobType}) async {
-        setLoading(true);
+    setLoading(true);
     await ApiHelper.post("CreateFaulty", {
       "programId": programId,
       "classId": classId,
@@ -105,7 +109,7 @@ class FacultyProvider extends ChangeNotifier {
       }
       // if 401 or 402 return token expired
       else {
-         setLoading(false);
+        setLoading(false);
         Fluttertoast.showToast(msg: "Token Expired Please Login Again");
         Navigator.pushNamed(context, RouteNames.login);
         return null;

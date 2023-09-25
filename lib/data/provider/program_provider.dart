@@ -21,7 +21,7 @@ class ProgramProvider extends ChangeNotifier {
   String? selectedClass;
   String? selectedBatch;
   String? selectedCourse;
-    String? selectedCourseName;
+  String? selectedCourseName;
 
   ProgramModel get getDepts => programModel;
   ProgramClassModel get getDeptsClass => programClassModel;
@@ -30,7 +30,7 @@ class ProgramProvider extends ChangeNotifier {
 
 // get program list
   Future<void> getProgram(BuildContext context) async {
-    ApiHelper.get("getProgram").then((value) async{
+    ApiHelper.get("getProgram", "").then((value) async {
       setLoading(false);
 // if 200 return response
       if (value.statusCode == 200) {
@@ -58,7 +58,7 @@ class ProgramProvider extends ChangeNotifier {
 
 // get classes list
   Future<void> getClasses(BuildContext context) async {
-    ApiHelper.get("getProgramClass/$selectedDept").then((value) {
+    ApiHelper.get("getProgramClass/$selectedDept", "").then((value) {
       setLoading(false);
 // if 200 return response
       if (value.statusCode == 200) {
@@ -86,7 +86,7 @@ class ProgramProvider extends ChangeNotifier {
 
 // get course List depend on the selected class and the batch
   Future<void> getCoursesList(BuildContext context) async {
-    ApiHelper.get("GetCourse/id=$selectedClass/batch=$selectedBatch")
+    ApiHelper.get("GetCourse/id=$selectedClass/batch=$selectedBatch", "")
         .then((value) {
       setLoading(false);
 // if 200 return response
@@ -159,16 +159,13 @@ class ProgramProvider extends ChangeNotifier {
     });
   }
 
-
 // create course or add new course
   Future<void> patchCoursesList(BuildContext context,
       {String? courseid, String? courseName, int? credits}) async {
     ApiHelper.post("UpdateCourse/id=$courseid", {
-   
       "CourseId": courseid,
       "CourseName": courseName,
       "credits": credits,
-   
     }).then((value) async {
       setLoading(false);
 // if 200 return response
@@ -196,7 +193,6 @@ class ProgramProvider extends ChangeNotifier {
     selectedDept = value;
     selectedClass = null;
     selectedCourse = null;
-    
 
     notifyListeners();
     await getClasses(context);
@@ -243,6 +239,7 @@ class ProgramProvider extends ChangeNotifier {
     selectedCourse = value;
     notifyListeners();
   }
+
   // set course
   void setSelectedCourseName(String value) {
     selectedCourseName = value;

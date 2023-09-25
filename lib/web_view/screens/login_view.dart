@@ -1,15 +1,13 @@
-
-
+import 'dart:convert';
 
 import 'package:animated_text_kit/animated_text_kit.dart';
 
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:rugst_alliance_academia/data/provider/login_provider.dart';
 import 'package:rugst_alliance_academia/routes/named_routes.dart';
-
-
 
 import 'package:rugst_alliance_academia/theme/app_colors.dart';
 import 'package:rugst_alliance_academia/util/index.dart';
@@ -18,9 +16,7 @@ import 'package:rugst_alliance_academia/widgets/app_elevatedbutton.dart';
 import 'package:rugst_alliance_academia/widgets/app_formfield.dart';
 import 'package:rugst_alliance_academia/widgets/app_richtext.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
-
-
+import 'package:shared_preferences/shared_preferences.dart';
 
 class WebLoginView extends StatefulWidget {
   const WebLoginView({super.key});
@@ -33,8 +29,6 @@ class _WebLoginViewState extends State<WebLoginView> {
   String? userName;
   String? password;
 
-
-
   final _formKey = GlobalKey<FormState>();
   var colorizeColors = [
     AppColors.color927,
@@ -45,12 +39,8 @@ class _WebLoginViewState extends State<WebLoginView> {
   var colorizeTextStyle =
       GoogleFonts.oswald(fontSize: 45.sp, fontWeight: FontWeight.w600);
 
-
-
-
   @override
   Widget build(BuildContext context) {
-  
     var size = MediaQuery.sizeOf(context);
     return Scaffold(
       appBar: AppBar(
@@ -122,58 +112,58 @@ class _WebLoginViewState extends State<WebLoginView> {
                       height: 30.h,
                     ),
                     Container(
-                      
                       decoration: BoxDecoration(
-                        color: AppColors.color927,
-                        borderRadius: BorderRadius.circular(18.sp)
-                      ),
+                          color: AppColors.color927,
+                          borderRadius: BorderRadius.circular(18.sp)),
                       child: AppTextFormFieldWidget(
                         textStyle: GoogleFonts.oswald(
                           color: AppColors.colorWhite,
-                          
                         ),
-                        validator:(value) {
+                        validator: (value) {
                           return EmailFormFieldValidator.validate(value!);
-                        }, 
+                        },
                         onSaved: (p0) => userName = p0,
                         obscureText: false,
                         inputDecoration: InputDecoration(
-                          errorStyle:GoogleFonts.oswald(color: AppColors.colorRed, fontWeight: FontWeight.bold),
-                          floatingLabelBehavior: FloatingLabelBehavior.always,
-                          hintText: "Enter Username",
-                          hintStyle:GoogleFonts.oswald(color: AppColors.colorWhite),
-                          contentPadding: EdgeInsets.symmetric(
-                              vertical: 25.0.h, horizontal: 10.0.w),
-                       border: InputBorder.none
-                        ),
+                            errorStyle: GoogleFonts.oswald(
+                                color: AppColors.colorRed,
+                                fontWeight: FontWeight.bold),
+                            floatingLabelBehavior: FloatingLabelBehavior.always,
+                            hintText: "Enter Username",
+                            hintStyle:
+                                GoogleFonts.oswald(color: AppColors.colorWhite),
+                            contentPadding: EdgeInsets.symmetric(
+                                vertical: 25.0.h, horizontal: 10.0.w),
+                            border: InputBorder.none),
                       ),
                     ),
                     SizedBox(
                       height: 20.h,
                     ),
                     Container(
-                        decoration: BoxDecoration(
-                        color: AppColors.color927,
-                        borderRadius: BorderRadius.circular(18.sp)
-                      ),
+                      decoration: BoxDecoration(
+                          color: AppColors.color927,
+                          borderRadius: BorderRadius.circular(18.sp)),
                       child: AppTextFormFieldWidget(
-                         textStyle: GoogleFonts.oswald(
+                        textStyle: GoogleFonts.oswald(
                           color: AppColors.colorWhite,
-                          
                         ),
                         onSaved: (p0) => password = p0,
                         validator: (value) {
-                           return PasswordFormFieldValidator.validate(value!);
+                          return PasswordFormFieldValidator.validate(value!);
                         },
                         obscureText: true,
                         inputDecoration: InputDecoration(
-                          errorStyle:GoogleFonts.oswald(color: AppColors.colorRed, fontWeight: FontWeight.bold),
+                          errorStyle: GoogleFonts.oswald(
+                              color: AppColors.colorRed,
+                              fontWeight: FontWeight.bold),
                           floatingLabelBehavior: FloatingLabelBehavior.always,
-                        hintText: "Enter Password",
-                          hintStyle:GoogleFonts.oswald(color: AppColors.colorWhite),
+                          hintText: "Enter Password",
+                          hintStyle:
+                              GoogleFonts.oswald(color: AppColors.colorWhite),
                           contentPadding: EdgeInsets.symmetric(
                               vertical: 25.0.h, horizontal: 10.0.w),
-                          border:  InputBorder.none,
+                          border: InputBorder.none,
                         ),
                       ),
                     ),
@@ -182,41 +172,38 @@ class _WebLoginViewState extends State<WebLoginView> {
                     ),
                     Center(
                       child: Consumer<LoginProvider>(
-                        builder: (context, authProvider,child) {
-                          return AppElevatedButon(
-                            loading: authProvider.isLoading,
-                            title: "Login",
-                            buttonColor: AppColors.color927,
-                            height: 70.h,
-                            width: size.width / 6,
-                            onPressed: (context) async {
-                              
-                              if (_formKey.currentState!.validate()) {
-                                _formKey.currentState!.save();
-                              var result =  await authProvider.login(userName!, password!);
-                            if(result.statusCode == 200){
-
-Navigator.pushNamed(context,  RouteNames.welcome);
-                            }
-                              
+                          builder: (context, authProvider, child) {
+                        return AppElevatedButon(
+                          loading: authProvider.isLoading,
+                          title: "Login",
+                          buttonColor: AppColors.color927,
+                          height: 70.h,
+                          width: size.width / 6,
+                          onPressed: (context) async {
+                            final SharedPreferences prefs =
+                                await SharedPreferences.getInstance();
+                            if (_formKey.currentState!.validate()) {
+                              _formKey.currentState!.save();
+                              var result = await authProvider.login(
+                                  userName!, password!);
+                              var decodedData = json.decode(result.body);
+                              if (result.statusCode == 200) {
+                                await prefs.setString(
+                                    'Token', decodedData["token"]);
+                                if (context.mounted) {
+                                  Navigator.pushNamed(
+                                      context, RouteNames.welcome);
+                                }
+                              } else {
+                                Fluttertoast.showToast(
+                                    msg: decodedData["Message"]);
                               }
-                            },
-                            textColor: AppColors.colorWhite,
-                          );
-                        }
-                      ),
+                            }
+                          },
+                          textColor: AppColors.colorWhite,
+                        );
+                      }),
                     ),
-                   
-
-              //       SignInWithEmailButton(
-              //   caller: client,
-              //   onSignedIn: () async{
-                 
-              //   var addUser = await client.userEndPoint.createUser(User(email: emailController.text, userType: "Student",name: usernameController.text));
-              //   log(addUser.toString());
-              //      Fluttertoast.showToast(msg: "Account Created Successfully");
-              //   },
-              // ),
                   ],
                 ),
               ),

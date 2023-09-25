@@ -6,10 +6,8 @@ import 'package:rugst_alliance_academia/util/image_path.dart';
 import 'package:rugst_alliance_academia/web_view/screens/dashboard/overview_view.dart';
 
 import 'package:rugst_alliance_academia/web_view/screens/department/program_view.dart';
-import 'package:rugst_alliance_academia/web_view/screens/faculty/faculty_detail_view.dart';
 
 import 'package:rugst_alliance_academia/web_view/screens/faculty/faculty_list_view.dart';
-
 
 import 'package:rugst_alliance_academia/web_view/screens/student/student_list_view.dart';
 
@@ -32,7 +30,7 @@ class _SidebarPageState extends State<SidebarPage> {
     super.initState();
     _items = _generateItems;
 
-    bodywidget = const  OverviewView();
+    bodywidget = const OverviewView();
   }
 
   List<CollapsibleItem> get _generateItems {
@@ -74,7 +72,7 @@ class _SidebarPageState extends State<SidebarPage> {
         text: 'Department',
         iconImage: const AssetImage(ImagePath.webdeptLogo),
         onPressed: () => setState(() {
-          bodywidget =  const ProgramView();
+          bodywidget = const ProgramView();
         }),
         onHold: () => ScaffoldMessenger.of(context)
             .showSnackBar(const SnackBar(content: Text("Alarm"))),

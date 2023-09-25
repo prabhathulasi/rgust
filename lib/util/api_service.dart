@@ -1,27 +1,27 @@
 import 'dart:convert';
 
-
 import 'package:http/http.dart' as http;
 
 class ApiHelper {
-  static const String baseUrl = "http://localhost:3013"; // Replace with your API base URL
+  static const String baseUrl =
+      "http://172.16.20.121:4000"; // Replace with your API base URL
 
-  static Future<http.Response> get(String endpoint) async {
-    final response = await http.get(Uri.parse('$baseUrl/$endpoint'));
+  static Future<http.Response> get(String endpoint, String token) async {
+    final response = await http.get(Uri.parse('$baseUrl/$endpoint'),
+        headers: {"Authorization": "Bearer $token"});
     return _handleResponse(response);
   }
 
-  static Future<http.Response> post(String endpoint, Map<String, dynamic> data) async {
+  static Future<http.Response> post(
+      String endpoint, Map<String, dynamic> data) async {
     final response = await http.post(
       Uri.parse('$baseUrl/$endpoint'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
-  
-      
       },
       body: jsonEncode(data),
     );
-   
+
     return _handleResponse(response);
   }
 
