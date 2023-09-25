@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:rugst_alliance_academia/data/provider/login_provider.dart';
+import 'package:rugst_alliance_academia/routes/named_routes.dart';
 
 
 
@@ -192,7 +193,11 @@ class _WebLoginViewState extends State<WebLoginView> {
                               
                               if (_formKey.currentState!.validate()) {
                                 _formKey.currentState!.save();
-                                authProvider.login(userName!, password!,context);
+                              var result =  await authProvider.login(userName!, password!);
+                            if(result.statusCode == 200){
+
+Navigator.pushNamed(context,  RouteNames.welcome);
+                            }
                               
                               }
                             },
