@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -7,6 +8,7 @@ import 'package:rugst_alliance_academia/data/model/program_class_model.dart';
 import 'package:rugst_alliance_academia/data/model/program_model.dart';
 import 'package:rugst_alliance_academia/routes/named_routes.dart';
 import 'package:rugst_alliance_academia/util/api_service.dart';
+import 'package:rugst_alliance_academia/util/toast_helper.dart';
 
 class ProgramProvider extends ChangeNotifier {
   int startYear = 2022; // Specify your start year
@@ -29,69 +31,65 @@ class ProgramProvider extends ChangeNotifier {
   bool get isLoading => _isLoading;
 
 // get program list
-  Future<void> getProgram(BuildContext context) async {
-    ApiHelper.get("getProgram", "").then((value) async {
-      setLoading(false);
-// if 200 return response
-      if (value.statusCode == 200) {
-        var data = json.decode(value.body);
+  Future getProgram(String token) async {
+    var result = await ApiHelper.get("getProgram", token);
+    try {
+      if (result.statusCode == 200) {
+        setLoading(false);
+        var data = json.decode(result.body);
 
         programModel = ProgramModel.fromJson(data);
 
         notifyListeners();
 
         return programModel;
-      }
-      // if 401 or 402 return token expired
-      else {
-        Fluttertoast.showToast(msg: "Token Expired Please Login Again");
-        Navigator.pushNamed(context, RouteNames.login);
+      } else {
+        setLoading(false);
+        notifyListeners();
+        ToastHelper().errorToast("Internal Server Error");
         return null;
       }
-      // catch error
-    }).catchError((onError) {
+    } catch (e) {
       setLoading(false);
-      Fluttertoast.showToast(msg: "Internal Server Error");
-      return null;
-    });
+      Fluttertoast.showToast(msg: e.toString());
+      return e.toString();
+    }
   }
 
 // get classes list
-  Future<void> getClasses(BuildContext context) async {
-    ApiHelper.get("getProgramClass/$selectedDept", "").then((value) {
-      setLoading(false);
-// if 200 return response
-      if (value.statusCode == 200) {
-        var data = json.decode(value.body);
+  Future getClasses(String token) async {
+    var result = await ApiHelper.get("getProgramClass/$selectedDept", token);
+    try {
+      if (result.statusCode == 200) {
+        setLoading(false);
+        var data = json.decode(result.body);
 
         programClassModel = ProgramClassModel.fromJson(data);
 
         notifyListeners();
 
         return programClassModel;
-      }
-      // if 401 or 402 return token expired
-      else {
-        Fluttertoast.showToast(msg: "Token Expired Please Login Again");
-        Navigator.pushNamed(context, RouteNames.login);
+      } else {
+        setLoading(false);
+        notifyListeners();
+        ToastHelper().errorToast("Internal Server Error");
         return null;
       }
-      // catch error
-    }).catchError((onError) {
+    } catch (e) {
       setLoading(false);
-      Fluttertoast.showToast(msg: "Internal Server Error");
-      return null;
-    });
+      Fluttertoast.showToast(msg: e.toString());
+      return e.toString();
+    }
   }
 
 // get course List depend on the selected class and the batch
-  Future<void> getCoursesList(BuildContext context) async {
-    ApiHelper.get("GetCourse/id=$selectedClass/batch=$selectedBatch", "")
-        .then((value) {
-      setLoading(false);
-// if 200 return response
-      if (value.statusCode == 200) {
-        var data = json.decode(value.body);
+  Future getCoursesList(String token) async {
+    var result = await ApiHelper.get(
+        "GetCourse/id=$selectedClass/batch=$selectedBatch", token);
+    try {
+      if (result.statusCode == 200) {
+        setLoading(false);
+        var data = json.decode(result.body);
 
         coursesModel = CoursesModel.fromJson(data);
 
@@ -110,55 +108,56 @@ class ProgramProvider extends ChangeNotifier {
         notifyListeners();
 
         return newData;
-      }
-      // if 401 or 402 return token expired
-      else {
-        Fluttertoast.showToast(msg: "Token Expired Please Login Again");
-        Navigator.pushNamed(context, RouteNames.login);
+      } else {
+        setLoading(false);
+        notifyListeners();
+        ToastHelper().errorToast("Internal Server Error");
         return null;
       }
-      // catch error
-    }).catchError((onError) {
+    } catch (e) {
       setLoading(false);
-      newData.clear();
-
-      Fluttertoast.showToast(msg: onError.toString(), timeInSecForIosWeb: 10);
-      return null;
-    });
+      Fluttertoast.showToast(msg: e.toString());
+      return e.toString();
+    }
   }
 
 // create course or add new course
-  Future<void> postCoursesList(BuildContext context,
+  Future postCoursesList(String? token,
       {String? courseid, String? courseName, int? credits}) async {
-    ApiHelper.post("PostCourse", {
-      "ProgramId": int.parse(selectedDept!),
-      "ClassId": int.parse(selectedClass!),
-      "CourseId": courseid,
-      "CourseName": courseName,
-      "credits": credits,
-      "batch": selectedBatch
-    }).then((value) async {
-      setLoading(false);
-// if 200 return response
-      if (value.statusCode == 200) {
-        Fluttertoast.showToast(msg: "Course Added Successfully");
-        await getCoursesList(context);
+    var result = await ApiHelper.post(
+        "PostCourse",
+        {
+          "ProgramId": int.parse(selectedDept!),
+          "ClassId": int.parse(selectedClass!),
+          "CourseId": courseid,
+          "CourseName": courseName,
+          "credits": credits,
+          "batch": selectedBatch
+        },
+        token!);
+
+        try {
+      if (result.statusCode == 200) {
+        setLoading(false);
+               ToastHelper().sucessToast("Course Added Successfully");
+        await getCoursesList(token);
         notifyListeners();
-      }
-      // if 401 or 402 return token expired
-      else {
-        Fluttertoast.showToast(msg: "Token Expired Please Login Again");
-        Navigator.pushNamed(context, RouteNames.login);
+
+      } else {
+        setLoading(false);
+        notifyListeners();
+        ToastHelper().errorToast("Internal Server Error");
         return null;
       }
-      // catch error
-    }).catchError((onError) {
+    } catch (e) {
       setLoading(false);
-      Fluttertoast.showToast(msg: "Internal Server Error");
-      return null;
-    });
-  }
+      Fluttertoast.showToast(msg: e.toString());
+      return e.toString();
+    }
 
+
+  }
+//TODO have to parse the token and complete the patch work in front end
 // create course or add new course
   Future<void> patchCoursesList(BuildContext context,
       {String? courseid, String? courseName, int? credits}) async {
@@ -166,12 +165,12 @@ class ProgramProvider extends ChangeNotifier {
       "CourseId": courseid,
       "CourseName": courseName,
       "credits": credits,
-    }).then((value) async {
+    },"").then((value) async {
       setLoading(false);
 // if 200 return response
       if (value.statusCode == 200) {
         Fluttertoast.showToast(msg: "Course Added Successfully");
-        await getCoursesList(context);
+        // await getCoursesList(context);
         notifyListeners();
       }
       // if 401 or 402 return token expired
@@ -189,13 +188,13 @@ class ProgramProvider extends ChangeNotifier {
   }
 
 // set program or dept
-  void setSelectedDept(String value, BuildContext context) async {
+  void setSelectedDept(String value, String token) async {
     selectedDept = value;
     selectedClass = null;
     selectedCourse = null;
 
     notifyListeners();
-    await getClasses(context);
+    await getClasses(token);
   }
 
 //set class
@@ -228,9 +227,9 @@ class ProgramProvider extends ChangeNotifier {
   }
 
 // set batch
-  void setSelectedBatch(String value, BuildContext context) async {
+  void setSelectedBatch(String value, String token) async {
     selectedBatch = value;
-    getCoursesList(context);
+    getCoursesList(token);
     notifyListeners();
   }
 

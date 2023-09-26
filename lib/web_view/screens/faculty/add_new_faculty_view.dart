@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:math';
 import 'dart:typed_data';
+import 'dart:developer' as dev;
 
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -11,11 +12,14 @@ import 'package:intl/intl.dart';
 
 import 'package:provider/provider.dart';
 import 'package:rugst_alliance_academia/custom_plugin/editable.dart';
+import 'package:rugst_alliance_academia/data/middleware/check_auth_middleware.dart';
 import 'package:rugst_alliance_academia/data/model/gender_model.dart';
 import 'package:rugst_alliance_academia/data/provider/faculty_provider.dart';
 import 'package:rugst_alliance_academia/data/provider/program_provider.dart';
+import 'package:rugst_alliance_academia/routes/named_routes.dart';
 import 'package:rugst_alliance_academia/theme/app_colors.dart';
 import 'package:rugst_alliance_academia/util/image_path.dart';
+import 'package:rugst_alliance_academia/util/toast_helper.dart';
 import 'package:rugst_alliance_academia/util/validator.dart';
 import 'package:rugst_alliance_academia/web_view/screens/department/batch_dropdown.dart';
 import 'package:rugst_alliance_academia/web_view/screens/department/class_dropdown.dart';
@@ -43,7 +47,7 @@ class _AddFacultyViewState extends State<AddFacultyView> {
   String? genderValue;
   String? jobTypeValue;
   String? selected_Course;
-
+ String ?randomString;
   final _editableKey = GlobalKey<EditableState>();
   @override
   void initState() {
@@ -67,6 +71,10 @@ class _AddFacultyViewState extends State<AddFacultyView> {
         'editable': false
       },
     ];
+       setState(() {
+         
+       randomString = generateRandomString(4);
+       }); 
     super.initState();
   }
 
@@ -148,8 +156,7 @@ class _AddFacultyViewState extends State<AddFacultyView> {
                               bytesFromPicker =
                                   await ImagePickerWeb.getImageAsBytes();
                               imageEncoded = base64.encode(bytesFromPicker!);
-                              // dev.log(imageEncoded!);
-                              // dev.log(base64.decode(imageEncoded!).toString());
+                            
                               setState(() {});
                             },
                             child: AppRichTextView(
@@ -228,18 +235,12 @@ class _AddFacultyViewState extends State<AddFacultyView> {
                                       enable: false,
                                       textStyle: const TextStyle(
                                           color: AppColors.colorWhite),
-                                      // textValidator: (value) {
-                                      //   if (value == null) {
-                                      //     return "This Field is Required";
-                                      //   } else {
-                                      //     return null;
-                                      //   }
-                                      // },
+                                    
                                       onSaved: (p0) {},
-                                      inputDecoration: const InputDecoration(
+                                      inputDecoration:  InputDecoration(
                                           border: InputBorder.none,
-                                          hintText: "2023/0100/0126",
-                                          hintStyle: TextStyle(
+                                          hintText: programProvider.selectedDept==null?"": "${DateTime.now().year}/${programProvider.selectedDept}/$randomString",
+                                          hintStyle:const TextStyle(
                                               color: AppColors.colorGrey)),
                                       obscureText: false,
                                     ),
@@ -940,6 +941,25 @@ class _AddFacultyViewState extends State<AddFacultyView> {
                                     msg: "Please Select the Course");
                                
                               } else {
+
+
+                                 var token = await getTokenAndUseIt();
+                              if (token == null) {
+                                if (context.mounted) {
+                                  Navigator.pushNamed(
+                                      context, RouteNames.login);
+                                }
+                              } else if (token == "Token Expired") {
+                                ToastHelper().errorToast(
+                                    "Session Expired Please Login Again");
+
+                                if (context.mounted) {
+                                  Navigator.pushNamed(
+                                      context, RouteNames.login);
+                                }
+                              } else {
+                                
+                              
                                  var data =
                                     programProvider.newData.where((element) {
                                   return element["coursecode"] ==
@@ -950,8 +970,8 @@ class _AddFacultyViewState extends State<AddFacultyView> {
                                 });
                                 if (_formKey.currentState!.validate()) {
                                   _formKey.currentState!.save();
-                                  String randomString = generateRandomString(4);
-                                  facultyProvider.addFaculty(context,
+                               
+                               var result=  await facultyProvider.addFaculty(token,
                                       programId: int.parse(
                                           programProvider.selectedDept!),
                                       classId: int.parse(
@@ -967,8 +987,9 @@ class _AddFacultyViewState extends State<AddFacultyView> {
                                       joiningDate: dateinput.text,
                                       userImage: imageEncoded!,
                                       jobType: jobTypeValue!);
+                                      dev.log(result.toString());
                                 }
-                              }
+                              }}
                             }),
                         SizedBox(
                           width: 10.h,

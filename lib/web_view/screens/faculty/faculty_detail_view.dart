@@ -1,20 +1,27 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:rugst_alliance_academia/data/model/faculty_model.dart';
 import 'package:rugst_alliance_academia/theme/app_colors.dart';
 import 'package:rugst_alliance_academia/util/image_path.dart';
 import 'package:rugst_alliance_academia/web_view/screens/faculty/faculty_tab_view.dart';
+import 'package:rugst_alliance_academia/widgets/app_elevatedbutton.dart';
 import 'package:rugst_alliance_academia/widgets/app_richtext.dart';
 
 class FacultyDetailView extends StatefulWidget {
-  const FacultyDetailView({super.key});
+  final FacultyList facultyDetail;
+  const FacultyDetailView({super.key, required this.facultyDetail});
 
   @override
   State<FacultyDetailView> createState() => _FacultyDetailViewState();
 }
 
 class _FacultyDetailViewState extends State<FacultyDetailView> {
+
   @override
   Widget build(BuildContext context) {
+    final facultyData = widget.facultyDetail;
     return Padding(
       padding: EdgeInsets.all(8.0.sp),
       child: Column(
@@ -37,6 +44,7 @@ class _FacultyDetailViewState extends State<FacultyDetailView> {
                           children: [
                             CircleAvatar(
                               radius: 80.sp,
+                              backgroundImage: MemoryImage(base64Decode(facultyData.userImage!)),
                             ),
                             Transform.translate(
                               offset: Offset(130.w,130.h),
@@ -44,18 +52,18 @@ class _FacultyDetailViewState extends State<FacultyDetailView> {
                                 decoration: BoxDecoration(
                                         borderRadius:
                                             BorderRadius.circular(25.sp),
-                                        color: AppColors.color582,
-                                        boxShadow: const [
+                                       
+                                        boxShadow:  [
                                           BoxShadow(
-                                              color: AppColors.color582,
+                                              color: facultyData.jobType =="Part-Time"? AppColors.contentColorOrange : facultyData.jobType =="Full-Time"?  AppColors.color582: AppColors.colorRed,
                                               blurRadius: 10,
                                               spreadRadius: 5)
                                         ]),
                                 child: CircleAvatar(
                                   radius: 15.sp,
-                                backgroundColor: AppColors.color582,
+                                backgroundColor: facultyData.jobType =="Part-Time"? AppColors.contentColorOrange : facultyData.jobType =="Full-Time"?  AppColors.color582: AppColors.colorRed,
                                 child: Center(
-                                  child: Icon(Icons.edit,size: 20.sp,color: AppColors.color927,),
+                                  child: Icon(Icons.edit,size: 20.sp,color: AppColors.colorWhite,),
                                 ),
                                 ),
                               ),
@@ -71,7 +79,7 @@ class _FacultyDetailViewState extends State<FacultyDetailView> {
                             Row(
                               children: [
                                 AppRichTextView(
-                                  title: "Prabhakaran Thulasi",
+                                  title: facultyData.firstName!+ facultyData.lastName! ,
                                   fontSize: 24.sp,
                                   fontWeight: FontWeight.bold,
                                   textColor: AppColors.colorWhite,
@@ -85,10 +93,10 @@ class _FacultyDetailViewState extends State<FacultyDetailView> {
                                   decoration: BoxDecoration(
                                       borderRadius:
                                           BorderRadius.circular(25.sp),
-                                      color: AppColors.color582,
-                                      boxShadow: const [
+                                      color: facultyData.jobType =="Part-Time"? AppColors.contentColorOrange : facultyData.jobType =="Full-Time"?  AppColors.color582: AppColors.colorRed,
+                                      boxShadow:  [
                                         BoxShadow(
-                                            color: AppColors.color582,
+                                            color: facultyData.jobType =="Part-Time"? AppColors.contentColorOrange : facultyData.jobType =="Full-Time"?  AppColors.color582: AppColors.colorRed,
                                             blurRadius: 10,
                                             spreadRadius: 5)
                                       ]),
@@ -114,7 +122,7 @@ class _FacultyDetailViewState extends State<FacultyDetailView> {
                                   textColor: AppColors.colorGrey,
                                 ),
                                 AppRichTextView(
-                                  title: "September-2023",
+                                  title: facultyData.batch!,
                                   fontSize: 20.sp,
                                   fontWeight: FontWeight.w800,
                                   textColor: AppColors.colorWhite,
@@ -133,7 +141,7 @@ class _FacultyDetailViewState extends State<FacultyDetailView> {
                                   textColor: AppColors.colorGrey,
                                 ),
                                 AppRichTextView(
-                                  title: "Male",
+                                  title: facultyData.gender!,
                                   fontSize: 20.sp,
                                   fontWeight: FontWeight.w800,
                                   textColor: AppColors.colorWhite,
@@ -152,7 +160,7 @@ class _FacultyDetailViewState extends State<FacultyDetailView> {
                                   textColor: AppColors.colorGrey,
                                 ),
                                 AppRichTextView(
-                                  title: "Prabha709@gmail.com",
+                                  title: facultyData.email!,
                                   fontSize: 20.sp,
                                   fontWeight: FontWeight.w800,
                                   textColor: AppColors.colorWhite,
@@ -171,7 +179,7 @@ class _FacultyDetailViewState extends State<FacultyDetailView> {
                                   textColor: AppColors.colorGrey,
                                 ),
                                 AppRichTextView(
-                                  title: "+917305822599",
+                                  title: facultyData.mobile!,
                                   fontSize: 20.sp,
                                   fontWeight: FontWeight.w800,
                                   textColor: AppColors.colorWhite,
@@ -190,7 +198,7 @@ class _FacultyDetailViewState extends State<FacultyDetailView> {
                                   textColor: AppColors.colorGrey,
                                 ),
                                 AppRichTextView(
-                                  title: "02/04/1996",
+                                  title: facultyData.dob!,
                                   fontSize: 20.sp,
                                   fontWeight: FontWeight.w800,
                                   textColor: AppColors.colorWhite,
@@ -202,9 +210,24 @@ class _FacultyDetailViewState extends State<FacultyDetailView> {
                       ),
                       Align(
                         alignment: Alignment.centerRight,
-                        child: CircleAvatar(
-                          radius: 60.sp,
-                         backgroundImage: const AssetImage(ImagePath.webrgustLogo),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            CircleAvatar(
+                              radius: 60.sp,
+                             backgroundImage: const AssetImage(ImagePath.webrgustLogo),
+                            ),
+                            SizedBox(height: 10.h,),
+                            AppElevatedButon(title: "Create Account",
+                            buttonColor: facultyData.jobType =="Part-Time"? AppColors.contentColorOrange : facultyData.jobType =="Full-Time"?  AppColors.color582: AppColors.colorRed,
+                            height: 40.h,
+                            width: 180.w,
+                            textColor: AppColors.colorWhite,
+                            onPressed: (context) {
+                              
+                            },
+                            )
+                          ],
                         ))
                     ],
                   ),
@@ -232,7 +255,7 @@ class _FacultyDetailViewState extends State<FacultyDetailView> {
                                   textColor: AppColors.colorGrey,
                                 ),
                                 AppRichTextView(
-                                  title: "17/02/2023",
+                                  title: facultyData.joiningDate!,
                                   fontSize: 20.sp,
                                   fontWeight: FontWeight.w800,
                                   textColor: AppColors.colorWhite,
@@ -249,7 +272,7 @@ class _FacultyDetailViewState extends State<FacultyDetailView> {
                                   textColor: AppColors.colorGrey,
                                 ),
                                 AppRichTextView(
-                                  title: "2023/0100/001",
+                                  title: facultyData.facultyId!,
                                   fontSize: 20.sp,
                                   fontWeight: FontWeight.w800,
                                   textColor: AppColors.colorWhite,
@@ -267,7 +290,7 @@ class _FacultyDetailViewState extends State<FacultyDetailView> {
                                   textColor: AppColors.colorGrey,
                                 ),
                                 AppRichTextView(
-                                  title: "English -I",
+                                  title: facultyData.courseName!,
                                   fontSize: 20.sp,
                                   fontWeight: FontWeight.w800,
                                   textColor: AppColors.colorWhite,
@@ -284,7 +307,7 @@ class _FacultyDetailViewState extends State<FacultyDetailView> {
                                   textColor: AppColors.colorGrey,
                                 ),
                                 AppRichTextView(
-                                  title: "Bachelor of Engineering",
+                                  title:facultyData.qualifiation!,
                                   fontSize: 20.sp,
                                   fontWeight: FontWeight.w800,
                                   textColor: AppColors.colorWhite,
@@ -301,7 +324,7 @@ class _FacultyDetailViewState extends State<FacultyDetailView> {
                                   textColor: AppColors.colorGrey,
                                 ),
                                 AppRichTextView(
-                                  title: "s0123456",
+                                  title: facultyData.passportNumber!,
                                   fontSize: 20.sp,
                                   fontWeight: FontWeight.w800,
                                   textColor: AppColors.colorWhite,
@@ -322,7 +345,7 @@ class _FacultyDetailViewState extends State<FacultyDetailView> {
                                 Flexible(
                                   child: AppRichTextView(
                                     maxLines: 3,
-                                    title: "No.22 gangai amman street urappakkam, chennai, TamilNadu, India",
+                                    title: facultyData.address!,
                                     fontSize: 20.sp,
                                     fontWeight: FontWeight.w800,
                                     textColor: AppColors.colorWhite,

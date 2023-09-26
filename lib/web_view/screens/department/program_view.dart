@@ -1,11 +1,16 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:rugst_alliance_academia/custom_plugin/commons/helper.dart';
 import 'package:rugst_alliance_academia/custom_plugin/editable.dart';
+import 'package:rugst_alliance_academia/data/middleware/check_auth_middleware.dart';
 import 'package:rugst_alliance_academia/data/provider/program_provider.dart';
+import 'package:rugst_alliance_academia/routes/named_routes.dart';
 import 'package:rugst_alliance_academia/theme/app_colors.dart';
+import 'package:rugst_alliance_academia/util/toast_helper.dart';
 import 'package:rugst_alliance_academia/web_view/screens/department/batch_dropdown.dart';
 import 'package:rugst_alliance_academia/web_view/screens/department/class_dropdown.dart';
 import 'package:rugst_alliance_academia/web_view/screens/department/dept_tab_view.dart';
@@ -140,13 +145,33 @@ class _ProgramViewState extends State<ProgramView> {
                                   Fluttertoast.showToast(
                                       msg: "credits is Required ");
                                 } else {
-                                  await programProvider.postCoursesList(context,
+                                   
+
+
+                                    var token = await getTokenAndUseIt();
+                              if (token == null) {
+                                if (context.mounted) {
+                                  Navigator.pushNamed(
+                                      context, RouteNames.login);
+                                }
+                              } else if (token == "Token Expired") {
+                                ToastHelper().errorToast(
+                                    "Session Expired Please Login Again");
+
+                                if (context.mounted) {
+                                  Navigator.pushNamed(
+                                      context, RouteNames.login);
+                                }
+                              } else {
+                                 await programProvider.postCoursesList(token,
                                       courseName: value["coursename"],
                                       courseid: value["coursecode"],
                                       credits: int.parse(value["credits"]));
 
                                   rows = removeOneRow(cols, rows, rows[0]);
                                   programProvider.setCreateButton(true);
+                              }
+                                 
                                 }
                               },
                               onSubmitted: (value) {
@@ -330,6 +355,7 @@ class _ProgramViewState extends State<ProgramView> {
                                   stripeColor1: AppColors.color927,
                                   stripeColor2: AppColors.color927,
                                   onRowSaved: (value) async {
+                                    log(value);
                                     //   await departmentProvider.patchCoursesList(context,
                                     //  courseName: value["coursename"],
                                     // courseid: value["coursecode"],
@@ -351,7 +377,7 @@ class _ProgramViewState extends State<ProgramView> {
                                   thAlignment: TextAlign.center,
                                   thVertAlignment: CrossAxisAlignment.end,
                                   thPaddingBottom: 3,
-                                  showSaveIcon: false,
+                                  showSaveIcon: true,
                                   saveIconColor: Colors.black,
                                   showCreateButton: false,
                                   tdAlignment: TextAlign.left,

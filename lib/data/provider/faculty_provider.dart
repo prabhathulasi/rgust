@@ -47,10 +47,6 @@ class FacultyProvider extends ChangeNotifier {
         notifyListeners();
 
         return facultyModel;
-      } else if (result.statusCode == 204) {
-        setLoading(false);
-        notifyListeners();
-        return null;
       } else {
         setLoading(false);
         notifyListeners();
@@ -59,12 +55,12 @@ class FacultyProvider extends ChangeNotifier {
       }
     } catch (e) {
       setLoading(false);
-      Fluttertoast.showToast(msg: e.toString());
+        ToastHelper().errorToast(e.toString());
       return e.toString();
     }
   }
 
-  Future<void> addFaculty(BuildContext context,
+  Future addFaculty(String token,
       {required int programId,
       required int classId,
       required String courseCode,
@@ -77,7 +73,11 @@ class FacultyProvider extends ChangeNotifier {
       required String userImage,
       required String jobType}) async {
     setLoading(true);
-    await ApiHelper.post("CreateFaulty", {
+
+    try{
+
+    
+   var result=  await ApiHelper.post("CreateFaulty", {
       "programId": programId,
       "classId": classId,
       "courseCode": courseCode,
@@ -98,28 +98,28 @@ class FacultyProvider extends ChangeNotifier {
       "passportNumber": passport,
       "citizenship": cizizen,
       "userImage": userImage
-    }).then((value) {
-      setLoading(false);
-// if 200 return response
-      if (value.statusCode == 200) {
+    },token);
+      
+      if (result.statusCode == 200) {
+         var data = json.decode(result.body);
         setLoading(false);
         notifyListeners();
-        Fluttertoast.showToast(msg: "Faculty Added Sucessfully");
-        Navigator.pop(context);
-      }
-      // if 401 or 402 return token expired
-      else {
+  ToastHelper().sucessToast("Faculty Added Sucessfully");
+        return data;
+ 
+      } else {
         setLoading(false);
-        Fluttertoast.showToast(msg: "Token Expired Please Login Again");
-        Navigator.pushNamed(context, RouteNames.login);
+        notifyListeners();
+        ToastHelper().errorToast("Internal Server Error");
         return null;
       }
-      // catch error
-    }).catchError((onError) {
+
+    }catch(e){
       setLoading(false);
-      Fluttertoast.showToast(msg: onError.toString());
-      return null;
-    });
+      ToastHelper().errorToast(e.toString());
+      return e.toString();
+    }
+
   }
 
 // set FIRSTNAME value
