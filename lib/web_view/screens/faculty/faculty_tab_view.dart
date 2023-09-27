@@ -11,6 +11,8 @@ import 'package:rugst_alliance_academia/widgets/app_indicator.dart';
 class FacultyTabView extends StatelessWidget {
   const FacultyTabView({super.key});
 
+
+
   @override
   Widget build(BuildContext context) {
     return  DefaultTabController(

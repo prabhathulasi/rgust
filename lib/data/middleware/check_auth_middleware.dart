@@ -7,15 +7,13 @@ Future getTokenAndUseIt() async {
       'Token'); // Assuming 'token' is the key used to store the token.
 
   if (token != null) {
-    Map<String, dynamic> decodedToken = JwtDecoder.decode(token);
+    // Map<String, dynamic> decodedToken = JwtDecoder.decode(token);
     if (JwtDecoder.isExpired(token)) {
       return "Token Expired";
     } else {
-      int expiryTimeInSeconds = decodedToken['exp'];
-      DateTime expiryDateTime =
-          DateTime.fromMillisecondsSinceEpoch(expiryTimeInSeconds * 1000);
 
-      print("Login Session will Expire at: $expiryDateTime");
+
+    
       return token;
     }
   } else {

@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:rugst_alliance_academia/data/model/faculty_model.dart';
-import 'package:rugst_alliance_academia/routes/named_routes.dart';
 import 'package:rugst_alliance_academia/util/api_service.dart';
 import 'package:rugst_alliance_academia/util/toast_helper.dart';
 
@@ -59,7 +58,31 @@ class FacultyProvider extends ChangeNotifier {
       return e.toString();
     }
   }
+Future createAccount(String token, String email, String password, String userType)async{
+setLoading(true);
 
+    // Make your login API call here using the http package
+
+    try {
+      var result =
+          await ApiHelper.post("CreateAccount", {"email": email, "password": password, "usertype":"Faculty" },token);
+      setLoading(false);
+      if(result.statusCode == 200){
+        var data = json.decode(result.body);
+        ToastHelper().sucessToast("Account Created Sucessfully");
+        return data;
+      }else{
+        notifyListeners();
+        ToastHelper().errorToast("Internal Server Error");
+        return null;
+      }
+      
+    } catch (e) {
+      setLoading(false);
+      Fluttertoast.showToast(msg: e.toString());
+       return e.toString();
+    }
+}
   Future addFaculty(String token,
       {required int programId,
       required int classId,
