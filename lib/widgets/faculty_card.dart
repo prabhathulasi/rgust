@@ -58,8 +58,8 @@ class FacultyCardWidget extends StatelessWidget {
             padding:  EdgeInsets.only(top:4.0.h,right: 4.w),
             child: Align(alignment: Alignment.topRight,
             child: Container(
-                      width: 10,
-                      height: 10,
+                      width: 10.w,
+                      height: 10.h,
                       decoration:  BoxDecoration(
                         shape: BoxShape.circle,
                         color: facultyType =="Part-Time"? AppColors.contentColorOrange : facultyType =="Full-Time"?  AppColors.color582: AppColors.colorRed,

@@ -33,7 +33,7 @@ class _FacultyListViewState extends State<FacultyListView> {
   showDetailAlertDialog(BuildContext context, FacultyList details) {
     // set up the AlertDialog
     Dialog alert = Dialog(
-      child: Container(
+      child: SizedBox(
         height: MediaQuery.sizeOf(context).height,
         width: MediaQuery.sizeOf(context).width * 0.68,
         child: Stack(
@@ -106,6 +106,7 @@ class _FacultyListViewState extends State<FacultyListView> {
 
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.sizeOf(context);
     final facultyProvider =
         Provider.of<FacultyProvider>(context, listen: false);
     final programProvider = Provider.of<ProgramProvider>(context);
@@ -127,8 +128,7 @@ class _FacultyListViewState extends State<FacultyListView> {
       }
     }
 
-    const double itemHeight = 255;
-    const double itemWidth = 220;
+    
     return Scaffold(
       body: Padding(
         padding: EdgeInsets.all(18.0.sp),
@@ -148,6 +148,7 @@ class _FacultyListViewState extends State<FacultyListView> {
                   : Column(
                       children: [
                         Row(
+                          
                           children: [
                             Container(
                               width: 300.w,
@@ -238,9 +239,12 @@ class _FacultyListViewState extends State<FacultyListView> {
                             itemCount: facultyProvider
                                 .facultyModel.facultyList!.length,
                             gridDelegate:
-                                const SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount: 6,
-                                    childAspectRatio: (itemWidth / itemHeight)),
+                                 SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount:size.width <= 1400?  4:6,
+                                    //  childAspectRatio:
+                                    childAspectRatio:size.width <= 1400?  1/0.9: 1/1.2
+                                    
+                                    ),
                             itemBuilder: (context, index) {
                               var facultydata = facultyProvider
                                   .facultyModel.facultyList![index];
@@ -249,33 +253,26 @@ class _FacultyListViewState extends State<FacultyListView> {
                                   showDetailAlertDialog(context, facultydata);
                                 },
                                 child: Card(
+                                  color: AppColors.colorc7e,
                                   shape: RoundedRectangleBorder(
                                       borderRadius:
                                           BorderRadius.circular(18.sp)),
-                                  child: Container(
-                                    height: 530.h,
-                                    width: 330.w,
-                                    decoration: BoxDecoration(
-                                        color: AppColors.colorc7e,
-                                        borderRadius:
-                                            BorderRadius.circular(18.sp)),
-                                    child: FacultyCardWidget(
-                                        userImage: facultydata.userImage!,
-                                        facultyName: facultydata.firstName! +
-                                            facultydata.lastName!,
-                                        assignedSubject:
-                                            facultydata.courseName!,
-                                        facultyType: facultydata.jobType!,
-                                        gender: facultydata.gender!,
-                                        mobileNumber: facultydata.mobile!,
-                                        email: facultydata.email!,
-                                        citizenship: facultydata.citizenship!,
-                                        dob: facultydata.dob!,
-                                        batch: facultydata.batch!,
-                                        address: facultydata.address!,
-                                        pasportNumber:
-                                            facultydata.passportNumber!),
-                                  ),
+                                  child: FacultyCardWidget(
+                                      userImage: facultydata.userImage!,
+                                      facultyName: facultydata.firstName! +
+                                          facultydata.lastName!,
+                                      assignedSubject:
+                                          facultydata.courseName!,
+                                      facultyType: facultydata.jobType!,
+                                      gender: facultydata.gender!,
+                                      mobileNumber: facultydata.mobile!,
+                                      email: facultydata.email!,
+                                      citizenship: facultydata.citizenship!,
+                                      dob: facultydata.dob!,
+                                      batch: facultydata.batch!,
+                                      address: facultydata.address!,
+                                      pasportNumber:
+                                          facultydata.passportNumber!),
                                 ),
                               );
                             },

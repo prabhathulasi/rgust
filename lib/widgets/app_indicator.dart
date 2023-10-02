@@ -50,7 +50,7 @@ class _CustomTabIndicatorPainter extends BoxPainter {
 
     final shadowPaint = Paint()
       ..color = color.withOpacity(0.5)
-      ..maskFilter = MaskFilter.blur(BlurStyle.normal, 10.0);
+      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 10.0);
 
     final RRect roundedRect = RRect.fromRectAndRadius(
       rect,

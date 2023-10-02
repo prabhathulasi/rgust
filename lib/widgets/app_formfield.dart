@@ -11,6 +11,8 @@ class AppTextFormFieldWidget extends StatelessWidget {
 final String? Function(String?)? validator;
   final InputDecoration? inputDecoration;
   final int? maxLines;
+ final  void Function(String)? onFieldSubmitted;
+ final FocusNode ?focusNode;
 
   const AppTextFormFieldWidget({
     super.key,
@@ -23,13 +25,15 @@ final String? Function(String?)? validator;
     this.onSaved,
     this.maxLines,
     this.textStyle,
-    this.validator
+    this.focusNode,
+    this.validator,
+    this.onFieldSubmitted
   });
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      
+      focusNode: focusNode,
       validator:validator ,
       style: textStyle,
       initialValue: initialValue,
@@ -40,6 +44,7 @@ final String? Function(String?)? validator;
       maxLines: maxLines ?? 1,
       decoration: inputDecoration,
       enabled: enable,
+      onFieldSubmitted:onFieldSubmitted?? (value){} ,
     );
   }
 }

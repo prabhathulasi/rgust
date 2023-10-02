@@ -138,10 +138,10 @@ class _SidebarPageState extends State<SidebarPage> {
           screenPadding: 0,
           borderRadius: 0,
           minWidth: size.width * 0.05,
-          maxWidth: size.width * 0.2,
+ 
           items: _items!,
           collapseOnBodyTap: false,
-          showToggleButton: true,
+          showToggleButton: false,
           title: userEmail ?? "ADMIN",
           onTitleTap: () {
             print("object");
@@ -156,7 +156,7 @@ class _SidebarPageState extends State<SidebarPage> {
               fontStyle: FontStyle.italic,
               fontWeight: FontWeight.bold),
           toggleTitleStyle:
-              TextStyle(fontSize: 20.sp, fontWeight: FontWeight.bold),
+              TextStyle(fontSize: 25.sp, fontWeight: FontWeight.bold),
           sidebarBoxShadow: const [
             BoxShadow(),
           ],

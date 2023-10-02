@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class CollapsibleItemSelection extends StatefulWidget {
-  const CollapsibleItemSelection({
+  const CollapsibleItemSelection({super.key, 
     required this.height,
     required this.offsetY,
     required this.color,

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class CollapsibleContainer extends StatelessWidget {
   const CollapsibleContainer(
-      {required this.height,
+      {super.key, required this.height,
       required this.width,
       required this.padding,
       required this.borderRadius,

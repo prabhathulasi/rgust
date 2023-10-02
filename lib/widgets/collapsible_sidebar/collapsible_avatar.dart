@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class CollapsibleAvatar extends StatelessWidget {
-  const CollapsibleAvatar({
+  const CollapsibleAvatar({super.key, 
     required this.avatarSize,
     required this.backgroundColor,
     required this.name,
@@ -42,7 +42,7 @@ class CollapsibleAvatar extends StatelessWidget {
   Widget get _initials {
     return Center(
       child: Text(
-        '${name.substring(0, 1).toUpperCase()}',
+        name.substring(0, 1).toUpperCase(),
         style: textStyle,
       ),
     );

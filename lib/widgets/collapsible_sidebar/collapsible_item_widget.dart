@@ -3,7 +3,7 @@ import 'package:rugst_alliance_academia/widgets/collapsible_sidebar/collapsible_
 import 'package:rugst_alliance_academia/widgets/collapsible_sidebar/collapsible_multi_level_item_widget.dart';
 
 class CollapsibleItemWidget extends StatefulWidget {
-  const CollapsibleItemWidget({
+  const CollapsibleItemWidget({super.key, 
     required this.onHoverPointer,
     required this.leading,
     required this.title,
@@ -78,7 +78,7 @@ class _CollapsibleItemWidgetState extends State<CollapsibleItemWidget> {
                   textStyle: widget.textStyle,
                   offsetX: widget.offsetX,
                   isSelected: widget.isSelected,
-                  scale: widget.scale,
+                  scale: 0.1,
                   padding: widget.padding,
                   minWidth: widget.minWidth,
                   isCollapsed: widget.isCollapsed,
@@ -118,7 +118,7 @@ class _CollapsibleItemWidgetState extends State<CollapsibleItemWidget> {
               widget.title,
               style: _underline
                   ? widget.textStyle
-                      .merge(TextStyle(decoration: TextDecoration.underline))
+                      .merge(const TextStyle(decoration: TextDecoration.underline))
                   : widget.textStyle,
               softWrap: false,
               overflow: TextOverflow.fade,

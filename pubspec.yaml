@@ -52,7 +52,7 @@ dependencies:
   syncfusion_flutter_calendar: ^23.1.36
   shared_preferences: ^2.2.1
   jwt_decoder: ^2.0.1
-  confetti: ^0.7.0
+  
 
 dev_dependencies:
   flutter_test:

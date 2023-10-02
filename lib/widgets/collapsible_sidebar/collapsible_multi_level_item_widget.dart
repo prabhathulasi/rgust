@@ -4,7 +4,7 @@ import 'package:rugst_alliance_academia/widgets/collapsible_sidebar/collapsible_
 import 'collapsible_item_widget.dart';
 
 class CollapsibleMultiLevelItemWidget extends StatefulWidget {
-  const CollapsibleMultiLevelItemWidget({
+  const CollapsibleMultiLevelItemWidget({super.key, 
     required this.onHoverPointer,
     required this.textStyle,
     required this.padding,
@@ -99,8 +99,8 @@ class _CollapsibleMultiLevelItemWidgetState
         ),
         if (widget.disable != null && widget.disable == false)
           AnimatedSize(
-            duration: Duration(milliseconds: 300),
-            child: Container(
+            duration: const Duration(milliseconds: 300),
+            child: SizedBox(
               height: widget.extendable == true && isOpen ? null : 0,
               child: Column(
                 children: widget.subItems

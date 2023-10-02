@@ -4,6 +4,7 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
+
         {
             "name": "rgust",
             "request": "launch",
@@ -16,6 +17,15 @@
                 "--disable-web-security"
 
             ]
+        },
+        {
+            "name": "rgust-mobile",
+            "request": "launch",
+            "type": "dart",
+            "program": "lib/main.dart",
+            "deviceId": "172.16.20.237:40671",
+            
+            
         },
         {
             "name": "rgust (profile mode)",

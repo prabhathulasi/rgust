@@ -9,7 +9,6 @@ library editable;
 
 
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:rugst_alliance_academia/custom_plugin/commons/helper.dart';
 import 'package:rugst_alliance_academia/custom_plugin/plugin_widgets/table_body.dart';
 import 'package:rugst_alliance_academia/custom_plugin/plugin_widgets/table_header.dart';
@@ -301,10 +300,10 @@ class Editable extends StatefulWidget {
 
   @override
   EditableState createState() => EditableState(
-      rows: this.rows,
-      columns: this.columns,
-      rowCount: this.rowCount,
-      columnCount: this.columnCount);
+      rows: rows,
+      columns: columns,
+      rowCount: rowCount,
+      columnCount: columnCount);
 }
 
 class EditableState extends State<Editable> {
@@ -320,7 +319,7 @@ class EditableState extends State<Editable> {
   EditableState({this.rows, this.columns, this.columnCount, this.rowCount});
 
   /// Temporarily holds all edited rows
-  List _editedRows = [];
+  final List _editedRows = [];
 
   @override
   Widget build(BuildContext context) {
@@ -518,7 +517,7 @@ if (rowIndex != -1 ) {
     return Visibility(
       visible: widget.showCreateButton,
       child: Padding(
-        padding: EdgeInsets.only(left: 4.0, bottom: 4),
+        padding: const EdgeInsets.only(left: 4.0, bottom: 4),
         child: InkWell(
           onTap: () {
             rows = addOneRow(columns, rows);
@@ -528,7 +527,7 @@ if (rowIndex != -1 ) {
             });
           },
           child: Container(
-            padding: EdgeInsets.all(2),
+            padding: const EdgeInsets.all(2),
             decoration: BoxDecoration(
               color: widget.createButtonColor ?? Colors.white,
               boxShadow: [
@@ -537,7 +536,7 @@ if (rowIndex != -1 ) {
               borderRadius: BorderRadius.circular(10),
               shape: BoxShape.rectangle,
             ),
-            child: widget.createButtonIcon ?? Icon(Icons.add),
+            child: widget.createButtonIcon ?? const Icon(Icons.add),
           ),
         ),
       ),

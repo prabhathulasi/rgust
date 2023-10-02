@@ -19,7 +19,7 @@ class _FacultyAttendanceViewState extends State<FacultyAttendanceView> {
 
   @override
   Widget build(BuildContext context) {
-    final List<Appointment> _events = <Appointment>[
+    final List<Appointment> events = <Appointment>[
       Appointment(
         startTime: DateTime(2023, 9, 20, 10, 0), // Start time of the event
         endTime: DateTime(2023, 9, 20, 11, 0), // End time of the event
@@ -53,7 +53,7 @@ class _FacultyAttendanceViewState extends State<FacultyAttendanceView> {
                   },
                   showNavigationArrow: true,
                   todayHighlightColor: AppColors.color582,
-                  dataSource: AppointmentDataSource(_events),
+                  dataSource: AppointmentDataSource(events),
                   // allowAppointmentResize: true,
                   view: CalendarView.month,
                   cellEndPadding: 10,
