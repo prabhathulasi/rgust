@@ -32,7 +32,7 @@ class StudentListView extends StatelessWidget {
                   alignment: Alignment.topRight,
                   child: CircleAvatar(
                     radius: 14.0,
-                    backgroundColor: AppColors.color927,
+                    backgroundColor: AppColors.colorc7e,
                     child: Icon(Icons.close, color: AppColors.color582),
                   ),
                 )),
@@ -66,7 +66,7 @@ class StudentListView extends StatelessWidget {
                   alignment: Alignment.topRight,
                   child: CircleAvatar(
                     radius: 14.0,
-                    backgroundColor: AppColors.color927,
+                    backgroundColor: AppColors.colorc7e,
                     child: Icon(Icons.close, color: AppColors.color582),
                   ),
                 )),
@@ -92,7 +92,7 @@ class StudentListView extends StatelessWidget {
         builder: (context, snapshot) => ScalableDataTable(
           loadingBuilder: (p0) {
             return SpinKitSpinningLines(
-              color: AppColors.color927,
+              color: AppColors.colorc7e,
               size: 90.sp,
             );
           },
@@ -142,7 +142,7 @@ class StudentListView extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-          backgroundColor: AppColors.color927,
+          backgroundColor: AppColors.colorc7e,
           onPressed: () {
             showAddAlertDialog(context);
           },

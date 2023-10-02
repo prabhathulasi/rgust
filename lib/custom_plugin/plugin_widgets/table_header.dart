@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rugst_alliance_academia/theme/app_colors.dart';
 
-
 class THeader extends StatelessWidget {
   ///Builds elements for the table headers
   const THeader(
@@ -37,12 +36,12 @@ class THeader extends StatelessWidget {
   final double? _widthRatio;
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width /2;
+    double width = MediaQuery.of(context).size.width / 2;
     return Flexible(
       fit: FlexFit.loose,
       child: Container(
         width: width * _widthRatio!,
-        color: AppColors.color927,
+        color: AppColors.colorc7e,
         child: Padding(
           padding: EdgeInsets.only(
               left: thPaddingLeft,

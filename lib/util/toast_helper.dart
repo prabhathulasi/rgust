@@ -1,18 +1,22 @@
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:rugst_alliance_academia/theme/app_colors.dart';
 
 class ToastHelper {
   sucessToast(String msg) {
     return Fluttertoast.showToast(
-        msg: msg, gravity: ToastGravity.TOP_RIGHT, timeInSecForIosWeb: 5);
+        webPosition: 'right',
+        webBgColor: "linear-gradient(to right, #008000, #008000)",
+        msg: msg,
+        gravity: ToastGravity.TOP,
+        timeInSecForIosWeb: 5);
   }
 
   errorToast(String msg) {
     return Fluttertoast.showToast(
       msg: msg,
-      gravity: ToastGravity.TOP_RIGHT,
+      webPosition: 'right',
+      gravity: ToastGravity.TOP,
       timeInSecForIosWeb: 5,
-      webBgColor: AppColors.colorRed,
+      webBgColor: "linear-gradient(to right, #ff0000, #ff0000)",
     );
   }
 }

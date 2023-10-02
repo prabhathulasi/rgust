@@ -38,7 +38,7 @@ class AppElevatedButon extends StatelessWidget {
                   RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10.0),
                       side: const BorderSide(
-                          color: AppColors.colorWhite, width: 2.0)))),
+                          color: AppColors.coloraeb, width: 2.0)))),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
@@ -54,7 +54,7 @@ class AppElevatedButon extends StatelessWidget {
               Visibility(
                   visible: loading,
                   child: SpinKitSpinningLines(
-                    color: AppColors.colorWhite,
+                    color: AppColors.coloraeb,
                     size: 25.sp,
                   )),
             ],

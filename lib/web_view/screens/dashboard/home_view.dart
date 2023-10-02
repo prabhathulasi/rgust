@@ -1,4 +1,3 @@
-import 'package:collapsible_sidebar/collapsible_sidebar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:rugst_alliance_academia/theme/app_colors.dart';
@@ -10,6 +9,9 @@ import 'package:rugst_alliance_academia/web_view/screens/department/program_view
 import 'package:rugst_alliance_academia/web_view/screens/faculty/faculty_list_view.dart';
 
 import 'package:rugst_alliance_academia/web_view/screens/student/student_list_view.dart';
+import 'package:rugst_alliance_academia/widgets/collapsible_sidebar.dart';
+import 'package:rugst_alliance_academia/widgets/collapsible_sidebar/collapsible_item.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SidebarPage extends StatefulWidget {
   const SidebarPage({super.key});
@@ -22,15 +24,25 @@ class _SidebarPageState extends State<SidebarPage> {
   List<CollapsibleItem>? _items;
 
   Widget? bodywidget;
+  String? userEmail;
 
   // final AssetImage _avatarImg = const AssetImage('assets/man.png');
 
   @override
   void initState() {
     super.initState();
+    getUsermail();
     _items = _generateItems;
 
     bodywidget = const OverviewView();
+  }
+
+  getUsermail() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    var email = sharedPreferences.getString("Email");
+    setState(() {
+      userEmail = email;
+    });
   }
 
   List<CollapsibleItem> get _generateItems {
@@ -105,6 +117,13 @@ class _SidebarPageState extends State<SidebarPage> {
         onHold: () => ScaffoldMessenger.of(context)
             .showSnackBar(const SnackBar(content: Text("Face"))),
       ),
+      CollapsibleItem(
+        text: 'Create Account',
+        icon: Icons.group_add,
+        onPressed: () => setState(() {}),
+        onHold: () => ScaffoldMessenger.of(context)
+            .showSnackBar(const SnackBar(content: Text("Face"))),
+      ),
     ];
   }
 
@@ -114,23 +133,24 @@ class _SidebarPageState extends State<SidebarPage> {
     return Scaffold(
       body: SafeArea(
         child: CollapsibleSidebar(
+          unselectedTextColor: AppColors.coloraeb,
           isCollapsed: false,
           screenPadding: 0,
           borderRadius: 0,
-          minWidth: 240.w,
+          minWidth: size.width * 0.05,
+          maxWidth: size.width * 0.2,
           items: _items!,
           collapseOnBodyTap: false,
-          showToggleButton: false,
-          title: 'Prabhakaran',
+          showToggleButton: true,
+          title: userEmail ?? "ADMIN",
           onTitleTap: () {
-            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                content: Text('Yay! Flutter Collapsible Sidebar!')));
+            print("object");
           },
           body: _body(size, context),
-          selectedIconColor: AppColors.color582,
-          backgroundColor: AppColors.color927,
-          selectedTextColor: AppColors.color582,
-          textStyle: TextStyle(fontSize: 15.sp, fontStyle: FontStyle.italic),
+          selectedIconBox: AppColors.coloraeb,
+          backgroundColor: AppColors.colorc7e,
+          selectedTextColor: AppColors.colorc7e,
+          textStyle: TextStyle(fontSize: 15.sp, fontWeight: FontWeight.bold),
           titleStyle: TextStyle(
               fontSize: 20.sp,
               fontStyle: FontStyle.italic,

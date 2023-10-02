@@ -47,7 +47,7 @@ class _AddFacultyViewState extends State<AddFacultyView> {
   String? genderValue;
   String? jobTypeValue;
   String? selected_Course;
- String ?randomString;
+  String? randomString;
   final _editableKey = GlobalKey<EditableState>();
   @override
   void initState() {
@@ -71,10 +71,9 @@ class _AddFacultyViewState extends State<AddFacultyView> {
         'editable': false
       },
     ];
-       setState(() {
-         
-       randomString = generateRandomString(4);
-       }); 
+    setState(() {
+      randomString = generateRandomString(4);
+    });
     super.initState();
   }
 
@@ -120,7 +119,7 @@ class _AddFacultyViewState extends State<AddFacultyView> {
                 children: [
                   AppRichTextView(
                       title: "Add New Faculty",
-                      textColor: AppColors.color927,
+                      textColor: AppColors.colorc7e,
                       fontSize: 25.sp,
                       fontWeight: FontWeight.w700),
                   const SizedBox(
@@ -134,14 +133,14 @@ class _AddFacultyViewState extends State<AddFacultyView> {
                         children: [
                           AppRichTextView(
                               title: "PROFILE IMAGE",
-                              textColor: AppColors.color927,
+                              textColor: AppColors.colorc7e,
                               fontSize: 15.sp,
                               fontWeight: FontWeight.w800),
                           SizedBox(
                             height: 10.h,
                           ),
                           CircleAvatar(
-                            backgroundColor: AppColors.color927,
+                            backgroundColor: AppColors.colorc7e,
                             radius: 60.sp,
                             backgroundImage: imageEncoded == null
                                 ? const AssetImage(ImagePath.webfacultyfLogo)
@@ -156,7 +155,7 @@ class _AddFacultyViewState extends State<AddFacultyView> {
                               bytesFromPicker =
                                   await ImagePickerWeb.getImageAsBytes();
                               imageEncoded = base64.encode(bytesFromPicker!);
-                            
+
                               setState(() {});
                             },
                             child: AppRichTextView(
@@ -196,7 +195,7 @@ class _AddFacultyViewState extends State<AddFacultyView> {
                           ),
                           programProvider.selectedDept == null
                               ? Container(
-                                  color: AppColors.color927,
+                                  color: AppColors.colorc7e,
                                   height: 60.h,
                                   width: size.width * 0.2,
                                   child: Align(
@@ -222,7 +221,7 @@ class _AddFacultyViewState extends State<AddFacultyView> {
                             height: 10.h,
                           ),
                           Container(
-                            color: AppColors.color927,
+                            color: AppColors.colorc7e,
                             height: 60.h,
                             width: size.width * 0.2,
                             child: Padding(
@@ -235,12 +234,15 @@ class _AddFacultyViewState extends State<AddFacultyView> {
                                       enable: false,
                                       textStyle: const TextStyle(
                                           color: AppColors.colorWhite),
-                                    
                                       onSaved: (p0) {},
-                                      inputDecoration:  InputDecoration(
+                                      inputDecoration: InputDecoration(
                                           border: InputBorder.none,
-                                          hintText: programProvider.selectedDept==null?"": "${DateTime.now().year}/${programProvider.selectedDept}/$randomString",
-                                          hintStyle:const TextStyle(
+                                          hintText: programProvider
+                                                      .selectedDept ==
+                                                  null
+                                              ? ""
+                                              : "${DateTime.now().year}/${programProvider.selectedDept}/$randomString",
+                                          hintStyle: const TextStyle(
                                               color: AppColors.colorGrey)),
                                       obscureText: false,
                                     ),
@@ -259,7 +261,7 @@ class _AddFacultyViewState extends State<AddFacultyView> {
                         children: [
                           AppRichTextView(
                               title: "Year",
-                              textColor: AppColors.color927,
+                              textColor: AppColors.colorc7e,
                               fontSize: 15.sp,
                               fontWeight: FontWeight.w500),
                           SizedBox(
@@ -267,7 +269,7 @@ class _AddFacultyViewState extends State<AddFacultyView> {
                           ),
                           programProvider.selectedClass == null
                               ? Container(
-                                  color: AppColors.color927,
+                                  color: AppColors.colorc7e,
                                   height: 60.h,
                                   width: size.width * 0.2,
                                   child: Align(
@@ -286,7 +288,7 @@ class _AddFacultyViewState extends State<AddFacultyView> {
                               : const DynamicYearsDropdown(),
                           AppRichTextView(
                               title: "Batch",
-                              textColor: AppColors.color927,
+                              textColor: AppColors.colorc7e,
                               fontSize: 15.sp,
                               fontWeight: FontWeight.w500),
                           SizedBox(
@@ -294,7 +296,7 @@ class _AddFacultyViewState extends State<AddFacultyView> {
                           ),
                           programProvider.selectedClass == null
                               ? Container(
-                                  color: AppColors.color927,
+                                  color: AppColors.colorc7e,
                                   height: 60.h,
                                   width: size.width * 0.2,
                                   child: Align(
@@ -313,7 +315,7 @@ class _AddFacultyViewState extends State<AddFacultyView> {
                               : const BatchDropdown(),
                           AppRichTextView(
                               title: "Course",
-                              textColor: AppColors.color927,
+                              textColor: AppColors.colorc7e,
                               fontSize: 15.sp,
                               fontWeight: FontWeight.w500),
                           SizedBox(
@@ -345,7 +347,7 @@ class _AddFacultyViewState extends State<AddFacultyView> {
                           Column(
                             children: [
                               Container(
-                                color: AppColors.color927,
+                                color: AppColors.colorc7e,
                                 height: 70.h,
                                 width: size.width * 0.2,
                                 child: Padding(
@@ -387,7 +389,7 @@ class _AddFacultyViewState extends State<AddFacultyView> {
                                 height: 10.h,
                               ),
                               Container(
-                                color: AppColors.color927,
+                                color: AppColors.colorc7e,
                                 height: 70.h,
                                 width: size.width * 0.2,
                                 child: Padding(
@@ -429,7 +431,7 @@ class _AddFacultyViewState extends State<AddFacultyView> {
                                 height: 10,
                               ),
                               Container(
-                                color: AppColors.color927,
+                                color: AppColors.colorc7e,
                                 height: 70.h,
                                 width: size.width * 0.2,
                                 child: Padding(
@@ -468,7 +470,7 @@ class _AddFacultyViewState extends State<AddFacultyView> {
                                 height: 10,
                               ),
                               Container(
-                                color: AppColors.color927,
+                                color: AppColors.colorc7e,
                                 height: 70.h,
                                 width: size.width * 0.2,
                                 child: Padding(
@@ -508,7 +510,7 @@ class _AddFacultyViewState extends State<AddFacultyView> {
                               ),
                               const SizedBox(height: 10),
                               Container(
-                                color: AppColors.color927,
+                                color: AppColors.colorc7e,
                                 height: 70.h,
                                 width: size.width * 0.2,
                                 child: Padding(
@@ -571,7 +573,7 @@ class _AddFacultyViewState extends State<AddFacultyView> {
                               ),
                               const SizedBox(height: 10),
                               Container(
-                                color: AppColors.color927,
+                                color: AppColors.colorc7e,
                                 height: 70.h,
                                 width: size.width * 0.2,
                                 child: Padding(
@@ -640,7 +642,7 @@ class _AddFacultyViewState extends State<AddFacultyView> {
                           Column(
                             children: [
                               Container(
-                                color: AppColors.color927,
+                                color: AppColors.colorc7e,
                                 height: 70.h,
                                 width: size.width * 0.2,
                                 child: Padding(
@@ -688,7 +690,7 @@ class _AddFacultyViewState extends State<AddFacultyView> {
                               ),
                               const SizedBox(height: 10),
                               Container(
-                                color: AppColors.color927,
+                                color: AppColors.colorc7e,
                                 height: 70.h,
                                 width: size.width * 0.2,
                                 child: Padding(
@@ -728,7 +730,7 @@ class _AddFacultyViewState extends State<AddFacultyView> {
                               ),
                               const SizedBox(height: 10),
                               Container(
-                                color: AppColors.color927,
+                                color: AppColors.colorc7e,
                                 height: 70.h,
                                 width: size.width * 0.2,
                                 child: Padding(
@@ -768,7 +770,7 @@ class _AddFacultyViewState extends State<AddFacultyView> {
                               ),
                               const SizedBox(height: 10),
                               Container(
-                                color: AppColors.color927,
+                                color: AppColors.colorc7e,
                                 height: 70.h,
                                 width: size.width * 0.2,
                                 child: Padding(
@@ -808,7 +810,7 @@ class _AddFacultyViewState extends State<AddFacultyView> {
                               ),
                               const SizedBox(height: 10),
                               Container(
-                                color: AppColors.color927,
+                                color: AppColors.colorc7e,
                                 height: 70.h,
                                 width: size.width * 0.2,
                                 child: Padding(
@@ -856,7 +858,7 @@ class _AddFacultyViewState extends State<AddFacultyView> {
                               ),
                               const SizedBox(height: 10),
                               Container(
-                                color: AppColors.color927,
+                                color: AppColors.colorc7e,
                                 height: 70.h,
                                 width: size.width * 0.2,
                                 child: Padding(
@@ -909,7 +911,7 @@ class _AddFacultyViewState extends State<AddFacultyView> {
                       children: [
                         AppElevatedButon(
                             title: "Save",
-                            buttonColor: AppColors.color927,
+                            buttonColor: AppColors.colorc7e,
                             textColor: AppColors.colorWhite,
                             height: 50.h,
                             width: 150.w,
@@ -939,64 +941,67 @@ class _AddFacultyViewState extends State<AddFacultyView> {
                                   null) {
                                 Fluttertoast.showToast(
                                     msg: "Please Select the Course");
-                               
                               } else {
+                                var token = await getTokenAndUseIt();
+                                if (token == null) {
+                                  if (context.mounted) {
+                                    Navigator.pushNamed(
+                                        context, RouteNames.login);
+                                  }
+                                } else if (token == "Token Expired") {
+                                  ToastHelper().errorToast(
+                                      "Session Expired Please Login Again");
 
+                                  if (context.mounted) {
+                                    Navigator.pushNamed(
+                                        context, RouteNames.login);
+                                  }
+                                } else {
+                                  var data =
+                                      programProvider.newData.where((element) {
+                                    return element["coursecode"] ==
+                                        programProvider.selectedCourse!;
+                                  }).toList();
+                                  setState(() {
+                                    selected_Course = data[0]["coursename"];
+                                  });
+                                  if (_formKey.currentState!.validate()) {
+                                    _formKey.currentState!.save();
 
-                                 var token = await getTokenAndUseIt();
-                              if (token == null) {
-                                if (context.mounted) {
-                                  Navigator.pushNamed(
-                                      context, RouteNames.login);
-                                }
-                              } else if (token == "Token Expired") {
-                                ToastHelper().errorToast(
-                                    "Session Expired Please Login Again");
+                                    var result = await facultyProvider.addFaculty(
+                                        token,
+                                        programId: int.parse(
+                                            programProvider.selectedDept!),
+                                        classId: int.parse(
+                                            programProvider.selectedClass!),
+                                        courseCode:
+                                            programProvider.selectedCourse!,
+                                        courseName: selected_Course!,
+                                        batch: programProvider.selectedBatch!,
+                                        facultyId:
+                                            "${DateTime.now().year}/${programProvider.selectedDept}/$randomString",
+                                        gender: genderValue!,
+                                        dob: dobinput.text,
+                                        joiningDate: dateinput.text,
+                                        userImage: imageEncoded!,
+                                        jobType: jobTypeValue!);
+                                    dev.log(result.toString());
 
-                                if (context.mounted) {
-                                  Navigator.pushNamed(
-                                      context, RouteNames.login);
+                                    if (result != null) {
+                                      if (context.mounted) {
+                                        Navigator.pop(context);
+                                      }
+                                    }
+                                  }
                                 }
-                              } else {
-                                
-                              
-                                 var data =
-                                    programProvider.newData.where((element) {
-                                  return element["coursecode"] ==
-                                      programProvider.selectedCourse!;
-                                }).toList();
-                                setState(() {
-                                  selected_Course = data[0]["coursename"];
-                                });
-                                if (_formKey.currentState!.validate()) {
-                                  _formKey.currentState!.save();
-                               
-                               var result=  await facultyProvider.addFaculty(token,
-                                      programId: int.parse(
-                                          programProvider.selectedDept!),
-                                      classId: int.parse(
-                                          programProvider.selectedClass!),
-                                      courseCode:
-                                          programProvider.selectedCourse!,
-                                      courseName: selected_Course!,
-                                      batch: programProvider.selectedBatch!,
-                                      facultyId:
-                                          "${DateTime.now().year}/${programProvider.selectedDept}/$randomString",
-                                      gender: genderValue!,
-                                      dob: dobinput.text,
-                                      joiningDate: dateinput.text,
-                                      userImage: imageEncoded!,
-                                      jobType: jobTypeValue!);
-                                      dev.log(result.toString());
-                                }
-                              }}
+                              }
                             }),
                         SizedBox(
                           width: 10.h,
                         ),
                         AppElevatedButon(
                           title: "Cancel",
-                          buttonColor: AppColors.color927,
+                          buttonColor: AppColors.colorc7e,
                           textColor: AppColors.colorWhite,
                           height: 50.h,
                           width: 120.w,
@@ -1032,8 +1037,8 @@ class _AddFacultyViewState extends State<AddFacultyView> {
                                   columns: filterdcols,
                                   rows: departmentProvider.newData,
                                   zebraStripe: true,
-                                  stripeColor1: AppColors.color927,
-                                  stripeColor2: AppColors.color927,
+                                  stripeColor1: AppColors.colorc7e,
+                                  stripeColor2: AppColors.colorc7e,
                                   onRowSaved: (value) async {},
                                   onSubmitted: (value) {
                                     print(value);

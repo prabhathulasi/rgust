@@ -54,35 +54,37 @@ class FacultyProvider extends ChangeNotifier {
       }
     } catch (e) {
       setLoading(false);
-        ToastHelper().errorToast(e.toString());
+      ToastHelper().errorToast(e.toString());
       return e.toString();
     }
   }
-Future createAccount(String token, String email, String password, String userType)async{
-setLoading(true);
+
+  Future createAccount(
+      String token, String email, String password, String userType) async {
+    setLoading(true);
 
     // Make your login API call here using the http package
 
     try {
-      var result =
-          await ApiHelper.post("CreateAccount", {"email": email, "password": password, "usertype":"Faculty" },token);
+      var result = await ApiHelper.post("CreateAccount",
+          {"email": email, "password": password, "usertype": "Faculty"}, token);
       setLoading(false);
-      if(result.statusCode == 200){
+      if (result.statusCode == 200) {
         var data = json.decode(result.body);
         ToastHelper().sucessToast("Account Created Sucessfully");
         return data;
-      }else{
+      } else {
         notifyListeners();
         ToastHelper().errorToast("Internal Server Error");
         return null;
       }
-      
     } catch (e) {
       setLoading(false);
       Fluttertoast.showToast(msg: e.toString());
-       return e.toString();
+      return e.toString();
     }
-}
+  }
+
   Future addFaculty(String token,
       {required int programId,
       required int classId,
@@ -97,52 +99,51 @@ setLoading(true);
       required String jobType}) async {
     setLoading(true);
 
-    try{
+    try {
+      var result = await ApiHelper.post(
+          "CreateFaulty",
+          {
+            "programId": programId,
+            "classId": classId,
+            "courseCode": courseCode,
+            "courseName": courseName,
+            "batch": batch,
+            "facultyId": facultyId,
+            "firstName": firstname,
+            "lastName": lastname,
+            "email": email,
+            "gender": gender,
+            "mobile": mobile,
+            "dob": dob,
+            "address": address,
+            "Qualifiation": qualification,
+            "salary": 1,
+            "joiningDate": joiningDate,
+            "jobType": jobType,
+            "passportNumber": passport,
+            "citizenship": cizizen,
+            "userImage": userImage
+          },
+          token);
+      var data = json.decode(result.body);
 
-    
-   var result=  await ApiHelper.post("CreateFaulty", {
-      "programId": programId,
-      "classId": classId,
-      "courseCode": courseCode,
-      "courseName": courseName,
-      "batch": batch,
-      "facultyId": facultyId,
-      "firstName": firstname,
-      "lastName": lastname,
-      "email": email,
-      "gender": gender,
-      "mobile": mobile,
-      "dob": dob,
-      "address": address,
-      "Qualifiation": qualification,
-      "salary": 1,
-      "joiningDate": joiningDate,
-      "jobType": jobType,
-      "passportNumber": passport,
-      "citizenship": cizizen,
-      "userImage": userImage
-    },token);
-      
       if (result.statusCode == 200) {
-         var data = json.decode(result.body);
+        var data = json.decode(result.body);
         setLoading(false);
         notifyListeners();
-  ToastHelper().sucessToast("Faculty Added Sucessfully");
+        ToastHelper().sucessToast("Faculty Added Sucessfully");
         return data;
- 
       } else {
         setLoading(false);
         notifyListeners();
-        ToastHelper().errorToast("Internal Server Error");
+        ToastHelper().errorToast(data["Message"]);
         return null;
       }
-
-    }catch(e){
+    } catch (e) {
       setLoading(false);
       ToastHelper().errorToast(e.toString());
       return e.toString();
     }
-
   }
 
 // set FIRSTNAME value

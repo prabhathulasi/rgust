@@ -98,7 +98,7 @@ class _AddStudentViewState extends State<AddStudentView> {
                   children: [
                     AppRichTextView(
                         title: "Add New Student",
-                        textColor: AppColors.color927,
+                        textColor: AppColors.colorc7e,
                         fontSize: 25.sp,
                         fontWeight: FontWeight.w700),
                     const SizedBox(
@@ -112,14 +112,14 @@ class _AddStudentViewState extends State<AddStudentView> {
                           children: [
                             AppRichTextView(
                                 title: "PROFILE IMAGE",
-                                textColor: AppColors.color927,
+                                textColor: AppColors.colorc7e,
                                 fontSize: 15.sp,
                                 fontWeight: FontWeight.w800),
                             SizedBox(
                               height: 10.h,
                             ),
                             CircleAvatar(
-                              backgroundColor: AppColors.color927,
+                              backgroundColor: AppColors.colorc7e,
                               radius: 60.sp,
                               child: Center(
                                 child: Icon(
@@ -154,7 +154,7 @@ class _AddStudentViewState extends State<AddStudentView> {
                               height: 10.h,
                             ),
                             Container(
-                              color: AppColors.color927,
+                              color: AppColors.colorc7e,
                               height: 60.h,
                               width: size.width * 0.2,
                               child: Padding(
@@ -183,7 +183,7 @@ class _AddStudentViewState extends State<AddStudentView> {
                                                             ? AppColors
                                                                 .colorWhite
                                                             : AppColors
-                                                                .color927,
+                                                                .colorc7e,
                                                       ),
                                                     ),
                                                   ))
@@ -210,14 +210,14 @@ class _AddStudentViewState extends State<AddStudentView> {
                             ),
                             AppRichTextView(
                                 title: "Registration Number",
-                                textColor: AppColors.color927,
+                                textColor: AppColors.colorc7e,
                                 fontSize: 15.sp,
                                 fontWeight: FontWeight.w500),
                             SizedBox(
                               height: 10.h,
                             ),
                             Container(
-                              color: AppColors.color927,
+                              color: AppColors.colorc7e,
                               height: 60.h,
                               width: size.width * 0.2,
                               child: Padding(
@@ -264,14 +264,14 @@ class _AddStudentViewState extends State<AddStudentView> {
                           children: [
                             AppRichTextView(
                                 title: "Date of Admission",
-                                textColor: AppColors.color927,
+                                textColor: AppColors.colorc7e,
                                 fontSize: 15.sp,
                                 fontWeight: FontWeight.w500),
                             SizedBox(
                               height: 10.h,
                             ),
                             Container(
-                              color: AppColors.color927,
+                              color: AppColors.colorc7e,
                               height: 60.h,
                               width: size.width * 0.2,
                               child: Padding(
@@ -309,7 +309,7 @@ class _AddStudentViewState extends State<AddStudentView> {
                               height: 50.h,
                             ),
                             Container(
-                              color: AppColors.color927,
+                              color: AppColors.colorc7e,
                               height: 60.h,
                               width: size.width * 0.2,
                               child: Padding(
@@ -364,7 +364,7 @@ class _AddStudentViewState extends State<AddStudentView> {
                         Column(
                           children: [
                             Container(
-                              color: AppColors.color927,
+                              color: AppColors.colorc7e,
                               height: 70.h,
                               width: size.width * 0.2,
                               child: Padding(
@@ -402,7 +402,7 @@ class _AddStudentViewState extends State<AddStudentView> {
                               height: 10.h,
                             ),
                             Container(
-                              color: AppColors.color927,
+                              color: AppColors.colorc7e,
                               height: 70.h,
                               width: size.width * 0.2,
                               child: Padding(
@@ -440,7 +440,7 @@ class _AddStudentViewState extends State<AddStudentView> {
                               height: 10,
                             ),
                             Container(
-                              color: AppColors.color927,
+                              color: AppColors.colorc7e,
                               height: 70.h,
                               width: size.width * 0.2,
                               child: Padding(
@@ -475,7 +475,7 @@ class _AddStudentViewState extends State<AddStudentView> {
                               height: 10,
                             ),
                             Container(
-                              color: AppColors.color927,
+                              color: AppColors.colorc7e,
                               height: 70.sp,
                               width: size.width * 0.2,
                               child: Padding(
@@ -508,7 +508,7 @@ class _AddStudentViewState extends State<AddStudentView> {
                             ),
                             const SizedBox(height: 10),
                             Container(
-                              color: AppColors.color927,
+                              color: AppColors.colorc7e,
                               height: 70.sp,
                               width: size.width * 0.2,
                               child: Padding(
@@ -550,7 +550,7 @@ class _AddStudentViewState extends State<AddStudentView> {
                         Column(
                           children: [
                             Container(
-                              color: AppColors.color927,
+                              color: AppColors.colorc7e,
                               height: 70.sp,
                               width: size.width * 0.2,
                               child: Padding(
@@ -595,7 +595,7 @@ class _AddStudentViewState extends State<AddStudentView> {
                             ),
                             const SizedBox(height: 10),
                             Container(
-                              color: AppColors.color927,
+                              color: AppColors.colorc7e,
                               height: 70.sp,
                               width: size.width * 0.2,
                               child: Padding(
@@ -631,7 +631,7 @@ class _AddStudentViewState extends State<AddStudentView> {
                             ),
                             const SizedBox(height: 10),
                             Container(
-                              color: AppColors.color927,
+                              color: AppColors.colorc7e,
                               height: 70.sp,
                               width: size.width * 0.2,
                               child: Padding(
@@ -684,7 +684,7 @@ class _AddStudentViewState extends State<AddStudentView> {
                         children: [
                           AppElevatedButon(
                               title: "Save",
-                              buttonColor: AppColors.color927,
+                              buttonColor: AppColors.colorc7e,
                               textColor: AppColors.colorWhite,
                               height: 50.h,
                               width: 120.w,
@@ -737,7 +737,7 @@ class _AddStudentViewState extends State<AddStudentView> {
                           ),
                           AppElevatedButon(
                             title: "Cancel",
-                            buttonColor: AppColors.color927,
+                            buttonColor: AppColors.colorc7e,
                             textColor: AppColors.colorWhite,
                             height: 50.h,
                             width: 120.w,
@@ -766,7 +766,7 @@ class _AddStudentViewState extends State<AddStudentView> {
                             builder: (context, snapshot) => ScalableDataTable(
                               loadingBuilder: (p0) {
                                 return SpinKitSpinningLines(
-                                  color: AppColors.color927,
+                                  color: AppColors.colorc7e,
                                   size: 90.sp,
                                 );
                               },
@@ -799,7 +799,7 @@ class _AddStudentViewState extends State<AddStudentView> {
                                     Text(user.surname),
                                     const Icon(
                                       Icons.edit_outlined,
-                                      color: AppColors.color927,
+                                      color: AppColors.colorc7e,
                                     ),
                                   ],
                                 );

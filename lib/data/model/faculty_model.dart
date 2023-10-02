@@ -46,6 +46,7 @@ class FacultyList {
   String? passportNumber;
   String? citizenship;
   String? userImage;
+  bool? createAccount;
 
   FacultyList(
       {this.iD,
@@ -71,7 +72,8 @@ class FacultyList {
       this.jobType,
       this.passportNumber,
       this.citizenship,
-      this.userImage});
+      this.userImage,
+      this.createAccount});
 
   FacultyList.fromJson(Map<String, dynamic> json) {
     iD = json['ID'];
@@ -98,6 +100,7 @@ class FacultyList {
     passportNumber = json['PassportNumber'];
     citizenship = json['Citizenship'];
     userImage = json['UserImage'];
+    createAccount = json['CreateAccount'];
   }
 
   Map<String, dynamic> toJson() {
@@ -126,6 +129,7 @@ class FacultyList {
     data['PassportNumber'] = passportNumber;
     data['Citizenship'] = citizenship;
     data['UserImage'] = userImage;
+    data['CreateAccount'] = createAccount;
     return data;
   }
 }

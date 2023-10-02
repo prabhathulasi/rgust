@@ -23,14 +23,14 @@ class _BatchDropdownState extends State<BatchDropdown> {
     return programProvider.selectedClass == null
         ? Container()
         : Container(
-            color: AppColors.color927,
+            color: AppColors.colorc7e,
             height: 60.h,
             width: size.width * 0.2,
             child: Padding(
               padding: EdgeInsets.all(8.0.sp),
               child: DropdownButtonHideUnderline(
                 child: DropdownButton(
-                  dropdownColor: AppColors.color927,
+                  dropdownColor: AppColors.colorc7e,
                   isExpanded: true,
                   value: programProvider.selectedBatch,
                   items: <String>[

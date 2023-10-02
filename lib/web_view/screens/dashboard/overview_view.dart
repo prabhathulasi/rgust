@@ -29,7 +29,7 @@ class _OverviewViewState extends State<OverviewView> {
               Container(
                 height: 300.sp,
                 width: size.width,
-                color: AppColors.color927,
+                color: AppColors.colorc7e,
                 child: Padding(
                   padding: EdgeInsets.only(left: 38.0.w, right: 20.w),
                   child: Row(
@@ -40,7 +40,7 @@ class _OverviewViewState extends State<OverviewView> {
                           child: AppRichTextView(
                             title: "P",
                             fontSize: 35.sp,
-                            textColor: AppColors.color927,
+                            textColor: AppColors.colorc7e,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -97,7 +97,7 @@ class _OverviewViewState extends State<OverviewView> {
                                       fontSize: 15.sp,
                                       color: value == classValue
                                           ? AppColors.colorWhite
-                                          : AppColors.color927,
+                                          : AppColors.colorc7e,
                                     ),
                                   ),
                                 );
@@ -118,19 +118,18 @@ class _OverviewViewState extends State<OverviewView> {
                       SizedBox(
                           height: 35.h,
                           child: Consumer<LoginProvider>(
-                            builder: (context, loginProvider, child) {
-                              return AppElevatedButon(
-                                title: "Filter",
-                                buttonColor: AppColors.color582,
-                                height: 50.h,
-                                width: 100.w,
-                                onPressed: (context) {
-                                  loginProvider.validate(context);
-                                },
-                                textColor: AppColors.colorWhite,
-                              );
-                            }
-                          ))
+                              builder: (context, loginProvider, child) {
+                            return AppElevatedButon(
+                              title: "Filter",
+                              buttonColor: AppColors.color582,
+                              height: 50.h,
+                              width: 100.w,
+                              onPressed: (context) {
+                                loginProvider.validate(context);
+                              },
+                              textColor: AppColors.colorWhite,
+                            );
+                          }))
                     ],
                   ),
                 ),
@@ -167,7 +166,7 @@ class _OverviewViewState extends State<OverviewView> {
                                 title: "47",
                                 fontSize: 40.sp,
                                 fontWeight: FontWeight.w600,
-                                textColor: AppColors.color927,
+                                textColor: AppColors.colorc7e,
                               ),
                               AppRichTextView(
                                 title: "Total Students",
@@ -215,7 +214,7 @@ class _OverviewViewState extends State<OverviewView> {
                                 title: "27",
                                 fontSize: 40.sp,
                                 fontWeight: FontWeight.w600,
-                                textColor: AppColors.color927,
+                                textColor: AppColors.colorc7e,
                               ),
                               AppRichTextView(
                                 title: "Total Faculties",
@@ -263,7 +262,7 @@ class _OverviewViewState extends State<OverviewView> {
                                 title: "2",
                                 fontSize: 40.sp,
                                 fontWeight: FontWeight.w600,
-                                textColor: AppColors.color927,
+                                textColor: AppColors.colorc7e,
                               ),
                               AppRichTextView(
                                 title: "Absent Today",
@@ -311,7 +310,7 @@ class _OverviewViewState extends State<OverviewView> {
                                 title: "2",
                                 fontSize: 40.sp,
                                 fontWeight: FontWeight.w600,
-                                textColor: AppColors.color927,
+                                textColor: AppColors.colorc7e,
                               ),
                               AppRichTextView(
                                 title: "Late Today",
@@ -351,7 +350,7 @@ class _OverviewViewState extends State<OverviewView> {
                             title: "Students by Class",
                             fontSize: 25.sp,
                             fontWeight: FontWeight.w600,
-                            textColor: AppColors.color927,
+                            textColor: AppColors.colorc7e,
                           ),
                         ),
                         Expanded(child: AppBarChart()),
@@ -377,7 +376,7 @@ class _OverviewViewState extends State<OverviewView> {
                             title: "Students by Gender",
                             fontSize: 25.sp,
                             fontWeight: FontWeight.w600,
-                            textColor: AppColors.color927,
+                            textColor: AppColors.colorc7e,
                           ),
                         ),
                         SizedBox(
@@ -388,7 +387,7 @@ class _OverviewViewState extends State<OverviewView> {
                             children: [
                               CircleAvatar(
                                 radius: 60,
-                                backgroundColor: AppColors.color927,
+                                backgroundColor: AppColors.colorc7e,
                                 child: Center(
                                   child: AppRichTextView(
                                     title: "45%",
@@ -427,7 +426,7 @@ class _OverviewViewState extends State<OverviewView> {
                               height: 10.h,
                               width: 40.w,
                               decoration: BoxDecoration(
-                                  color: AppColors.color927,
+                                  color: AppColors.colorc7e,
                                   borderRadius: BorderRadius.circular(5.sp)),
                             ),
                             SizedBox(
@@ -446,7 +445,7 @@ class _OverviewViewState extends State<OverviewView> {
                               title: "25",
                               fontSize: 16.sp,
                               fontWeight: FontWeight.w700,
-                              textColor: AppColors.color927,
+                              textColor: AppColors.colorc7e,
                             ),
                             SizedBox(
                               width: 15.w,
@@ -474,7 +473,7 @@ class _OverviewViewState extends State<OverviewView> {
                               title: "22",
                               fontSize: 16.sp,
                               fontWeight: FontWeight.w700,
-                              textColor: AppColors.color927,
+                              textColor: AppColors.colorc7e,
                             ),
                           ],
                         )
@@ -500,7 +499,7 @@ class _OverviewViewState extends State<OverviewView> {
                             title: "Top 6 Attendant",
                             fontSize: 25.sp,
                             fontWeight: FontWeight.w600,
-                            textColor: AppColors.color927,
+                            textColor: AppColors.colorc7e,
                           ),
                         ),
                         Expanded(
@@ -522,7 +521,7 @@ class _OverviewViewState extends State<OverviewView> {
                                       title: "Prabhakaran",
                                       fontSize: 15.sp,
                                       fontWeight: FontWeight.w600,
-                                      textColor: AppColors.color927,
+                                      textColor: AppColors.colorc7e,
                                     ),
                                     SizedBox(
                                       width: 5.w,

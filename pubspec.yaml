@@ -38,7 +38,6 @@ dependencies:
   provider: ^6.0.5
   google_fonts: ^4.0.4
   flutter_signature_pad: ^3.0.1
-  collapsible_sidebar: ^2.0.5+1
   font_awesome_flutter: ^10.5.0
   fl_chart: ^0.63.0
   scalable_data_table: ^0.0.2
@@ -53,7 +52,7 @@ dependencies:
   syncfusion_flutter_calendar: ^23.1.36
   shared_preferences: ^2.2.1
   jwt_decoder: ^2.0.1
-  lottie: ^2.6.0
+  confetti: ^0.7.0
 
 dev_dependencies:
   flutter_test:

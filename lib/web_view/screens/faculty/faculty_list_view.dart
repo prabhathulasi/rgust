@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -7,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:rugst_alliance_academia/data/middleware/check_auth_middleware.dart';
 import 'package:rugst_alliance_academia/data/model/faculty_model.dart';
 import 'package:rugst_alliance_academia/data/provider/faculty_provider.dart';
+import 'package:rugst_alliance_academia/data/provider/program_provider.dart';
 import 'package:rugst_alliance_academia/routes/named_routes.dart';
 
 import 'package:rugst_alliance_academia/theme/app_colors.dart';
@@ -38,7 +38,7 @@ class _FacultyListViewState extends State<FacultyListView> {
         width: MediaQuery.sizeOf(context).width * 0.68,
         child: Stack(
           children: [
-             FacultyDetailView(facultyDetail: details),
+            FacultyDetailView(facultyDetail: details),
             Transform.translate(
               offset: Offset(10.w, -13.h),
               child: GestureDetector(
@@ -49,7 +49,7 @@ class _FacultyListViewState extends State<FacultyListView> {
                     alignment: Alignment.topRight,
                     child: CircleAvatar(
                       radius: 14.0,
-                      backgroundColor: AppColors.color927,
+                      backgroundColor: AppColors.colorc7e,
                       child: Icon(Icons.close, color: AppColors.color582),
                     ),
                   )),
@@ -84,7 +84,7 @@ class _FacultyListViewState extends State<FacultyListView> {
                   alignment: Alignment.topRight,
                   child: CircleAvatar(
                     radius: 14.0,
-                    backgroundColor: AppColors.color927,
+                    backgroundColor: AppColors.colorc7e,
                     child: Icon(Icons.close, color: AppColors.color582),
                   ),
                 )),
@@ -108,6 +108,7 @@ class _FacultyListViewState extends State<FacultyListView> {
   Widget build(BuildContext context) {
     final facultyProvider =
         Provider.of<FacultyProvider>(context, listen: false);
+    final programProvider = Provider.of<ProgramProvider>(context);
 
     Future getFacultyList() async {
       var token = await getTokenAndUseIt();
@@ -134,166 +135,166 @@ class _FacultyListViewState extends State<FacultyListView> {
         child: FutureBuilder(
           future: getFacultyList(),
           builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return   Center(
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(
                 child: SpinKitSpinningLines(
-                  color: AppColors.color927,
+                  color: AppColors.colorc7e,
                   size: 60.sp,
                 ),
               );
-        } else {
-    
-          return facultyProvider.facultyModel.facultyList == null
-                  ? Center(
-                      child: Image.asset(ImagePath.webNoDataLogo)
-                    )
-                  :   Column(
-                    children: [
+            } else {
+              return facultyProvider.facultyModel.facultyList == null
+                  ? Center(child: Image.asset(ImagePath.webNoDataLogo))
+                  : Column(
+                      children: [
                         Row(
-                              children: [
-                                Container(
-                                  width: 300.w,
-                                  height: 54.h,
-                                  decoration: BoxDecoration(
-                                      color: AppColors.color927,
-                                      borderRadius:
-                                          BorderRadius.circular(10.sp)),
-                                  child: Padding(
-                                    padding: EdgeInsets.only(
-                                        left: 18.0.w, right: 18.w),
-                                    child: AppTextFormFieldWidget(
-                                      textStyle: GoogleFonts.oswald(
-                                          color: AppColors.colorWhite),
-                                      inputDecoration: InputDecoration(
-                                          border: InputBorder.none,
-                                          prefixIcon: const Icon(
-                                            Icons.search_outlined,
-                                            color: AppColors.colorWhite,
-                                          ),
-                                          hintText: "Search by Name or Mail id",
-                                          hintStyle: GoogleFonts.oswald(
-                                              color: AppColors.colorWhite)),
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 10.w,
-                                ),
-                                Row(
-                                  children: [
-                                    Container(
-                                      height: 10,
-                                      width: 10,
-                                      color: AppColors.contentColorOrange,
-                                    ),
-                                    SizedBox(
-                                      width: 5.w,
-                                    ),
-                                    AppRichTextView(
-                                        title: "Part-Time",
-                                        fontSize: 13.sp,
-                                        fontWeight: FontWeight.bold)
-                                  ],
-                                ),
-                                SizedBox(
-                                  width: 10.w,
-                                ),
-                                Row(
-                                  children: [
-                                    Container(
-                                      height: 10,
-                                      width: 10,
-                                      color: AppColors.color582,
-                                    ),
-                                    SizedBox(
-                                      width: 5.w,
-                                    ),
-                                    AppRichTextView(
-                                        title: "Full-Time",
-                                        fontSize: 13.sp,
-                                        fontWeight: FontWeight.bold)
-                                  ],
-                                ),
-                                SizedBox(
-                                  width: 10.w,
-                                ),
-                                Row(
-                                  children: [
-                                    Container(
-                                      height: 10,
-                                      width: 10,
-                                      color: AppColors.colorRed,
-                                    ),
-                                    SizedBox(
-                                      width: 5.w,
-                                    ),
-                                    AppRichTextView(
-                                        title: "Resigned",
-                                        fontSize: 13.sp,
-                                        fontWeight: FontWeight.bold)
-                                  ],
-                                ),
-                              ],
-                            ),
-                      Expanded(
-                        child: GridView.builder(
-                          shrinkWrap: true,
-                          itemCount: facultyProvider
-                              .facultyModel.facultyList!.length,
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 6,
-                                  childAspectRatio:
-                                      (itemWidth / itemHeight)),
-                          itemBuilder: (context, index) {
-                            var facultydata = facultyProvider
-                                .facultyModel.facultyList![index];
-                            return InkWell(
-                              onTap: () {
-                                showDetailAlertDialog(context, facultydata);
-                              },
-                              child: Card(
-                                shape: RoundedRectangleBorder(
-                                    borderRadius:
-                                        BorderRadius.circular(18.sp)),
-                                child: Container(
-                                  height: 530.h,
-                                  width: 330.w,
-                                  decoration: BoxDecoration(
-                                      color: AppColors.color927,
-                                      borderRadius:
-                                          BorderRadius.circular(18.sp)),
-                                  child: FacultyCardWidget(
-                                      userImage: facultydata.userImage!,
-                                      facultyName: facultydata.firstName! +
-                                          facultydata.lastName!,
-                                      assignedSubject:
-                                          facultydata.courseName!,
-                                      facultyType: facultydata.jobType!,
-                                      gender: facultydata.gender!,
-                                      mobileNumber: facultydata.mobile!,
-                                      email: facultydata.email!,
-                                      citizenship: facultydata.citizenship!,
-                                      dob: facultydata.dob!,
-                                      batch: facultydata.batch!,
-                                      address: facultydata.address!,
-                                      pasportNumber:
-                                          facultydata.passportNumber!),
+                          children: [
+                            Container(
+                              width: 300.w,
+                              height: 54.h,
+                              decoration: BoxDecoration(
+                                  color: AppColors.colorc7e,
+                                  borderRadius: BorderRadius.circular(10.sp)),
+                              child: Padding(
+                                padding:
+                                    EdgeInsets.only(left: 18.0.w, right: 18.w),
+                                child: AppTextFormFieldWidget(
+                                  textStyle: GoogleFonts.oswald(
+                                      color: AppColors.colorWhite),
+                                  inputDecoration: InputDecoration(
+                                      border: InputBorder.none,
+                                      prefixIcon: const Icon(
+                                        Icons.search_outlined,
+                                        color: AppColors.colorWhite,
+                                      ),
+                                      hintText: "Search by Name or Mail id",
+                                      hintStyle: GoogleFonts.oswald(
+                                          color: AppColors.colorWhite)),
                                 ),
                               ),
-                            );
-                          },
+                            ),
+                            SizedBox(
+                              width: 10.w,
+                            ),
+                            Row(
+                              children: [
+                                Container(
+                                  height: 10,
+                                  width: 10,
+                                  color: AppColors.contentColorOrange,
+                                ),
+                                SizedBox(
+                                  width: 5.w,
+                                ),
+                                AppRichTextView(
+                                    title: "Part-Time",
+                                    fontSize: 13.sp,
+                                    fontWeight: FontWeight.bold)
+                              ],
+                            ),
+                            SizedBox(
+                              width: 10.w,
+                            ),
+                            Row(
+                              children: [
+                                Container(
+                                  height: 10,
+                                  width: 10,
+                                  color: AppColors.color582,
+                                ),
+                                SizedBox(
+                                  width: 5.w,
+                                ),
+                                AppRichTextView(
+                                    title: "Full-Time",
+                                    fontSize: 13.sp,
+                                    fontWeight: FontWeight.bold)
+                              ],
+                            ),
+                            SizedBox(
+                              width: 10.w,
+                            ),
+                            Row(
+                              children: [
+                                Container(
+                                  height: 10,
+                                  width: 10,
+                                  color: AppColors.colorRed,
+                                ),
+                                SizedBox(
+                                  width: 5.w,
+                                ),
+                                AppRichTextView(
+                                    title: "Resigned",
+                                    fontSize: 13.sp,
+                                    fontWeight: FontWeight.bold)
+                              ],
+                            ),
+                          ],
                         ),
-                      ),
-                    ],
-                  );
-        }
+                        Expanded(
+                          child: GridView.builder(
+                            shrinkWrap: true,
+                            itemCount: facultyProvider
+                                .facultyModel.facultyList!.length,
+                            gridDelegate:
+                                const SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 6,
+                                    childAspectRatio: (itemWidth / itemHeight)),
+                            itemBuilder: (context, index) {
+                              var facultydata = facultyProvider
+                                  .facultyModel.facultyList![index];
+                              return InkWell(
+                                onTap: () {
+                                  showDetailAlertDialog(context, facultydata);
+                                },
+                                child: Card(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.circular(18.sp)),
+                                  child: Container(
+                                    height: 530.h,
+                                    width: 330.w,
+                                    decoration: BoxDecoration(
+                                        color: AppColors.colorc7e,
+                                        borderRadius:
+                                            BorderRadius.circular(18.sp)),
+                                    child: FacultyCardWidget(
+                                        userImage: facultydata.userImage!,
+                                        facultyName: facultydata.firstName! +
+                                            facultydata.lastName!,
+                                        assignedSubject:
+                                            facultydata.courseName!,
+                                        facultyType: facultydata.jobType!,
+                                        gender: facultydata.gender!,
+                                        mobileNumber: facultydata.mobile!,
+                                        email: facultydata.email!,
+                                        citizenship: facultydata.citizenship!,
+                                        dob: facultydata.dob!,
+                                        batch: facultydata.batch!,
+                                        address: facultydata.address!,
+                                        pasportNumber:
+                                            facultydata.passportNumber!),
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      ],
+                    );
+            }
           },
         ),
       ),
       floatingActionButton: FloatingActionButton(
-          backgroundColor: AppColors.color927,
-          onPressed: () {
+          backgroundColor: AppColors.colorc7e,
+          onPressed: () async {
+            programProvider.selectedDept = null;
+            programProvider.selectedClass = null;
+            programProvider.selectedBatch = null;
+            programProvider.selectedCourse = null;
+            programProvider.newData.clear();
             showAddAlertDialog(context);
           },
           child: const Icon(

@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -108,6 +107,11 @@ class ProgramProvider extends ChangeNotifier {
         notifyListeners();
 
         return newData;
+      } else if (result.statusCode == 204) {
+        setLoading(false);
+        notifyListeners();
+        ToastHelper().errorToast("No Courses Added Yet");
+        return null;
       } else {
         setLoading(false);
         notifyListeners();
@@ -136,13 +140,12 @@ class ProgramProvider extends ChangeNotifier {
         },
         token!);
 
-        try {
+    try {
       if (result.statusCode == 200) {
         setLoading(false);
-               ToastHelper().sucessToast("Course Added Successfully");
+        ToastHelper().sucessToast("Course Added Successfully");
         await getCoursesList(token);
         notifyListeners();
-
       } else {
         setLoading(false);
         notifyListeners();
@@ -154,18 +157,21 @@ class ProgramProvider extends ChangeNotifier {
       Fluttertoast.showToast(msg: e.toString());
       return e.toString();
     }
-
-
   }
+
 //TODO have to parse the token and complete the patch work in front end
 // create course or add new course
   Future<void> patchCoursesList(BuildContext context,
       {String? courseid, String? courseName, int? credits}) async {
-    ApiHelper.post("UpdateCourse/id=$courseid", {
-      "CourseId": courseid,
-      "CourseName": courseName,
-      "credits": credits,
-    },"").then((value) async {
+    ApiHelper.post(
+            "UpdateCourse/id=$courseid",
+            {
+              "CourseId": courseid,
+              "CourseName": courseName,
+              "credits": credits,
+            },
+            "")
+        .then((value) async {
       setLoading(false);
 // if 200 return response
       if (value.statusCode == 200) {

@@ -32,7 +32,7 @@ class _StudentDetailViewState extends State<StudentDetailView> {
     // CalendarControllerProvider.of(context).controller.add(event2);
     var size = MediaQuery.of(context).size;
     return Scaffold(
-        backgroundColor: AppColors.color927,
+        backgroundColor: AppColors.colorc7e,
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -60,7 +60,7 @@ class _StudentDetailViewState extends State<StudentDetailView> {
                                   height: 40.h,
                                   width: 12.w,
                                   decoration: BoxDecoration(
-                                      color: AppColors.color927,
+                                      color: AppColors.colorc7e,
                                       borderRadius:
                                           BorderRadius.circular(10.sp)),
                                 ),
@@ -69,13 +69,13 @@ class _StudentDetailViewState extends State<StudentDetailView> {
                                 ),
                                 AppRichTextView(
                                     title: "Student Details",
-                                    textColor: AppColors.color927,
+                                    textColor: AppColors.colorc7e,
                                     fontSize: 25.sp,
                                     fontWeight: FontWeight.w700),
                                 const Spacer(),
                                 const Icon(
                                   Icons.edit_outlined,
-                                  color: AppColors.color927,
+                                  color: AppColors.colorc7e,
                                 )
                               ],
                             ),
@@ -89,7 +89,7 @@ class _StudentDetailViewState extends State<StudentDetailView> {
                                   child: Center(
                                     child: AppRichTextView(
                                         title: "K",
-                                        textColor: AppColors.color927,
+                                        textColor: AppColors.colorc7e,
                                         fontSize: 35.sp,
                                         fontWeight: FontWeight.w900),
                                   ),
@@ -102,7 +102,7 @@ class _StudentDetailViewState extends State<StudentDetailView> {
                                   children: [
                                     AppRichTextView(
                                         title: "Prabhakaran Thulasi",
-                                        textColor: AppColors.color927,
+                                        textColor: AppColors.colorc7e,
                                         fontSize: 25.sp,
                                         fontWeight: FontWeight.w700),
                                     SizedBox(
@@ -121,7 +121,7 @@ class _StudentDetailViewState extends State<StudentDetailView> {
                                                 fontWeight: FontWeight.w500),
                                             AppRichTextView(
                                                 title: "MD-1",
-                                                textColor: AppColors.color927,
+                                                textColor: AppColors.colorc7e,
                                                 fontSize: 20.sp,
                                                 fontWeight: FontWeight.w700),
                                           ],
@@ -140,7 +140,7 @@ class _StudentDetailViewState extends State<StudentDetailView> {
                                                 fontWeight: FontWeight.w500),
                                             AppRichTextView(
                                                 title: "+917305822599",
-                                                textColor: AppColors.color927,
+                                                textColor: AppColors.colorc7e,
                                                 fontSize: 20.sp,
                                                 fontWeight: FontWeight.w700),
                                           ],
@@ -159,7 +159,7 @@ class _StudentDetailViewState extends State<StudentDetailView> {
                                                 fontWeight: FontWeight.w500),
                                             AppRichTextView(
                                                 title: "Prabha709@gmail.com",
-                                                textColor: AppColors.color927,
+                                                textColor: AppColors.colorc7e,
                                                 fontSize: 20.sp,
                                                 fontWeight: FontWeight.w700),
                                           ],
@@ -201,7 +201,7 @@ class _StudentDetailViewState extends State<StudentDetailView> {
                                                 AppRichTextView(
                                                     title: "302",
                                                     textColor:
-                                                        AppColors.color927,
+                                                        AppColors.colorc7e,
                                                     fontSize: 20.sp,
                                                     fontWeight:
                                                         FontWeight.w800),
@@ -248,7 +248,7 @@ class _StudentDetailViewState extends State<StudentDetailView> {
                                                 AppRichTextView(
                                                     title: "8:42 AM",
                                                     textColor:
-                                                        AppColors.color927,
+                                                        AppColors.colorc7e,
                                                     fontSize: 20.sp,
                                                     fontWeight:
                                                         FontWeight.w800),
@@ -296,7 +296,7 @@ class _StudentDetailViewState extends State<StudentDetailView> {
                                                 AppRichTextView(
                                                     title: "5:00 PM",
                                                     textColor:
-                                                        AppColors.color927,
+                                                        AppColors.colorc7e,
                                                     fontSize: 20.sp,
                                                     fontWeight:
                                                         FontWeight.w800),
@@ -349,7 +349,7 @@ class _StudentDetailViewState extends State<StudentDetailView> {
                                     height: 40.h,
                                     width: 12.w,
                                     decoration: BoxDecoration(
-                                        color: AppColors.color927,
+                                        color: AppColors.colorc7e,
                                         borderRadius:
                                             BorderRadius.circular(10.sp)),
                                   ),
@@ -358,7 +358,7 @@ class _StudentDetailViewState extends State<StudentDetailView> {
                                   ),
                                   AppRichTextView(
                                       title: "Campus In Out History",
-                                      textColor: AppColors.color927,
+                                      textColor: AppColors.colorc7e,
                                       fontSize: 25.sp,
                                       fontWeight: FontWeight.w700),
                                 ],
@@ -401,7 +401,7 @@ class _StudentDetailViewState extends State<StudentDetailView> {
                                                   AppRichTextView(
                                                       title: "March 07 2023",
                                                       textColor:
-                                                          AppColors.color927,
+                                                          AppColors.colorc7e,
                                                       fontSize: 15.sp,
                                                       fontWeight:
                                                           FontWeight.w800),
@@ -446,14 +446,14 @@ class _StudentDetailViewState extends State<StudentDetailView> {
                                                           title:
                                                               "Check In Time",
                                                           textColor: AppColors
-                                                              .color927,
+                                                              .colorc7e,
                                                           fontSize: 12.sp,
                                                           fontWeight:
                                                               FontWeight.w400),
                                                       AppRichTextView(
                                                           title: "8:00 AM",
                                                           textColor: AppColors
-                                                              .color927,
+                                                              .colorc7e,
                                                           fontSize: 12.sp,
                                                           fontWeight:
                                                               FontWeight.w700),
@@ -468,14 +468,14 @@ class _StudentDetailViewState extends State<StudentDetailView> {
                                                           title:
                                                               "Check Out Time",
                                                           textColor: AppColors
-                                                              .color927,
+                                                              .colorc7e,
                                                           fontSize: 12.sp,
                                                           fontWeight:
                                                               FontWeight.w400),
                                                       AppRichTextView(
                                                           title: "4:00 PM",
                                                           textColor: AppColors
-                                                              .color927,
+                                                              .colorc7e,
                                                           fontSize: 12.sp,
                                                           fontWeight:
                                                               FontWeight.w700),
@@ -514,7 +514,7 @@ class _StudentDetailViewState extends State<StudentDetailView> {
                                       height: 40.h,
                                       width: 12.w,
                                       decoration: BoxDecoration(
-                                          color: AppColors.color927,
+                                          color: AppColors.colorc7e,
                                           borderRadius:
                                               BorderRadius.circular(10.sp)),
                                     ),
@@ -523,7 +523,7 @@ class _StudentDetailViewState extends State<StudentDetailView> {
                                     ),
                                     AppRichTextView(
                                         title: "Leave request",
-                                        textColor: AppColors.color927,
+                                        textColor: AppColors.colorc7e,
                                         fontSize: 25.sp,
                                         fontWeight: FontWeight.w700),
                                   ],
@@ -543,7 +543,7 @@ class _StudentDetailViewState extends State<StudentDetailView> {
                               ),
                               AppRichTextView(
                                   title: "No Leave request",
-                                  textColor: AppColors.color927,
+                                  textColor: AppColors.colorc7e,
                                   fontSize: 25.sp,
                                   fontWeight: FontWeight.w700),
                             ],

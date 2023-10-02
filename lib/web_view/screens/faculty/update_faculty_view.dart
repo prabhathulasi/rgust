@@ -35,7 +35,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class UpdateFacultyView extends StatefulWidget {
   final FacultyList facultyDetail;
-  const UpdateFacultyView({super.key,required this.facultyDetail});
+  const UpdateFacultyView({super.key, required this.facultyDetail});
 
   @override
   State<UpdateFacultyView> createState() => _AddFacultyViewState();
@@ -74,19 +74,15 @@ class _AddFacultyViewState extends State<UpdateFacultyView> {
         'editable': false
       },
     ];
-     
+
     super.initState();
   }
 
-  
-bool dropdownSelected = false;
+  bool dropdownSelected = false;
   Uint8List? bytesFromPicker;
   String? imageEncoded;
   TextEditingController dateinput = TextEditingController();
   TextEditingController dobinput = TextEditingController();
-
-
-  
 
   @override
   Widget build(BuildContext context) {
@@ -111,7 +107,7 @@ bool dropdownSelected = false;
                 children: [
                   AppRichTextView(
                       title: "Update Faculty",
-                      textColor: AppColors.color927,
+                      textColor: AppColors.colorc7e,
                       fontSize: 25.sp,
                       fontWeight: FontWeight.w700),
                   const SizedBox(
@@ -125,17 +121,18 @@ bool dropdownSelected = false;
                         children: [
                           AppRichTextView(
                               title: "PROFILE IMAGE",
-                              textColor: AppColors.color927,
+                              textColor: AppColors.colorc7e,
                               fontSize: 15.sp,
                               fontWeight: FontWeight.w800),
                           SizedBox(
                             height: 10.h,
                           ),
                           CircleAvatar(
-                            backgroundColor: AppColors.color927,
+                            backgroundColor: AppColors.colorc7e,
                             radius: 60.sp,
                             backgroundImage: imageEncoded == null
-                                ?  MemoryImage(base64Decode(widget.facultyDetail.userImage!) )
+                                ? MemoryImage(base64Decode(
+                                    widget.facultyDetail.userImage!))
                                 : MemoryImage(bytesFromPicker!)
                                     as ImageProvider,
                           ),
@@ -147,7 +144,7 @@ bool dropdownSelected = false;
                               bytesFromPicker =
                                   await ImagePickerWeb.getImageAsBytes();
                               imageEncoded = base64.encode(bytesFromPicker!);
-                            
+
                               setState(() {});
                             },
                             child: AppRichTextView(
@@ -173,13 +170,13 @@ bool dropdownSelected = false;
                           SizedBox(
                             height: 10.h,
                           ),
-
-
-                      
                           Consumer<ProgramProvider>(
                               builder: (context, programProvider, child) {
-                                    dropdownSelected == false? programProvider.selectedDept = widget.facultyDetail.programId.toString() : programProvider.selectedDept =null ;
-                               
+                            dropdownSelected == false
+                                ? programProvider.selectedDept =
+                                    widget.facultyDetail.programId.toString()
+                                : programProvider.selectedDept = null;
+
                             return const ProgramDropdown();
                           }),
                           AppRichTextView(
@@ -192,7 +189,7 @@ bool dropdownSelected = false;
                           ),
                           programProvider.selectedDept == null
                               ? Container(
-                                  color: AppColors.color927,
+                                  color: AppColors.colorc7e,
                                   height: 60.h,
                                   width: size.width * 0.2,
                                   child: Align(
@@ -209,11 +206,9 @@ bool dropdownSelected = false;
                                   ),
                                 )
                               : Consumer<ProgramProvider>(
-                              builder: (context, programProvider, child) {
-                                
+                                  builder: (context, programProvider, child) {
                                   return const ClassDropdown();
-                                }
-                              ),
+                                }),
                           AppRichTextView(
                               title: "Faculty Id",
                               textColor: AppColors.colorBlack,
@@ -223,7 +218,7 @@ bool dropdownSelected = false;
                             height: 10.h,
                           ),
                           Container(
-                            color: AppColors.color927,
+                            color: AppColors.colorc7e,
                             height: 60.h,
                             width: size.width * 0.2,
                             child: Padding(
@@ -236,13 +231,12 @@ bool dropdownSelected = false;
                                       enable: false,
                                       textStyle: const TextStyle(
                                           color: AppColors.colorWhite),
-                                    
                                       onSaved: (p0) {},
-                                      inputDecoration:  const InputDecoration(
+                                      inputDecoration: const InputDecoration(
                                           border: InputBorder.none,
                                           //TODO ADD the exisiting employee id
                                           hintText: "",
-                                          hintStyle:TextStyle(
+                                          hintStyle: TextStyle(
                                               color: AppColors.colorGrey)),
                                       obscureText: false,
                                     ),
@@ -261,7 +255,7 @@ bool dropdownSelected = false;
                         children: [
                           AppRichTextView(
                               title: "Year",
-                              textColor: AppColors.color927,
+                              textColor: AppColors.colorc7e,
                               fontSize: 15.sp,
                               fontWeight: FontWeight.w500),
                           SizedBox(
@@ -269,7 +263,7 @@ bool dropdownSelected = false;
                           ),
                           programProvider.selectedClass == null
                               ? Container(
-                                  color: AppColors.color927,
+                                  color: AppColors.colorc7e,
                                   height: 60.h,
                                   width: size.width * 0.2,
                                   child: Align(
@@ -288,7 +282,7 @@ bool dropdownSelected = false;
                               : const DynamicYearsDropdown(),
                           AppRichTextView(
                               title: "Batch",
-                              textColor: AppColors.color927,
+                              textColor: AppColors.colorc7e,
                               fontSize: 15.sp,
                               fontWeight: FontWeight.w500),
                           SizedBox(
@@ -296,7 +290,7 @@ bool dropdownSelected = false;
                           ),
                           programProvider.selectedClass == null
                               ? Container(
-                                  color: AppColors.color927,
+                                  color: AppColors.colorc7e,
                                   height: 60.h,
                                   width: size.width * 0.2,
                                   child: Align(
@@ -315,7 +309,7 @@ bool dropdownSelected = false;
                               : const BatchDropdown(),
                           AppRichTextView(
                               title: "Course",
-                              textColor: AppColors.color927,
+                              textColor: AppColors.colorc7e,
                               fontSize: 15.sp,
                               fontWeight: FontWeight.w500),
                           SizedBox(
@@ -347,7 +341,7 @@ bool dropdownSelected = false;
                           Column(
                             children: [
                               Container(
-                                color: AppColors.color927,
+                                color: AppColors.colorc7e,
                                 height: 70.h,
                                 width: size.width * 0.2,
                                 child: Padding(
@@ -389,7 +383,7 @@ bool dropdownSelected = false;
                                 height: 10.h,
                               ),
                               Container(
-                                color: AppColors.color927,
+                                color: AppColors.colorc7e,
                                 height: 70.h,
                                 width: size.width * 0.2,
                                 child: Padding(
@@ -431,7 +425,7 @@ bool dropdownSelected = false;
                                 height: 10,
                               ),
                               Container(
-                                color: AppColors.color927,
+                                color: AppColors.colorc7e,
                                 height: 70.h,
                                 width: size.width * 0.2,
                                 child: Padding(
@@ -470,7 +464,7 @@ bool dropdownSelected = false;
                                 height: 10,
                               ),
                               Container(
-                                color: AppColors.color927,
+                                color: AppColors.colorc7e,
                                 height: 70.h,
                                 width: size.width * 0.2,
                                 child: Padding(
@@ -510,7 +504,7 @@ bool dropdownSelected = false;
                               ),
                               const SizedBox(height: 10),
                               Container(
-                                color: AppColors.color927,
+                                color: AppColors.colorc7e,
                                 height: 70.h,
                                 width: size.width * 0.2,
                                 child: Padding(
@@ -573,7 +567,7 @@ bool dropdownSelected = false;
                               ),
                               const SizedBox(height: 10),
                               Container(
-                                color: AppColors.color927,
+                                color: AppColors.colorc7e,
                                 height: 70.h,
                                 width: size.width * 0.2,
                                 child: Padding(
@@ -642,7 +636,7 @@ bool dropdownSelected = false;
                           Column(
                             children: [
                               Container(
-                                color: AppColors.color927,
+                                color: AppColors.colorc7e,
                                 height: 70.h,
                                 width: size.width * 0.2,
                                 child: Padding(
@@ -690,7 +684,7 @@ bool dropdownSelected = false;
                               ),
                               const SizedBox(height: 10),
                               Container(
-                                color: AppColors.color927,
+                                color: AppColors.colorc7e,
                                 height: 70.h,
                                 width: size.width * 0.2,
                                 child: Padding(
@@ -730,7 +724,7 @@ bool dropdownSelected = false;
                               ),
                               const SizedBox(height: 10),
                               Container(
-                                color: AppColors.color927,
+                                color: AppColors.colorc7e,
                                 height: 70.h,
                                 width: size.width * 0.2,
                                 child: Padding(
@@ -770,7 +764,7 @@ bool dropdownSelected = false;
                               ),
                               const SizedBox(height: 10),
                               Container(
-                                color: AppColors.color927,
+                                color: AppColors.colorc7e,
                                 height: 70.h,
                                 width: size.width * 0.2,
                                 child: Padding(
@@ -810,7 +804,7 @@ bool dropdownSelected = false;
                               ),
                               const SizedBox(height: 10),
                               Container(
-                                color: AppColors.color927,
+                                color: AppColors.colorc7e,
                                 height: 70.h,
                                 width: size.width * 0.2,
                                 child: Padding(
@@ -858,7 +852,7 @@ bool dropdownSelected = false;
                               ),
                               const SizedBox(height: 10),
                               Container(
-                                color: AppColors.color927,
+                                color: AppColors.colorc7e,
                                 height: 70.h,
                                 width: size.width * 0.2,
                                 child: Padding(
@@ -911,7 +905,7 @@ bool dropdownSelected = false;
                       children: [
                         AppElevatedButon(
                             title: "Save",
-                            buttonColor: AppColors.color927,
+                            buttonColor: AppColors.colorc7e,
                             textColor: AppColors.colorWhite,
                             height: 50.h,
                             width: 150.w,
@@ -941,64 +935,61 @@ bool dropdownSelected = false;
                                   null) {
                                 Fluttertoast.showToast(
                                     msg: "Please Select the Course");
-                               
                               } else {
+                                var token = await getTokenAndUseIt();
+                                if (token == null) {
+                                  if (context.mounted) {
+                                    Navigator.pushNamed(
+                                        context, RouteNames.login);
+                                  }
+                                } else if (token == "Token Expired") {
+                                  ToastHelper().errorToast(
+                                      "Session Expired Please Login Again");
 
+                                  if (context.mounted) {
+                                    Navigator.pushNamed(
+                                        context, RouteNames.login);
+                                  }
+                                } else {
+                                  var data =
+                                      programProvider.newData.where((element) {
+                                    return element["coursecode"] ==
+                                        programProvider.selectedCourse!;
+                                  }).toList();
+                                  setState(() {
+                                    selected_Course = data[0]["coursename"];
+                                  });
+                                  if (_formKey.currentState!.validate()) {
+                                    _formKey.currentState!.save();
 
-                                 var token = await getTokenAndUseIt();
-                              if (token == null) {
-                                if (context.mounted) {
-                                  Navigator.pushNamed(
-                                      context, RouteNames.login);
+                                    var result = await facultyProvider.addFaculty(
+                                        token,
+                                        programId: int.parse(
+                                            programProvider.selectedDept!),
+                                        classId: int.parse(
+                                            programProvider.selectedClass!),
+                                        courseCode:
+                                            programProvider.selectedCourse!,
+                                        courseName: selected_Course!,
+                                        batch: programProvider.selectedBatch!,
+                                        facultyId: "",
+                                        // "${DateTime.now().year}/${programProvider.selectedDept}/$randomString",
+                                        gender: genderValue!,
+                                        dob: dobinput.text,
+                                        joiningDate: dateinput.text,
+                                        userImage: imageEncoded!,
+                                        jobType: jobTypeValue!);
+                                    dev.log(result.toString());
+                                  }
                                 }
-                              } else if (token == "Token Expired") {
-                                ToastHelper().errorToast(
-                                    "Session Expired Please Login Again");
-
-                                if (context.mounted) {
-                                  Navigator.pushNamed(
-                                      context, RouteNames.login);
-                                }
-                              } else {
-                                
-                              
-                                 var data =
-                                    programProvider.newData.where((element) {
-                                  return element["coursecode"] ==
-                                      programProvider.selectedCourse!;
-                                }).toList();
-                                setState(() {
-                                  selected_Course = data[0]["coursename"];
-                                });
-                                if (_formKey.currentState!.validate()) {
-                                  _formKey.currentState!.save();
-                               
-                               var result=  await facultyProvider.addFaculty(token,
-                                      programId: int.parse(
-                                          programProvider.selectedDept!),
-                                      classId: int.parse(
-                                          programProvider.selectedClass!),
-                                      courseCode:
-                                          programProvider.selectedCourse!,
-                                      courseName: selected_Course!,
-                                      batch: programProvider.selectedBatch!,
-                                      facultyId:"",
-                                          // "${DateTime.now().year}/${programProvider.selectedDept}/$randomString",
-                                      gender: genderValue!,
-                                      dob: dobinput.text,
-                                      joiningDate: dateinput.text,
-                                      userImage: imageEncoded!,
-                                      jobType: jobTypeValue!);
-                                      dev.log(result.toString());
-                                }
-                              }}
+                              }
                             }),
                         SizedBox(
                           width: 10.h,
                         ),
                         AppElevatedButon(
                           title: "Cancel",
-                          buttonColor: AppColors.color927,
+                          buttonColor: AppColors.colorc7e,
                           textColor: AppColors.colorWhite,
                           height: 50.h,
                           width: 120.w,
@@ -1034,8 +1025,8 @@ bool dropdownSelected = false;
                                   columns: filterdcols,
                                   rows: departmentProvider.newData,
                                   zebraStripe: true,
-                                  stripeColor1: AppColors.color927,
-                                  stripeColor2: AppColors.color927,
+                                  stripeColor1: AppColors.colorc7e,
+                                  stripeColor2: AppColors.colorc7e,
                                   onRowSaved: (value) async {},
                                   onSubmitted: (value) {
                                     print(value);

@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:animated_text_kit/animated_text_kit.dart';
 
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:rugst_alliance_academia/data/provider/login_provider.dart';
@@ -11,6 +11,7 @@ import 'package:rugst_alliance_academia/routes/named_routes.dart';
 
 import 'package:rugst_alliance_academia/theme/app_colors.dart';
 import 'package:rugst_alliance_academia/util/index.dart';
+import 'package:rugst_alliance_academia/util/toast_helper.dart';
 import 'package:rugst_alliance_academia/util/validator.dart';
 import 'package:rugst_alliance_academia/widgets/app_elevatedbutton.dart';
 import 'package:rugst_alliance_academia/widgets/app_formfield.dart';
@@ -31,7 +32,7 @@ class _WebLoginViewState extends State<WebLoginView> {
 
   final _formKey = GlobalKey<FormState>();
   var colorizeColors = [
-    AppColors.color927,
+    AppColors.colorc7e,
     AppColors.color582,
     AppColors.colorWhite,
     AppColors.colorRed,
@@ -45,9 +46,9 @@ class _WebLoginViewState extends State<WebLoginView> {
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 100.h,
-        backgroundColor: AppColors.color927,
+        backgroundColor: AppColors.colorc7e,
         title: AppRichTextView(
-            title: "Alliance academia",
+            title: "Rgust Alliance academia",
             textColor: AppColors.colorWhite,
             fontSize: 45.sp,
             fontWeight: FontWeight.w400),
@@ -64,7 +65,7 @@ class _WebLoginViewState extends State<WebLoginView> {
               decoration: BoxDecoration(
                 borderRadius:
                     BorderRadius.only(topRight: Radius.circular(30.sp)),
-                color: AppColors.color927,
+                color: AppColors.colorc7e,
               ),
               child: Padding(
                 padding: EdgeInsets.all(20.0.sp),
@@ -83,7 +84,7 @@ class _WebLoginViewState extends State<WebLoginView> {
                   children: [
                     AppRichTextView(
                         title: "Login",
-                        textColor: AppColors.color927,
+                        textColor: AppColors.colorc7e,
                         fontSize: 45.sp,
                         fontWeight: FontWeight.w400),
                     AnimatedTextKit(totalRepeatCount: 100, animatedTexts: [
@@ -113,7 +114,7 @@ class _WebLoginViewState extends State<WebLoginView> {
                     ),
                     Container(
                       decoration: BoxDecoration(
-                          color: AppColors.color927,
+                          color: AppColors.colorc7e,
                           borderRadius: BorderRadius.circular(18.sp)),
                       child: AppTextFormFieldWidget(
                         textStyle: GoogleFonts.oswald(
@@ -142,7 +143,7 @@ class _WebLoginViewState extends State<WebLoginView> {
                     ),
                     Container(
                       decoration: BoxDecoration(
-                          color: AppColors.color927,
+                          color: AppColors.colorc7e,
                           borderRadius: BorderRadius.circular(18.sp)),
                       child: AppTextFormFieldWidget(
                         textStyle: GoogleFonts.oswald(
@@ -176,29 +177,31 @@ class _WebLoginViewState extends State<WebLoginView> {
                         return AppElevatedButon(
                           loading: authProvider.isLoading,
                           title: "Login",
-                          buttonColor: AppColors.color927,
+                          buttonColor: AppColors.colorc7e,
                           height: 70.h,
                           width: size.width / 6,
                           onPressed: (context) async {
-                            final SharedPreferences prefs =
-                                await SharedPreferences.getInstance();
                             if (_formKey.currentState!.validate()) {
                               _formKey.currentState!.save();
-                              var result = await authProvider.login(
-                                  userName!, password!);
-                              var decodedData = json.decode(result.body);
-                              if (result.statusCode == 200) {
-                                await prefs.setString(
-                                    'Token', decodedData["token"]);
-                                    await prefs.setInt("userId", decodedData["user"]);
-                                if (context.mounted) {
-                                  Navigator.pushNamed(
-                                      context, RouteNames.welcome);
-                                }
-                              } else {
-                                Fluttertoast.showToast(
-                                    msg: decodedData["Message"]);
-                              }
+                              final SharedPreferences prefs =
+                                  await SharedPreferences.getInstance();
+                              await authProvider.login(userName!, password!);
+                              // var decodedData = json.decode(result.body);
+                              // if (result.statusCode == 200) {
+                              //   await prefs.setString(
+                              //       'Token', decodedData["token"]);
+                              //   await prefs.setString(
+                              //       "Email", decodedData["user"]);
+                              //   // await prefs.setInt("userId", decodedData["user"]);
+                              //   if (context.mounted) {
+                              //     Navigator.pushNamed(
+                              //         context, RouteNames.welcome);
+                              //     ToastHelper().sucessToast("Login Success");
+                              //   }
+                              // } else {
+                              //   ToastHelper()
+                              //       .errorToast(decodedData["Message"]);
+                              // }
                             }
                           },
                           textColor: AppColors.colorWhite,

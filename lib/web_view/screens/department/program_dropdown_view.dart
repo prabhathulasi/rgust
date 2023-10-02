@@ -47,7 +47,7 @@ class _ProgramDropdownState extends State<ProgramDropdown> {
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Container(
-                color: AppColors.color927,
+                color: AppColors.colorc7e,
                 height: 60.h,
                 width: size.width * 0.2,
                 child: Center(
@@ -58,7 +58,7 @@ class _ProgramDropdownState extends State<ProgramDropdown> {
           } else {
             return programProvider.programModel.program == null
                 ? Container(
-                    color: AppColors.color927,
+                    color: AppColors.colorc7e,
                     height: 60.h,
                     width: size.width * 0.2,
                     child: Center(
@@ -69,7 +69,7 @@ class _ProgramDropdownState extends State<ProgramDropdown> {
                 : Consumer<ProgramProvider>(
                     builder: (context, programProvider, child) {
                     return Container(
-                      color: AppColors.color927,
+                      color: AppColors.colorc7e,
                       height: 60.h,
                       width: size.width * 0.2,
                       child: Padding(
@@ -77,7 +77,7 @@ class _ProgramDropdownState extends State<ProgramDropdown> {
                         child: DropdownButtonHideUnderline(
                           child: DropdownButton(
                             iconDisabledColor: AppColors.colorWhite,
-                            dropdownColor: AppColors.color927,
+                            dropdownColor: AppColors.colorc7e,
                             isExpanded: true,
                             value: programProvider.selectedDept,
                             items: programProvider.programModel.program!

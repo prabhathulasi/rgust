@@ -18,7 +18,7 @@ class ApiHelper {
       Uri.parse('$baseUrl/$endpoint'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
-        // "Authorization": "Bearer $token"
+        "Authorization": "Bearer $token"
       },
       body: jsonEncode(data),
     );

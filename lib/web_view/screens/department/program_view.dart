@@ -145,33 +145,29 @@ class _ProgramViewState extends State<ProgramView> {
                                   Fluttertoast.showToast(
                                       msg: "credits is Required ");
                                 } else {
-                                   
+                                  var token = await getTokenAndUseIt();
+                                  if (token == null) {
+                                    if (context.mounted) {
+                                      Navigator.pushNamed(
+                                          context, RouteNames.login);
+                                    }
+                                  } else if (token == "Token Expired") {
+                                    ToastHelper().errorToast(
+                                        "Session Expired Please Login Again");
 
+                                    if (context.mounted) {
+                                      Navigator.pushNamed(
+                                          context, RouteNames.login);
+                                    }
+                                  } else {
+                                    await programProvider.postCoursesList(token,
+                                        courseName: value["coursename"],
+                                        courseid: value["coursecode"],
+                                        credits: int.parse(value["credits"]));
 
-                                    var token = await getTokenAndUseIt();
-                              if (token == null) {
-                                if (context.mounted) {
-                                  Navigator.pushNamed(
-                                      context, RouteNames.login);
-                                }
-                              } else if (token == "Token Expired") {
-                                ToastHelper().errorToast(
-                                    "Session Expired Please Login Again");
-
-                                if (context.mounted) {
-                                  Navigator.pushNamed(
-                                      context, RouteNames.login);
-                                }
-                              } else {
-                                 await programProvider.postCoursesList(token,
-                                      courseName: value["coursename"],
-                                      courseid: value["coursecode"],
-                                      credits: int.parse(value["credits"]));
-
-                                  rows = removeOneRow(cols, rows, rows[0]);
-                                  programProvider.setCreateButton(true);
-                              }
-                                 
+                                    rows = removeOneRow(cols, rows, rows[0]);
+                                    programProvider.setCreateButton(true);
+                                  }
                                 }
                               },
                               onSubmitted: (value) {
@@ -181,6 +177,8 @@ class _ProgramViewState extends State<ProgramView> {
                               tdStyle:
                                   const TextStyle(fontWeight: FontWeight.bold),
                               trHeight: 40,
+                              removeIconColor: AppColors.colorRed,
+
                               thStyle: const TextStyle(
                                   fontSize: 15,
                                   fontWeight: FontWeight.bold,
@@ -189,7 +187,7 @@ class _ProgramViewState extends State<ProgramView> {
                               thVertAlignment: CrossAxisAlignment.end,
                               thPaddingBottom: 3,
                               showSaveIcon: true,
-                              saveIconColor: Colors.black,
+                              saveIconColor: AppColors.colorc7e,
                               showCreateButton:
                                   programProvider.showCreateButton,
                               tdAlignment: TextAlign.left,
@@ -352,8 +350,8 @@ class _ProgramViewState extends State<ProgramView> {
                                   columns: filterdcols,
                                   rows: departmentProvider.newData,
                                   zebraStripe: true,
-                                  stripeColor1: AppColors.color927,
-                                  stripeColor2: AppColors.color927,
+                                  stripeColor1: AppColors.colorc7e,
+                                  stripeColor2: AppColors.colorc7e,
                                   onRowSaved: (value) async {
                                     log(value);
                                     //   await departmentProvider.patchCoursesList(context,

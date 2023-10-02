@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 import 'package:rugst_alliance_academia/theme/app_colors.dart';
 import 'package:rugst_alliance_academia/web_view/screens/department/filterd_student_list.dart';
 
@@ -11,43 +10,35 @@ class DepartmentTabView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  DefaultTabController(
-    length: 2,
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-Container(
-  color: AppColors.color927,
-  width: MediaQuery.sizeOf(context).width,
+    return DefaultTabController(
+        length: 2,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              color: AppColors.colorc7e,
+              width: MediaQuery.sizeOf(context).width,
 
-  // ignore: prefer_const_constructors
-  child:    TabBar(
-    labelColor: AppColors.colorWhite,
-    
-    indicatorWeight: 4.0,
-    indicator: const TabBarGradientIndicator(
-            gradientColor: [AppColors.colorWhite , AppColors.color582],
-            indicatorWidth: 2),
-indicatorSize: TabBarIndicatorSize.label,    
-
-
-            tabs: const[
-               Tab(text: "Students"),
-               Tab(text:"History"),
-              
-            ],
-          ),
-),
-        const Expanded(
-          child:  TabBarView(
-  children: [
-  FilteredStudentView(),
-  Text("History")
-   
-  ],
-),
-        )
-      ],
-    ));
+              // ignore: prefer_const_constructors
+              child: TabBar(
+                labelColor: AppColors.colorWhite,
+                indicatorWeight: 4.0,
+                indicator: const TabBarGradientIndicator(
+                    gradientColor: [AppColors.colorWhite, AppColors.color582],
+                    indicatorWidth: 2),
+                indicatorSize: TabBarIndicatorSize.label,
+                tabs: const [
+                  Tab(text: "Students"),
+                  Tab(text: "History"),
+                ],
+              ),
+            ),
+            const Expanded(
+              child: TabBarView(
+                children: [FilteredStudentView(), Text("History")],
+              ),
+            )
+          ],
+        ));
   }
 }
