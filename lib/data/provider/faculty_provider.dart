@@ -13,6 +13,9 @@ class FacultyProvider extends ChangeNotifier {
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
+  bool _loadPrograms = false;
+  bool get loadPrograms => _loadPrograms;
+
   String? firstNamecontroller;
   String get firstname => firstNamecontroller!;
   String? lastNamecontroller;
@@ -37,8 +40,8 @@ class FacultyProvider extends ChangeNotifier {
     setLoading(true);
     try {
       var result = await ApiHelper.get("GetFaculty", token);
+      setLoading(false);
       if (result.statusCode == 200) {
-        setLoading(false);
         var data = json.decode(result.body);
 
         facultyModel = FacultyModel.fromJson(data);
@@ -46,8 +49,11 @@ class FacultyProvider extends ChangeNotifier {
         notifyListeners();
 
         return facultyModel;
+      } else if (result.statusCode == 204) {
+        notifyListeners();
+        ToastHelper().errorToast("No Faculty Added Yet");
+        return null;
       } else {
-        setLoading(false);
         notifyListeners();
         ToastHelper().errorToast("Internal Server Error");
         return null;
@@ -129,9 +135,12 @@ class FacultyProvider extends ChangeNotifier {
 
       if (result.statusCode == 200) {
         var data = json.decode(result.body);
+        await getFaculty(token);
         setLoading(false);
+
         notifyListeners();
         ToastHelper().sucessToast("Faculty Added Sucessfully");
+
         return data;
       } else {
         setLoading(false);
@@ -197,6 +206,12 @@ class FacultyProvider extends ChangeNotifier {
 // set loading value
   void setLoading(bool value) async {
     _isLoading = value;
+    notifyListeners();
+  }
+
+  // set showProgram value
+  void setShowProgram(bool value) async {
+    _loadPrograms = value;
     notifyListeners();
   }
 }

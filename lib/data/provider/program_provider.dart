@@ -235,6 +235,7 @@ class ProgramProvider extends ChangeNotifier {
 // set batch
   void setSelectedBatch(String value, String token) async {
     selectedBatch = value;
+    newData.clear();
     getCoursesList(token);
     notifyListeners();
   }

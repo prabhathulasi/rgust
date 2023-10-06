@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -221,7 +220,7 @@ class _FacultyDetailViewState extends State<FacultyDetailView> {
   @override
   Widget build(BuildContext context) {
     final facultyData = widget.facultyDetail;
-    log(facultyData.createAccount.toString());
+
     return Padding(
       padding: EdgeInsets.all(8.0.sp),
       child: Column(
@@ -266,7 +265,7 @@ class _FacultyDetailViewState extends State<FacultyDetailView> {
                                     ]),
                                 child: InkWell(
                                   onTap: () {
-                                    // showAddAlertDialog(context, facultyData);
+                                    showAddAlertDialog(context, facultyData);
                                   },
                                   child: CircleAvatar(
                                     radius: 15.sp,
@@ -477,132 +476,133 @@ class _FacultyDetailViewState extends State<FacultyDetailView> {
               SizedBox(
                 width: 8.w,
               ),
-              Container(
-                height: 339.h,
-                width: 544.w,
-                decoration: BoxDecoration(
-                    color: AppColors.colorc7e,
-                    borderRadius: BorderRadius.circular(18.sp)),
-                child: Padding(
-                  padding: EdgeInsets.all(18.0.sp),
-                  child: Column(
-                    children: [
-                      Row(
-                        children: [
-                          AppRichTextView(
-                            title: "Joining Date: ",
-                            fontSize: 20.sp,
-                            fontWeight: FontWeight.w800,
-                            textColor: AppColors.colorGrey,
-                          ),
-                          AppRichTextView(
-                            title: facultyData.joiningDate!,
-                            fontSize: 20.sp,
-                            fontWeight: FontWeight.w800,
-                            textColor: AppColors.colorWhite,
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 10.h,
-                      ),
-                      Row(
-                        children: [
-                          AppRichTextView(
-                            title: "FacultyID: ",
-                            fontSize: 20.sp,
-                            fontWeight: FontWeight.w800,
-                            textColor: AppColors.colorGrey,
-                          ),
-                          AppRichTextView(
-                            title: facultyData.facultyId!,
-                            fontSize: 20.sp,
-                            fontWeight: FontWeight.w800,
-                            textColor: AppColors.colorWhite,
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 10.h,
-                      ),
-                      Row(
-                        children: [
-                          AppRichTextView(
-                            title: "Course Assigned: ",
-                            fontSize: 20.sp,
-                            fontWeight: FontWeight.w800,
-                            textColor: AppColors.colorGrey,
-                          ),
-                          AppRichTextView(
-                            title: facultyData.courseName!,
-                            fontSize: 20.sp,
-                            fontWeight: FontWeight.w800,
-                            textColor: AppColors.colorWhite,
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 10.h,
-                      ),
-                      Row(
-                        children: [
-                          AppRichTextView(
-                            title: "Qualification: ",
-                            fontSize: 20.sp,
-                            fontWeight: FontWeight.w800,
-                            textColor: AppColors.colorGrey,
-                          ),
-                          AppRichTextView(
-                            title: facultyData.qualifiation!,
-                            fontSize: 20.sp,
-                            fontWeight: FontWeight.w800,
-                            textColor: AppColors.colorWhite,
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 10.h,
-                      ),
-                      Row(
-                        children: [
-                          AppRichTextView(
-                            title: "Passport Number: ",
-                            fontSize: 20.sp,
-                            fontWeight: FontWeight.w800,
-                            textColor: AppColors.colorGrey,
-                          ),
-                          AppRichTextView(
-                            title: facultyData.passportNumber!,
-                            fontSize: 20.sp,
-                            fontWeight: FontWeight.w800,
-                            textColor: AppColors.colorWhite,
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 10.h,
-                      ),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          AppRichTextView(
-                            title: "Address: ",
-                            fontSize: 20.sp,
-                            fontWeight: FontWeight.w800,
-                            textColor: AppColors.colorGrey,
-                          ),
-                          Flexible(
-                            child: AppRichTextView(
-                              maxLines: 3,
-                              title: facultyData.address!,
+              Expanded(
+                child: Container(
+                  height: 339.h,
+                  decoration: BoxDecoration(
+                      color: AppColors.colorc7e,
+                      borderRadius: BorderRadius.circular(18.sp)),
+                  child: Padding(
+                    padding: EdgeInsets.all(18.0.sp),
+                    child: Column(
+                      children: [
+                        Row(
+                          children: [
+                            AppRichTextView(
+                              title: "Joining Date: ",
+                              fontSize: 20.sp,
+                              fontWeight: FontWeight.w800,
+                              textColor: AppColors.colorGrey,
+                            ),
+                            AppRichTextView(
+                              title: facultyData.joiningDate!,
                               fontSize: 20.sp,
                               fontWeight: FontWeight.w800,
                               textColor: AppColors.colorWhite,
                             ),
-                          ),
-                        ],
-                      ),
-                    ],
+                          ],
+                        ),
+                        SizedBox(
+                          height: 10.h,
+                        ),
+                        Row(
+                          children: [
+                            AppRichTextView(
+                              title: "FacultyID: ",
+                              fontSize: 20.sp,
+                              fontWeight: FontWeight.w800,
+                              textColor: AppColors.colorGrey,
+                            ),
+                            AppRichTextView(
+                              title: facultyData.facultyId!,
+                              fontSize: 20.sp,
+                              fontWeight: FontWeight.w800,
+                              textColor: AppColors.colorWhite,
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 10.h,
+                        ),
+                        Row(
+                          children: [
+                            AppRichTextView(
+                              title: "Course Assigned: ",
+                              fontSize: 20.sp,
+                              fontWeight: FontWeight.w800,
+                              textColor: AppColors.colorGrey,
+                            ),
+                            AppRichTextView(
+                              title: facultyData.courseName!,
+                              fontSize: 20.sp,
+                              fontWeight: FontWeight.w800,
+                              textColor: AppColors.colorWhite,
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 10.h,
+                        ),
+                        Row(
+                          children: [
+                            AppRichTextView(
+                              title: "Qualification: ",
+                              fontSize: 20.sp,
+                              fontWeight: FontWeight.w800,
+                              textColor: AppColors.colorGrey,
+                            ),
+                            AppRichTextView(
+                              title: facultyData.qualifiation!,
+                              fontSize: 20.sp,
+                              fontWeight: FontWeight.w800,
+                              textColor: AppColors.colorWhite,
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 10.h,
+                        ),
+                        Row(
+                          children: [
+                            AppRichTextView(
+                              title: "Passport Number: ",
+                              fontSize: 20.sp,
+                              fontWeight: FontWeight.w800,
+                              textColor: AppColors.colorGrey,
+                            ),
+                            AppRichTextView(
+                              title: facultyData.passportNumber!,
+                              fontSize: 20.sp,
+                              fontWeight: FontWeight.w800,
+                              textColor: AppColors.colorWhite,
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 10.h,
+                        ),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            AppRichTextView(
+                              title: "Address: ",
+                              fontSize: 20.sp,
+                              fontWeight: FontWeight.w800,
+                              textColor: AppColors.colorGrey,
+                            ),
+                            Flexible(
+                              child: AppRichTextView(
+                                maxLines: 3,
+                                title: facultyData.address!,
+                                fontSize: 20.sp,
+                                fontWeight: FontWeight.w800,
+                                textColor: AppColors.colorWhite,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),

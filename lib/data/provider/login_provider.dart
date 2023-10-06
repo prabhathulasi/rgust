@@ -14,22 +14,20 @@ class LoginProvider extends ChangeNotifier {
   Future<http.Response> login(String email, String password) async {
     var bodyData = {"email": email, "password": password};
     setLoading(true);
-   
-    // Make your login API call here using the http package
-   
-      var result = await http.post(
-        Uri.parse("http://localhost:3013/login"),
-        body: jsonEncode(bodyData),
-        headers: {
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
-      );
-  
 
-      setLoading(false);
-      notifyListeners();
-      return result;
-   
+    // Make your login API call here using the http package
+
+    var result = await http.post(
+      Uri.parse("http://172.16.20.122:3013/login"),
+      body: jsonEncode(bodyData),
+      headers: {
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+    );
+
+    setLoading(false);
+    notifyListeners();
+    return result;
   }
 
   Future<void> validate(BuildContext context) async {

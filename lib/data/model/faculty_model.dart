@@ -26,6 +26,8 @@ class FacultyList {
   String? createdAt;
   String? updatedAt;
   String? deletedAt;
+  String? programName;
+  String? className;
   int? programId;
   int? classId;
   String? courseCode;
@@ -73,6 +75,8 @@ class FacultyList {
       this.passportNumber,
       this.citizenship,
       this.userImage,
+      this.programName,
+      this.className,
       this.createAccount});
 
   FacultyList.fromJson(Map<String, dynamic> json) {
@@ -81,7 +85,10 @@ class FacultyList {
     updatedAt = json['UpdatedAt'];
     deletedAt = json['DeletedAt'].toString();
     programId = json['ProgramId'];
+    programName = json['ProgramName'];
+
     classId = json['ClassId'];
+    className = json['ClassName'];
     courseCode = json['CourseCode'];
     courseName = json['CourseName'];
     batch = json['Batch'];
@@ -130,6 +137,8 @@ class FacultyList {
     data['Citizenship'] = citizenship;
     data['UserImage'] = userImage;
     data['CreateAccount'] = createAccount;
+    data["ProgramName"] = programName;
+    data["ClassName"] = className;
     return data;
   }
 }

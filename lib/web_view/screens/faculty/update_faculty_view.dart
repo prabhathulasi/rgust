@@ -81,11 +81,14 @@ class _AddFacultyViewState extends State<UpdateFacultyView> {
   bool dropdownSelected = false;
   Uint8List? bytesFromPicker;
   String? imageEncoded;
-  TextEditingController dateinput = TextEditingController();
-  TextEditingController dobinput = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    TextEditingController dateinput =
+        TextEditingController(text: widget.facultyDetail.joiningDate);
+    TextEditingController dobinput =
+        TextEditingController(text: widget.facultyDetail.dob);
+
     final programProvider = Provider.of<ProgramProvider>(context);
     final facultyProvider = Provider.of<FacultyProvider>(context);
 
@@ -170,15 +173,36 @@ class _AddFacultyViewState extends State<UpdateFacultyView> {
                           SizedBox(
                             height: 10.h,
                           ),
-                          Consumer<ProgramProvider>(
-                              builder: (context, programProvider, child) {
-                            dropdownSelected == false
-                                ? programProvider.selectedDept =
-                                    widget.facultyDetail.programId.toString()
-                                : programProvider.selectedDept = null;
-
-                            return const ProgramDropdown();
-                          }),
+                          facultyProvider.loadPrograms == false
+                              ? Container(
+                                  color: AppColors.colorc7e,
+                                  height: 60.h,
+                                  width: size.width * 0.2,
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(bottom: 8.0),
+                                    child: ListTile(
+                                      trailing: InkWell(
+                                        onTap: () {
+                                          facultyProvider.setShowProgram(true);
+                                        },
+                                        child: const Icon(
+                                          Icons.edit,
+                                          color: AppColors.color0ec,
+                                        ),
+                                      ),
+                                      title: Center(
+                                        child: AppRichTextView(
+                                          title:
+                                              widget.facultyDetail.programName!,
+                                          fontSize: 15.sp,
+                                          fontWeight: FontWeight.bold,
+                                          textColor: AppColors.color0ec,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                )
+                              : const ProgramDropdown(),
                           AppRichTextView(
                               title: "Class",
                               textColor: AppColors.colorBlack,
@@ -187,28 +211,24 @@ class _AddFacultyViewState extends State<UpdateFacultyView> {
                           SizedBox(
                             height: 10.h,
                           ),
-                          programProvider.selectedDept == null
+                          facultyProvider.loadPrograms == false
                               ? Container(
                                   color: AppColors.colorc7e,
                                   height: 60.h,
                                   width: size.width * 0.2,
-                                  child: Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Padding(
-                                      padding: EdgeInsets.only(left: 8.0.w),
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(bottom: 8.0),
+                                    child: Center(
                                       child: AppRichTextView(
+                                        title: widget.facultyDetail.className!,
                                         fontSize: 15.sp,
                                         fontWeight: FontWeight.bold,
-                                        title: "Please Select the Class",
-                                        textColor: AppColors.colorWhite,
+                                        textColor: AppColors.color0ec,
                                       ),
                                     ),
                                   ),
                                 )
-                              : Consumer<ProgramProvider>(
-                                  builder: (context, programProvider, child) {
-                                  return const ClassDropdown();
-                                }),
+                              : const ClassDropdown(),
                           AppRichTextView(
                               title: "Faculty Id",
                               textColor: AppColors.colorBlack,
@@ -222,26 +242,14 @@ class _AddFacultyViewState extends State<UpdateFacultyView> {
                             height: 60.h,
                             width: size.width * 0.2,
                             child: Padding(
-                              padding: EdgeInsets.all(8.0.sp),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Expanded(
-                                    child: AppTextFormFieldWidget(
-                                      enable: false,
-                                      textStyle: const TextStyle(
-                                          color: AppColors.colorWhite),
-                                      onSaved: (p0) {},
-                                      inputDecoration: const InputDecoration(
-                                          border: InputBorder.none,
-                                          //TODO ADD the exisiting employee id
-                                          hintText: "",
-                                          hintStyle: TextStyle(
-                                              color: AppColors.colorGrey)),
-                                      obscureText: false,
-                                    ),
-                                  ),
-                                ],
+                              padding: const EdgeInsets.only(bottom: 8.0),
+                              child: Center(
+                                child: AppRichTextView(
+                                  title: widget.facultyDetail.facultyId!,
+                                  fontSize: 15.sp,
+                                  fontWeight: FontWeight.bold,
+                                  textColor: AppColors.color0ec,
+                                ),
                               ),
                             ),
                           ),
@@ -261,25 +269,44 @@ class _AddFacultyViewState extends State<UpdateFacultyView> {
                           SizedBox(
                             height: 10.h,
                           ),
-                          programProvider.selectedClass == null
-                              ? Container(
-                                  color: AppColors.colorc7e,
-                                  height: 60.h,
-                                  width: size.width * 0.2,
-                                  child: Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Padding(
-                                      padding: EdgeInsets.only(left: 8.0.w),
-                                      child: AppRichTextView(
-                                        fontSize: 15.sp,
-                                        fontWeight: FontWeight.bold,
-                                        title: "Please Select the Year",
-                                        textColor: AppColors.colorWhite,
-                                      ),
-                                    ),
-                                  ),
-                                )
-                              : const DynamicYearsDropdown(),
+                          Container(
+                            color: AppColors.colorc7e,
+                            height: 60.h,
+                            width: size.width * 0.2,
+                            child: Padding(
+                              padding: const EdgeInsets.only(bottom: 8.0),
+                              child: Center(
+                                child: AppRichTextView(
+                                  title: DateTime.parse(
+                                          widget.facultyDetail.joiningDate!)
+                                      .year
+                                      .toString(),
+                                  fontSize: 15.sp,
+                                  fontWeight: FontWeight.bold,
+                                  textColor: AppColors.color0ec,
+                                ),
+                              ),
+                            ),
+                          ),
+                          // programProvider.selectedClass == null
+                          //     ? Container(
+                          //         color: AppColors.colorc7e,
+                          //         height: 60.h,
+                          //         width: size.width * 0.2,
+                          //         child: Align(
+                          //           alignment: Alignment.centerLeft,
+                          //           child: Padding(
+                          //             padding: EdgeInsets.only(left: 8.0.w),
+                          //             child: AppRichTextView(
+                          //               fontSize: 15.sp,
+                          //               fontWeight: FontWeight.bold,
+                          //               title: "Please Select the Year",
+                          //               textColor: AppColors.colorWhite,
+                          //             ),
+                          //           ),
+                          //         ),
+                          //       )
+                          //     : const DynamicYearsDropdown(),
                           AppRichTextView(
                               title: "Batch",
                               textColor: AppColors.colorc7e,
@@ -288,25 +315,41 @@ class _AddFacultyViewState extends State<UpdateFacultyView> {
                           SizedBox(
                             height: 10.h,
                           ),
-                          programProvider.selectedClass == null
-                              ? Container(
-                                  color: AppColors.colorc7e,
-                                  height: 60.h,
-                                  width: size.width * 0.2,
-                                  child: Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Padding(
-                                      padding: EdgeInsets.only(left: 8.0.w),
-                                      child: AppRichTextView(
-                                        fontSize: 15.sp,
-                                        fontWeight: FontWeight.bold,
-                                        title: "Please Select the Batch",
-                                        textColor: AppColors.colorWhite,
-                                      ),
-                                    ),
-                                  ),
-                                )
-                              : const BatchDropdown(),
+                          Container(
+                            color: AppColors.colorc7e,
+                            height: 60.h,
+                            width: size.width * 0.2,
+                            child: Padding(
+                              padding: const EdgeInsets.only(bottom: 8.0),
+                              child: Center(
+                                child: AppRichTextView(
+                                  title: widget.facultyDetail.batch!,
+                                  fontSize: 15.sp,
+                                  fontWeight: FontWeight.bold,
+                                  textColor: AppColors.color0ec,
+                                ),
+                              ),
+                            ),
+                          ),
+                          // programProvider.selectedClass == null
+                          //     ? Container(
+                          //         color: AppColors.colorc7e,
+                          //         height: 60.h,
+                          //         width: size.width * 0.2,
+                          //         child: Align(
+                          //           alignment: Alignment.centerLeft,
+                          //           child: Padding(
+                          //             padding: EdgeInsets.only(left: 8.0.w),
+                          //             child: AppRichTextView(
+                          //               fontSize: 15.sp,
+                          //               fontWeight: FontWeight.bold,
+                          //               title: "Please Select the Batch",
+                          //               textColor: AppColors.colorWhite,
+                          //             ),
+                          //           ),
+                          //         ),
+                          //       )
+                          //     : const BatchDropdown(),
                           AppRichTextView(
                               title: "Course",
                               textColor: AppColors.colorc7e,
@@ -315,7 +358,23 @@ class _AddFacultyViewState extends State<UpdateFacultyView> {
                           SizedBox(
                             height: 10.h,
                           ),
-                          const CourseDropDown()
+                          Container(
+                            color: AppColors.colorc7e,
+                            height: 60.h,
+                            width: size.width * 0.2,
+                            child: Padding(
+                              padding: const EdgeInsets.only(bottom: 8.0),
+                              child: Center(
+                                child: AppRichTextView(
+                                  title: widget.facultyDetail.courseName!,
+                                  fontSize: 15.sp,
+                                  fontWeight: FontWeight.bold,
+                                  textColor: AppColors.color0ec,
+                                ),
+                              ),
+                            ),
+                          ),
+                          // const CourseDropDown()
                         ],
                       )
                     ],
@@ -357,6 +416,8 @@ class _AddFacultyViewState extends State<UpdateFacultyView> {
                                           fontWeight: FontWeight.w500),
                                       Expanded(
                                           child: AppTextFormFieldWidget(
+                                        initialValue:
+                                            widget.facultyDetail.firstName,
                                         textStyle: GoogleFonts.roboto(
                                             color: AppColors.colorWhite),
                                         validator: (value) {
@@ -399,6 +460,8 @@ class _AddFacultyViewState extends State<UpdateFacultyView> {
                                           fontWeight: FontWeight.w500),
                                       Expanded(
                                           child: AppTextFormFieldWidget(
+                                        initialValue:
+                                            widget.facultyDetail.lastName,
                                         textStyle: GoogleFonts.roboto(
                                             color: AppColors.colorWhite),
                                         validator: (value) {
@@ -441,6 +504,8 @@ class _AddFacultyViewState extends State<UpdateFacultyView> {
                                           fontWeight: FontWeight.w500),
                                       Expanded(
                                           child: AppTextFormFieldWidget(
+                                        initialValue:
+                                            widget.facultyDetail.email,
                                         textStyle: GoogleFonts.roboto(
                                             color: AppColors.colorWhite),
                                         validator: (value) {
@@ -480,6 +545,8 @@ class _AddFacultyViewState extends State<UpdateFacultyView> {
                                           fontWeight: FontWeight.w500),
                                       Expanded(
                                           child: AppTextFormFieldWidget(
+                                        initialValue:
+                                            widget.facultyDetail.mobile,
                                         textStyle: GoogleFonts.roboto(
                                             color: AppColors.colorWhite),
                                         validator: (value) {
@@ -651,33 +718,52 @@ class _AddFacultyViewState extends State<UpdateFacultyView> {
                                           fontSize: 14.sp,
                                           fontWeight: FontWeight.w500),
                                       Expanded(
-                                          child: ListView.builder(
-                                        scrollDirection: Axis.horizontal,
-                                        shrinkWrap: true,
-                                        itemCount: genders.length,
-                                        itemBuilder: (context, index) {
-                                          return Padding(
-                                            padding: const EdgeInsets.only(
-                                                left: 8.0),
-                                            child: InkWell(
-                                              onTap: () {
-                                                setState(() {
-                                                  for (var gender in genders) {
-                                                    gender.isSelected = false;
-                                                  }
-                                                  genders[index].isSelected =
-                                                      true;
-                                                  genderValue =
-                                                      genders[index].name;
-                                                });
-                                              },
-                                              child: AppRadioButton(
-                                                gender: genders[index],
-                                              ),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            AppRichTextView(
+                                              title:
+                                                  widget.facultyDetail.gender!,
+                                              fontSize: 15.sp,
+                                              fontWeight: FontWeight.bold,
+                                              textColor: AppColors.color0ec,
                                             ),
-                                          );
-                                        },
-                                      ))
+                                            const Icon(
+                                              Icons.edit,
+                                              color: AppColors.color0ec,
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                      // Expanded(
+                                      //     child: ListView.builder(
+                                      //   scrollDirection: Axis.horizontal,
+                                      //   shrinkWrap: true,
+                                      //   itemCount: genders.length,
+                                      //   itemBuilder: (context, index) {
+                                      //     return Padding(
+                                      //       padding: const EdgeInsets.only(
+                                      //           left: 8.0),
+                                      //       child: InkWell(
+                                      //         onTap: () {
+                                      //           setState(() {
+                                      //             for (var gender in genders) {
+                                      //               gender.isSelected = false;
+                                      //             }
+                                      //             genders[index].isSelected =
+                                      //                 true;
+                                      //             genderValue =
+                                      //                 genders[index].name;
+                                      //           });
+                                      //         },
+                                      //         child: AppRadioButton(
+                                      //           gender: genders[index],
+                                      //         ),
+                                      //       ),
+                                      //     );
+                                      //   },
+                                      // ))
                                     ],
                                   ),
                                 ),
@@ -700,6 +786,8 @@ class _AddFacultyViewState extends State<UpdateFacultyView> {
                                           fontWeight: FontWeight.w500),
                                       Expanded(
                                           child: AppTextFormFieldWidget(
+                                        initialValue:
+                                            widget.facultyDetail.address,
                                         textStyle: GoogleFonts.roboto(
                                             color: AppColors.colorWhite),
                                         validator: (value) {
@@ -740,6 +828,8 @@ class _AddFacultyViewState extends State<UpdateFacultyView> {
                                           fontWeight: FontWeight.w500),
                                       Expanded(
                                           child: AppTextFormFieldWidget(
+                                        initialValue:
+                                            widget.facultyDetail.qualifiation,
                                         textStyle: GoogleFonts.roboto(
                                             color: AppColors.colorWhite),
                                         validator: (value) {
@@ -780,6 +870,8 @@ class _AddFacultyViewState extends State<UpdateFacultyView> {
                                           fontWeight: FontWeight.w500),
                                       Expanded(
                                           child: AppTextFormFieldWidget(
+                                        initialValue:
+                                            widget.facultyDetail.passportNumber,
                                         textStyle: GoogleFonts.roboto(
                                             color: AppColors.colorWhite),
                                         validator: (value) {
@@ -819,33 +911,52 @@ class _AddFacultyViewState extends State<UpdateFacultyView> {
                                           fontSize: 14.sp,
                                           fontWeight: FontWeight.w500),
                                       Expanded(
-                                          child: ListView.builder(
-                                        scrollDirection: Axis.horizontal,
-                                        shrinkWrap: true,
-                                        itemCount: jobType.length,
-                                        itemBuilder: (context, index) {
-                                          return Padding(
-                                            padding: const EdgeInsets.only(
-                                                left: 8.0),
-                                            child: InkWell(
-                                              onTap: () {
-                                                setState(() {
-                                                  for (var data in jobType) {
-                                                    data.isSelected = false;
-                                                  }
-                                                  jobType[index].isSelected =
-                                                      true;
-                                                  jobTypeValue =
-                                                      jobType[index].name;
-                                                });
-                                              },
-                                              child: AppRadioButton(
-                                                jobType: jobType[index],
-                                              ),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            AppRichTextView(
+                                              title:
+                                                  widget.facultyDetail.jobType!,
+                                              fontSize: 15.sp,
+                                              fontWeight: FontWeight.bold,
+                                              textColor: AppColors.color0ec,
                                             ),
-                                          );
-                                        },
-                                      ))
+                                            const Icon(
+                                              Icons.edit,
+                                              color: AppColors.color0ec,
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                      // Expanded(
+                                      //     child: ListView.builder(
+                                      //   scrollDirection: Axis.horizontal,
+                                      //   shrinkWrap: true,
+                                      //   itemCount: jobType.length,
+                                      //   itemBuilder: (context, index) {
+                                      //     return Padding(
+                                      //       padding: const EdgeInsets.only(
+                                      //           left: 8.0),
+                                      //       child: InkWell(
+                                      //         onTap: () {
+                                      //           setState(() {
+                                      //             for (var data in jobType) {
+                                      //               data.isSelected = false;
+                                      //             }
+                                      //             jobType[index].isSelected =
+                                      //                 true;
+                                      //             jobTypeValue =
+                                      //                 jobType[index].name;
+                                      //           });
+                                      //         },
+                                      //         child: AppRadioButton(
+                                      //           jobType: jobType[index],
+                                      //         ),
+                                      //       ),
+                                      //     );
+                                      //   },
+                                      // ))
                                     ],
                                   ),
                                 ),
@@ -868,6 +979,8 @@ class _AddFacultyViewState extends State<UpdateFacultyView> {
                                           fontWeight: FontWeight.w500),
                                       Expanded(
                                           child: AppTextFormFieldWidget(
+                                        initialValue:
+                                            widget.facultyDetail.citizenship,
                                         textStyle: GoogleFonts.roboto(
                                             color: AppColors.colorWhite),
                                         validator: (value) {
