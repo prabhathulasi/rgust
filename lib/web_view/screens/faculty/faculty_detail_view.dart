@@ -34,7 +34,7 @@ class _FacultyDetailViewState extends State<FacultyDetailView> {
     Dialog alert = Dialog(
       child: Stack(
         children: [
-          UpdateFacultyView(facultyDetail: details),
+          // UpdateFacultyView(facultyDetail: details),
           Transform.translate(
             offset: Offset(10.w, -13.h),
             child: GestureDetector(
@@ -265,7 +265,7 @@ class _FacultyDetailViewState extends State<FacultyDetailView> {
                                     ]),
                                 child: InkWell(
                                   onTap: () {
-                                    showAddAlertDialog(context, facultyData);
+                                    // showAddAlertDialog(context, facultyData);
                                   },
                                   child: CircleAvatar(
                                     radius: 15.sp,
@@ -351,7 +351,8 @@ class _FacultyDetailViewState extends State<FacultyDetailView> {
                                   textColor: AppColors.colorGrey,
                                 ),
                                 AppRichTextView(
-                                  title: facultyData.batch!,
+                                  title: facultyData
+                                      .registeredCourse![0].courseName!,
                                   fontSize: 20.sp,
                                   fontWeight: FontWeight.w800,
                                   textColor: AppColors.colorWhite,
@@ -442,15 +443,7 @@ class _FacultyDetailViewState extends State<FacultyDetailView> {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
-                              CircleAvatar(
-                                radius: 60.sp,
-                                backgroundImage:
-                                    const AssetImage(ImagePath.webrgustLogo),
-                              ),
-                              SizedBox(
-                                height: 10.h,
-                              ),
-                              facultyData.createAccount == false
+                              facultyData.accountCreated == false
                                   ? AppElevatedButon(
                                       title: "Create Account",
                                       buttonColor: facultyData.jobType ==
@@ -532,12 +525,12 @@ class _FacultyDetailViewState extends State<FacultyDetailView> {
                               fontWeight: FontWeight.w800,
                               textColor: AppColors.colorGrey,
                             ),
-                            AppRichTextView(
-                              title: facultyData.courseName!,
-                              fontSize: 20.sp,
-                              fontWeight: FontWeight.w800,
-                              textColor: AppColors.colorWhite,
-                            ),
+                            // AppRichTextView(
+                            //   title: facultyData.courseName!,
+                            //   fontSize: 20.sp,
+                            //   fontWeight: FontWeight.w800,
+                            //   textColor: AppColors.colorWhite,
+                            // ),
                           ],
                         ),
                         SizedBox(

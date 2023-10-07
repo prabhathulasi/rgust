@@ -16,6 +16,9 @@ class FacultyProvider extends ChangeNotifier {
   bool _loadPrograms = false;
   bool get loadPrograms => _loadPrograms;
 
+  bool _isNewUser = false;
+  bool get isNewUser => _isNewUser;
+
   String? firstNamecontroller;
   String get firstname => firstNamecontroller!;
   String? lastNamecontroller;
@@ -87,7 +90,7 @@ class FacultyProvider extends ChangeNotifier {
     } catch (e) {
       setLoading(false);
       Fluttertoast.showToast(msg: e.toString());
-      return e.toString();
+      return null;
     }
   }
 
@@ -132,6 +135,7 @@ class FacultyProvider extends ChangeNotifier {
           },
           token);
       var data = json.decode(result.body);
+      print(data);
 
       if (result.statusCode == 200) {
         var data = json.decode(result.body);
@@ -151,7 +155,7 @@ class FacultyProvider extends ChangeNotifier {
     } catch (e) {
       setLoading(false);
       ToastHelper().errorToast(e.toString());
-      return e.toString();
+      return null;
     }
   }
 
@@ -212,6 +216,11 @@ class FacultyProvider extends ChangeNotifier {
   // set showProgram value
   void setShowProgram(bool value) async {
     _loadPrograms = value;
+    notifyListeners();
+  }
+
+  void selectUserType(bool isNew) {
+    _isNewUser = isNew;
     notifyListeners();
   }
 }

@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:rugst_alliance_academia/theme/app_colors.dart';
+import 'package:rugst_alliance_academia/util/index.dart';
 
 import 'package:rugst_alliance_academia/widgets/app_richtext.dart';
 
@@ -43,32 +44,38 @@ class FacultyCardWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
-            padding: EdgeInsets.only(top: 4.0.h, right: 4.w),
-            child: Align(
-              alignment: Alignment.topRight,
-              child: Container(
-                width: 10.w,
-                height: 10.h,
-                decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: facultyType == "Part-Time"
-                        ? AppColors.contentColorOrange
-                        : facultyType == "Full-Time"
-                            ? AppColors.color582
-                            : AppColors.colorRed,
-                    boxShadow: [
-                      BoxShadow(
-                          color: facultyType == "Part-Time"
-                              ? AppColors.contentColorOrange
-                              : facultyType == "Full-Time"
-                                  ? AppColors.color582
-                                  : AppColors.colorRed,
-                          blurRadius: 10,
-                          spreadRadius: 5)
-                    ]),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Image.asset(ImagePath.webMDILogo),
+              Padding(
+                padding: EdgeInsets.only(top: 4.0.h, right: 4.w),
+                child: Align(
+                  alignment: Alignment.topRight,
+                  child: Container(
+                    width: 10.w,
+                    height: 10.h,
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: facultyType == "Part-Time"
+                            ? AppColors.contentColorOrange
+                            : facultyType == "Full-Time"
+                                ? AppColors.color582
+                                : AppColors.colorRed,
+                        boxShadow: [
+                          BoxShadow(
+                              color: facultyType == "Part-Time"
+                                  ? AppColors.contentColorOrange
+                                  : facultyType == "Full-Time"
+                                      ? AppColors.color582
+                                      : AppColors.colorRed,
+                              blurRadius: 10,
+                              spreadRadius: 5)
+                        ]),
+                  ),
+                ),
               ),
-            ),
+            ],
           ),
           Center(
             child: CircleAvatar(

@@ -26,7 +26,7 @@ class VerticalTabs extends StatefulWidget {
   final double tabsElevation;
   final Function(int tabIndex)? onSelect;
   final Color? backgroundColor;
-  final Widget  ?header;
+  final Widget? header;
 
   const VerticalTabs(
       {Key? key,
@@ -58,7 +58,8 @@ class VerticalTabs extends StatefulWidget {
   VerticalTabsState createState() => VerticalTabsState();
 }
 
-class VerticalTabsState extends State<VerticalTabs> with TickerProviderStateMixin {
+class VerticalTabsState extends State<VerticalTabs>
+    with TickerProviderStateMixin {
   late int _selectedIndex;
   bool? _changePageByTapView;
 
@@ -70,7 +71,7 @@ class VerticalTabsState extends State<VerticalTabs> with TickerProviderStateMixi
 
   List<AnimationController> animationControllers = [];
 
-  ScrollPhysics pageScrollPhysics = const AlwaysScrollableScrollPhysics();
+  ScrollPhysics pageScrollPhysics = const NeverScrollableScrollPhysics();
 
   @override
   void initState() {
@@ -82,8 +83,6 @@ class VerticalTabsState extends State<VerticalTabs> with TickerProviderStateMixi
       ));
     }
     _selectTab(widget.initialIndex);
-
-    if (widget.disabledChangePageFromContentView == true) pageScrollPhysics = const NeverScrollableScrollPhysics();
 
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -122,21 +121,20 @@ class VerticalTabsState extends State<VerticalTabs> with TickerProviderStateMixi
                       children: [
                         // header
                         Padding(
-                          padding:  EdgeInsets.all(8.0.sp),
-                          child: widget.header
-                        ),
+                            padding: EdgeInsets.all(8.0.sp),
+                            child: widget.header),
                         Expanded(
                           child: ListView.builder(
                             shrinkWrap: true,
                             itemCount: widget.tabs.length,
                             itemBuilder: (context, index) {
                               Tab tab = widget.tabs[index];
-                                            
+
                               Alignment alignment = Alignment.centerLeft;
                               if (widget.direction == TextDirection.rtl) {
                                 alignment = Alignment.centerRight;
                               }
-                                            
+
                               Widget child;
                               if (tab.child != null) {
                                 child = tab.child!;
@@ -157,43 +155,43 @@ class VerticalTabsState extends State<VerticalTabs> with TickerProviderStateMixi
                                             : Container(),
                                         (tab.text != null)
                                             ? Expanded(
-                                              child: Text(
-                                                tab.text!,
-                                                softWrap: true,
-                                                style: _selectedIndex == index
-                                                    ? widget.selectedTabTextStyle
-                                                    : widget.tabTextStyle,
-                                              ),
-                                            )
+                                                child: Text(
+                                                  tab.text!,
+                                                  softWrap: true,
+                                                  style: _selectedIndex == index
+                                                      ? widget
+                                                          .selectedTabTextStyle
+                                                      : widget.tabTextStyle,
+                                                ),
+                                              )
                                             : Container(),
                                       ],
                                     ));
                               }
-                                            
+
                               Color itemBGColor = widget.tabBackgroundColor;
-                              if (_selectedIndex == index) itemBGColor = widget.selectedTabBackgroundColor;
-                              
-                                            
-                              
-                                            
+                              if (_selectedIndex == index)
+                                itemBGColor = widget.selectedTabBackgroundColor;
+
                               return GestureDetector(
                                 onTap: () {
                                   _changePageByTapView = true;
                                   setState(() {
                                     _selectTab(index);
                                   });
-                                            
-                                  pageController.jumpToPage(index,
-                                      );
+
+                                  pageController.jumpToPage(
+                                    index,
+                                  );
                                 },
                                 child: Padding(
                                   padding: EdgeInsets.only(right: 10.w),
                                   child: Container(
                                     height: 60,
                                     decoration: BoxDecoration(
-                                      color: itemBGColor,
-                                      borderRadius: BorderRadius.circular(15.sp)
-                                    ),
+                                        color: itemBGColor,
+                                        borderRadius:
+                                            BorderRadius.circular(15.sp)),
                                     alignment: alignment,
                                     padding: const EdgeInsets.all(5),
                                     child: child,
@@ -213,7 +211,8 @@ class VerticalTabsState extends State<VerticalTabs> with TickerProviderStateMixi
                     // scrollDirection: widget.contentScrollAxis,
                     physics: pageScrollPhysics,
                     onPageChanged: (index) {
-                      if (_changePageByTapView == false || _changePageByTapView == null) {
+                      if (_changePageByTapView == false ||
+                          _changePageByTapView == null) {
                         _selectTab(index);
                       }
                       if (_selectedIndex == index) {

@@ -184,6 +184,9 @@ class _FacultyGridViewState extends State<FacultyGridView> {
               ),
             ],
           ),
+          SizedBox(
+            height: 10.h,
+          ),
           Expanded(
             child: GridView.builder(
               shrinkWrap: true,
@@ -191,7 +194,7 @@ class _FacultyGridViewState extends State<FacultyGridView> {
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: size.width <= 1400 ? 4 : 6,
                   //  childAspectRatio:
-                  childAspectRatio: size.width <= 1400 ? 1 / 0.9 : 1 / 1.2),
+                  childAspectRatio: size.width <= 1400 ? 1 / 0.9 : 1 / 1.3),
               itemBuilder: (context, index) {
                 var facultydata =
                     facultyProvider.facultyModel.facultyList![index];
@@ -207,14 +210,15 @@ class _FacultyGridViewState extends State<FacultyGridView> {
                         userImage: facultydata.userImage!,
                         facultyName:
                             facultydata.firstName! + facultydata.lastName!,
-                        assignedSubject: facultydata.courseName!,
+                        assignedSubject:
+                            facultydata.registeredCourse![0].courseName!,
                         facultyType: facultydata.jobType!,
                         gender: facultydata.gender!,
                         mobileNumber: facultydata.mobile!,
                         email: facultydata.email!,
                         citizenship: facultydata.citizenship!,
                         dob: facultydata.dob!,
-                        batch: facultydata.batch!,
+                        batch: facultydata.registeredCourse![0].batch!,
                         address: facultydata.address!,
                         pasportNumber: facultydata.passportNumber!),
                   ),

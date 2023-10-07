@@ -26,13 +26,6 @@ class FacultyList {
   String? createdAt;
   String? updatedAt;
   String? deletedAt;
-  String? programName;
-  String? className;
-  int? programId;
-  int? classId;
-  String? courseCode;
-  String? courseName;
-  String? batch;
   String? facultyId;
   String? firstName;
   String? lastName;
@@ -48,18 +41,14 @@ class FacultyList {
   String? passportNumber;
   String? citizenship;
   String? userImage;
-  bool? createAccount;
+  bool? accountCreated;
+  List<RegisteredCourse>? registeredCourse;
 
   FacultyList(
       {this.iD,
       this.createdAt,
       this.updatedAt,
       this.deletedAt,
-      this.programId,
-      this.classId,
-      this.courseCode,
-      this.courseName,
-      this.batch,
       this.facultyId,
       this.firstName,
       this.lastName,
@@ -75,23 +64,14 @@ class FacultyList {
       this.passportNumber,
       this.citizenship,
       this.userImage,
-      this.programName,
-      this.className,
-      this.createAccount});
+      this.accountCreated,
+      this.registeredCourse});
 
   FacultyList.fromJson(Map<String, dynamic> json) {
     iD = json['ID'];
     createdAt = json['CreatedAt'];
     updatedAt = json['UpdatedAt'];
     deletedAt = json['DeletedAt'].toString();
-    programId = json['ProgramId'];
-    programName = json['ProgramName'];
-
-    classId = json['ClassId'];
-    className = json['ClassName'];
-    courseCode = json['CourseCode'];
-    courseName = json['CourseName'];
-    batch = json['Batch'];
     facultyId = json['FacultyId'];
     firstName = json['FirstName'];
     lastName = json['LastName'];
@@ -107,7 +87,13 @@ class FacultyList {
     passportNumber = json['PassportNumber'];
     citizenship = json['Citizenship'];
     userImage = json['UserImage'];
-    createAccount = json['CreateAccount'];
+    accountCreated = json['AccountCreated'];
+    if (json['RegisteredCourse'] != null) {
+      registeredCourse = <RegisteredCourse>[];
+      json['RegisteredCourse'].forEach((v) {
+        registeredCourse!.add(RegisteredCourse.fromJson(v));
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -116,11 +102,6 @@ class FacultyList {
     data['CreatedAt'] = createdAt;
     data['UpdatedAt'] = updatedAt;
     data['DeletedAt'] = deletedAt;
-    data['ProgramId'] = programId;
-    data['ClassId'] = classId;
-    data['CourseCode'] = courseCode;
-    data['CourseName'] = courseName;
-    data['Batch'] = batch;
     data['FacultyId'] = facultyId;
     data['FirstName'] = firstName;
     data['LastName'] = lastName;
@@ -136,9 +117,72 @@ class FacultyList {
     data['PassportNumber'] = passportNumber;
     data['Citizenship'] = citizenship;
     data['UserImage'] = userImage;
-    data['CreateAccount'] = createAccount;
-    data["ProgramName"] = programName;
-    data["ClassName"] = className;
+    data['AccountCreated'] = accountCreated;
+    if (registeredCourse != null) {
+      data['RegisteredCourse'] =
+          registeredCourse!.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
+}
+
+class RegisteredCourse {
+  int? iD;
+  String? createdAt;
+  String? updatedAt;
+  String? deletedAt;
+  int? programId;
+  int? classId;
+  String? courseName;
+  String? courseCode;
+  int? facultyId;
+  String? batch;
+  String? programName;
+  String? className;
+
+  RegisteredCourse(
+      {this.iD,
+      this.createdAt,
+      this.updatedAt,
+      this.deletedAt,
+      this.programId,
+      this.classId,
+      this.courseName,
+      this.courseCode,
+      this.facultyId,
+      this.batch,
+      this.programName,
+      this.className});
+
+  RegisteredCourse.fromJson(Map<String, dynamic> json) {
+    iD = json['ID'];
+    createdAt = json['CreatedAt'];
+    updatedAt = json['UpdatedAt'];
+    deletedAt = json['DeletedAt'].toString();
+    programId = json['ProgramId'];
+    classId = json['ClassId'];
+    courseName = json['CourseName'];
+    courseCode = json['CourseCode'];
+    facultyId = json['FacultyId'];
+    batch = json['Batch'];
+    programName = json['ProgramName'];
+    className = json['ClassName'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['ID'] = iD;
+    data['CreatedAt'] = createdAt;
+    data['UpdatedAt'] = updatedAt;
+    data['DeletedAt'] = deletedAt;
+    data['ProgramId'] = programId;
+    data['ClassId'] = classId;
+    data['CourseName'] = courseName;
+    data['CourseCode'] = courseCode;
+    data['FacultyId'] = facultyId;
+    data['Batch'] = batch;
+    data['ProgramName'] = programName;
+    data['ClassName'] = className;
     return data;
   }
 }
