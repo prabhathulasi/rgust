@@ -236,232 +236,231 @@ class _FacultyDetailViewState extends State<FacultyDetailView> {
                 child: Padding(
                   padding: EdgeInsets.all(8.0.sp),
                   child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Padding(
-                        padding: EdgeInsets.only(left: 8.0.w),
-                        child: Stack(
-                          children: [
-                            CircleAvatar(
-                              radius: 80.sp,
-                              backgroundImage: MemoryImage(
-                                  base64Decode(facultyData.userImage!)),
-                            ),
-                            Transform.translate(
-                              offset: Offset(130.w, 130.h),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(25.sp),
-                                    boxShadow: [
-                                      BoxShadow(
-                                          color:
-                                              facultyData.jobType == "Part-Time"
-                                                  ? AppColors.contentColorOrange
-                                                  : facultyData.jobType ==
-                                                          "Full-Time"
-                                                      ? AppColors.color582
-                                                      : AppColors.colorRed,
-                                          blurRadius: 10,
-                                          spreadRadius: 5)
-                                    ]),
-                                child: InkWell(
-                                  onTap: () {
-                                    // showAddAlertDialog(context, facultyData);
-                                  },
-                                  child: CircleAvatar(
-                                    radius: 15.sp,
-                                    backgroundColor:
-                                        facultyData.jobType == "Part-Time"
-                                            ? AppColors.contentColorOrange
-                                            : facultyData.jobType == "Full-Time"
-                                                ? AppColors.color582
-                                                : AppColors.colorRed,
-                                    child: Center(
-                                      child: Icon(
-                                        Icons.edit,
-                                        size: 20.sp,
-                                        color: AppColors.colorWhite,
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.only(left: 8.0.w),
+                            child: Stack(
+                              children: [
+                                CircleAvatar(
+                                  radius: 80.sp,
+                                  backgroundImage: MemoryImage(
+                                      base64Decode(facultyData.userImage!)),
+                                ),
+                                Transform.translate(
+                                  offset: Offset(130.w, 150.h),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(25.sp),
+                                        boxShadow: [
+                                          BoxShadow(
+                                              color:
+                                                  facultyData.jobType == "Part-Time"
+                                                      ? AppColors.contentColorOrange
+                                                      : facultyData.jobType ==
+                                                              "Full-Time"
+                                                          ? AppColors.color582
+                                                          : AppColors.colorRed,
+                                              blurRadius: 10,
+                                              spreadRadius: 5)
+                                        ]),
+                                    child: InkWell(
+                                      onTap: () {
+                                        // showAddAlertDialog(context, facultyData);
+                                      },
+                                      child: CircleAvatar(
+                                        radius: 15.sp,
+                                        backgroundColor:
+                                            facultyData.jobType == "Part-Time"
+                                                ? AppColors.contentColorOrange
+                                                : facultyData.jobType == "Full-Time"
+                                                    ? AppColors.color582
+                                                    : AppColors.colorRed,
+                                        child: Center(
+                                          child: Icon(
+                                            Icons.edit,
+                                            size: 20.sp,
+                                            color: AppColors.colorWhite,
+                                          ),
+                                        ),
                                       ),
                                     ),
                                   ),
+                                )
+                              ],
+                            ),
+                          ),
+                          SizedBox(height: 10.h,),
+                          Row(
+                            children: [
+                              Tooltip(
+                               
+                              
+                                message:facultyData.mobile ,
+                                child: const Icon(Icons.phone,color: AppColors.colorWhite,)),
+                              SizedBox(width: 5.w,),
+                              Tooltip(
+                                message: facultyData.email,
+                                child: const Icon(Icons.mail,color: AppColors.colorWhite,)),
+                              SizedBox(width: 5.w,),
+                              Tooltip(
+                                message: facultyData.dob,
+                                child: const Icon(Icons.cake,color: AppColors.colorWhite,))
+                            ],
+                          ),
+                        ],
+                      ),
+                      Expanded(
+                        child: Padding(
+                          padding: EdgeInsets.only(top: 18.0.h, left: 10.h),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  AppRichTextView(
+                                    title: facultyData.firstName! +
+                                        facultyData.lastName!,
+                                    fontSize: 24.sp,
+                                    fontWeight: FontWeight.bold,
+                                    textColor: AppColors.colorWhite,
+                                  ),
+                                   Icon(
+               facultyData.gender == "Male" ? Icons.male : Icons.female,
+                color: AppColors.colorWhite,
+              )
+                                ],
+                              ),
+                              SizedBox(
+                                height: 20.h,
+                              ),
+                            
+                             
+                            
+                            
+                              
+                             ListView.builder(
+                                           shrinkWrap: true,
+                                           itemCount: facultyData.registeredCourse!.length,
+                                           itemBuilder: (context, index) {
+                                             return AppRichTextView(
+                                       title: "${facultyData.registeredCourse![index].courseName!} (${facultyData.registeredCourse![index].batch})" ,
+                                       fontSize: 12.sp,
+                                       fontWeight: FontWeight.w800,
+                                       textColor: AppColors.colorWhite,
+                                     );
+                                           },
+                                         ),
+                                           SizedBox(
+                                height: 10.h,
+                              ),
+                                          Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            AppRichTextView(
+                              title: "Joining Date: ",
+                              fontSize: 12.sp,
+                              fontWeight: FontWeight.w800,
+                              textColor: AppColors.colorGrey,
+                            ),
+                            AppRichTextView(
+                              title: facultyData.joiningDate!,
+                              fontSize: 12.sp,
+                              fontWeight: FontWeight.w800,
+                              textColor: AppColors.colorWhite,
+                            ),
+                          ],
+                        ),
+                         SizedBox(
+                          height: 10.h,
+                        ),
+                        Row(
+                          children: [
+                            AppRichTextView(
+                              title: "FacultyID: ",
+                              fontSize: 12.sp,
+                              fontWeight: FontWeight.w800,
+                              textColor: AppColors.colorGrey,
+                            ),
+                            AppRichTextView(
+                              title: facultyData.facultyId!,
+                              fontSize: 12.sp,
+                              fontWeight: FontWeight.w800,
+                              textColor: AppColors.colorWhite,
+                            ),
+                          ],
+                        ),
+                         SizedBox(
+                          height: 10.h,
+                        ),
+                        Row(
+                          children: [
+                            AppRichTextView(
+                              title: "Qualification: ",
+                              fontSize: 12.sp,
+                              fontWeight: FontWeight.w800,
+                              textColor: AppColors.colorGrey,
+                            ),
+                            AppRichTextView(
+                              title: facultyData.qualifiation!,
+                              fontSize: 12.sp,
+                              fontWeight: FontWeight.w800,
+                              textColor: AppColors.colorWhite,
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 10.h,
+                        ),
+                        Row(
+                          children: [
+                            AppRichTextView(
+                              title: "Passport Number: ",
+                              fontSize: 12.sp,
+                              fontWeight: FontWeight.w800,
+                              textColor: AppColors.colorGrey,
+                            ),
+                            AppRichTextView(
+                              title: facultyData.passportNumber!,
+                              fontSize: 12.sp,
+                              fontWeight: FontWeight.w800,
+                              textColor: AppColors.colorWhite,
+                            ),
+                          ],
+                        ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Expanded(child:  Padding(
+                        padding:  EdgeInsets.only(top:18.0.h),
+                        child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              AppRichTextView(
+                                title: "Address: ",
+                                fontSize: 12.sp,
+                                fontWeight: FontWeight.w800,
+                                textColor: AppColors.colorGrey,
+                              ),
+                              Flexible(
+                                child: AppRichTextView(
+                                  maxLines: 3,
+                                  title: facultyData.address!,
+                                  fontSize: 12.sp,
+                                  fontWeight: FontWeight.w800,
+                                  textColor: AppColors.colorWhite,
                                 ),
                               ),
-                            )
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(top: 18.0.h, left: 10.h),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: [
-                                AppRichTextView(
-                                  title: facultyData.firstName! +
-                                      facultyData.lastName!,
-                                  fontSize: 24.sp,
-                                  fontWeight: FontWeight.bold,
-                                  textColor: AppColors.colorWhite,
-                                ),
-                                SizedBox(
-                                  width: 10.w,
-                                ),
-                                Container(
-                                  width: 117,
-                                  height: 43,
-                                  decoration: BoxDecoration(
-                                      borderRadius:
-                                          BorderRadius.circular(25.sp),
-                                      color: facultyData.jobType == "Part-Time"
-                                          ? AppColors.contentColorOrange
-                                          : facultyData.jobType == "Full-Time"
-                                              ? AppColors.color582
-                                              : AppColors.colorRed,
-                                      boxShadow: [
-                                        BoxShadow(
-                                            color: facultyData.jobType ==
-                                                    "Part-Time"
-                                                ? AppColors.contentColorOrange
-                                                : facultyData.jobType ==
-                                                        "Full-Time"
-                                                    ? AppColors.color582
-                                                    : AppColors.colorRed,
-                                            blurRadius: 10,
-                                            spreadRadius: 5)
-                                      ]),
-                                  child: Center(
-                                      child: AppRichTextView(
-                                    title: "Full-Time",
-                                    fontSize: 20.sp,
-                                    fontWeight: FontWeight.w600,
-                                    textColor: AppColors.colorWhite,
-                                  )),
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 20.h,
-                            ),
-                            Row(
-                              children: [
-                                AppRichTextView(
-                                  title: "Batch: ",
-                                  fontSize: 20.sp,
-                                  fontWeight: FontWeight.w800,
-                                  textColor: AppColors.colorGrey,
-                                ),
-                                AppRichTextView(
-                                  title: facultyData
-                                      .registeredCourse![0].courseName!,
-                                  fontSize: 20.sp,
-                                  fontWeight: FontWeight.w800,
-                                  textColor: AppColors.colorWhite,
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 10.h,
-                            ),
-                            Row(
-                              children: [
-                                AppRichTextView(
-                                  title: "Gender: ",
-                                  fontSize: 20.sp,
-                                  fontWeight: FontWeight.w800,
-                                  textColor: AppColors.colorGrey,
-                                ),
-                                AppRichTextView(
-                                  title: facultyData.gender!,
-                                  fontSize: 20.sp,
-                                  fontWeight: FontWeight.w800,
-                                  textColor: AppColors.colorWhite,
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 10.h,
-                            ),
-                            Row(
-                              children: [
-                                AppRichTextView(
-                                  title: "Email: ",
-                                  fontSize: 20.sp,
-                                  fontWeight: FontWeight.w800,
-                                  textColor: AppColors.colorGrey,
-                                ),
-                                AppRichTextView(
-                                  title: facultyData.email!,
-                                  fontSize: 20.sp,
-                                  fontWeight: FontWeight.w800,
-                                  textColor: AppColors.colorWhite,
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 10.h,
-                            ),
-                            Row(
-                              children: [
-                                AppRichTextView(
-                                  title: "Phone: ",
-                                  fontSize: 20.sp,
-                                  fontWeight: FontWeight.w800,
-                                  textColor: AppColors.colorGrey,
-                                ),
-                                AppRichTextView(
-                                  title: facultyData.mobile!,
-                                  fontSize: 20.sp,
-                                  fontWeight: FontWeight.w800,
-                                  textColor: AppColors.colorWhite,
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 10.h,
-                            ),
-                            Row(
-                              children: [
-                                AppRichTextView(
-                                  title: "DOB: ",
-                                  fontSize: 20.sp,
-                                  fontWeight: FontWeight.w800,
-                                  textColor: AppColors.colorGrey,
-                                ),
-                                AppRichTextView(
-                                  title: facultyData.dob!,
-                                  fontSize: 20.sp,
-                                  fontWeight: FontWeight.w800,
-                                  textColor: AppColors.colorWhite,
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                      Align(
-                          alignment: Alignment.centerRight,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              facultyData.accountCreated == false
-                                  ? AppElevatedButon(
-                                      title: "Create Account",
-                                      buttonColor: facultyData.jobType ==
-                                              "Part-Time"
-                                          ? AppColors.contentColorOrange
-                                          : facultyData.jobType == "Full-Time"
-                                              ? AppColors.color582
-                                              : AppColors.colorRed,
-                                      height: 40.h,
-                                      width: 180.w,
-                                      textColor: AppColors.colorWhite,
-                                      onPressed: (context) {
-                                        // showCreateAccountDialogue(context);
-                                      },
-                                    )
-                                  : Container()
                             ],
-                          ))
+                          ),
+                      ),)
+
+                     
+                   
                     ],
                   ),
                 ),
@@ -479,121 +478,15 @@ class _FacultyDetailViewState extends State<FacultyDetailView> {
                     padding: EdgeInsets.all(18.0.sp),
                     child: Column(
                       children: [
-                        Row(
-                          children: [
-                            AppRichTextView(
-                              title: "Joining Date: ",
-                              fontSize: 20.sp,
-                              fontWeight: FontWeight.w800,
-                              textColor: AppColors.colorGrey,
-                            ),
-                            AppRichTextView(
-                              title: facultyData.joiningDate!,
-                              fontSize: 20.sp,
-                              fontWeight: FontWeight.w800,
-                              textColor: AppColors.colorWhite,
-                            ),
-                          ],
-                        ),
+                       
+                       
+                        
+                        
+                       
                         SizedBox(
                           height: 10.h,
                         ),
-                        Row(
-                          children: [
-                            AppRichTextView(
-                              title: "FacultyID: ",
-                              fontSize: 20.sp,
-                              fontWeight: FontWeight.w800,
-                              textColor: AppColors.colorGrey,
-                            ),
-                            AppRichTextView(
-                              title: facultyData.facultyId!,
-                              fontSize: 20.sp,
-                              fontWeight: FontWeight.w800,
-                              textColor: AppColors.colorWhite,
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 10.h,
-                        ),
-                        Row(
-                          children: [
-                            AppRichTextView(
-                              title: "Course Assigned: ",
-                              fontSize: 20.sp,
-                              fontWeight: FontWeight.w800,
-                              textColor: AppColors.colorGrey,
-                            ),
-                            // AppRichTextView(
-                            //   title: facultyData.courseName!,
-                            //   fontSize: 20.sp,
-                            //   fontWeight: FontWeight.w800,
-                            //   textColor: AppColors.colorWhite,
-                            // ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 10.h,
-                        ),
-                        Row(
-                          children: [
-                            AppRichTextView(
-                              title: "Qualification: ",
-                              fontSize: 20.sp,
-                              fontWeight: FontWeight.w800,
-                              textColor: AppColors.colorGrey,
-                            ),
-                            AppRichTextView(
-                              title: facultyData.qualifiation!,
-                              fontSize: 20.sp,
-                              fontWeight: FontWeight.w800,
-                              textColor: AppColors.colorWhite,
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 10.h,
-                        ),
-                        Row(
-                          children: [
-                            AppRichTextView(
-                              title: "Passport Number: ",
-                              fontSize: 20.sp,
-                              fontWeight: FontWeight.w800,
-                              textColor: AppColors.colorGrey,
-                            ),
-                            AppRichTextView(
-                              title: facultyData.passportNumber!,
-                              fontSize: 20.sp,
-                              fontWeight: FontWeight.w800,
-                              textColor: AppColors.colorWhite,
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 10.h,
-                        ),
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            AppRichTextView(
-                              title: "Address: ",
-                              fontSize: 20.sp,
-                              fontWeight: FontWeight.w800,
-                              textColor: AppColors.colorGrey,
-                            ),
-                            Flexible(
-                              child: AppRichTextView(
-                                maxLines: 3,
-                                title: facultyData.address!,
-                                fontSize: 20.sp,
-                                fontWeight: FontWeight.w800,
-                                textColor: AppColors.colorWhite,
-                              ),
-                            ),
-                          ],
-                        ),
+                       
                       ],
                     ),
                   ),

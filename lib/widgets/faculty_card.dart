@@ -2,43 +2,53 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import 'package:rugst_alliance_academia/data/model/faculty_model.dart';
+
 import 'package:rugst_alliance_academia/theme/app_colors.dart';
 import 'package:rugst_alliance_academia/util/index.dart';
+
 
 import 'package:rugst_alliance_academia/widgets/app_richtext.dart';
 
 class FacultyCardWidget extends StatelessWidget {
+  final int index;
   final String userImage;
   final String facultyName;
-  final String assignedSubject;
+  final List<RegisteredCourse>? registeredCourse;
   final String facultyType;
   final String mobileNumber;
   final String email;
   final String citizenship;
   final String dob;
   final String gender;
-  final String batch;
+
+  final bool isMultipleCourse;
 
   final String address;
   final String pasportNumber;
 
   const FacultyCardWidget(
       {super.key,
+      required this.index,
       required this.facultyName,
       required this.userImage,
-      required this.assignedSubject,
       required this.facultyType,
       required this.mobileNumber,
       required this.email,
       required this.citizenship,
       required this.dob,
       required this.gender,
-      required this.batch,
+      required this.registeredCourse,
       required this.address,
-      required this.pasportNumber});
+      required this.pasportNumber,
+      required this.isMultipleCourse});
 
   @override
   Widget build(BuildContext context) {
+    
+
+  
     return Padding(
       padding: EdgeInsets.all(8.0.sp),
       child: Column(
@@ -47,7 +57,9 @@ class FacultyCardWidget extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Image.asset(ImagePath.webMDILogo),
+              isMultipleCourse == true
+                  ? Image.asset(ImagePath.webMDILogo)
+                  : Container(),
               Padding(
                 padding: EdgeInsets.only(top: 4.0.h, right: 4.w),
                 child: Align(
@@ -105,36 +117,26 @@ class FacultyCardWidget extends StatelessWidget {
               )
             ],
           ),
-          Center(
-              child: AppRichTextView(
-            title: assignedSubject,
-            fontSize: 13.sp,
-            fontWeight: FontWeight.w600,
-            textColor: AppColors.colorWhite,
-          )),
+       
           SizedBox(
             height: 10.h,
           ),
-          Row(
-            children: [
-              Expanded(
-                  flex: 2,
-                  child: AppRichTextView(
-                    title: "Batch: ",
-                    fontSize: 12.sp,
-                    fontWeight: FontWeight.w800,
-                    textColor: AppColors.colorGrey,
-                  )),
-              Expanded(
-                  flex: 2,
-                  child: AppRichTextView(
-                    title: batch,
-                    fontSize: 12.sp,
-                    fontWeight: FontWeight.w800,
-                    textColor: AppColors.colorWhite,
-                  )),
-            ],
+          Expanded(
+             flex: 2,
+              child: ListView.builder(
+                shrinkWrap: true,
+                itemCount: registeredCourse!.length,
+                itemBuilder: (context, index) {
+                  return AppRichTextView(
+            title: "${registeredCourse![index].courseName!} (${registeredCourse![index].batch})" ,
+            fontSize: 12.sp,
+            fontWeight: FontWeight.w800,
+            textColor: AppColors.colorWhite,
+          );
+                },
+              )
           ),
+          
           Row(
             children: [
               Expanded(

@@ -9,7 +9,8 @@ import 'package:rugst_alliance_academia/util/toast_helper.dart';
 class FacultyProvider extends ChangeNotifier {
   FacultyModel facultyModel = FacultyModel();
   FacultyModel get getDepts => facultyModel;
-
+ int _selectedIndex = -1;
+   int get selectedIndex => _selectedIndex;
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
@@ -38,6 +39,18 @@ class FacultyProvider extends ChangeNotifier {
   String? citizenshipcontroller;
   String get cizizen => citizenshipcontroller!;
 
+
+void selectTile(int index) {
+if(_selectedIndex == index){
+   // If the same tile is selected again, unselect it
+        _selectedIndex = -1;
+}else{
+  _selectedIndex = index;
+  notifyListeners();
+}
+
+
+}
 //  getFaculty list
   Future getFaculty(String token) async {
     setLoading(true);
@@ -158,7 +171,54 @@ class FacultyProvider extends ChangeNotifier {
       return null;
     }
   }
+ Future updateCourseInFaculty(String token,
+      {required int programId,
+      required int classId,
+      required String courseCode,
+      required String courseName,
+      required String batch,
+      required int facultyId,
+ }) async {
 
+   setLoading(true);
+
+    try {
+      var result = await ApiHelper.post(
+          "AddCourseFaculty",
+          {
+            "programId": programId,
+            "classId": classId,
+            "courseCode": courseCode,
+            "courseName": courseName,
+            "batch": batch,
+            "facultyId": facultyId,
+         
+          },
+          token);
+      var data = json.decode(result.body);
+      print(data);
+
+      if (result.statusCode == 200) {
+        var data = json.decode(result.body);
+        await getFaculty(token);
+        setLoading(false);
+
+        notifyListeners();
+        ToastHelper().sucessToast(data["result"]);
+
+        return data;
+      } else {
+        setLoading(false);
+        notifyListeners();
+        ToastHelper().errorToast(data["Message"]);
+        return null;
+      }
+    } catch (e) {
+      setLoading(false);
+      ToastHelper().errorToast(e.toString());
+      return null;
+    }
+ }
 // set FIRSTNAME value
   void setfirstName(String value) async {
     firstNamecontroller = value;
@@ -223,4 +283,5 @@ class FacultyProvider extends ChangeNotifier {
     _isNewUser = isNew;
     notifyListeners();
   }
+  
 }

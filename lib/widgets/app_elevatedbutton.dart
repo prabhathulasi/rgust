@@ -14,6 +14,7 @@ class AppElevatedButon extends StatelessWidget {
       this.height,
       this.loading = false,
       this.textColor,
+      this.borderColor,
       this.buttonColor})
       : super(key: key);
   final double? width;
@@ -23,6 +24,7 @@ class AppElevatedButon extends StatelessWidget {
   final Color? textColor;
   final Color? buttonColor;
   final bool loading;
+  final Color? borderColor;
 
   @override
   Widget build(BuildContext context) {
@@ -37,8 +39,8 @@ class AppElevatedButon extends StatelessWidget {
               shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                   RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10.0),
-                      side: const BorderSide(
-                          color: AppColors.coloraeb, width: 2.0)))),
+                      side:  BorderSide(
+                          color:borderColor ?? AppColors.coloraeb, width: 3.0)))),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[

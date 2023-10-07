@@ -139,13 +139,21 @@ class _AddFacultyViewState extends State<AddFacultyView> {
                           SizedBox(
                             height: 10.h,
                           ),
-                          CircleAvatar(
-                            backgroundColor: AppColors.colorc7e,
-                            radius: 60.sp,
-                            backgroundImage: imageEncoded == null
-                                ? const AssetImage(ImagePath.webfacultyfLogo)
-                                : MemoryImage(bytesFromPicker!)
-                                    as ImageProvider,
+                          Consumer<FacultyProvider>(
+                            builder: (context, facultyConsumer, child) {
+                              return   facultyConsumer.selectedIndex == -1?  CircleAvatar(
+                                backgroundColor: AppColors.colorc7e,
+                                radius: 60.sp,
+                                backgroundImage: imageEncoded == null
+                                    ? const AssetImage(ImagePath.webfacultyfLogo):
+                                   MemoryImage(bytesFromPicker!)  
+                                        as ImageProvider 
+                              ):CircleAvatar(
+                                 backgroundColor: AppColors.colorc7e,
+                                radius: 60.sp,
+                                backgroundImage: MemoryImage(base64Decode(facultyConsumer.facultyModel.facultyList![facultyProvider.selectedIndex].userImage!)),
+                              );
+                            }
                           ),
                           SizedBox(
                             height: 10.h,
@@ -1033,23 +1041,37 @@ class _AddFacultyViewState extends State<AddFacultyView> {
                               itemBuilder: (context, index) {
                                 var data =
                                     facultyProvider.facultyModel.facultyList;
-                                return Container(
-                                  color: AppColors.colorc7e,
-                                  child: ListTile(
-                                    leading: CircleAvatar(
-                                      child: AppRichTextView(
-                                        fontSize: 15.sp,
-                                        title: data![index].firstName![0] +
-                                            data[index].lastName![0],
-                                        fontWeight: FontWeight.bold,
+                                return InkWell(
+
+                                  onTap: () {
+                                    facultyProvider.selectTile(index);
+                                  },
+                                  child: Padding(
+                                    padding:  EdgeInsets.all(8.0.sp),
+                                    child: Container(
+                                      color: AppColors.colorc7e,
+                                      child: ListTile(
+                                        trailing: facultyProvider.selectedIndex == index?  const Icon(
+                  Icons.check_circle,
+                  color: Colors.green,
+                )
+              : null,
+                                        leading: CircleAvatar(
+                                          child: AppRichTextView(
+                                            fontSize: 15.sp,
+                                            title: data![index].firstName![0] +
+                                                data[index].lastName![0],
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        title: AppRichTextView(
+                                          fontSize: 15.sp,
+                                          title: data[index].firstName! +
+                                              data[index].lastName!,
+                                          fontWeight: FontWeight.bold,
+                                          textColor: AppColors.colorWhite,
+                                        ),
                                       ),
-                                    ),
-                                    title: AppRichTextView(
-                                      fontSize: 15.sp,
-                                      title: data[index].firstName! +
-                                          data[index].lastName!,
-                                      fontWeight: FontWeight.bold,
-                                      textColor: AppColors.colorWhite,
                                     ),
                                   ),
                                 );
@@ -1064,12 +1086,88 @@ class _AddFacultyViewState extends State<AddFacultyView> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        AppElevatedButon(
-                            title: "Save",
+                      facultyProvider.isNewUser == true?AppElevatedButon(
+                          borderColor: AppColors.colorGreen,
+                          title: "Amend",
+                          buttonColor: AppColors.colorc7e,
+                          textColor: AppColors.colorWhite,
+                          height: 50.h,
+                          width: 150.w,
+                          onPressed: (context) async{
+                             
+if (programProvider.selectedDept == null) {
+                                Fluttertoast.showToast(
+                                    msg: "Please Select the Program");
+                              } else if (programProvider.selectedClass ==
+                                  null) {
+                                Fluttertoast.showToast(
+                                    msg: "Please Select the Class");
+                              } else if (programProvider.selectedBatch ==
+                                  null) {
+                                Fluttertoast.showToast(
+                                    msg: "Please Select the Batch");
+                              } else if (programProvider.selectedCourse ==
+                                  null) {
+                                Fluttertoast.showToast(
+                                    msg: "Please Select the Course");
+                              } else if(facultyProvider.selectedIndex == -1){
+                                 Fluttertoast.showToast(
+                                    msg: "Please Select Atleast one Faculty");
+                              }else{
+                                  var token = await getTokenAndUseIt();
+                                if (token == null) {
+                                  if (context.mounted) {
+                                    Navigator.pushNamed(
+                                        context, RouteNames.login);
+                                  }
+                                } else if (token == "Token Expired") {
+                                  ToastHelper().errorToast(
+                                      "Session Expired Please Login Again");
+
+                                  if (context.mounted) {
+                                    Navigator.pushNamed(
+                                        context, RouteNames.login);
+                                  }
+                                } 
+                                
+                                else {
+                                   var data =
+                                      programProvider.newData.where((element) {
+                                    return element["coursecode"] ==
+                                        programProvider.selectedCourse!;
+                                  }).toList();
+                                  setState(() {
+                                    selected_Course = data[0]["coursename"];
+                                  });
+                            
+                                  var result = await facultyProvider.updateCourseInFaculty(
+                                        token,
+                                        programId: int.parse(
+                                            programProvider.selectedDept!),
+                                        classId: int.parse(
+                                            programProvider.selectedClass!),
+                                        courseCode:
+                                            programProvider.selectedCourse!,
+                                        courseName: selected_Course!,
+                                        batch: programProvider.selectedBatch!,
+                                        facultyId:facultyProvider.facultyModel.facultyList![facultyProvider.selectedIndex].iD! );
+                                  
+
+                                    if (result != null) {
+                                      if (context.mounted) {
+                                        Navigator.pop(context);
+                                      }
+                                    }
+                                }
+                              }
+                          },
+                        ):  AppElevatedButon(
+                        borderColor: AppColors.colorGreen,
+                            title: "Hand in",
                             buttonColor: AppColors.colorc7e,
                             textColor: AppColors.colorWhite,
                             height: 50.h,
-                            width: 150.w,
+                            width: 160.w,
                             loading: facultyProvider.isLoading,
                             onPressed: (context) async {
                               if (imageEncoded == null) {
@@ -1096,7 +1194,9 @@ class _AddFacultyViewState extends State<AddFacultyView> {
                                   null) {
                                 Fluttertoast.showToast(
                                     msg: "Please Select the Course");
-                              } else {
+                              }
+                              
+                              else {
                                 var token = await getTokenAndUseIt();
                                 if (token == null) {
                                   if (context.mounted) {
@@ -1155,6 +1255,7 @@ class _AddFacultyViewState extends State<AddFacultyView> {
                           width: 10.h,
                         ),
                         AppElevatedButon(
+                          borderColor: AppColors.colorRed,
                           title: "Cancel",
                           buttonColor: AppColors.colorc7e,
                           textColor: AppColors.colorWhite,

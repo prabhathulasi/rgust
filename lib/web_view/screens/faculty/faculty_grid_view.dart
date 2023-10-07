@@ -194,7 +194,7 @@ class _FacultyGridViewState extends State<FacultyGridView> {
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: size.width <= 1400 ? 4 : 6,
                   //  childAspectRatio:
-                  childAspectRatio: size.width <= 1400 ? 1 / 0.9 : 1 / 1.3),
+                  childAspectRatio: size.width <= 1400 ? 1 / 1 : 1 / 1.3),
               itemBuilder: (context, index) {
                 var facultydata =
                     facultyProvider.facultyModel.facultyList![index];
@@ -207,18 +207,19 @@ class _FacultyGridViewState extends State<FacultyGridView> {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(18.sp)),
                     child: FacultyCardWidget(
+                      index: index,
+                      isMultipleCourse: facultydata.registeredCourse!.length > 1 ? true : false,
                         userImage: facultydata.userImage!,
                         facultyName:
                             facultydata.firstName! + facultydata.lastName!,
-                        assignedSubject:
-                            facultydata.registeredCourse![0].courseName!,
+                   
                         facultyType: facultydata.jobType!,
                         gender: facultydata.gender!,
                         mobileNumber: facultydata.mobile!,
                         email: facultydata.email!,
                         citizenship: facultydata.citizenship!,
                         dob: facultydata.dob!,
-                        batch: facultydata.registeredCourse![0].batch!,
+                      registeredCourse: facultydata.registeredCourse,
                         address: facultydata.address!,
                         pasportNumber: facultydata.passportNumber!),
                   ),
@@ -235,6 +236,7 @@ class _FacultyGridViewState extends State<FacultyGridView> {
             programProvider.selectedClass = null;
             programProvider.selectedBatch = null;
             programProvider.selectedCourse = null;
+            facultyProvider.selectTile(-1);
             programProvider.newData.clear();
             showAddAlertDialog(context);
           },
