@@ -5,12 +5,13 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:rugst_alliance_academia/data/provider/faculty_provider.dart';
+import 'package:rugst_alliance_academia/data/provider/file_upload_provider.dart';
 import 'package:rugst_alliance_academia/data/provider/login_provider.dart';
 import 'package:rugst_alliance_academia/data/provider/program_provider.dart';
+import 'package:rugst_alliance_academia/data/provider/student_provider.dart';
 
 import 'package:rugst_alliance_academia/mobile_view/screens/splash_screen.dart';
 import 'package:rugst_alliance_academia/routes/named_routes.dart';
-import 'package:rugst_alliance_academia/web_view/screens/dashboard/home_view.dart';
 import 'package:rugst_alliance_academia/web_view/screens/dashboard/vertical_tab_view.dart';
 import 'package:rugst_alliance_academia/web_view/screens/login_view.dart';
 
@@ -53,6 +54,13 @@ class MyApp extends StatelessWidget {
                       ChangeNotifierProvider(
                         create: (context) => FacultyProvider(),
                       ),
+                       ChangeNotifierProvider(
+                        create: (context) => StudentProvider(),
+                      ),
+                       ChangeNotifierProvider(
+                        create: (context) => FileUploadProvider(),
+                      ),
+                    
                     ],
                     builder: (context, child) {
                       return MaterialApp(
@@ -61,8 +69,7 @@ class MyApp extends StatelessWidget {
                           routes: {
                             RouteNames.welcome: (context) =>
                                 const VerticalTabView(),
-                            RouteNames.studentDetail: (context) =>
-                                const StudentDetailView()
+                     
                           },
                           title: 'Academia',
                           theme: ThemeData(

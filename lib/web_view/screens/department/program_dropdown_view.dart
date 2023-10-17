@@ -38,7 +38,12 @@ class _ProgramDropdownState extends State<ProgramDropdown> {
           Navigator.pushNamed(context, RouteNames.login);
         }
       } else {
-        await programProvider.getProgram(token);
+        var result = await programProvider.getProgram(token);
+        if(result =="Invalid token"){
+           if (context.mounted) {
+          Navigator.pushNamed(context, RouteNames.login);
+        }
+        }
       }
     }
 

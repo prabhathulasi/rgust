@@ -1,0 +1,154 @@
+class StudentModel {
+  String? message;
+  List<StudentList>? studentList;
+
+  StudentModel({this.message, this.studentList});
+
+  StudentModel.fromJson(Map<String, dynamic> json) {
+    message = json['Message'];
+    if (json['StudentList'] != null) {
+      studentList = <StudentList>[];
+      json['StudentList'].forEach((v) {
+        studentList!.add(new StudentList.fromJson(v));
+      });
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['Message'] = message;
+    if (studentList != null) {
+      data['StudentList'] = studentList!.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
+}
+
+class StudentList {
+  int? iD;
+  String? createdAt;
+  String? updatedAt;
+  String? deletedAt;
+  String? studentRegiterNumber;
+  int? currentProgramId;
+  String? currentProgramName;
+  int? currentClassId;
+  String? currentClassName;
+  String? batch;
+  String? admissionDate;
+  int? emergencyContact;
+  String? firstName;
+  String? lastName;
+  String? email;
+  int? mobileNumber;
+  String? dOB;
+  String? gender;
+  String? address;
+  int? tutionFee;
+  String? userImage;
+  String? studentType;
+  String? mailingAddress;
+  String? passportNumber;
+  String? citizenship;
+  bool? accountCreated;
+  List<dynamic>? registeredCourse;
+
+  StudentList(
+      {this.iD,
+      this.createdAt,
+      this.updatedAt,
+      this.deletedAt,
+      this.studentRegiterNumber,
+      this.currentProgramId,
+      this.currentProgramName,
+      this.currentClassId,
+      this.currentClassName,
+      this.batch,
+      this.admissionDate,
+      this.emergencyContact,
+      this.firstName,
+      this.lastName,
+      this.email,
+      this.mobileNumber,
+      this.dOB,
+      this.gender,
+      this.address,
+      this.tutionFee,
+      this.userImage,
+      this.studentType,
+      this.mailingAddress,
+      this.passportNumber,
+      this.citizenship,
+      this.accountCreated,
+      this.registeredCourse});
+
+  StudentList.fromJson(Map<String, dynamic> json) {
+    iD = json['ID'];
+    createdAt = json['CreatedAt'];
+    updatedAt = json['UpdatedAt'];
+    deletedAt = json['DeletedAt'];
+    studentRegiterNumber = json['StudentRegiterNumber'];
+    currentProgramId = json['CurrentProgramId'];
+    currentProgramName = json['CurrentProgramName'];
+    currentClassId = json['CurrentClassId'];
+    currentClassName = json['CurrentClassName'];
+    batch = json['Batch'];
+    admissionDate = json['AdmissionDate'];
+    emergencyContact = json['EmergencyContact'];
+    firstName = json['FirstName'];
+    lastName = json['LastName'];
+    email = json['Email'];
+    mobileNumber = json['MobileNumber'];
+    dOB = json['DOB'];
+    gender = json['Gender'];
+    address = json['Address'];
+    tutionFee = json['TutionFee'];
+    userImage = json['UserImage'];
+    studentType = json['StudentType'];
+    mailingAddress = json['MailingAddress'];
+    passportNumber = json['PassportNumber'];
+    citizenship = json['Citizenship'];
+    accountCreated = json['AccountCreated'];
+    // if (json['RegisteredCourse'] != null) {
+    //   registeredCourse = <Null>[];
+    //   json['RegisteredCourse'].forEach((v) {
+    //     registeredCourse!.add(new Null.fromJson(v));
+    //   });
+    // }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['ID'] = iD;
+    data['CreatedAt'] = createdAt;
+    data['UpdatedAt'] = updatedAt;
+    data['DeletedAt'] = deletedAt;
+    data['StudentRegiterNumber'] = studentRegiterNumber;
+    data['CurrentProgramId'] = currentProgramId;
+    data['CurrentProgramName'] = currentProgramName;
+    data['CurrentClassId'] = currentClassId;
+    data['CurrentClassName'] = currentClassName;
+    data['Batch'] = batch;
+    data['AdmissionDate'] = admissionDate;
+    data['EmergencyContact'] = emergencyContact;
+    data['FirstName'] = firstName;
+    data['LastName'] = lastName;
+    data['Email'] = email;
+    data['MobileNumber'] = mobileNumber;
+    data['DOB'] = dOB;
+    data['Gender'] = gender;
+    data['Address'] = address;
+    data['TutionFee'] = tutionFee;
+    data['UserImage'] = userImage;
+    data['StudentType'] = studentType;
+    data['MailingAddress'] = mailingAddress;
+    data['PassportNumber'] = passportNumber;
+    data['Citizenship'] = citizenship;
+    data['AccountCreated'] = accountCreated;
+    // if (this.registeredCourse != null) {
+    //   data['RegisteredCourse'] =
+    //       this.registeredCourse!.map((v) => v!.toJson()).toList();
+    // }
+    return data;
+  }
+}

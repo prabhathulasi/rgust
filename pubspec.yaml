@@ -52,6 +52,8 @@ dependencies:
   syncfusion_flutter_calendar: ^23.1.36
   shared_preferences: ^2.2.1
   jwt_decoder: ^2.0.1
+  file_picker: ^6.0.0
+  pdfx: ^2.4.0
   
 
 dev_dependencies:

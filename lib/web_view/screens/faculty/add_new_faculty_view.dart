@@ -92,7 +92,7 @@ class _AddFacultyViewState extends State<AddFacultyView> {
   }
 
   Uint8List? bytesFromPicker;
-  String? imageEncoded;
+    String? imageEncoded;
   TextEditingController dateinput = TextEditingController();
   TextEditingController dobinput = TextEditingController();
 

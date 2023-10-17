@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:rugst_alliance_academia/theme/app_colors.dart';
 import 'package:rugst_alliance_academia/util/index.dart';
+import 'package:rugst_alliance_academia/web_view/screens/dashboard/account_creation.dart';
 import 'package:rugst_alliance_academia/web_view/screens/dashboard/overview_view.dart';
 import 'package:rugst_alliance_academia/web_view/screens/department/program_view.dart';
 import 'package:rugst_alliance_academia/web_view/screens/faculty/faculty_list_view.dart';
 import 'package:rugst_alliance_academia/web_view/screens/student/student_list_view.dart';
 import 'package:rugst_alliance_academia/widgets/app_richtext.dart';
 import 'package:rugst_alliance_academia/widgets/app_vertical_tab.dart';
+
 
 
 
@@ -134,7 +136,7 @@ class _VerticalTabViewState extends State<VerticalTabView> {
           contents: <Widget>[
             const OverviewView(),
            const StudentListView(),
-             tabsContent('Dart'),
+         tabsContent('Dart'),
             const FacultyListView(),
             const ProgramView(),
               tabsContent('Dart'),
@@ -143,18 +145,7 @@ class _VerticalTabViewState extends State<VerticalTabView> {
                    tabsContent('Dart'),
                 
 
-            Container(
-                color: Colors.black12,
-                child: ListView.builder(
-                    itemCount: 10,
-                    itemExtent: 100,
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (context, index) {
-                      return Container(
-                        margin: const EdgeInsets.all(10),
-                        color: Colors.white30,
-                      );
-                    })),
+            const AccountCreationView()
           ],
         ),
       

@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:provider/provider.dart';
-import 'package:rugst_alliance_academia/data/provider/login_provider.dart';
 import 'package:rugst_alliance_academia/theme/app_colors.dart';
-import 'package:rugst_alliance_academia/widgets/app_elevatedbutton.dart';
 import 'package:rugst_alliance_academia/widgets/app_linechart.dart';
 import 'package:rugst_alliance_academia/widgets/app_richtext.dart';
 
@@ -19,7 +16,6 @@ class _OverviewViewState extends State<OverviewView> {
   String classValue = "All Classes";
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.sizeOf(context);
     return Scaffold(
       body: LayoutBuilder(
         builder: (context,constraints) {

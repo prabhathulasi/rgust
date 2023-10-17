@@ -39,11 +39,12 @@ class ApiHelper {
     return _handleResponse(response);
   }
 
-  static Future<dynamic> put(String endpoint, Map<String, dynamic> data) async {
+  static Future<dynamic> put(String endpoint, Map<String, dynamic> data, String token) async {
     final response = await http.put(
       Uri.parse('$baseUrl/$endpoint'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
+         "Authorization": "Bearer $token"
       },
       body: jsonEncode(data),
     );

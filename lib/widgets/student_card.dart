@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -20,6 +21,7 @@ class StudentCardWidget extends StatelessWidget {
   final String currentClass;
   final String address;
   final String pasportNumber;
+  final Uint8List userImage;
 
   const StudentCardWidget({super.key,
   required this.studentName,
@@ -32,7 +34,8 @@ class StudentCardWidget extends StatelessWidget {
   required this.program, 
   required this.currentClass,
   required this.address,
-  required this.pasportNumber
+  required this.pasportNumber,
+  required this.userImage
   });
 
 
@@ -82,73 +85,119 @@ AppColors.colorPurple,
                         ),
                 ),
               ),
-              CircleAvatar(
-                radius: 40.sp,
-                backgroundImage:const AssetImage(ImagePath.webtestLogo,),
+              Center(
+                child: CircleAvatar(
+                  radius: 42.sp,
+                  backgroundColor: AppColors.colorWhite,
+                  child: CircleAvatar(
+                    key: UniqueKey(),
+                    radius: 40.sp,
+                    backgroundImage: MemoryImage(userImage),
+                  ),
+                ),
               ),
               SizedBox(height: 10.h,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  AppRichTextView(title: studentName, fontSize: 16.sp, fontWeight: FontWeight.bold,textColor: AppColors.colorWhite,),
+                  AppRichTextView(title: studentName,   fontSize: 14.sp,
+                fontWeight: FontWeight.bold,
+                textColor: AppColors.colorWhite,),
                   const Icon(Icons.male,color: AppColors.colorWhite,)
                 ],
               ),
         
-        AppRichTextView(title: studentType, fontSize: 13.sp, fontWeight: FontWeight.w600,textColor: AppColors.colorWhite,),
+        AppRichTextView(title: "$studentType Student",  fontSize: 12.sp,
+            fontWeight: FontWeight.w800,
+            textColor: AppColors.colorWhite,),
+            SizedBox(height: 10.h,),
         Row(
           children: [
-            AppRichTextView(title: "Mobile Number: ", fontSize: 12.sp, fontWeight: FontWeight.w500,textColor: AppColors.colorWhite,),
-            AppRichTextView(title: mobileNumber, fontSize: 10.sp, fontWeight: FontWeight.w400,textColor: AppColors.colorWhite,),
+            Expanded(
+              flex: 2,
+              child: AppRichTextView(title: "Mobile Number: ",   fontSize: 12.sp,
+                    fontWeight: FontWeight.w800,
+                    textColor: AppColors.colorGrey,)),
+             Expanded(
+              flex: 2,child: AppRichTextView(title: mobileNumber,  fontSize: 12.sp,
+                    fontWeight: FontWeight.w800,
+                    textColor: AppColors.colorWhite,)),
           ],
         ),
         Row(
           children: [
-            AppRichTextView(title: "Email Address: ", fontSize: 12.sp, fontWeight: FontWeight.w500,textColor: AppColors.colorWhite,),
-            AppRichTextView(title: email, fontSize: 10.sp, fontWeight: FontWeight.w400,textColor: AppColors.colorWhite,),
+            Expanded(
+              flex: 2,child: AppRichTextView(title: "Email Address: ",   fontSize: 12.sp,
+                    fontWeight: FontWeight.w800,
+                    textColor: AppColors.colorGrey,)),
+             Expanded(
+              flex: 2,  child: AppRichTextView(title: email,  fontSize: 12.sp,
+                    fontWeight: FontWeight.w800,
+                    textColor: AppColors.colorWhite,)),
           ],
         ),
 Row(
           children: [
-            AppRichTextView(title: "Citizenship: ", fontSize: 12.sp, fontWeight: FontWeight.w500,textColor: AppColors.colorWhite,),
-            AppRichTextView(title: citizenship, fontSize: 10.sp, fontWeight: FontWeight.w400,textColor: AppColors.colorWhite,),
+             Expanded(
+              flex: 2,child: AppRichTextView(title: "Citizenship: ",   fontSize: 12.sp,
+                    fontWeight: FontWeight.w800,
+                    textColor: AppColors.colorGrey,)),
+             Expanded(
+              flex: 2,child: AppRichTextView(title: citizenship,  fontSize: 12.sp,
+                    fontWeight: FontWeight.w800,
+                    textColor: AppColors.colorWhite,)),
           ],
         ),
         Row(
           children: [
-            AppRichTextView(title: "DOB: ", fontSize: 12.sp, fontWeight: FontWeight.w500,textColor: AppColors.colorWhite,),
-            AppRichTextView(title: dob, fontSize: 10.sp, fontWeight: FontWeight.w400,textColor: AppColors.colorWhite,),
+             Expanded(
+              flex: 2,child: AppRichTextView(title: "DOB: ",   fontSize: 12.sp,
+                    fontWeight: FontWeight.w800,
+                    textColor: AppColors.colorGrey,)),
+             Expanded(
+              flex: 2,child: AppRichTextView(title: dob,  fontSize: 12.sp,
+                    fontWeight: FontWeight.w800,
+                    textColor: AppColors.colorWhite,)),
           ],
         ),
         Row(
           children: [
-            AppRichTextView(title: "Program: ", fontSize: 12.sp, fontWeight: FontWeight.w500,textColor: AppColors.colorWhite,),
-            AppRichTextView(title: program, fontSize: 10.sp, fontWeight: FontWeight.w400,textColor: AppColors.colorWhite,),
+             Expanded(
+              flex: 2,child: AppRichTextView(title: "Program: ",   fontSize: 12.sp,
+                    fontWeight: FontWeight.w800,
+                    textColor: AppColors.colorGrey,)),
+             Expanded(
+              flex: 2,child: AppRichTextView(title: program,  fontSize: 12.sp,
+                    fontWeight: FontWeight.w800,
+                    textColor: AppColors.colorWhite,)),
           ],
         ),
         Row(
           children: [
-            AppRichTextView(title: "Class: ", fontSize: 12.sp, fontWeight: FontWeight.w500,textColor: AppColors.colorWhite,),
-            AppRichTextView(title: currentClass, fontSize: 10.sp, fontWeight: FontWeight.w400,textColor: AppColors.colorWhite,),
+             Expanded(
+              flex: 2,child: AppRichTextView(title: "Class: ",   fontSize: 12.sp,
+                    fontWeight: FontWeight.w800,
+                    textColor: AppColors.colorGrey,)),
+             Expanded(
+              flex: 2,child: AppRichTextView(title: currentClass,  fontSize: 12.sp,
+                    fontWeight: FontWeight.w800,
+                    textColor: AppColors.colorWhite,)),
           ],
         ),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            AppRichTextView(title: "Address: ", fontSize: 12.sp, fontWeight: FontWeight.w500,textColor: AppColors.colorWhite,),
-            
-            Flexible(child: AppRichTextView(title: address, maxLines: 3, fontSize: 10.sp, fontWeight: FontWeight.w400,textColor: AppColors.colorWhite,)),
-          ],
-        ),
+        
         const Divider(
           color: AppColors.colorWhite,
         ),
          Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            AppRichTextView(title: "Passport Number: ", fontSize: 12.sp, fontWeight: FontWeight.w500,textColor: AppColors.colorWhite,),
+            AppRichTextView(title: "Passport Number: ",   fontSize: 12.sp,
+                    fontWeight: FontWeight.w800,
+                    textColor: AppColors.colorGrey,),
             
-            AppRichTextView(title: pasportNumber,  fontSize: 10.sp, fontWeight: FontWeight.w400,textColor: AppColors.colorWhite,),
+            AppRichTextView(title: pasportNumber,   fontSize: 12.sp,
+                    fontWeight: FontWeight.w800,
+                    textColor: AppColors.colorWhite,),
           ],
         ),
 

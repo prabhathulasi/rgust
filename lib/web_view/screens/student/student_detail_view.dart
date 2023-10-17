@@ -1,561 +1,331 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
+import 'package:provider/provider.dart';
+import 'package:rugst_alliance_academia/data/model/faculty_model.dart';
+import 'package:rugst_alliance_academia/data/model/student_model.dart';
+import 'package:rugst_alliance_academia/data/provider/faculty_provider.dart';
 import 'package:rugst_alliance_academia/theme/app_colors.dart';
-import 'package:rugst_alliance_academia/util/index.dart';
+import 'package:rugst_alliance_academia/web_view/screens/faculty/faculty_attendance_view.dart';
+import 'package:rugst_alliance_academia/web_view/screens/faculty/faculty_tab_view.dart';
+import 'package:rugst_alliance_academia/web_view/screens/faculty/update_faculty_view.dart';
+import 'package:rugst_alliance_academia/web_view/screens/student/student_tab_view.dart';
 import 'package:rugst_alliance_academia/widgets/app_richtext.dart';
-import 'package:calendar_view/calendar_view.dart';
 
 class StudentDetailView extends StatefulWidget {
-  const StudentDetailView({super.key});
+  final StudentList studentDetails;
+  const StudentDetailView({super.key, required this.studentDetails});
 
   @override
-  State<StudentDetailView> createState() => _StudentDetailViewState();
+  State<StudentDetailView> createState() => _FacultyDetailViewState();
 }
 
-class _StudentDetailViewState extends State<StudentDetailView> {
+class _FacultyDetailViewState extends State<StudentDetailView> {
+  String? password;
+  
+
+
+
+
+
   @override
   Widget build(BuildContext context) {
-    final event = CalendarEventData(
-      title: "Anatomy-1",
-      date: DateTime(2023, 8, 26),
-    );
-    // final List<CalendarEventData> events = [
-    //   CalendarEventData(
-    //       title: "Anatomy-1", date: DateTime(2023, 8, 26), event: "event1"),
-    //   CalendarEventData(
-    //       date: DateTime(2023, 8, 26), title: "Anatomy-2", event: "event2"),
-    //   // Add more events as needed
-    // ];
+    final studentData = widget.studentDetails;
 
-    CalendarControllerProvider.of(context).controller.add(event);
-    // CalendarControllerProvider.of(context).controller.add(event2);
-    var size = MediaQuery.of(context).size;
-    return Scaffold(
-        backgroundColor: AppColors.colorc7e,
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+    return Container(
+      color: AppColors.color0ec,
+      child: Padding(
+        padding: EdgeInsets.all(8.0.sp),
+        child: Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.all(18.0),
-              child: Row(
-                children: [
-                  Card(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30.sp)),
-                    elevation: 1.0,
-                    child: Container(
-                      height: 400.h,
-                      width: size.width * 0.4,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(30.sp)),
-                      child: Padding(
-                        padding: EdgeInsets.all(18.0.sp),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+            Row(
+              children: [
+                Container(
+                  height: 339.h,
+                  width: 734.w,
+                  decoration: BoxDecoration(
+                      color: AppColors.colorc7e,
+                      borderRadius: BorderRadius.circular(18.sp)),
+                  child: Padding(
+                    padding: EdgeInsets.all(8.0.sp),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Row(
-                              children: [
-                                Container(
-                                  height: 40.h,
-                                  width: 12.w,
-                                  decoration: BoxDecoration(
-                                      color: AppColors.colorc7e,
-                                      borderRadius:
-                                          BorderRadius.circular(10.sp)),
-                                ),
-                                SizedBox(
-                                  width: 10.w,
-                                ),
-                                AppRichTextView(
-                                    title: "Student Details",
-                                    textColor: AppColors.colorc7e,
-                                    fontSize: 25.sp,
-                                    fontWeight: FontWeight.w700),
-                                const Spacer(),
-                                const Icon(
-                                  Icons.edit_outlined,
-                                  color: AppColors.colorc7e,
-                                )
-                              ],
-                            ),
-                            SizedBox(
-                              height: 20.h,
-                            ),
-                            Row(
-                              children: [
-                                CircleAvatar(
-                                  radius: 45.sp,
-                                  child: Center(
-                                    child: AppRichTextView(
-                                        title: "K",
-                                        textColor: AppColors.colorc7e,
-                                        fontSize: 35.sp,
-                                        fontWeight: FontWeight.w900),
+                            Padding(
+                              padding: EdgeInsets.only(left: 8.0.w),
+                              child: Stack(
+                                children: [
+                                  CircleAvatar(
+                                    radius: 80.sp,
+                                    backgroundImage: MemoryImage(
+                                        base64Decode(studentData.userImage!)),
                                   ),
-                                ),
-                                SizedBox(
-                                  width: 20.w,
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    AppRichTextView(
-                                        title: "Prabhakaran Thulasi",
-                                        textColor: AppColors.colorc7e,
-                                        fontSize: 25.sp,
-                                        fontWeight: FontWeight.w700),
-                                    SizedBox(
-                                      height: 10.h,
-                                    ),
-                                    Row(
-                                      children: [
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            AppRichTextView(
-                                                title: "Class",
-                                                textColor: AppColors.colorGrey,
-                                                fontSize: 20.sp,
-                                                fontWeight: FontWeight.w500),
-                                            AppRichTextView(
-                                                title: "MD-1",
-                                                textColor: AppColors.colorc7e,
-                                                fontSize: 20.sp,
-                                                fontWeight: FontWeight.w700),
-                                          ],
-                                        ),
-                                        SizedBox(
-                                          width: 60.w,
-                                        ),
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            AppRichTextView(
-                                                title: "Phone Number",
-                                                textColor: AppColors.colorGrey,
-                                                fontSize: 20.sp,
-                                                fontWeight: FontWeight.w500),
-                                            AppRichTextView(
-                                                title: "+917305822599",
-                                                textColor: AppColors.colorc7e,
-                                                fontSize: 20.sp,
-                                                fontWeight: FontWeight.w700),
-                                          ],
-                                        ),
-                                        SizedBox(
-                                          width: 60.w,
-                                        ),
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            AppRichTextView(
-                                                title: "Email Address",
-                                                textColor: AppColors.colorGrey,
-                                                fontSize: 20.sp,
-                                                fontWeight: FontWeight.w500),
-                                            AppRichTextView(
-                                                title: "Prabha709@gmail.com",
-                                                textColor: AppColors.colorc7e,
-                                                fontSize: 20.sp,
-                                                fontWeight: FontWeight.w700),
-                                          ],
-                                        ),
-                                      ],
-                                    )
-                                  ],
-                                )
-                              ],
-                            ),
-                            SizedBox(height: 30.h),
-                            Row(
-                              children: [
-                                Card(
-                                  elevation: 2.0,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(20.sp),
-                                  ),
-                                  child: SizedBox(
-                                    height: 100.h,
-                                    child: Padding(
-                                      padding: EdgeInsets.all(18.0.sp),
-                                      child: Row(
-                                        children: [
-                                          Image.asset(
-                                            ImagePath.webattendanceLogo,
-                                            width: 50.w,
-                                          ),
-                                          SizedBox(
-                                            width: 10.w,
-                                          ),
-                                          Padding(
-                                            padding:
-                                                EdgeInsets.only(top: 8.0.h),
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                AppRichTextView(
-                                                    title: "302",
-                                                    textColor:
-                                                        AppColors.colorc7e,
-                                                    fontSize: 20.sp,
-                                                    fontWeight:
-                                                        FontWeight.w800),
-                                                AppRichTextView(
-                                                    title: "Total Attendance",
-                                                    textColor:
-                                                        AppColors.colorGrey,
-                                                    fontSize: 15.sp,
-                                                    fontWeight:
-                                                        FontWeight.w500),
-                                              ],
+                                  Transform.translate(
+                                    offset: Offset(130.w, 150.h),
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(25.sp),
+                                          boxShadow: const [
+                                            BoxShadow(
+                                                color: AppColors.color582,
+                                                           
+                                                blurRadius: 10,
+                                                spreadRadius: 5)
+                                          ]),
+                                      child: InkWell(
+                                        onTap: () {
+                                        //  facultyProvider.updateJobType(false);
+                                        //  facultyProvider.updateGender(false);
+                                        //  showAddAlertDialog(context, facultyData);
+                                        },
+                                        child: CircleAvatar(
+                                          radius: 15.sp,
+                                          backgroundColor:
+                                             AppColors.color582,
+                                                     
+                                          child: Center(
+                                            child: Icon(
+                                              Icons.edit,
+                                              size: 20.sp,
+                                              color: AppColors.colorWhite,
                                             ),
-                                          )
-                                        ],
+                                          ),
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                ),
-                                Card(
-                                  elevation: 2.0,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(20.sp),
-                                  ),
-                                  child: SizedBox(
-                                    height: 100.h,
-                                    child: Padding(
-                                      padding: EdgeInsets.all(18.0.sp),
-                                      child: Row(
-                                        children: [
-                                          Image.asset(
-                                            ImagePath.webcheckInLogo,
-                                            width: 50.w,
-                                          ),
-                                          SizedBox(
-                                            width: 10.w,
-                                          ),
-                                          Padding(
-                                            padding:
-                                                EdgeInsets.only(top: 8.0.h),
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                AppRichTextView(
-                                                    title: "8:42 AM",
-                                                    textColor:
-                                                        AppColors.colorc7e,
-                                                    fontSize: 20.sp,
-                                                    fontWeight:
-                                                        FontWeight.w800),
-                                                AppRichTextView(
-                                                    title:
-                                                        "Averge Check In Time",
-                                                    textColor:
-                                                        AppColors.colorGrey,
-                                                    fontSize: 15.sp,
-                                                    fontWeight:
-                                                        FontWeight.w500),
-                                              ],
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Card(
-                                  elevation: 2.0,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(20.sp),
-                                  ),
-                                  child: SizedBox(
-                                    height: 100.h,
-                                    child: Padding(
-                                      padding: EdgeInsets.all(18.0.sp),
-                                      child: Row(
-                                        children: [
-                                          Image.asset(
-                                            ImagePath.webcheckOutLogo,
-                                            width: 50.w,
-                                          ),
-                                          SizedBox(
-                                            width: 10.w,
-                                          ),
-                                          Padding(
-                                            padding:
-                                                EdgeInsets.only(top: 8.0.h),
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                AppRichTextView(
-                                                    title: "5:00 PM",
-                                                    textColor:
-                                                        AppColors.colorc7e,
-                                                    fontSize: 20.sp,
-                                                    fontWeight:
-                                                        FontWeight.w800),
-                                                AppRichTextView(
-                                                    title:
-                                                        "Averge Check In Time",
-                                                    textColor:
-                                                        AppColors.colorGrey,
-                                                    fontSize: 15.sp,
-                                                    fontWeight:
-                                                        FontWeight.w500),
-                                              ],
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
+                                  )
+                                ],
+                              ),
+                            ),
+                            SizedBox(height: 10.h,),
+                            Row(
+                              children: [
+                                Tooltip(
+                                 
+                                
+                                  message:studentData.mobileNumber.toString() ,
+                                  child: const Icon(Icons.phone,color: AppColors.colorWhite,)),
+                                SizedBox(width: 5.w,),
+                                Tooltip(
+                                  message: studentData.email,
+                                  child: const Icon(Icons.mail,color: AppColors.colorWhite,)),
+                                SizedBox(width: 5.w,),
+                                Tooltip(
+                                  message: studentData.dOB,
+                                  child: const Icon(Icons.cake,color: AppColors.colorWhite,))
                               ],
                             ),
                           ],
                         ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Expanded(
-              child: Padding(
-                padding: EdgeInsets.only(top: 18.h, left: 18.w, right: 18.w),
-                child: Row(
-                  children: [
-                    Card(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30.sp)),
-                      child: Container(
-                        height: size.height * 0.6,
-                        width: size.width * 0.6,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(30.sp)),
-                        child: Padding(
-                          padding: EdgeInsets.all(18.0.sp),
-                          child: Column(
-                            children: [
-                              Row(
-                                children: [
-                                  Container(
-                                    height: 40.h,
-                                    width: 12.w,
-                                    decoration: BoxDecoration(
-                                        color: AppColors.colorc7e,
-                                        borderRadius:
-                                            BorderRadius.circular(10.sp)),
-                                  ),
-                                  SizedBox(
-                                    width: 10.w,
-                                  ),
-                                  AppRichTextView(
-                                      title: "Campus In Out History",
-                                      textColor: AppColors.colorc7e,
-                                      fontSize: 25.sp,
-                                      fontWeight: FontWeight.w700),
-                                ],
-                              ),
-                              SizedBox(
-                                height: 20.h,
-                              ),
-                              Expanded(
-                                child: GridView.builder(
-                                  shrinkWrap: true,
-                                  itemCount: 18,
-                                  gridDelegate:
-                                      const SliverGridDelegateWithFixedCrossAxisCount(
-                                          childAspectRatio: 2.5,
-                                          crossAxisCount: 3,
-                                          crossAxisSpacing: 4.0,
-                                          mainAxisSpacing: 4.0),
-                                  itemBuilder:
-                                      (BuildContext context, int index) {
-                                    return Card(
-                                      elevation: 2.0,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(20.sp),
-                                      ),
-                                      child: SizedBox(
-                                        height: 120.h,
-                                        width: 250.w,
-                                        child: Padding(
-                                          padding: EdgeInsets.all(18.0.sp),
-                                          child: Column(
-                                            children: [
-                                              Row(
-                                                children: [
-                                                  const Icon(
-                                                      Icons.timer_outlined),
-                                                  SizedBox(
-                                                    width: 10.w,
-                                                  ),
-                                                  AppRichTextView(
-                                                      title: "March 07 2023",
-                                                      textColor:
-                                                          AppColors.colorc7e,
-                                                      fontSize: 15.sp,
-                                                      fontWeight:
-                                                          FontWeight.w800),
-                                                  const Spacer(),
-                                                  Container(
-                                                    decoration: BoxDecoration(
-                                                        color: AppColors
-                                                            .colorGreen
-                                                            .shade100,
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(
-                                                                    10.sp)),
-                                                    child: Padding(
-                                                      padding: EdgeInsets.all(
-                                                          8.0.sp),
-                                                      child: AppRichTextView(
-                                                          title: "On Time",
-                                                          textColor: AppColors
-                                                              .colorGreen,
-                                                          fontSize: 8.sp,
-                                                          fontWeight:
-                                                              FontWeight.bold),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                              SizedBox(
-                                                height: 20.h,
-                                              ),
-                                              Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceEvenly,
-                                                children: [
-                                                  Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      AppRichTextView(
-                                                          title:
-                                                              "Check In Time",
-                                                          textColor: AppColors
-                                                              .colorc7e,
-                                                          fontSize: 12.sp,
-                                                          fontWeight:
-                                                              FontWeight.w400),
-                                                      AppRichTextView(
-                                                          title: "8:00 AM",
-                                                          textColor: AppColors
-                                                              .colorc7e,
-                                                          fontSize: 12.sp,
-                                                          fontWeight:
-                                                              FontWeight.w700),
-                                                    ],
-                                                  ),
-                                                  Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      AppRichTextView(
-                                                          title:
-                                                              "Check Out Time",
-                                                          textColor: AppColors
-                                                              .colorc7e,
-                                                          fontSize: 12.sp,
-                                                          fontWeight:
-                                                              FontWeight.w400),
-                                                      AppRichTextView(
-                                                          title: "4:00 PM",
-                                                          textColor: AppColors
-                                                              .colorc7e,
-                                                          fontSize: 12.sp,
-                                                          fontWeight:
-                                                              FontWeight.w700),
-                                                    ],
-                                                  )
-                                                ],
-                                              )
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: Card(
-                        elevation: 2.0,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30.sp)),
-                        child: SizedBox(
-                          height: size.height * 0.6,
-                          child: Column(
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.all(18.0.sp),
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                        Expanded(
+                          child: Padding(
+                            padding: EdgeInsets.only(top: 18.0.h, left: 10.h),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
                                   children: [
-                                    Container(
-                                      height: 40.h,
-                                      width: 12.w,
-                                      decoration: BoxDecoration(
-                                          color: AppColors.colorc7e,
-                                          borderRadius:
-                                              BorderRadius.circular(10.sp)),
-                                    ),
-                                    SizedBox(
-                                      width: 10.w,
-                                    ),
                                     AppRichTextView(
-                                        title: "Leave request",
-                                        textColor: AppColors.colorc7e,
-                                        fontSize: 25.sp,
-                                        fontWeight: FontWeight.w700),
+                                      title: studentData.firstName! +
+                                          studentData.lastName!,
+                                      fontSize: 24.sp,
+                                      fontWeight: FontWeight.bold,
+                                      textColor: AppColors.colorWhite,
+                                    ),
+                                     Icon(
+                 studentData.gender == "Male" ? Icons.male : Icons.female,
+                  color: AppColors.colorWhite,
+                )
                                   ],
                                 ),
-                              ),
-                              SizedBox(
-                                height: 20.h,
-                              ),
-                              Center(
-                                child: Image.asset(
-                                  ImagePath.webExitLogo,
-                                  width: 300.w,
+                                SizedBox(
+                                  height: 20.h,
                                 ),
-                              ),
-                              SizedBox(
-                                height: 20.h,
+                              
+                               
+                              Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              AppRichTextView(
+                                title: "Student Type: ",
+                                fontSize: 12.sp,
+                                fontWeight: FontWeight.w800,
+                                textColor: AppColors.colorGrey,
                               ),
                               AppRichTextView(
-                                  title: "No Leave request",
-                                  textColor: AppColors.colorc7e,
-                                  fontSize: 25.sp,
-                                  fontWeight: FontWeight.w700),
+                                title:studentData.studentType!,
+                                fontSize: 12.sp,
+                                fontWeight: FontWeight.w800,
+                                textColor: AppColors.colorWhite,
+                              ),
                             ],
                           ),
+                                        SizedBox(
+                                  height: 10.h,
+                                ),
+                               Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              AppRichTextView(
+                                title: "Current Class: ",
+                                fontSize: 12.sp,
+                                fontWeight: FontWeight.w800,
+                                textColor: AppColors.colorGrey,
+                              ),
+                              AppRichTextView(
+                                title:studentData.currentClassName!,
+                                fontSize: 12.sp,
+                                fontWeight: FontWeight.w800,
+                                textColor: AppColors.colorWhite,
+                              ),
+                            ],
+                          ),
+                                
+                           
+                                             SizedBox(
+                                  height: 10.h,
+                                ),
+                                            Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              AppRichTextView(
+                                title: "Joining Date: ",
+                                fontSize: 12.sp,
+                                fontWeight: FontWeight.w800,
+                                textColor: AppColors.colorGrey,
+                              ),
+                              AppRichTextView(
+                                title: studentData.admissionDate!,
+                                fontSize: 12.sp,
+                                fontWeight: FontWeight.w800,
+                                textColor: AppColors.colorWhite,
+                              ),
+                            ],
+                          ),
+                           SizedBox(
+                            height: 10.h,
+                          ),
+                          Row(
+                            children: [
+                              AppRichTextView(
+                                title: "Student Id: ",
+                                fontSize: 12.sp,
+                                fontWeight: FontWeight.w800,
+                                textColor: AppColors.colorGrey,
+                              ),
+                              AppRichTextView(
+                                title: studentData.studentRegiterNumber!,
+                                fontSize: 12.sp,
+                                fontWeight: FontWeight.w800,
+                                textColor: AppColors.colorWhite,
+                              ),
+                            ],
+                          ),
+                           SizedBox(
+                            height: 10.h,
+                          ),
+                          Row(
+                            children: [
+                              AppRichTextView(
+                                title: "Emergency Contact Number: ",
+                                fontSize: 12.sp,
+                                fontWeight: FontWeight.w800,
+                                textColor: AppColors.colorGrey,
+                              ),
+                              AppRichTextView(
+                                title: studentData.emergencyContact!.toString(),
+                                fontSize: 12.sp,
+                                fontWeight: FontWeight.w800,
+                                textColor: AppColors.colorWhite,
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 10.h,
+                          ),
+                          Row(
+                            children: [
+                              AppRichTextView(
+                                title: "Passport Number: ",
+                                fontSize: 12.sp,
+                                fontWeight: FontWeight.w800,
+                                textColor: AppColors.colorGrey,
+                              ),
+                              AppRichTextView(
+                                title: studentData.passportNumber!,
+                                fontSize: 12.sp,
+                                fontWeight: FontWeight.w800,
+                                textColor: AppColors.colorWhite,
+                              ),
+                            ],
+                          ),
+                              ],
+                            ),
+                          ),
                         ),
-                      ),
-                    )
-                  ],
+                        Expanded(child:  Padding(
+                          padding:  EdgeInsets.only(top:18.0.h),
+                          child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                AppRichTextView(
+                                  title: "Address: ",
+                                  fontSize: 12.sp,
+                                  fontWeight: FontWeight.w800,
+                                  textColor: AppColors.colorGrey,
+                                ),
+                                Flexible(
+                                  child: AppRichTextView(
+                                    maxLines: 3,
+                                    title: studentData.address!,
+                                    fontSize: 12.sp,
+                                    fontWeight: FontWeight.w800,
+                                    textColor: AppColors.colorWhite,
+                                  ),
+                                ),
+                              ],
+                            ),
+                        ),)
+    
+                       
+                     
+                      ],
+                    ),
+                  ),
                 ),
+                SizedBox(
+                  width: 8.w,
+                ),
+                Expanded(
+                  child: Container(
+                    height: 339.h,
+                    decoration: BoxDecoration(
+                        color: AppColors.colorc7e,
+                        borderRadius: BorderRadius.circular(18.sp)),
+                        child: const FacultyAttendanceView(),
+                 
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 8.h,
+            ),
+            Expanded(
+                child: Container(
+              decoration:
+                  BoxDecoration(borderRadius: BorderRadius.circular(18.sp)),
+              child:  StudentTabView(
+                studentId: studentData.iD!,
               ),
-            )
+            ))
           ],
-        ));
+        ),
+      ),
+    );
   }
 }

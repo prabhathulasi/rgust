@@ -76,11 +76,17 @@ class _FacultyListViewState extends State<FacultyListView> {
           Navigator.pushNamed(context, RouteNames.login);
         }
       } else {
-        await facultyProvider.getFaculty(token);
+        var result = await facultyProvider.getFaculty(token);
+         if(result =="Invalid Token"){
+           ToastHelper().errorToast("Session Expired Please Login Again");
+           if (context.mounted) {
+          Navigator.pushNamed(context, RouteNames.login);
+        }}
       }
     }
 
     return Scaffold(
+      backgroundColor: AppColors.color0ec,
       body: Padding(
         padding: EdgeInsets.all(18.0.sp),
         child: FutureBuilder(
@@ -111,7 +117,7 @@ class _FacultyListViewState extends State<FacultyListView> {
                         )
                       ],
                     ))
-                  : const FacultyGridView();
+                  : const  FacultyGridView();
             }
           },
         ),

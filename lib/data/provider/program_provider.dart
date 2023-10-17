@@ -24,6 +24,9 @@ class ProgramProvider extends ChangeNotifier {
   String? selectedCourse;
   String? selectedCourseName;
 
+   bool _isNewStudent = false;
+  bool get isNewStudent => _isNewStudent;
+
   ProgramModel get getDepts => programModel;
   ProgramClassModel get getDeptsClass => programClassModel;
   bool _isLoading = false;
@@ -42,7 +45,12 @@ class ProgramProvider extends ChangeNotifier {
         notifyListeners();
 
         return programModel;
-      } else {
+      } else if(result.statusCode == 401){
+        setLoading(false);
+        notifyListeners();
+       
+        return "Invalid token";
+      }else {
         setLoading(false);
         notifyListeners();
         ToastHelper().errorToast("Internal Server Error");
@@ -251,4 +259,10 @@ class ProgramProvider extends ChangeNotifier {
     selectedCourseName = value;
     notifyListeners();
   }
+
+  void selectStudentType(bool isNew) {
+    _isNewStudent = isNew;
+    notifyListeners();
+  }
+
 }
