@@ -3,12 +3,14 @@ import 'package:calendar_view/calendar_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:provider/provider.dart';
 import 'package:rugst_alliance_academia/data/provider/faculty_provider.dart';
 import 'package:rugst_alliance_academia/data/provider/file_upload_provider.dart';
 import 'package:rugst_alliance_academia/data/provider/login_provider.dart';
 import 'package:rugst_alliance_academia/data/provider/program_provider.dart';
 import 'package:rugst_alliance_academia/data/provider/student_provider.dart';
+import 'package:rugst_alliance_academia/data/provider/timesheet_provider.dart';
 
 import 'package:rugst_alliance_academia/mobile_view/screens/splash_screen.dart';
 import 'package:rugst_alliance_academia/routes/named_routes.dart';
@@ -60,10 +62,14 @@ class MyApp extends StatelessWidget {
                        ChangeNotifierProvider(
                         create: (context) => FileUploadProvider(),
                       ),
+                        ChangeNotifierProvider(
+                        create: (context) => TimeSheetProvider(),
+                      ),
                     
                     ],
                     builder: (context, child) {
                       return MaterialApp(
+                          navigatorObservers: [FlutterSmartDialog.observer],
                           debugShowCheckedModeBanner: false,
                           initialRoute: RouteNames.login,
                           routes: {

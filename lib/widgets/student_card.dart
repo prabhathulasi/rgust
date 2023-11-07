@@ -1,10 +1,8 @@
-import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:rugst_alliance_academia/theme/app_colors.dart';
-import 'package:rugst_alliance_academia/util/image_path.dart';
 import 'package:rugst_alliance_academia/widgets/app_richtext.dart';
 
 class StudentCardWidget extends StatelessWidget {
@@ -42,22 +40,7 @@ class StudentCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
- List<Color> predefinedColors = [
-  AppColors.color582,
- AppColors.contentColorYellow,
-  AppColors.colorRed,
-AppColors.colorPurple,
-  Colors.purple,
-  AppColors.colorGrey,
-  AppColors.colorf85,
-  // Add more colors as needed
-];
-    // Generate a random index
-    Random random = Random();
-    int randomIndex = random.nextInt(predefinedColors.length);
 
-    // Get the random color from the list
-    Color randomColor = predefinedColors[randomIndex];
 
    
     return Padding(
@@ -74,9 +57,9 @@ AppColors.colorPurple,
                           height: 10,
                           decoration:  BoxDecoration(
                             shape: BoxShape.circle,
-                            color: randomColor,
+                            color: studentType == "Regular"?AppColors.color582:AppColors.colorPurple,
                             boxShadow: [BoxShadow(
-                color:randomColor,
+                color:studentType == "Regular"?AppColors.color582:AppColors.colorPurple,
                 blurRadius: 10,
                 spreadRadius: 5
                             )]

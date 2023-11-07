@@ -42,6 +42,7 @@ class FacultyList {
   String? citizenship;
   String? userImage;
   bool? accountCreated;
+  int? userId;
   List<RegisteredCourse>? registeredCourse;
 
   FacultyList(
@@ -65,7 +66,9 @@ class FacultyList {
       this.citizenship,
       this.userImage,
       this.accountCreated,
-      this.registeredCourse});
+      this.registeredCourse,
+      this.userId
+      });
 
   FacultyList.fromJson(Map<String, dynamic> json) {
     iD = json['ID'];
@@ -87,6 +90,7 @@ class FacultyList {
     passportNumber = json['PassportNumber'];
     citizenship = json['Citizenship'];
     userImage = json['UserImage'];
+       userId = json['UserId'];
     accountCreated = json['AccountCreated'];
     if (json['RegisteredCourse'] != null) {
       registeredCourse = <RegisteredCourse>[];
@@ -117,6 +121,7 @@ class FacultyList {
     data['PassportNumber'] = passportNumber;
     data['Citizenship'] = citizenship;
     data['UserImage'] = userImage;
+    data["UserId"] = userId;
     data['AccountCreated'] = accountCreated;
     if (registeredCourse != null) {
       data['RegisteredCourse'] =

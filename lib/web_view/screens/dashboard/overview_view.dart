@@ -64,61 +64,7 @@ class _OverviewViewState extends State<OverviewView> {
                               ),
                             ],
                           ),
-                          // const Spacer(),
-                          // Padding(
-                          //   padding: EdgeInsets.only(left: 8.0.w),
-                          //   child: DropdownButtonHideUnderline(
-                          //     child: DropdownButton<String>(
-                          //       isExpanded: true,
-                          //       value: classValue,
-
-                          //       items: <String>[
-                          //         'All Classes',
-                          //         'MD1',
-                          //         'MD2',
-                          //         'MD3',
-                          //         'MD4'
-                          //       ].map<DropdownMenuItem<String>>((String value) {
-                          //         return DropdownMenuItem<String>(
-                          //           value: value,
-                          //           child: Text(
-                          //             value,
-                          //             style: TextStyle(
-                          //               fontSize: 15.sp,
-                          //               color: value == classValue
-                          //                   ? AppColors.colorWhite
-                          //                   : AppColors.colorc7e,
-                          //             ),
-                          //           ),
-                          //         );
-                          //       }).toList(),
-                          //       // Step 5.
-                          //       onChanged: (String? newValue) {
-                          //         setState(() {
-                          //           classValue = newValue!;
-                          //         });
-                          //       },
-                          //     ),
-                          //   ),
-                          // ),
-                          // SizedBox(
-                          //   width: 10.w,
-                          // ),
-                          // SizedBox(
-                          //     height: 35,
-                          //     child: Consumer<LoginProvider>(
-                          //         builder: (context, loginProvider, child) {
-                          //       return AppElevatedButon(
-                          //         title: "Filter",
-                          //         buttonColor: AppColors.color582,
-                          //         height: 50.h,
-                          //         width: 100.w,
-                          //         onPressed: (context) {
-                          //           // loginProvider.validate(context);
-                          //         },
-                          //         textColor: AppColors.colorWhite,
-                          //       );
-                          //     }))
+                      
                         ],
                       ),
                     ),
@@ -277,54 +223,7 @@ class _OverviewViewState extends State<OverviewView> {
                           ),
                         ),
                       ),
-                      Expanded(
-                        flex: 1,
-                        child: Card(
-                          elevation: 4.0,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15.sp)),
-                          child: Container(
-                            height: 150.h,
-                            width: 310.w,
-                            decoration: BoxDecoration(
-                                color: AppColors.colorWhite,
-                                borderRadius: BorderRadius.circular(15.sp)),
-                            child: Padding(
-                              padding: EdgeInsets.only(left: 35.0.w),
-                              child: Row(
-                                children: [
-                                  FaIcon(
-                                    FontAwesomeIcons.businessTime,
-                                    size: 40.sp,
-                                    color: AppColors.color582,
-                                  ),
-                                  SizedBox(
-                                    width: 10.w,
-                                  ),
-                                  Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      AppRichTextView(
-                                        title: "2",
-                                        fontSize: 30.sp,
-                                        fontWeight: FontWeight.bold,
-                                        textColor: AppColors.colorc7e,
-                                      ),
-                                      AppRichTextView(
-                                        title: "Late Today",
-                                        fontSize: 20.sp,
-                                        fontWeight: FontWeight.w400,
-                                        textColor: AppColors.colorGrey,
-                                      ),
-                                    ],
-                                  )
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
+                    
                         ],
                       ),
                     ),

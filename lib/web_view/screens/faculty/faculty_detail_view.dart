@@ -322,7 +322,7 @@ final facultyProvider = Provider.of<FacultyProvider>(context);
                     decoration: BoxDecoration(
                         color: AppColors.colorc7e,
                         borderRadius: BorderRadius.circular(18.sp)),
-                        child: const FacultyAttendanceView(),
+                        child:  FacultyAttendanceView(facultyDetail: widget.facultyDetail),
                  
                   ),
                 ),

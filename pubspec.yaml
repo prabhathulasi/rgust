@@ -54,6 +54,7 @@ dependencies:
   jwt_decoder: ^2.0.1
   file_picker: ^6.0.0
   pdfx: ^2.4.0
+  flutter_smart_dialog: ^4.9.4
   
 
 dev_dependencies:

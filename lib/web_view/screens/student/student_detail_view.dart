@@ -2,14 +2,9 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:provider/provider.dart';
-import 'package:rugst_alliance_academia/data/model/faculty_model.dart';
 import 'package:rugst_alliance_academia/data/model/student_model.dart';
-import 'package:rugst_alliance_academia/data/provider/faculty_provider.dart';
 import 'package:rugst_alliance_academia/theme/app_colors.dart';
 import 'package:rugst_alliance_academia/web_view/screens/faculty/faculty_attendance_view.dart';
-import 'package:rugst_alliance_academia/web_view/screens/faculty/faculty_tab_view.dart';
-import 'package:rugst_alliance_academia/web_view/screens/faculty/update_faculty_view.dart';
 import 'package:rugst_alliance_academia/web_view/screens/student/student_tab_view.dart';
 import 'package:rugst_alliance_academia/widgets/app_richtext.dart';
 
@@ -306,7 +301,7 @@ class _FacultyDetailViewState extends State<StudentDetailView> {
                     decoration: BoxDecoration(
                         color: AppColors.colorc7e,
                         borderRadius: BorderRadius.circular(18.sp)),
-                        child: const FacultyAttendanceView(),
+                        // child: const FacultyAttendanceView(),
                  
                   ),
                 ),

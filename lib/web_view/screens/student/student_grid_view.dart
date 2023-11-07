@@ -4,13 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:rugst_alliance_academia/data/model/faculty_model.dart';
 import 'package:rugst_alliance_academia/data/model/student_model.dart';
 import 'package:rugst_alliance_academia/data/provider/program_provider.dart';
 import 'package:rugst_alliance_academia/data/provider/student_provider.dart';
 import 'package:rugst_alliance_academia/theme/app_colors.dart';
-import 'package:rugst_alliance_academia/web_view/screens/faculty/add_new_faculty_view.dart';
-import 'package:rugst_alliance_academia/web_view/screens/faculty/faculty_detail_view.dart';
 import 'package:rugst_alliance_academia/web_view/screens/student/add_student_view.dart';
 import 'package:rugst_alliance_academia/web_view/screens/student/student_detail_view.dart';
 import 'package:rugst_alliance_academia/widgets/app_formfield.dart';
@@ -139,63 +136,120 @@ class _StudentGridViewState extends State<StudentGridView> {
                     ),
                   ),
                 ),
-                SizedBox(
-                  width: 10.w,
-                ),
-                Row(
-                  children: [
-                    Container(
-                      height: 10,
-                      width: 10,
-                      color: AppColors.contentColorOrange,
-                    ),
-                    SizedBox(
-                      width: 5.w,
-                    ),
-                    AppRichTextView(
-                        title: "Part-Time",
-                        fontSize: 13.sp,
-                        fontWeight: FontWeight.bold)
-                  ],
-                ),
-                SizedBox(
-                  width: 10.w,
-                ),
-                Row(
-                  children: [
-                    Container(
-                      height: 10,
-                      width: 10,
-                      color: AppColors.color582,
-                    ),
-                    SizedBox(
-                      width: 5.w,
-                    ),
-                    AppRichTextView(
-                        title: "Full-Time",
-                        fontSize: 13.sp,
-                        fontWeight: FontWeight.bold)
-                  ],
-                ),
-                SizedBox(
-                  width: 10.w,
-                ),
-                Row(
-                  children: [
-                    Container(
-                      height: 10,
-                      width: 10,
-                      color: AppColors.colorRed,
-                    ),
-                    SizedBox(
-                      width: 5.w,
-                    ),
-                    AppRichTextView(
-                        title: "Resigned",
-                        fontSize: 13.sp,
-                        fontWeight: FontWeight.bold)
-                  ],
-                ),
+                 SizedBox(
+                   width: 10.w,
+                 ),
+                 Row(
+                   children: [
+                     Container(
+                       height: 10,
+                       width: 10,
+                       color: AppColors.color582,
+                     ),
+                     SizedBox(
+                       width: 5.w,
+                     ),
+                     AppRichTextView(
+                         title: "Regular",
+                         fontSize: 13.sp,
+                         fontWeight: FontWeight.bold)
+                   ],
+                 ),
+                 SizedBox(
+                   width: 10.w,
+                 ),
+                 Row(
+                   children: [
+                     Container(
+                       height: 10,
+                       width: 10,
+                       color: AppColors.contentColorYellow,
+                     ),
+                     SizedBox(
+                       width: 5.w,
+                     ),
+                     AppRichTextView(
+                         title: "Widthdraw",
+                         fontSize: 13.sp,
+                         fontWeight: FontWeight.bold)
+                   ],
+                 ),
+                 SizedBox(
+                   width: 10.w,
+                 ),
+                 Row(
+                   children: [
+                     Container(
+                       height: 10,
+                       width: 10,
+                       color: AppColors.colorRed,
+                     ),
+                     SizedBox(
+                       width: 5.w,
+                     ),
+                     AppRichTextView(
+                         title: "Dropout",
+                         fontSize: 13.sp,
+                         fontWeight: FontWeight.bold)
+                   ],
+                 ),
+                 SizedBox(
+                   width: 10.w,
+                 ),
+                 Row(
+                   children: [
+                     Container(
+                       height: 10,
+                       width: 10,
+                       color: AppColors.colorPurple,
+                     ),
+                     SizedBox(
+                       width: 5.w,
+                     ),
+                     AppRichTextView(
+                         title: "Transfer",
+                         fontSize: 13.sp,
+                         fontWeight: FontWeight.bold)
+                   ],
+                 ),
+                 SizedBox(
+                   width: 10.w,
+                 ),
+                 Row(
+                   children: [
+                     Container(
+                       height: 10,
+                       width: 10,
+                       color: AppColors.colorGrey,
+                     ),
+                     SizedBox(
+                       width: 5.w,
+                     ),
+                     AppRichTextView(
+                         title: "Clinical",
+                         fontSize: 13.sp,
+                         fontWeight: FontWeight.bold)
+                   ],
+                 ),
+                 SizedBox(
+                   width: 10.w,
+                 ),
+                 Row(
+                   children: [
+                     Container(
+                       height: 10,
+                       width: 10,
+                       color: AppColors.colorf85,
+                     ),
+                     SizedBox(
+                       width: 5.w,
+                     ),
+                     AppRichTextView(
+                         title: "Leaf of Absent",
+                         fontSize: 13.sp,
+                         fontWeight: FontWeight.bold)
+                   ],
+                 ),
               ],
             ),
             SizedBox(
