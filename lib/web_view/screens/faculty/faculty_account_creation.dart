@@ -22,7 +22,7 @@ class FacultyAccountCreationView extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) {
-    final _formKey = GlobalKey<FormState>();
+    final formKey = GlobalKey<FormState>();
     String? password;
     String? userName;
   showCreateAccountDialogue(BuildContext context, String email) {
@@ -34,7 +34,7 @@ class FacultyAccountCreationView extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Form(
-            key: _formKey,
+            key: formKey,
             child: Column(
               children: [
                 AppRichTextView(
@@ -152,8 +152,8 @@ class FacultyAccountCreationView extends StatelessWidget {
                         width: 120.w,
                         textColor: AppColors.colorWhite,
                         onPressed: (context) async {
-                          if (_formKey.currentState!.validate()) {
-                            _formKey.currentState!.save();
+                          if (formKey.currentState!.validate()) {
+                            formKey.currentState!.save();
                             var token = await getTokenAndUseIt();
                             if (token == null) {
                               if (context.mounted) {

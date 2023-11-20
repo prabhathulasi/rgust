@@ -55,9 +55,11 @@ class AppElevatedButon extends StatelessWidget {
               ),
               Visibility(
                   visible: loading,
-                  child: SpinKitSpinningLines(
-                    color: AppColors.coloraeb,
-                    size: 25.sp,
+                  child: Expanded(
+                    child: SpinKitSpinningLines(
+                      color: AppColors.coloraeb,
+                      size: 25.sp,
+                    ),
                   )),
             ],
           ),

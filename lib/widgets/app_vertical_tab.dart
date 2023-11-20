@@ -170,8 +170,9 @@ class VerticalTabsState extends State<VerticalTabs>
                               }
 
                               Color itemBGColor = widget.tabBackgroundColor;
-                              if (_selectedIndex == index)
+                              if (_selectedIndex == index) {
                                 itemBGColor = widget.selectedTabBackgroundColor;
+                              }
 
                               return GestureDetector(
                                 onTap: () {

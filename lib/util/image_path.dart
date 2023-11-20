@@ -23,3 +23,21 @@ class ImagePath {
   static const String webclockLogo = "assets/clock.png";
   
 }
+class LottiePath{
+    static const String studentLottie = "assets/lottie/student.json";
+    static const String facultyLottie = "assets/lottie/faculty.json";
+     static const String staffLottie = "assets/lottie/staff.json";
+     static const String otherLottie = "assets/lottie/others.json";
+     static const String genderMLottie = "assets/lottie/male_gender.json";
+       static const String genderFLottie = "assets/lottie/female_gender.json";
+       static const String dashboardLottie= "assets/lottie/dashboard.json";
+       static const String dstudentLottie= "assets/lottie/d_student.json";
+       static const String dfacultyLottie= "assets/lottie/d_faculty.json";
+       static const String dstaffLottie= "assets/lottie/d_staff.json";
+        static const String createAccountLottie= "assets/lottie/create_account.json";
+         static const String deptLottie= "assets/lottie/department.json";
+          static const String notificationLottie= "assets/lottie/notification.json";
+           static const String admissionLottie= "assets/lottie/admission.json";
+            static const String leaveReqLottie= "assets/lottie/leave_request.json";
+             static const String uploadLottie= "assets/lottie/upload.json";
+}

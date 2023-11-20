@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class AppTextFormFieldWidget extends StatelessWidget {
   final String? initialValue;
@@ -13,6 +14,7 @@ final String? Function(String?)? validator;
   final int? maxLines;
  final  void Function(String)? onFieldSubmitted;
  final FocusNode ?focusNode;
+ final List<TextInputFormatter>? inputFormatters;
 
   const AppTextFormFieldWidget({
     super.key,
@@ -27,12 +29,15 @@ final String? Function(String?)? validator;
     this.textStyle,
     this.focusNode,
     this.validator,
-    this.onFieldSubmitted
+    this.onFieldSubmitted,
+    this.inputFormatters
   });
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      inputFormatters: inputFormatters,
+      
       focusNode: focusNode,
       validator:validator ,
       style: textStyle,

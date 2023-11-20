@@ -34,15 +34,12 @@ class AccountCreationView extends StatelessWidget {
                 ],
               ),
         ),
-        body: SizedBox(
-          width: 300.w,
-          child: const TabBarView(
-            children: [
-           FacultyAccountCreationView(),
-              Text("History"),
-              Text("History")
-            ],
-          ),
+        body: const TabBarView(
+          children: [
+         FacultyAccountCreationView(),
+            Text("History"),
+            Text("History")
+          ],
         ),
       ),
     );

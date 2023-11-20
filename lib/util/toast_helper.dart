@@ -7,15 +7,16 @@ class ToastHelper {
         webBgColor: "linear-gradient(to right, #008000, #008000)",
         msg: msg,
         gravity: ToastGravity.TOP,
-        timeInSecForIosWeb: 5);
+        timeInSecForIosWeb: 2);
   }
 
   errorToast(String msg) {
     return Fluttertoast.showToast(
+      webShowClose: true,
       msg: msg,
       webPosition: 'right',
-      gravity: ToastGravity.TOP,
-      timeInSecForIosWeb: 5,
+      gravity: ToastGravity.TOP_RIGHT,
+      timeInSecForIosWeb: 2,
       webBgColor: "linear-gradient(to right, #ff0000, #ff0000)",
     );
   }

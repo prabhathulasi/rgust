@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:lottie/lottie.dart';
 import 'package:rugst_alliance_academia/theme/app_colors.dart';
 import 'package:rugst_alliance_academia/util/index.dart';
 import 'package:rugst_alliance_academia/web_view/screens/dashboard/account_creation.dart';
 import 'package:rugst_alliance_academia/web_view/screens/dashboard/overview_view.dart';
 import 'package:rugst_alliance_academia/web_view/screens/department/program_view.dart';
 import 'package:rugst_alliance_academia/web_view/screens/faculty/faculty_list_view.dart';
+import 'package:rugst_alliance_academia/web_view/screens/staffs/staff_list_view.dart';
 import 'package:rugst_alliance_academia/web_view/screens/student/student_list_view.dart';
 import 'package:rugst_alliance_academia/widgets/app_richtext.dart';
 import 'package:rugst_alliance_academia/widgets/app_vertical_tab.dart';
@@ -52,65 +54,73 @@ class _VerticalTabViewState extends State<VerticalTabView> {
               textColor: AppColors.color0ec,
             ),
           ),
-          tabs: const <Tab>[
+          tabs:  <Tab>[
  
             Tab(
             text: "Dashboard",
             icon: CircleAvatar(
-              backgroundImage: AssetImage(
-          ImagePath.webDashboardLogo,
-        ),
+              backgroundColor: Colors.transparent,
+              child: OverflowBox(
+              maxHeight: 100.h,
+              maxWidth: 100.w,
+              child: Lottie.asset(LottiePath.dashboardLottie))),
             ),
-            ),
-            Tab(
+             Tab(
             text: "Student",
             icon: CircleAvatar(
-              backgroundImage: AssetImage(
-          ImagePath.webGraduateLogo,
+                backgroundColor: Colors.transparent,
+             child: OverflowBox(
+                    maxHeight: 100.h,
+              maxWidth: 100.w,
+              child: Lottie.asset(LottiePath.dstudentLottie)),
         ),
+            
             ),
-            ),
-            Tab(
+             Tab(
             text: "Staff",
             icon: CircleAvatar(
-              backgroundImage: AssetImage(
-          ImagePath.webStaffLogo,
+                backgroundColor: Colors.transparent,
+             child: OverflowBox(
+                    maxHeight: 100.h,
+              maxWidth: 100.w,
+              child: Lottie.asset(LottiePath.dstaffLottie)),
         ),
             ),
-            ),
-            Tab(
+             Tab(
             text: "Faculty",
             icon: CircleAvatar(
-              backgroundImage: AssetImage(
-          ImagePath.webfacultyfLogo,
+                backgroundColor: Colors.transparent,
+             child: OverflowBox(
+                    maxHeight: 100.h,
+              maxWidth: 100.w,
+              child: Lottie.asset(LottiePath.dfacultyLottie)),
         ),
             ),
-            ),
-             Tab(
+              Tab(
             text: "Department",
             icon: CircleAvatar(
-              backgroundImage: AssetImage(
-          ImagePath.webdeptLogo,
-        ),
+                backgroundColor: Colors.transparent,
+              child: Lottie.asset(LottiePath.deptLottie),
             ),
             ),
-             Tab(
+              Tab(
             text: "Admission",
             icon: CircleAvatar(
-              backgroundImage: AssetImage(
-          ImagePath.webadmissionLogo,
-        ),
-            ),
-            ),
-            Tab(
-            text: "Leave Request",
-            icon: CircleAvatar(
-              backgroundImage: AssetImage(
-          ImagePath.webfacultyfLogo,
-        ),
+                backgroundColor: Colors.transparent,
+            child: OverflowBox(
+                    maxHeight: 100.h,
+              maxWidth: 100.w,
+              child: Lottie.asset(LottiePath.admissionLottie)),
             ),
             ),
              Tab(
+            text: "Leave Request",
+            icon: CircleAvatar(
+                 backgroundColor: Colors.transparent,
+            child: Lottie.asset(LottiePath.leaveReqLottie),
+            ),
+            ),
+             const Tab(
             text: "E-library",
             icon: CircleAvatar(
               backgroundImage: AssetImage(
@@ -118,17 +128,23 @@ class _VerticalTabViewState extends State<VerticalTabView> {
         ),
             ),
             ),
-            Tab(
+             Tab(
             text: "Notification",
             icon: CircleAvatar(
-              backgroundImage: AssetImage(
-          ImagePath.webNotificationLogo,
-        ),
+           backgroundColor: Colors.transparent,
+            child: OverflowBox(
+                    maxHeight: 100.h,
+              maxWidth: 100.w,
+              child: Lottie.asset(LottiePath.notificationLottie)),
             ),
             ),
-            Tab(
+             Tab(
             text: "Create Account",
-            icon: CircleAvatar(child: Icon(Icons.group_add))
+            icon: CircleAvatar(       backgroundColor: Colors.transparent,
+            child: OverflowBox(
+                    maxHeight: 100.h,
+              maxWidth: 100.w,
+              child: Lottie.asset(LottiePath.createAccountLottie)),)
             ),
             
           
@@ -136,7 +152,7 @@ class _VerticalTabViewState extends State<VerticalTabView> {
           contents: <Widget>[
             const OverviewView(),
            const StudentListView(),
-         tabsContent('Dart'),
+         const StaffListView(),
             const FacultyListView(),
             const ProgramView(),
               tabsContent('Dart'),

@@ -9,13 +9,13 @@ class StudentModel {
     if (json['StudentList'] != null) {
       studentList = <StudentList>[];
       json['StudentList'].forEach((v) {
-        studentList!.add(new StudentList.fromJson(v));
+        studentList!.add(StudentList.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['Message'] = message;
     if (studentList != null) {
       data['StudentList'] = studentList!.map((v) => v.toJson()).toList();

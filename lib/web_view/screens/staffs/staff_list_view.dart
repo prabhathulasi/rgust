@@ -4,20 +4,22 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:provider/provider.dart';
 import 'package:rugst_alliance_academia/data/middleware/check_auth_middleware.dart';
+import 'package:rugst_alliance_academia/data/provider/staff_provider.dart';
 import 'package:rugst_alliance_academia/data/provider/student_provider.dart';
 import 'package:rugst_alliance_academia/routes/named_routes.dart';
 
 import 'package:rugst_alliance_academia/theme/app_colors.dart';
 import 'package:rugst_alliance_academia/util/index.dart';
 import 'package:rugst_alliance_academia/util/toast_helper.dart';
+import 'package:rugst_alliance_academia/web_view/screens/staffs/staff_grid_view.dart';
 import 'package:rugst_alliance_academia/web_view/screens/student/add_student_view.dart';
 import 'package:rugst_alliance_academia/web_view/screens/student/student_grid_view.dart';
 import 'package:rugst_alliance_academia/widgets/app_elevatedbutton.dart';
 import 'package:rugst_alliance_academia/widgets/app_spining.dart';
 
 
-class StudentListView extends StatelessWidget {
-  const StudentListView({Key? key}) : super(key: key);
+class StaffListView extends StatelessWidget {
+  const StaffListView({Key? key}) : super(key: key);
 
  
 
@@ -26,7 +28,7 @@ class StudentListView extends StatelessWidget {
     Dialog alert = Dialog(
       child: Stack(
         children: [
-          const AddStudentView(),
+          // const AddStudentView(),
           Transform.translate(
             offset: Offset(10.w, -13.h),
             child: GestureDetector(
@@ -57,8 +59,8 @@ class StudentListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final studentProvider =
-        Provider.of<StudentProvider>(context, listen: false);
+    final staffProvider =
+        Provider.of<StaffProvider>(context, listen: false);
 
     Future getStudentList() async {
       var token = await getTokenAndUseIt();
@@ -73,7 +75,7 @@ class StudentListView extends StatelessWidget {
           Navigator.pushNamed(context, RouteNames.login);
         }
       } else {
-        var result = await studentProvider.getStudent(token);
+        var result = await staffProvider.getStaffList(token);
          if(result =="Invalid Token"){
            ToastHelper().errorToast("Session Expired Please Login Again");
            if (context.mounted) {
@@ -96,16 +98,16 @@ class StudentListView extends StatelessWidget {
                 ),
               );
             } else {
-              return (studentProvider.studentModel.studentList == null|| studentProvider.studentModel.studentList!.isEmpty )
+              return staffProvider.staffModel.staffList == null
                   ? Center(
                       child: Column(
                       children: [
                         Expanded(child: Image.asset(ImagePath.webNoDataLogo)),
                         AppElevatedButon(
-                          title: "Add New Student",
+                          title: "Add New Staff",
                           buttonColor: AppColors.colorc7e,
                           height: 50.h,
-                          width: 210.w,
+                          width: 200.w,
                           onPressed: (context) {
                             showAddAlertDialog(context);
                           },
@@ -113,7 +115,7 @@ class StudentListView extends StatelessWidget {
                         )
                       ],
                     ))
-                  :  const StudentGridView();
+                  :  const StaffGridView();
             }
           },
         ),

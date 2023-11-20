@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:rugst_alliance_academia/data/model/gender_model.dart';
 import 'package:rugst_alliance_academia/theme/app_colors.dart';
 
@@ -17,7 +18,7 @@ class _AppRadioButtonState extends State<AppRadioButton> {
    return widget.gender!=null?  Row(
       children: [
         Icon(Icons.circle,
-            size: 15,
+            size: 15.sp,
             color: widget.gender!.isSelected
                 ? AppColors.color582
                 : AppColors.colorWhite),
@@ -27,6 +28,7 @@ class _AppRadioButtonState extends State<AppRadioButton> {
         Text(
           widget.gender!.name,
           style: TextStyle(
+            fontSize: 15.sp,
               color: widget.gender!.isSelected
                   ? AppColors.color582
                   : AppColors.colorWhite),
@@ -35,7 +37,7 @@ class _AppRadioButtonState extends State<AppRadioButton> {
     ):Row(
       children: [
         Icon(Icons.circle,
-            size: 15,
+            size: 15.sp,
             color: widget.jobType!.isSelected
                 ? AppColors.color582
                 : AppColors.colorWhite),
@@ -45,6 +47,7 @@ class _AppRadioButtonState extends State<AppRadioButton> {
         Text(
           widget.jobType!.name,
           style: TextStyle(
+            fontSize: 15.sp,
               color: widget.jobType!.isSelected
                   ? AppColors.color582
                   : AppColors.colorWhite),

@@ -5,10 +5,12 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:provider/provider.dart';
+import 'package:rugst_alliance_academia/data/provider/dashboard_provider.dart';
 import 'package:rugst_alliance_academia/data/provider/faculty_provider.dart';
 import 'package:rugst_alliance_academia/data/provider/file_upload_provider.dart';
 import 'package:rugst_alliance_academia/data/provider/login_provider.dart';
 import 'package:rugst_alliance_academia/data/provider/program_provider.dart';
+import 'package:rugst_alliance_academia/data/provider/staff_provider.dart';
 import 'package:rugst_alliance_academia/data/provider/student_provider.dart';
 import 'package:rugst_alliance_academia/data/provider/timesheet_provider.dart';
 
@@ -18,7 +20,6 @@ import 'package:rugst_alliance_academia/web_view/screens/dashboard/vertical_tab_
 import 'package:rugst_alliance_academia/web_view/screens/login_view.dart';
 
 import 'package:flutter/foundation.dart';
-import 'package:rugst_alliance_academia/web_view/screens/student/student_detail_view.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -36,7 +37,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-  var size = MediaQuery.sizeOf(context);
 
     return kIsWeb
         ? ScreenUtilInit(
@@ -65,7 +65,12 @@ class MyApp extends StatelessWidget {
                         ChangeNotifierProvider(
                         create: (context) => TimeSheetProvider(),
                       ),
-                    
+                     ChangeNotifierProvider(
+                        create: (context) => StaffProvider(),
+                      ),
+                       ChangeNotifierProvider(
+                        create: (context) => DashboardProvider(),
+                      ),
                     ],
                     builder: (context, child) {
                       return MaterialApp(

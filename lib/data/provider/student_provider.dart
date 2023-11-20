@@ -47,7 +47,7 @@ class StudentProvider extends ChangeNotifier {
         studentModel = StudentModel.fromJson(data);
 
         notifyListeners();
-        log(studentModel.studentList.toString());
+     
 
         return studentModel;
       } else if (result.statusCode == 204) {
@@ -115,9 +115,10 @@ class StudentProvider extends ChangeNotifier {
     
 
       if (result.statusCode == 200) {
+             setLoading(false);
         var data = json.decode(result.body);
         await getStudent(token);
-        setLoading(false);
+   
 
         notifyListeners();
         ToastHelper().sucessToast("Student Added Sucessfully");
