@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'dart:typed_data';
+
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -1404,8 +1404,8 @@ class _AddStudentViewState extends State<AddStudentView> {
                               }),
                             );
                           }),
-
-                          // const Expanded(child: DepartmentTabView())
+const Divider(),
+                            Expanded(child: Container())
                         ],
                       ),
               )

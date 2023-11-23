@@ -7,6 +7,7 @@ import 'package:rugst_alliance_academia/web_view/screens/dashboard/account_creat
 import 'package:rugst_alliance_academia/web_view/screens/dashboard/overview_view.dart';
 import 'package:rugst_alliance_academia/web_view/screens/department/program_view.dart';
 import 'package:rugst_alliance_academia/web_view/screens/faculty/faculty_list_view.dart';
+import 'package:rugst_alliance_academia/web_view/screens/fees/fees_view.dart';
 import 'package:rugst_alliance_academia/web_view/screens/staffs/staff_list_view.dart';
 import 'package:rugst_alliance_academia/web_view/screens/student/student_list_view.dart';
 import 'package:rugst_alliance_academia/widgets/app_richtext.dart';
@@ -19,11 +20,11 @@ class VerticalTabView extends StatefulWidget {
   const VerticalTabView({super.key});
 
   @override
-  _VerticalTabViewState createState() => _VerticalTabViewState();
+  VerticalTabViewState createState() => VerticalTabViewState();
   
 }
 
-class _VerticalTabViewState extends State<VerticalTabView> {
+class VerticalTabViewState extends State<VerticalTabView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,8 +62,8 @@ class _VerticalTabViewState extends State<VerticalTabView> {
             icon: CircleAvatar(
               backgroundColor: Colors.transparent,
               child: OverflowBox(
-              maxHeight: 100.h,
-              maxWidth: 100.w,
+              maxHeight: 80.h,
+              maxWidth: 80.w,
               child: Lottie.asset(LottiePath.dashboardLottie))),
             ),
              Tab(
@@ -70,8 +71,8 @@ class _VerticalTabViewState extends State<VerticalTabView> {
             icon: CircleAvatar(
                 backgroundColor: Colors.transparent,
              child: OverflowBox(
-                    maxHeight: 100.h,
-              maxWidth: 100.w,
+                    maxHeight: 80.h,
+              maxWidth: 80.w,
               child: Lottie.asset(LottiePath.dstudentLottie)),
         ),
             
@@ -81,8 +82,8 @@ class _VerticalTabViewState extends State<VerticalTabView> {
             icon: CircleAvatar(
                 backgroundColor: Colors.transparent,
              child: OverflowBox(
-                    maxHeight: 100.h,
-              maxWidth: 100.w,
+                    maxHeight: 60.h,
+              maxWidth: 60.w,
               child: Lottie.asset(LottiePath.dstaffLottie)),
         ),
             ),
@@ -91,8 +92,8 @@ class _VerticalTabViewState extends State<VerticalTabView> {
             icon: CircleAvatar(
                 backgroundColor: Colors.transparent,
              child: OverflowBox(
-                    maxHeight: 100.h,
-              maxWidth: 100.w,
+                    maxHeight: 60.h,
+              maxWidth: 60.w,
               child: Lottie.asset(LottiePath.dfacultyLottie)),
         ),
             ),
@@ -146,6 +147,12 @@ class _VerticalTabViewState extends State<VerticalTabView> {
               maxWidth: 100.w,
               child: Lottie.asset(LottiePath.createAccountLottie)),)
             ),
+             const Tab(
+            text: "Fees Structure",
+            icon:   CircleAvatar(
+              child: Icon(Icons.attach_money_outlined,color: AppColors.colorc7e,),
+            ),
+            ),
             
           
           ],
@@ -161,7 +168,8 @@ class _VerticalTabViewState extends State<VerticalTabView> {
                    tabsContent('Dart'),
                 
 
-            const AccountCreationView()
+            const AccountCreationView(),
+          const FeesView()
           ],
         ),
       

@@ -6,7 +6,7 @@ import 'package:rugst_alliance_academia/util/toast_helper.dart';
 
 class ApiHelper {
   static const String baseUrl =
-      "http://172.16.20.197:3014"; // Replace with your API base URL
+      "http://172.16.20.151:3014"; // Replace with your API base URL
 
   static Future<http.Response> get(String endpoint, String token) async {
     try {

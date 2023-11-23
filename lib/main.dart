@@ -7,6 +7,7 @@ import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:provider/provider.dart';
 import 'package:rugst_alliance_academia/data/provider/dashboard_provider.dart';
 import 'package:rugst_alliance_academia/data/provider/faculty_provider.dart';
+import 'package:rugst_alliance_academia/data/provider/fees_provider.dart';
 import 'package:rugst_alliance_academia/data/provider/file_upload_provider.dart';
 import 'package:rugst_alliance_academia/data/provider/login_provider.dart';
 import 'package:rugst_alliance_academia/data/provider/program_provider.dart';
@@ -70,6 +71,9 @@ class MyApp extends StatelessWidget {
                       ),
                        ChangeNotifierProvider(
                         create: (context) => DashboardProvider(),
+                      ),
+                      ChangeNotifierProvider(
+                        create: (context) => FeesProvider(),
                       ),
                     ],
                     builder: (context, child) {

@@ -216,10 +216,9 @@ class _OverviewViewState extends State<OverviewView> {
             ),
             SizedBox(height: 10.h,),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              
               children: [
-                Align(
-                  alignment: Alignment.topLeft,
+                Expanded(
                   child: Container(
                     decoration: BoxDecoration(
                       border: Border.all(
@@ -228,15 +227,15 @@ class _OverviewViewState extends State<OverviewView> {
                       ),
                       borderRadius: BorderRadius.circular(22.sp)
                     ),
-                    height: 450.h,
-                    width: 450.h,
+                    height: 300.h,
+                   
                     child: const PieChartScreen(
                       donutColor1:           AppColors.color6d5,
                          donutColor2: AppColors.color4ff,
                     )),
                 ),
-                  Align(
-                    alignment: Alignment.topLeft,
+                SizedBox(width: 10.w,),
+                  Expanded(
                     child: Container(
                       decoration: BoxDecoration(
                         border: Border.all(
@@ -245,15 +244,15 @@ class _OverviewViewState extends State<OverviewView> {
                         ),
                         borderRadius: BorderRadius.circular(22.sp)
                       ),
-                      height: 450.h,
-                      width: 450.h,
+                      height: 300.h,
+                    
                       child: const PieChartScreen(
                         donutColor1:     AppColors.color3ee,
                        donutColor2:   AppColors.colorcfe,
                       )),
                   ),
-                    Align(
-                      alignment: Alignment.topLeft,
+                   SizedBox(width: 10.w,),
+                    Expanded(
                       child: Container(
                         decoration: BoxDecoration(
                           border: Border.all(
@@ -262,15 +261,15 @@ class _OverviewViewState extends State<OverviewView> {
                           ),
                           borderRadius: BorderRadius.circular(22.sp)
                         ),
-                        height: 450.h,
-                        width: 450.h,
+                        height: 300.h,
+                        
                         child: const PieChartScreen(
                           donutColor1:        AppColors.coloreac,
                           donutColor2:AppColors.color0e7,
                         )),
                     ),
-              Align(
-                alignment: Alignment.topLeft,
+                     SizedBox(width: 10.w,),
+              Expanded(
                 child: Container(
                   decoration: BoxDecoration(
                     border: Border.all(
@@ -279,8 +278,8 @@ class _OverviewViewState extends State<OverviewView> {
                     ),
                     borderRadius: BorderRadius.circular(22.sp)
                   ),
-                  height: 450.h,
-                  width: 450.h,
+                  height: 300.h,
+                 
                   child: const PieChartScreen(
                     donutColor1:     AppColors.color78a,
                       donutColor2:    AppColors.colordb8,

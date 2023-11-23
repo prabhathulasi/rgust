@@ -1,6 +1,7 @@
 
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
 import 'package:rugst_alliance_academia/theme/app_colors.dart';
 import 'package:rugst_alliance_academia/util/image_path.dart';
@@ -93,9 +94,9 @@ return PieChart(
  Color donutColor2) {
     return List.generate(2, (i) {
       final isTouched = i == touchedIndex;
-      final fontSize = isTouched ? 20.0 : 16.0;
-      final radius = isTouched ? 110.0 : 100.0;
-      final widgetSize = isTouched ? 35.0 : 30.0;
+      final fontSize = isTouched ? 20.0.sp : 16.0.sp;
+      final radius = isTouched ? 110.0.sp : 100.0.sp;
+      final widgetSize = isTouched ? 30.sp : 25.0.sp;
       const shadows = [Shadow(color: Colors.black, blurRadius: 2)];
 
       switch (i) {

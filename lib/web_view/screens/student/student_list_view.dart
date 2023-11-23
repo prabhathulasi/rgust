@@ -96,7 +96,7 @@ class StudentListView extends StatelessWidget {
                 ),
               );
             } else {
-              return (studentProvider.studentModel.studentList == null|| studentProvider.studentModel.studentList!.isEmpty )
+              return (studentProvider.studentModel.studentList == null )
                   ? Center(
                       child: Column(
                       children: [

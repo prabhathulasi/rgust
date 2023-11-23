@@ -35,6 +35,7 @@ class DynamicYearsDropdownState extends State<DynamicYearsDropdown> {
               padding: EdgeInsets.all(8.0.sp),
               child: DropdownButtonHideUnderline(
                 child: DropdownButton<int>(
+                  iconEnabledColor: AppColors.colorWhite,
                   iconDisabledColor: AppColors.colorWhite,
                   dropdownColor: AppColors.colorc7e,
                   isExpanded: true,

@@ -81,6 +81,7 @@ class _ProgramDropdownState extends State<ProgramDropdown> {
                         padding: EdgeInsets.all(8.0.sp),
                         child: DropdownButtonHideUnderline(
                           child: DropdownButton(
+                            iconEnabledColor: AppColors.colorWhite,
                             iconDisabledColor: AppColors.colorWhite,
                             dropdownColor: AppColors.colorc7e,
                             isExpanded: true,

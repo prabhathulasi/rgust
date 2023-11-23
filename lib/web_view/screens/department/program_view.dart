@@ -213,130 +213,13 @@ class _ProgramViewState extends State<ProgramView> {
                     : Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Row(
-                            children: [
-                              AppRichTextView(
-                                  title: "Registered Course",
-                                  fontSize: 25.sp,
-                                  fontWeight: FontWeight.w500),
-                              SizedBox(
-                                width: 10.w,
-                              ),
-                              Row(
-                                children: [
-                                  Container(
-                                    height: 10,
-                                    width: 10,
-                                    color: AppColors.color582,
-                                  ),
-                                  SizedBox(
-                                    width: 5.w,
-                                  ),
-                                  AppRichTextView(
-                                      title: "Active",
-                                      fontSize: 13.sp,
-                                      fontWeight: FontWeight.bold)
-                                ],
-                              ),
-                              SizedBox(
-                                width: 10.w,
-                              ),
-                              Row(
-                                children: [
-                                  Container(
-                                    height: 10,
-                                    width: 10,
-                                    color: AppColors.contentColorYellow,
-                                  ),
-                                  SizedBox(
-                                    width: 5.w,
-                                  ),
-                                  AppRichTextView(
-                                      title: "Widthdraw",
-                                      fontSize: 13.sp,
-                                      fontWeight: FontWeight.bold)
-                                ],
-                              ),
-                              SizedBox(
-                                width: 10.w,
-                              ),
-                              Row(
-                                children: [
-                                  Container(
-                                    height: 10,
-                                    width: 10,
-                                    color: AppColors.colorRed,
-                                  ),
-                                  SizedBox(
-                                    width: 5.w,
-                                  ),
-                                  AppRichTextView(
-                                      title: "Dropout",
-                                      fontSize: 13.sp,
-                                      fontWeight: FontWeight.bold)
-                                ],
-                              ),
-                              SizedBox(
-                                width: 10.w,
-                              ),
-                              Row(
-                                children: [
-                                  Container(
-                                    height: 10,
-                                    width: 10,
-                                    color: AppColors.colorPurple,
-                                  ),
-                                  SizedBox(
-                                    width: 5.w,
-                                  ),
-                                  AppRichTextView(
-                                      title: "Transfer",
-                                      fontSize: 13.sp,
-                                      fontWeight: FontWeight.bold)
-                                ],
-                              ),
-                              SizedBox(
-                                width: 10.w,
-                              ),
-                              Row(
-                                children: [
-                                  Container(
-                                    height: 10,
-                                    width: 10,
-                                    color: AppColors.colorGrey,
-                                  ),
-                                  SizedBox(
-                                    width: 5.w,
-                                  ),
-                                  AppRichTextView(
-                                      title: "Clinical",
-                                      fontSize: 13.sp,
-                                      fontWeight: FontWeight.bold)
-                                ],
-                              ),
-                              SizedBox(
-                                width: 10.w,
-                              ),
-                              Row(
-                                children: [
-                                  Container(
-                                    height: 10,
-                                    width: 10,
-                                    color: AppColors.colorf85,
-                                  ),
-                                  SizedBox(
-                                    width: 5.w,
-                                  ),
-                                  AppRichTextView(
-                                      title: "Leaf of Absent",
-                                      fontSize: 13.sp,
-                                      fontWeight: FontWeight.bold)
-                                ],
-                              )
-                            ],
-                          ),
+                          AppRichTextView(
+                              title: "Registered Course",
+                              fontSize: 25.sp,
+                              fontWeight: FontWeight.w500),
+                        
                           SizedBox(
-                            width: 10.w,
+                            height: 10.w,
                           ),
                           Builder(builder: (context) {
                             return Expanded(
@@ -364,25 +247,26 @@ class _ProgramViewState extends State<ProgramView> {
                                   },
 
                                   borderColor: Colors.blueGrey,
-                                  tdStyle: const TextStyle(
+                                  tdStyle:  TextStyle(
+                                    fontSize: 18.sp,
                                       fontWeight: FontWeight.bold,
                                       color: AppColors.colorWhite),
-                                  trHeight: 40,
-                                  thStyle: const TextStyle(
-                                      fontSize: 15,
+                                  trHeight: 30.h,
+                                  thStyle:  TextStyle(
+                                      fontSize: 18.sp,
                                       fontWeight: FontWeight.bold,
                                       color: AppColors.colorWhite),
                                   thAlignment: TextAlign.center,
                                   thVertAlignment: CrossAxisAlignment.end,
                                   thPaddingBottom: 3,
-                                  showSaveIcon: true,
+                                  showSaveIcon: false,
                                   saveIconColor: Colors.black,
                                   showCreateButton: false,
                                   tdAlignment: TextAlign.left,
                                   tdEditableMaxLines:
                                       100, // don't limit and allow data to wrap
-                                  tdPaddingTop: 0,
-                                  tdPaddingBottom: 14,
+                                  tdPaddingTop: 10.h,
+                                  // tdPaddingBottom: 14,
                                   tdPaddingLeft: 10,
                                   tdPaddingRight: 8,
                                   focusedBorder: const OutlineInputBorder(
@@ -394,7 +278,7 @@ class _ProgramViewState extends State<ProgramView> {
                               }),
                             );
                           }),
-                          const Expanded(flex: 2, child: DepartmentTabView())
+                          
                         ],
                       ),
               ),
