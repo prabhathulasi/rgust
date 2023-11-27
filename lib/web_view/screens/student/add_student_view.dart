@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 
 import 'package:flutter/material.dart';
@@ -11,6 +12,8 @@ import 'package:provider/provider.dart';
 import 'package:rugst_alliance_academia/custom_plugin/editable.dart';
 import 'package:rugst_alliance_academia/data/middleware/check_auth_middleware.dart';
 import 'package:rugst_alliance_academia/data/model/gender_model.dart';
+import 'package:rugst_alliance_academia/data/provider/common_provider.dart';
+import 'package:rugst_alliance_academia/data/provider/fees_provider.dart';
 import 'package:rugst_alliance_academia/data/provider/program_provider.dart';
 import 'package:rugst_alliance_academia/data/provider/student_provider.dart';
 import 'package:rugst_alliance_academia/routes/named_routes.dart';
@@ -22,11 +25,13 @@ import 'package:rugst_alliance_academia/web_view/screens/department/batch_dropdo
 import 'package:rugst_alliance_academia/web_view/screens/department/class_dropdown.dart';
 import 'package:rugst_alliance_academia/web_view/screens/department/program_dropdown_view.dart';
 import 'package:rugst_alliance_academia/web_view/screens/department/year_dropdown_view.dart';
+import 'package:rugst_alliance_academia/web_view/screens/student/doa_drop_down.dart';
 import 'package:rugst_alliance_academia/widgets/app_elevatedbutton.dart';
 import 'package:rugst_alliance_academia/widgets/app_formfield.dart';
 import 'package:rugst_alliance_academia/widgets/app_radiobutton.dart';
 import 'package:rugst_alliance_academia/widgets/app_richtext.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:rugst_alliance_academia/widgets/app_spining.dart';
 
 class AddStudentView extends StatefulWidget {
   const AddStudentView({super.key});
@@ -64,13 +69,13 @@ class _AddStudentViewState extends State<AddStudentView> {
     ];
   }
 
-  TextEditingController dateinput = TextEditingController();
+
   TextEditingController dobinput = TextEditingController();
   Uint8List? bytesFromPicker;
   String? imageEncoded;
-
+String? gender ; 
   showTermsDialog(BuildContext context, StudentProvider studentProvider,
-      String token, ProgramProvider programProvider) {
+      String token, ProgramProvider programProvider , CommonProvider commonProvider) {
     Dialog alert = Dialog(
       child: SizedBox(
         height: MediaQuery.sizeOf(context).height / 2,
@@ -128,11 +133,11 @@ class _AddStudentViewState extends State<AddStudentView> {
                           token,
                           programId: int.parse(programProvider.selectedDept!),
                           classId: int.parse(programProvider.selectedClass!),
-                          admissionDate: dateinput.text,
+                          admissionDate:commonProvider.doaController,
                           studentType: "Regular",
                           batch: programProvider.selectedBatch!,
                           registerNo:
-                              "${DateTime.now().year}/${programProvider.selectedDept}/212",
+                              "${DateTime.now().year}/${programProvider.selectedDept}/213",
                           gender: genderValue!,
                           dob: dobinput.text,
                           userImage: imageEncoded!,
@@ -178,7 +183,29 @@ class _AddStudentViewState extends State<AddStudentView> {
   Widget build(BuildContext context) {
     final programProvider = Provider.of<ProgramProvider>(context);
     final studentProvider = Provider.of<StudentProvider>(context);
+    final commonProvider = Provider.of<CommonProvider>(context);
+    final feesProvider = Provider.of<FeesProvider>(context,listen: false);
+Future getMiscFees(int programId) async {
+      var token = await getTokenAndUseIt();
+      if (token == null) {
+        if (context.mounted) {
+          Navigator.pushNamed(context, RouteNames.login);
+        }
+      } else if (token == "Token Expired") {
+        ToastHelper().errorToast("Session Expired Please Login Again");
 
+        if (context.mounted) {
+          Navigator.pushNamed(context, RouteNames.login);
+        }
+      } else {
+        var result = await feesProvider.getFeesByid(token,programId);
+         if(result =="Invalid Token"){
+           ToastHelper().errorToast("Session Expired Please Login Again");
+           if (context.mounted) {
+          Navigator.pushNamed(context, RouteNames.login);
+        }}
+      }
+    }
     var size = MediaQuery.of(context).size;
     return Scaffold(
       body: Container(
@@ -206,10 +233,12 @@ class _AddStudentViewState extends State<AddStudentView> {
                             fontWeight: FontWeight.w700),
                         Radio(
                           activeColor: AppColors.colorc7e,
-                          value: false,
+                          value: 1,
                           groupValue: programProvider.isNewStudent,
                           onChanged: (value) {
+                          
                             programProvider.selectStudentType(value!);
+                            
                           },
                         ),
                         AppRichTextView(
@@ -218,7 +247,7 @@ class _AddStudentViewState extends State<AddStudentView> {
                             fontWeight: FontWeight.bold),
                         Radio(
                           activeColor: AppColors.colorc7e,
-                          value: true,
+                          value: 2,
                           groupValue: programProvider.isNewStudent,
                           onChanged: (value) {
                             programProvider.selectStudentType(value!);
@@ -464,71 +493,8 @@ class _AddStudentViewState extends State<AddStudentView> {
                                     fontWeight: FontWeight.w500),
                               ],
                             ),
-                            Container(
-                              color: AppColors.colorc7e,
-                              height: 70.h,
-                              width: size.width * 0.2,
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    AppRichTextView(
-                                        title: "Date of Admission",
-                                        textColor: AppColors.colorWhite,
-                                        fontSize: 14.sp,
-                                        fontWeight: FontWeight.w500),
-                                    Expanded(
-                                      child: TextFormField(
-                                        validator: (value) {
-                                          if (value == null || value.isEmpty) {
-                                            return "This DOB is Required";
-                                          } else {
-                                            return null;
-                                          }
-                                        },
-                                        style: GoogleFonts.roboto(
-                                            color: AppColors.colorWhite,
-                                            fontSize: 15.sp),
-                                        controller: dateinput,
-                                        decoration: InputDecoration(
-                                            errorStyle: TextStyle(
-                                                fontSize: 15.sp,
-                                                fontWeight: FontWeight.bold,
-                                                color: AppColors.colorRed),
-                                            hintStyle: GoogleFonts.roboto(
-                                                color: AppColors.colorWhite),
-                                            border: InputBorder.none),
-                                        onTap: () async {
-                                          DateTime? pickedDate =
-                                              await showDatePicker(
-                                                  context: context,
-                                                  initialDate: DateTime.now(),
-                                                  firstDate: DateTime(
-                                                      1900), //- not to allow to choose before today.
-                                                  lastDate: DateTime(2101));
-
-                                          if (pickedDate != null) {
-                                            //pickedDate output format => 2021-03-10 00:00:00.000
-                                            String formattedDate =
-                                                DateFormat('yyyy-MM-dd')
-                                                    .format(pickedDate);
-                                            //formatted date output using intl package =>  2021-03-16
-
-                                            setState(() {
-                                              dateinput.text =
-                                                  formattedDate; //set output date to TextField value.
-                                            });
-                                          } else {
-                                            print("Date is not selected");
-                                          }
-                                        },
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
+                            const DoaDropdown()
+                           //////
                           ],
                         )
                       ],
@@ -1081,63 +1047,7 @@ class _AddStudentViewState extends State<AddStudentView> {
                                     ),
                                   ),
                                 ),
-                                const SizedBox(height: 10),
-                                Container(
-                                  color: AppColors.colorc7e,
-                                  height: 70.h,
-                                  width: size.width * 0.2,
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Row(
-                                          children: [
-                                            AppRichTextView(
-                                                title: "Tution Fee",
-                                                textColor: AppColors.colorWhite,
-                                                fontSize: 14.sp,
-                                                fontWeight: FontWeight.w500),
-                                            SizedBox(
-                                              width: 3.w,
-                                            ),
-                                            AppRichTextView(
-                                                title: "*",
-                                                textColor: AppColors.colorRed,
-                                                fontSize: 18.sp,
-                                                fontWeight: FontWeight.w500),
-                                          ],
-                                        ),
-                                        Expanded(
-                                            child: AppTextFormFieldWidget(
-                                              inputFormatters: [
-                                                 FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
-                                              ],
-                                          textStyle: GoogleFonts.roboto(
-                                              color: AppColors.colorWhite,
-                                              fontSize: 15.sp),
-                                          validator: (value) {
-                                            if (value == null ||
-                                                value.isEmpty) {
-                                              return "This Field is Required";
-                                            } else {
-                                              return null;
-                                            }
-                                          },
-                                          onSaved: (p0) => studentProvider
-                                              .tutionfeecontroller = p0!,
-                                          inputDecoration: InputDecoration(
-                                              border: InputBorder.none,
-                                              hintStyle: TextStyle(
-                                                  color: AppColors.colorGrey,
-                                                  fontSize: 15.sp)),
-                                          obscureText: false,
-                                        )),
-                                      ],
-                                    ),
-                                  ),
-                                ),
+                               
                                 const SizedBox(height: 10),
                                 Container(
                                   color: AppColors.colorc7e,
@@ -1317,7 +1227,7 @@ class _AddStudentViewState extends State<AddStudentView> {
                                             context,
                                             studentProvider,
                                             token,
-                                            programProvider);
+                                            programProvider, commonProvider);
                                       }
                                     }
                                   }
@@ -1374,12 +1284,12 @@ class _AddStudentViewState extends State<AddStudentView> {
                                   },
 
                                   borderColor: Colors.blueGrey,
-                                  tdStyle: const TextStyle(
+                                  tdStyle:  TextStyle(
                                       fontWeight: FontWeight.bold,
-                                      color: AppColors.colorWhite),
-                                  trHeight: 40,
-                                  thStyle: const TextStyle(
-                                      fontSize: 15,
+                                      color: AppColors.colorWhite,fontSize: 15.sp),
+                                  trHeight: 40.h,
+                                  thStyle:  TextStyle(
+                                      fontSize: 15.sp,
                                       fontWeight: FontWeight.bold,
                                       color: AppColors.colorWhite),
                                   thAlignment: TextAlign.center,
@@ -1405,7 +1315,225 @@ class _AddStudentViewState extends State<AddStudentView> {
                             );
                           }),
 const Divider(),
-                            Expanded(child: Container())
+                            Expanded(child: FutureBuilder(
+                              future: getMiscFees(int.parse(programProvider.selectedDept!)),
+                              builder: (context,snapshot) {
+                                if(snapshot.connectionState == ConnectionState.waiting){
+                                  return  Center(
+                                    child: SpinKitSpinningLines(color: AppColors.colorcfe,size: 30.sp,),
+                                  );
+                                }else{
+ return Column(
+   children: [
+     AppRichTextView(
+       title: "Fees Structure",
+       fontSize: 25.sp,
+       fontWeight: FontWeight.w500),
+       SizedBox(
+         height: 10.h,
+       ),
+     
+Expanded(
+  child:   ListView.builder(
+    shrinkWrap: true,
+    itemCount: feesProvider.singlefeesModel.feeslist!.length,
+    itemBuilder: (context, index) {
+      var data = feesProvider.singlefeesModel.feeslist![index];
+      return Column(
+        children: [
+          Row(
+            children: [
+              const Icon(Icons.radio_button_checked_outlined),
+              SizedBox(width: 10.w,),
+
+              Text(feesProvider.singlefeesModel.feeslist![index].feesType!),
+              
+
+            ],
+          ),
+          Row(
+            children: [
+ Padding(
+   padding: const EdgeInsets.all(18.0),
+   child: AppRichTextView(
+     title:
+         "Tution Fee:",
+     fontSize: 18.sp,
+     fontWeight: FontWeight.bold,
+     textColor: AppColors.colorc7e,
+   ),
+ ),
+  AppRichTextView(
+    title:
+        data.tutionFee.toString(),
+    fontSize: 18.sp,
+    fontWeight: FontWeight.bold,
+    textColor: AppColors.colorBlack,
+  ),
+      Padding(
+   padding: const EdgeInsets.all(18.0),
+   child: AppRichTextView(
+     title:
+         "No of Semester:",
+     fontSize: 18.sp,
+     fontWeight: FontWeight.bold,
+     textColor: AppColors.colorc7e,
+   ),
+ ),
+  AppRichTextView(
+    title:
+        data.semCount.toString(),
+    fontSize: 18.sp,
+    fontWeight: FontWeight.bold,
+    textColor: AppColors.colorBlack,
+  ),       ],
+          ),
+           Center(
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(18.0),
+                                    child: AppRichTextView(
+                                      title:
+                                          "National Students: Miscellaneous Fees (Per Semester US\$)",
+                                      fontSize: 18.sp,
+                                      fontWeight: FontWeight.bold,
+                                      textColor: AppColors.colorc7e,
+                                    ),
+                                  ),
+                                ),
+          DataTable(
+            border: TableBorder.all(width: 2,color: AppColors.colorBlack),
+                          columnSpacing: 80.sp,
+                          columns: [
+                            DataColumn(
+                              label: AppRichTextView(
+                                title: "Details",
+                                fontSize: 20.sp,
+                                fontWeight: FontWeight.bold,
+                                textColor: AppColors.colorc7e,
+                              ),
+                            ),
+                            DataColumn(
+                              label: AppRichTextView(
+                                title: "Semester Fee",
+                                fontSize: 20.sp,
+                                fontWeight: FontWeight.bold,
+                                textColor: AppColors.colorc7e,
+                              ),
+                            ),
+                             DataColumn(
+                                label: AppRichTextView(
+                                  title: "Total Amount",
+                                  fontSize: 20.sp,
+                                  fontWeight: FontWeight.bold,
+                                  textColor: AppColors.colorc7e,
+                                ),
+                              ),
+                             
+                            
+                          ],
+                          rows: data.miscellaneousFees!.where((element) => element.isNational == true)
+                              .map((e) => DataRow(cells: [
+                                    DataCell(AppRichTextView(
+                                      title: e.detail!,
+                                      fontSize: 15.sp,
+                                      fontWeight: FontWeight.bold,
+                                      textColor: AppColors.colorBlack,
+                                    )),
+                                    DataCell(AppRichTextView(
+                                      title: e.miscFee.toString(),
+                                      fontSize: 15.sp,
+                                      fontWeight: FontWeight.bold,
+                                      textColor: AppColors.colorBlack,
+                                    )),
+                                     DataCell(AppRichTextView(
+                                      title: (e.miscFee! * data.semCount!).toString(),
+                                      fontSize: 15.sp,
+                                      fontWeight: FontWeight.bold,
+                                      textColor: AppColors.colorBlack,
+                                    )),
+                                    
+                                   
+                                  ]))
+                              .toList()),
+
+                                Center(
+                           child: Padding(
+                                    padding: const EdgeInsets.all(18.0),
+                                    child: AppRichTextView(
+                                      title:
+                                          "National Students: Miscellaneous Fees (Per Semester US\$)",
+                                      fontSize: 18.sp,
+                                      fontWeight: FontWeight.bold,
+                                      textColor: AppColors.colorc7e,
+                                    ),
+                                  ),
+                         ),
+                          DataTable(
+                            border: TableBorder.all(width: 2, color: AppColors.colorBlack),
+                            columnSpacing: 80.sp,
+                            columns: [
+                              DataColumn(
+                                label: AppRichTextView(
+                                  title: "Details",
+                                  fontSize: 20.sp,
+                                  fontWeight: FontWeight.bold,
+                                  textColor: AppColors.colorc7e,
+                                ),
+                              ),
+                              DataColumn(
+                                label: AppRichTextView(
+                                  title: "Semester Fee",
+                                  fontSize: 20.sp,
+                                  fontWeight: FontWeight.bold,
+                                  textColor: AppColors.colorc7e,
+                                ),
+                              ),
+                                DataColumn(
+                                label: AppRichTextView(
+                                  title: "Total Amount",
+                                  fontSize: 20.sp,
+                                  fontWeight: FontWeight.bold,
+                                  textColor: AppColors.colorc7e,
+                                ),
+                              ),
+                              
+                            ],
+                            rows: data.miscellaneousFees!.where((element) => element.isNational == false)
+                                .map((e) => DataRow(cells: [
+                                      DataCell(AppRichTextView(
+                                        title: e.detail!,
+                                        fontSize: 15.sp,
+                                        fontWeight: FontWeight.bold,
+                                        textColor: AppColors.colorBlack,
+                                      )),
+                                      DataCell(AppRichTextView(
+                                        title: e.miscFee.toString(),
+                                        fontSize: 15.sp,
+                                        fontWeight: FontWeight.bold,
+                                        textColor: AppColors.colorBlack,
+                                      )),
+                                       DataCell(AppRichTextView(
+                                        title: (e.miscFee! * data.semCount!).toString(),
+                                        fontSize: 15.sp,
+                                        fontWeight: FontWeight.bold,
+                                        textColor: AppColors.colorBlack,
+                                      )),
+                                     
+                                    ]))
+                                .toList()),
+        ],
+      );
+    },
+  ),
+)
+       
+       
+   ],
+ );
+                                }
+                               
+                              }
+                            ),)
                         ],
                       ),
               )
@@ -1416,46 +1544,5 @@ const Divider(),
     );
   }
 
-  Widget columnWrapper(BuildContext context, int columnIndex, Widget child) {
-    const padding = EdgeInsets.symmetric(horizontal: 10);
-    switch (columnIndex) {
-      case 0:
-        return Container(
-          width: 120,
-          padding: padding,
-          child: child,
-        );
-      case 1:
-        return Container(
-          width: 130,
-          padding: padding,
-          child: child,
-        );
-      case 2:
-        return Container(
-          width: 130,
-          padding: padding,
-          child: child,
-        );
-      case 3:
-        return Container(
-          width: 170,
-          padding: padding,
-          child: child,
-        );
-      case 4:
-        return Container(
-          width: 130,
-          padding: padding,
-          child: child,
-        );
-      default:
-        return Expanded(
-          child: Container(
-            padding: padding,
-            child: child,
-          ),
-        );
-    }
-  }
+
 }

@@ -87,7 +87,7 @@ class StudentList {
     createdAt = json['CreatedAt'];
     updatedAt = json['UpdatedAt'];
     deletedAt = json['DeletedAt'];
-    studentRegiterNumber = json['StudentRegiterNumber'];
+    studentRegiterNumber = json['StudentId'];
     currentProgramId = json['CurrentProgramId'];
     currentProgramName = json['CurrentProgramName'];
     currentClassId = json['CurrentClassId'];
@@ -123,7 +123,7 @@ class StudentList {
     data['CreatedAt'] = createdAt;
     data['UpdatedAt'] = updatedAt;
     data['DeletedAt'] = deletedAt;
-    data['StudentRegiterNumber'] = studentRegiterNumber;
+    data['StudentId'] = studentRegiterNumber;
     data['CurrentProgramId'] = currentProgramId;
     data['CurrentProgramName'] = currentProgramName;
     data['CurrentClassId'] = currentClassId;

@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'dart:developer';
+
 
 import 'package:flutter/material.dart';
 
@@ -27,14 +27,19 @@ class StudentProvider extends ChangeNotifier {
   String get address => addresscontroller!;
     String? mailingaddresscontroller;
   String get mailingaddress => mailingaddresscontroller!;
-      String? tutionfeecontroller;
-  String get tutionfee => tutionfeecontroller!;
+
    String? emergencyContactcontroller;
   String get emergencyContact => emergencyContactcontroller!;
     String? passportcontroller;
   String get passport => passportcontroller!;
   String? citizenshipcontroller;
   String get cizizen => citizenshipcontroller!;
+
+
+
+  int _isStandardFee = 1;
+  int get isStandardFee => _isStandardFee;
+
   //  getStudent list
   Future getStudent(String token) async {
     setLoading(true);
@@ -102,7 +107,7 @@ class StudentProvider extends ChangeNotifier {
             "Mobile":int.parse(mobile),
             "DOB": dob,
             "Address": address,
-            "TutionFee":int.parse(tutionfee),
+            "FeesId": 1,// have to change this dynamically later
             "StudentType": studentType,
             "MailingAddress": mailingaddress,
             "PassportNumber":passport,
@@ -142,4 +147,10 @@ class StudentProvider extends ChangeNotifier {
     _isLoading = value;
     notifyListeners();
   }
+
+   void selectFeesType(int feeType) {
+    _isStandardFee = feeType;
+    notifyListeners();
+  }
+  
 }

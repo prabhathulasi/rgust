@@ -6,6 +6,7 @@ import 'package:rugst_alliance_academia/data/provider/fees_provider.dart';
 import 'package:rugst_alliance_academia/routes/named_routes.dart';
 import 'package:rugst_alliance_academia/theme/app_colors.dart';
 import 'package:rugst_alliance_academia/util/toast_helper.dart';
+import 'package:rugst_alliance_academia/web_view/screens/fees/add_new_fees.dart';
 import 'package:rugst_alliance_academia/widgets/app_richtext.dart';
 import 'package:rugst_alliance_academia/widgets/app_spining.dart';
 
@@ -329,85 +330,7 @@ class _FeesViewState extends State<FeesView> {
                           }
                         ),
                      
-                      //   Center(
-                      //     child: Padding(
-                      //       padding: const EdgeInsets.all(18.0),
-                      //       child: AppRichTextView(
-                      //         title:
-                      //             "InterNational Students: Miscellaneous Fees (Per Semester US\$)",
-                      //         fontSize: 30.sp,
-                      //         fontWeight: FontWeight.bold,
-                      //         textColor: AppColors.colorc7e,
-                      //       ),
-                      //     ),
-                      //   ),
-                      // Padding(
-                      //     padding: EdgeInsets.all(18.sp),
-                      //     child: DataTable(
-                      //         columnSpacing: 100.sp,
-                      //         columns: [
-                      //           DataColumn(
-                      //             label: AppRichTextView(
-                      //               title: "Details",
-                      //               fontSize: 20.sp,
-                      //               fontWeight: FontWeight.bold,
-                      //               textColor: AppColors.colorc7e,
-                      //             ),
-                      //           ),
-                      //           DataColumn(
-                      //             label: AppRichTextView(
-                      //               title: "Pre- Medicine",
-                      //               fontSize: 20.sp,
-                      //               fontWeight: FontWeight.bold,
-                      //               textColor: AppColors.colorc7e,
-                      //             ),
-                      //           ),
-                      //           DataColumn(
-                      //             label: AppRichTextView(
-                      //               title: "Pre-Clinicals",
-                      //               fontSize: 20.sp,
-                      //               fontWeight: FontWeight.bold,
-                      //               textColor: AppColors.colorc7e,
-                      //             ),
-                      //           ),
-                      //           DataColumn(
-                      //             label: AppRichTextView(
-                      //               title: "Clinicals",
-                      //               fontSize: 20.sp,
-                      //               fontWeight: FontWeight.bold,
-                      //               textColor: AppColors.colorc7e,
-                      //             ),
-                      //           )
-                      //         ],
-                      //         rows: data.miscellaneousFee!.where((element) => element.isNational == false)
-                      //             .map((e) => DataRow(cells: [
-                      //                   DataCell(AppRichTextView(
-                      //                     title: e.detail!,
-                      //                     fontSize: 20.sp,
-                      //                     fontWeight: FontWeight.bold,
-                      //                     textColor: AppColors.colorBlack,
-                      //                   )),
-                      //                   DataCell(AppRichTextView(
-                      //                     title: e.preMed.toString(),
-                      //                     fontSize: 20.sp,
-                      //                     fontWeight: FontWeight.bold,
-                      //                     textColor: AppColors.colorBlack,
-                      //                   )),
-                      //                   DataCell(AppRichTextView(
-                      //                     title: e.preClinical.toString(),
-                      //                     fontSize: 20.sp,
-                      //                     fontWeight: FontWeight.bold,
-                      //                     textColor: AppColors.colorBlack,
-                      //                   )),
-                      //                   DataCell(AppRichTextView(
-                      //                     title: e.clinical.toString(),
-                      //                     fontSize: 20.sp,
-                      //                     fontWeight: FontWeight.bold,
-                      //                     textColor: AppColors.colorBlack,
-                      //                   ))
-                      //                 ]))
-                      //             .toList()),
-                      //   ),
+                      
                       ]),
                 ),
               );
@@ -417,8 +340,40 @@ class _FeesViewState extends State<FeesView> {
             backgroundColor: AppColors.colorc7e,
             child: const Icon(Icons.edit,color: AppColors.colorWhite,),
             onPressed: () {
-              
-            },
+           
+    // set up the AlertDialog
+    Dialog alert = Dialog(
+      child: Stack(
+        children: [
+          const AddNewFees(),
+          Transform.translate(
+            offset: Offset(10.w, -13.h),
+            child: GestureDetector(
+                onTap: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Align(
+                  alignment: Alignment.topRight,
+                  child: CircleAvatar(
+                    radius: 14.0,
+                    backgroundColor: AppColors.colorc7e,
+                    child: Icon(Icons.close, color: AppColors.color582),
+                  ),
+                )),
+          )
+        ],
+      ),
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }  
+            
           ),
     );
   }

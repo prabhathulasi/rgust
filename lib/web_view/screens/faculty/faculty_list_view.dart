@@ -100,24 +100,28 @@ class _FacultyListViewState extends State<FacultyListView> {
                 ),
               );
             } else {
-              return facultyProvider.facultyModel.facultyList == null
+              return  Consumer<FacultyProvider>(
+                    builder: (context, facultyConsumer, child) {
+                      return facultyConsumer.facultyModel.facultyList == null
                   ? Center(
-                      child: Column(
-                      children: [
-                        Expanded(child: Image.asset(ImagePath.webNoDataLogo)),
-                        AppElevatedButon(
-                          title: "Add New Faculty",
-                          buttonColor: AppColors.colorc7e,
-                          height: 50.h,
-                          width: 200.w,
-                          onPressed: (context) {
-                            showAddAlertDialog(context);
-                          },
-                          textColor: AppColors.colorWhite,
-                        )
-                      ],
-                    ))
-                  : const  FacultyGridView();
+                          child: Column(
+                          children: [
+                            Expanded(child: Image.asset(ImagePath.webNoDataLogo)),
+                            AppElevatedButon(
+                              title: "Add New Faculty",
+                              buttonColor: AppColors.colorc7e,
+                              height: 50.h,
+                              width: 200.w,
+                              onPressed: (context) {
+                                showAddAlertDialog(context);
+                              },
+                              textColor: AppColors.colorWhite,
+                            )
+                          ],
+                        )):const  FacultyGridView();
+                    }
+                  );
+                  
             }
           },
         ),

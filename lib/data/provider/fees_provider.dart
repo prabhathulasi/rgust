@@ -1,10 +1,9 @@
 
 
 import 'dart:convert';
-import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:rugst_alliance_academia/data/model/fees_model.dart';
+import 'package:rugst_alliance_academia/data/model/fee_model.dart';
+
 import 'package:rugst_alliance_academia/data/model/miscfee_model.dart';
 import 'package:rugst_alliance_academia/util/api_service.dart';
 import 'package:rugst_alliance_academia/util/toast_helper.dart';
@@ -14,6 +13,8 @@ class FeesProvider extends ChangeNotifier{
   bool get isLoading => _isLoading;
 
 FeesModel feesModel = FeesModel();
+FeesModel singlefeesModel = FeesModel();
+
 MiscFeeModel miscFeeModel = MiscFeeModel();
 
   void setLoading(bool value) async {
@@ -56,7 +57,42 @@ MiscFeeModel miscFeeModel = MiscFeeModel();
       return e.toString();
     }
   }
+  //  getFeesbyid 
+  Future getFeesByid(String token, int programId) async {
+    setLoading(true);
+    try {
+      var result = await ApiHelper.get("GetFeesById/id=$programId", token);
+      setLoading(false);
+      if (result.statusCode == 200) {
+        singlefeesModel.feeslist?.clear();
+        var data = json.decode(result.body);
+        print(data);
 
+        singlefeesModel = FeesModel.fromJson(data);
+
+
+        notifyListeners();
+
+        return singlefeesModel;
+      } else if (result.statusCode == 204) {
+        notifyListeners();
+        ToastHelper().errorToast("No Fees Details Found");
+        return null;
+      } else if (result.statusCode == 401) {
+        notifyListeners();
+
+        return "Invalid Token";
+      } else {
+        notifyListeners();
+        ToastHelper().errorToast("Internal Server Error");
+        return null;
+      }
+    } catch (e) {
+      setLoading(false);
+      ToastHelper().errorToast(e.toString());
+      return e.toString();
+    }
+  }
    //  getMiscFees list
   Future getMiscFeesDetails(String token, int programId, int feesId) async {
     setLoading(true);

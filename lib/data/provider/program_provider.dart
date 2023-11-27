@@ -24,8 +24,9 @@ class ProgramProvider extends ChangeNotifier {
   String? selectedCourse;
   String? selectedCourseName;
 
-   bool _isNewStudent = false;
-  bool get isNewStudent => _isNewStudent;
+   int _isNewStudent = 1;
+  int get isNewStudent => _isNewStudent;
+
 
   ProgramModel get getDepts => programModel;
   ProgramClassModel get getDeptsClass => programClassModel;
@@ -260,7 +261,7 @@ class ProgramProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void selectStudentType(bool isNew) {
+  void selectStudentType(int isNew) {
     _isNewStudent = isNew;
     notifyListeners();
   }

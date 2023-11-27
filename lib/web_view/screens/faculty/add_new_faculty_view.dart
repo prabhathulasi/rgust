@@ -4,6 +4,7 @@ import 'dart:typed_data';
 import 'dart:developer' as dev;
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 import 'package:google_fonts/google_fonts.dart';
@@ -402,9 +403,12 @@ class _AddFacultyViewState extends State<AddFacultyView> {
                                                   fontWeight: FontWeight.w500),
                                               Expanded(
                                                   child: AppTextFormFieldWidget(
+                                                      inputFormatters: [
+                                                FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z\s]'))
+                                              ],
                                                 textStyle: GoogleFonts.roboto(
                                                     color:
-                                                        AppColors.colorWhite),
+                                                        AppColors.colorWhite, fontSize: 15.sp),
                                                 validator: (value) {
                                                   if (value == null ||
                                                       value.isEmpty) {
@@ -419,6 +423,7 @@ class _AddFacultyViewState extends State<AddFacultyView> {
                                                 },
                                                 inputDecoration:
                                                     const InputDecoration(
+                                                    
                                                         border:
                                                             InputBorder.none,
                                                         hintStyle: TextStyle(
@@ -451,9 +456,12 @@ class _AddFacultyViewState extends State<AddFacultyView> {
                                                   fontWeight: FontWeight.w500),
                                               Expanded(
                                                   child: AppTextFormFieldWidget(
+                                                           inputFormatters: [
+                                                FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z\s]'))
+                                              ],
                                                 textStyle: GoogleFonts.roboto(
                                                     color:
-                                                        AppColors.colorWhite),
+                                                        AppColors.colorWhite,fontSize: 15.sp),
                                                 validator: (value) {
                                                   if (value == null ||
                                                       value.isEmpty) {
@@ -502,7 +510,7 @@ class _AddFacultyViewState extends State<AddFacultyView> {
                                                   child: AppTextFormFieldWidget(
                                                 textStyle: GoogleFonts.roboto(
                                                     color:
-                                                        AppColors.colorWhite),
+                                                        AppColors.colorWhite,fontSize: 15.sp),
                                                 validator: (value) {
                                                   return EmailFormFieldValidator
                                                       .validate(value);
@@ -544,9 +552,12 @@ class _AddFacultyViewState extends State<AddFacultyView> {
                                                   fontWeight: FontWeight.w500),
                                               Expanded(
                                                   child: AppTextFormFieldWidget(
+                                                     inputFormatters: [
+                                                 FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+                                              ],
                                                 textStyle: GoogleFonts.roboto(
                                                     color:
-                                                        AppColors.colorWhite),
+                                                        AppColors.colorWhite,fontSize: 15.sp),
                                                 validator: (value) {
                                                   if (value == null ||
                                                       value.isEmpty) {
@@ -601,7 +612,7 @@ class _AddFacultyViewState extends State<AddFacultyView> {
                                                   },
                                                   style: GoogleFonts.roboto(
                                                       color:
-                                                          AppColors.colorWhite),
+                                                          AppColors.colorWhite,fontSize: 15.sp),
                                                   controller: dobinput,
                                                   decoration: InputDecoration(
                                                       hintStyle:
@@ -673,7 +684,7 @@ class _AddFacultyViewState extends State<AddFacultyView> {
                                                   },
                                                   style: GoogleFonts.roboto(
                                                       color:
-                                                          AppColors.colorWhite),
+                                                          AppColors.colorWhite,fontSize: 15.sp),
                                                   controller: dateinput,
                                                   decoration: InputDecoration(
                                                       hintStyle:
@@ -800,7 +811,7 @@ class _AddFacultyViewState extends State<AddFacultyView> {
                                                   child: AppTextFormFieldWidget(
                                                 textStyle: GoogleFonts.roboto(
                                                     color:
-                                                        AppColors.colorWhite),
+                                                        AppColors.colorWhite,fontSize: 15.sp),
                                                 validator: (value) {
                                                   if (value == null ||
                                                       value.isEmpty) {
@@ -838,6 +849,7 @@ class _AddFacultyViewState extends State<AddFacultyView> {
                                                 CrossAxisAlignment.start,
                                             children: [
                                               AppRichTextView(
+                                                
                                                   title:
                                                       "Education qualification",
                                                   textColor:
@@ -846,9 +858,12 @@ class _AddFacultyViewState extends State<AddFacultyView> {
                                                   fontWeight: FontWeight.w500),
                                               Expanded(
                                                   child: AppTextFormFieldWidget(
+                                                           inputFormatters: [
+                                                FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z\s]'))
+                                              ],
                                                 textStyle: GoogleFonts.roboto(
                                                     color:
-                                                        AppColors.colorWhite),
+                                                        AppColors.colorWhite,fontSize: 15.sp),
                                                 validator: (value) {
                                                   if (value == null ||
                                                       value.isEmpty) {
@@ -895,7 +910,7 @@ class _AddFacultyViewState extends State<AddFacultyView> {
                                                   child: AppTextFormFieldWidget(
                                                 textStyle: GoogleFonts.roboto(
                                                     color:
-                                                        AppColors.colorWhite),
+                                                        AppColors.colorWhite,fontSize: 15.sp),
                                                 validator: (value) {
                                                   if (value == null ||
                                                       value.isEmpty) {
@@ -995,9 +1010,12 @@ class _AddFacultyViewState extends State<AddFacultyView> {
                                                   fontWeight: FontWeight.w500),
                                               Expanded(
                                                   child: AppTextFormFieldWidget(
+                                                           inputFormatters: [
+                                                FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z\s]'))
+                                              ],
                                                 textStyle: GoogleFonts.roboto(
                                                     color:
-                                                        AppColors.colorWhite),
+                                                        AppColors.colorWhite,fontSize: 15.sp),
                                                 validator: (value) {
                                                   if (value == null ||
                                                       value.isEmpty) {

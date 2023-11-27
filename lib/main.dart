@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:provider/provider.dart';
+import 'package:rugst_alliance_academia/data/provider/common_provider.dart';
 import 'package:rugst_alliance_academia/data/provider/dashboard_provider.dart';
 import 'package:rugst_alliance_academia/data/provider/faculty_provider.dart';
 import 'package:rugst_alliance_academia/data/provider/fees_provider.dart';
@@ -74,6 +75,9 @@ class MyApp extends StatelessWidget {
                       ),
                       ChangeNotifierProvider(
                         create: (context) => FeesProvider(),
+                      ),
+                      ChangeNotifierProvider(
+                        create: (context) => CommonProvider(),
                       ),
                     ],
                     builder: (context, child) {

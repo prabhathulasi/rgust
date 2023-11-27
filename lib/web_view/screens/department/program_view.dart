@@ -176,11 +176,11 @@ class _ProgramViewState extends State<ProgramView> {
                               borderColor: Colors.blueGrey,
                               tdStyle:
                                   const TextStyle(fontWeight: FontWeight.bold),
-                              trHeight: 40,
+                              trHeight: 40.h,
                               removeIconColor: AppColors.colorRed,
 
-                              thStyle: const TextStyle(
-                                  fontSize: 15,
+                              thStyle:  TextStyle(
+                                  fontSize: 15.sp,
                                   fontWeight: FontWeight.bold,
                                   color: AppColors.colorWhite),
                               thAlignment: TextAlign.center,
@@ -248,10 +248,10 @@ class _ProgramViewState extends State<ProgramView> {
 
                                   borderColor: Colors.blueGrey,
                                   tdStyle:  TextStyle(
-                                    fontSize: 18.sp,
+                                    fontSize: 15.sp,
                                       fontWeight: FontWeight.bold,
                                       color: AppColors.colorWhite),
-                                  trHeight: 30.h,
+                                  trHeight: 100.h,
                                   thStyle:  TextStyle(
                                       fontSize: 18.sp,
                                       fontWeight: FontWeight.bold,
@@ -266,9 +266,9 @@ class _ProgramViewState extends State<ProgramView> {
                                   tdEditableMaxLines:
                                       100, // don't limit and allow data to wrap
                                   tdPaddingTop: 10.h,
-                                  // tdPaddingBottom: 14,
-                                  tdPaddingLeft: 10,
-                                  tdPaddingRight: 8,
+                                   tdPaddingBottom: 14.h,
+                                  tdPaddingLeft: 10.w,
+                                  tdPaddingRight: 8.w,
                                   focusedBorder: const OutlineInputBorder(
                                       borderSide:
                                           BorderSide(color: Colors.blue),

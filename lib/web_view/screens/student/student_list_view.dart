@@ -96,24 +96,27 @@ class StudentListView extends StatelessWidget {
                 ),
               );
             } else {
-              return (studentProvider.studentModel.studentList == null )
-                  ? Center(
-                      child: Column(
-                      children: [
-                        Expanded(child: Image.asset(ImagePath.webNoDataLogo)),
-                        AppElevatedButon(
-                          title: "Add New Student",
-                          buttonColor: AppColors.colorc7e,
-                          height: 50.h,
-                          width: 210.w,
-                          onPressed: (context) {
-                            showAddAlertDialog(context);
-                          },
-                          textColor: AppColors.colorWhite,
-                        )
-                      ],
-                    ))
-                  :  const StudentGridView();
+              return Consumer<StudentProvider>(
+                builder: (context , studentConsumer, child) {
+                  return studentConsumer.studentModel.studentList == null? Center(
+                          child: Column(
+                          children: [
+                            Expanded(child: Image.asset(ImagePath.webNoDataLogo)),
+                            AppElevatedButon(
+                              title: "Add New Student",
+                              buttonColor: AppColors.colorc7e,
+                              height: 50.h,
+                              width: 210.w,
+                              onPressed: (context) {
+                                showAddAlertDialog(context);
+                              },
+                              textColor: AppColors.colorWhite,
+                            )
+                          ],
+                        )) :  const StudentGridView();
+                }
+              );
+                 
             }
           },
         ),

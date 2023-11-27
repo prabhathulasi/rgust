@@ -150,24 +150,27 @@ class _FacultyGridViewState extends State<FacultyGridView> {
                   decoration: BoxDecoration(
                       color: AppColors.colorc7e,
                       borderRadius: BorderRadius.circular(10.sp)),
-                  child: Padding(
-                    padding: EdgeInsets.only(left: 18.0.w, right: 18.w),
-                    child: AppTextFormFieldWidget(
-                      key: textFieldKey,
-                   
-                      onChanged: (p0) {
-                        facultyProvider.setEnableFilter(true);
-                        facultyProvider.filterFaculty(p0);
-                      },
-                      
-                      textStyle: GoogleFonts.oswald(color: AppColors.colorWhite),
-                      inputDecoration: InputDecoration(
-                        suffixIcon :const Icon(Icons.search, color: AppColors.colorWhite,),
-                          border: InputBorder.none,
-                          
-                          hintText: "Search by Name",
-                          hintStyle:
-                              GoogleFonts.oswald(color: AppColors.colorWhite)),
+                  child: Center(
+                    child: Padding(
+                      padding: EdgeInsets.only(left: 18.0.w, right: 18.w),
+                      child: AppTextFormFieldWidget(
+                        
+                        key: textFieldKey,
+                     
+                        onChanged: (p0) {
+                          facultyProvider.setEnableFilter(true);
+                          facultyProvider.filterFaculty(p0);
+                        },
+                        
+                        textStyle: GoogleFonts.oswald(color: AppColors.colorWhite,fontSize: 15.sp),
+                        inputDecoration: InputDecoration(
+                          suffixIcon : Icon(Icons.search, color: AppColors.colorWhite,size: 25.sp,),
+                            border: InputBorder.none,
+                            
+                            hintText: "Search by Name",
+                            hintStyle:
+                                GoogleFonts.oswald(color: AppColors.colorWhite,fontSize: 20.sp)),
+                      ),
                     ),
                   ),
                 ),
