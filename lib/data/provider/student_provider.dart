@@ -2,6 +2,7 @@ import 'dart:convert';
 
 
 import 'package:flutter/material.dart';
+import 'package:rugst_alliance_academia/data/model/student_course_model.dart';
 
 import 'package:rugst_alliance_academia/data/model/student_model.dart';
 import 'package:rugst_alliance_academia/util/api_service.dart';
@@ -9,6 +10,7 @@ import 'package:rugst_alliance_academia/util/toast_helper.dart';
 
 class StudentProvider extends ChangeNotifier {
   StudentModel studentModel = StudentModel();
+  StudentRegisterCourseModel studentRegisterCourseModel = StudentRegisterCourseModel();
   // loading indicator
   bool _isLoading = false;
   bool get isLoading => _isLoading;
@@ -95,7 +97,7 @@ class StudentProvider extends ChangeNotifier {
       var result = await ApiHelper.post(
           "CreateStudent",
           {
-            "StudentRegiterNumber": registerNo,
+            "StudentRegiterNumber": "211",
             "ProgramId": programId,
             "CurrentClassId": classId,
             "Batch": batch,
@@ -141,6 +143,43 @@ class StudentProvider extends ChangeNotifier {
       return null;
     }
   }
+
+getStudentCourses(int studentId, String token)async{
+   setLoading(true);
+    try {
+      var result = await ApiHelper.get("GetStudentCourses/id=$studentId", token);
+      setLoading(false);
+      if (result.statusCode == 200) {
+        var data = json.decode(result.body);
+
+        studentRegisterCourseModel = StudentRegisterCourseModel.fromJson(data);
+
+        notifyListeners();
+     
+
+        return studentRegisterCourseModel;
+      } else if (result.statusCode == 204) {
+        studentRegisterCourseModel.studentCourses?.clear();
+        notifyListeners();
+        ToastHelper().errorToast("No Courses Registered Yet");
+  
+        return null;
+      } else if (result.statusCode == 401) {
+        notifyListeners();
+
+        return "Invalid Token";
+      } else {
+        notifyListeners();
+        ToastHelper().errorToast("Internal Server Error");
+        return null;
+      }
+    } catch (e) {
+      setLoading(false);
+      ToastHelper().errorToast(e.toString());
+      return e.toString();
+    }
+}
+
 
 // set loading value
   void setLoading(bool value) async {

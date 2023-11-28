@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:rugst_alliance_academia/data/model/student_model.dart';
 import 'package:rugst_alliance_academia/theme/app_colors.dart';
 import 'package:rugst_alliance_academia/web_view/screens/student/student_tab_view.dart';
+import 'package:rugst_alliance_academia/web_view/screens/student/update_student_detail.dart';
 import 'package:rugst_alliance_academia/widgets/app_richtext.dart';
 
 class StudentDetailView extends StatefulWidget {
@@ -20,7 +21,41 @@ class _FacultyDetailViewState extends State<StudentDetailView> {
   
 
 
+  showAddAlertDialog(BuildContext context, StudentList details) {
+    // set up the AlertDialog
+    Dialog alert = Dialog(
+      child: Stack(
+        children: [
+           UpdateStudentDetails(studentDetails: details),
+          Transform.translate(
+            offset: Offset(10.w, -13.h),
+            child: GestureDetector(
+                onTap: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Align(
+                  alignment: Alignment.topRight,
+                  child: CircleAvatar(
+                    radius: 14.0,
+                    backgroundColor: AppColors.colorc7e,
+                    child: Icon(Icons.close, color: AppColors.color582),
+                  ),
+                )),
+          )
+        ],
+      ),
+    );
 
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    ).then((value) {
+Navigator.pop(context);
+    });
+  }
 
 
   @override
@@ -74,7 +109,7 @@ class _FacultyDetailViewState extends State<StudentDetailView> {
                                         onTap: () {
                                         //  facultyProvider.updateJobType(false);
                                         //  facultyProvider.updateGender(false);
-                                        //  showAddAlertDialog(context, facultyData);
+                                          showAddAlertDialog(context, studentData);
                                         },
                                         child: CircleAvatar(
                                           radius: 15.sp,

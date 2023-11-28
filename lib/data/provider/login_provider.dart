@@ -18,7 +18,7 @@ class LoginProvider extends ChangeNotifier {
     // Make your login API call here using the http package
 
     var result = await http.post(
-      Uri.parse("http://172.16.20.151:3014/login"),
+      Uri.parse("http://localhost:3014/login"),
       body: jsonEncode(bodyData),
       headers: {
         'Content-Type': 'application/json; charset=UTF-8',

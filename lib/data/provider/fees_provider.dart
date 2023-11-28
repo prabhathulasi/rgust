@@ -66,7 +66,7 @@ MiscFeeModel miscFeeModel = MiscFeeModel();
       if (result.statusCode == 200) {
         singlefeesModel.feeslist?.clear();
         var data = json.decode(result.body);
-        print(data);
+        
 
         singlefeesModel = FeesModel.fromJson(data);
 

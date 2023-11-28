@@ -112,7 +112,7 @@ class _StudentAdditionalInfoViewState extends State<StudentAdditionalInfoView> {
         final request = http.MultipartRequest(
             'POST',
             Uri.parse(
-                "http://172.16.20.122:3014/upload/id=${widget.studentId}"))
+                "http://localhost:3014/upload/id=${widget.studentId}"))
           ..headers.addAll(headers)
           ..files.add(
             http.MultipartFile.fromBytes(
@@ -155,15 +155,13 @@ class _StudentAdditionalInfoViewState extends State<StudentAdditionalInfoView> {
                 
                 return fileUploadProvider.mediaFileModel.files == null ||
                         fileUploadProvider.mediaFileModel.files!.isEmpty
-                    ? Column(
-                      children: [
-                        AppRichTextView(
-                                title: "No Documents Uploaded Yet",
-                                fontSize: 15.sp,
-                                fontWeight: FontWeight.w800,
-                                textColor: AppColors.colorWhite,
-                              ),
-                      ],
+                    ? Center(
+                      child: AppRichTextView(
+                              title: "No Documents Uploaded Yet",
+                              fontSize: 15.sp,
+                              fontWeight: FontWeight.w800,
+                              textColor: AppColors.colorWhite,
+                            ),
                     )
                     : ListView.builder(
                       scrollDirection: Axis.horizontal,
