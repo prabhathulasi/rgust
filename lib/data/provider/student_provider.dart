@@ -109,7 +109,7 @@ bool _isstudentTypeEdit = false;
       var result = await ApiHelper.post(
           "CreateStudent",
           {
-            "StudentRegiterNumber": "211",
+            "StudentRegiterNumber": registerNo,
             "ProgramId": programId,
             "CurrentClassId": classId,
             "Batch": batch,

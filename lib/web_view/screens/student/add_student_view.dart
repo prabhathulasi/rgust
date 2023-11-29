@@ -135,7 +135,7 @@ String? gender ;
                           studentType: "Regular",
                           batch: programProvider.selectedBatch!,
                           registerNo:
-                              "${DateTime.now().year}/${programProvider.selectedDept}/213",
+                              "${DateTime.now().year}/${programProvider.selectedDept}/${studentProvider.studentRegisterNumberController}",
                           gender: genderValue!,
                           dob: dobinput.text,
                           userImage: imageEncoded!,
