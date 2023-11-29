@@ -277,7 +277,7 @@ double imageSizeInKB = imageSizeInBytes / 1024;
 if (imageSizeInKB > 50) {
   ToastHelper().errorToast("Image size exceeds 50KB. Please choose a smaller image.");
   setState(() {
-    
+    imageEncoded = null;
   });
 } else {
   imageEncoded = base64.encode(bytesFromPicker!);
