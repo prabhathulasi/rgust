@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 
 
 import 'package:flutter/material.dart';
@@ -13,7 +12,6 @@ import 'package:rugst_alliance_academia/custom_plugin/editable.dart';
 import 'package:rugst_alliance_academia/data/middleware/check_auth_middleware.dart';
 import 'package:rugst_alliance_academia/data/model/gender_model.dart';
 import 'package:rugst_alliance_academia/data/provider/common_provider.dart';
-import 'package:rugst_alliance_academia/data/provider/fees_provider.dart';
 import 'package:rugst_alliance_academia/data/provider/program_provider.dart';
 import 'package:rugst_alliance_academia/data/provider/student_provider.dart';
 import 'package:rugst_alliance_academia/routes/named_routes.dart';
@@ -32,7 +30,6 @@ import 'package:rugst_alliance_academia/widgets/app_formfield.dart';
 import 'package:rugst_alliance_academia/widgets/app_radiobutton.dart';
 import 'package:rugst_alliance_academia/widgets/app_richtext.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:rugst_alliance_academia/widgets/app_spining.dart';
 
 class AddStudentView extends StatefulWidget {
   const AddStudentView({super.key});
@@ -93,29 +90,29 @@ String? gender ;
               SizedBox(
                 height: 10.h,
               ),
-              Text(
+              const Text(
                 "1.I confirm that all the information provided is accurate and up to date to the best of my knowledge.",
-                style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.bold),
+                
               ),
-              Text(
+              const Text(
                 "2.I ensure that there are no duplicate entries or redundant information in the submitted data.",
-                style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.bold),
+                
               ),
-              Text(
+              const Text(
                 "3.The provided image adheres to the requirement of a white background as specified for identification purposes.",
-                style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.bold),
+                
               ),
-              Text(
+              const Text(
                 "4.I have verified that there are no errors or inaccuracies in the information submitted, ensuring its correctness.",
-                style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.bold),
+                
               ),
-              Text(
+              const Text(
                 "5.I affirm that the information submitted maintains its integrity and authenticity without manipulation or misrepresentation.",
-                style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.bold),
+                
               ),
-              Text(
+              const Text(
                 "6.The image submitted complies with the mandated criteria, ensuring clarity and adherence to guidelines.",
-                style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.bold),
+                
               ),
               SizedBox(
                 height: 10.h,
@@ -272,9 +269,22 @@ String? gender ;
                               onTap: () async {
                                 bytesFromPicker =
                                     await ImagePickerWeb.getImageAsBytes();
-                                imageEncoded = base64.encode(bytesFromPicker!);
+                                    // Get the size of the base64 string in bytes
+int imageSizeInBytes = (base64.encode(bytesFromPicker!).length * 3 / 4).ceil();
+
+// Convert bytes to kilobytes
+double imageSizeInKB = imageSizeInBytes / 1024;
+if (imageSizeInKB > 50) {
+  ToastHelper().errorToast("Image size exceeds 50KB. Please choose a smaller image.");
+  setState(() {
+    
+  });
+} else {
+  imageEncoded = base64.encode(bytesFromPicker!);
 
                                 setState(() {});
+}
+                                
                               },
                               child: AppRichTextView(
                                   title: "Select Profile Image",
@@ -360,18 +370,27 @@ String? gender ;
                                   children: [
                                     Expanded(
                                       child: AppTextFormFieldWidget(
-                                        enable: false,
+                                          inputFormatters: [
+                                                 FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+                                              ],
+                                        validator: (p0) {
+                                          if(p0 == null || p0.isEmpty){
+                                            return "This Field is required";
+                                          }else{
+                                             return null;
+                                      
+                                          }
+                                        },
                                         textStyle: const TextStyle(
                                             color: AppColors.colorWhite),
-                                        onSaved: (p0) {},
-                                        inputDecoration: InputDecoration(
+                                        onSaved: (p0) {
+                                          studentProvider.setStudentId(p0!);
+                                        },
+                                        inputDecoration: const InputDecoration(
                                             border: InputBorder.none,
-                                            hintText: programProvider
-                                                        .selectedDept ==
-                                                    null
-                                                ? ""
-                                                : "${DateTime.now().year}/${programProvider.selectedDept}/126",
-                                            hintStyle: const TextStyle(
+                                            hintText: "123"
+                                               ,
+                                            hintStyle: TextStyle(
                                                 color: AppColors.colorGrey)),
                                         obscureText: false,
                                       ),
@@ -499,7 +518,7 @@ String? gender ;
                             child: Column(
                               children: [
                                 Container(
-                                  height: 70.h,
+                                  height: 80.h,
                                   width: size.width * 0.2,
                                   decoration: const BoxDecoration(
                                     color: AppColors.colorc7e,
@@ -553,6 +572,7 @@ String? gender ;
                                                           AppColors.colorGrey)),
                                           obscureText: false,
                                         )),
+                                        const SizedBox(height: 3,)
                                       ],
                                     ),
                                   ),
@@ -562,7 +582,7 @@ String? gender ;
                                 ),
                                 Container(
                                   color: AppColors.colorc7e,
-                                  height: 70.h,
+                                  height: 80.h,
                                   width: size.width * 0.2,
                                   child: Padding(
                                     padding: const EdgeInsets.all(8.0),
@@ -613,6 +633,7 @@ String? gender ;
                                                           AppColors.colorGrey)),
                                           obscureText: false,
                                         )),
+                                         const SizedBox(height: 3,)
                                       ],
                                     ),
                                   ),
@@ -622,7 +643,7 @@ String? gender ;
                                 ),
                                 Container(
                                   color: AppColors.colorc7e,
-                                  height: 70.h,
+                                  height: 80.h,
                                   width: size.width * 0.2,
                                   child: Padding(
                                     padding: const EdgeInsets.all(8.0),
@@ -665,6 +686,7 @@ String? gender ;
                                                   fontSize: 15.sp)),
                                           obscureText: false,
                                         )),
+                                         const SizedBox(height: 3,)
                                       ],
                                     ),
                                   ),
@@ -674,7 +696,7 @@ String? gender ;
                                 ),
                                 Container(
                                   color: AppColors.colorc7e,
-                                  height: 70.h,
+                                  height: 80.h,
                                   width: size.width * 0.2,
                                   child: Padding(
                                     padding: const EdgeInsets.all(8.0),
@@ -725,6 +747,7 @@ String? gender ;
                                                           AppColors.colorGrey)),
                                           obscureText: false,
                                         )),
+                                         const SizedBox(height: 3,)
                                       ],
                                     ),
                                   ),
@@ -732,7 +755,7 @@ String? gender ;
                                 const SizedBox(height: 10),
                                 Container(
                                   color: AppColors.colorc7e,
-                                  height: 70.h,
+                                  height: 80.h,
                                   width: size.width * 0.2,
                                   child: Padding(
                                     padding: const EdgeInsets.all(8.0),
@@ -803,6 +826,7 @@ String? gender ;
                                             },
                                           ),
                                         ),
+                                         const SizedBox(height: 3,)
                                       ],
                                     ),
                                   ),
@@ -810,7 +834,7 @@ String? gender ;
                                 const SizedBox(height: 10),
                                 Container(
                                   color: AppColors.colorc7e,
-                                  height: 70.h,
+                                  height: 80.h,
                                   width: size.width * 0.2,
                                   child: Padding(
                                     padding: const EdgeInsets.all(8.0),
@@ -858,6 +882,7 @@ String? gender ;
                                                           AppColors.colorGrey)),
                                           obscureText: false,
                                         )),
+                                         const SizedBox(height: 3,)
                                       ],
                                     ),
                                   ),
@@ -873,7 +898,7 @@ String? gender ;
                               children: [
                                 Container(
                                   color: AppColors.colorc7e,
-                                  height: 80.h,
+                                  height: 100.h,
                                   width: size.width * 0.2,
                                   child: Padding(
                                     padding: const EdgeInsets.all(8.0),
@@ -886,6 +911,7 @@ String? gender ;
                                             textColor: AppColors.colorWhite,
                                             fontSize: 14.sp,
                                             fontWeight: FontWeight.w500),
+                                             SizedBox(height: 5.h,),
                                         Expanded(
                                             child: ListView.builder(
                                           scrollDirection: Axis.horizontal,
@@ -914,7 +940,8 @@ String? gender ;
                                               ),
                                             );
                                           },
-                                        ))
+                                        )),
+                                        
                                       ],
                                     ),
                                   ),
@@ -922,7 +949,7 @@ String? gender ;
                                 const SizedBox(height: 10),
                                 Container(
                                   color: AppColors.colorc7e,
-                                  height: 70.h,
+                                  height: 120.h,
                                   width: size.width * 0.2,
                                   child: Padding(
                                     padding: const EdgeInsets.all(8.0),
@@ -949,6 +976,7 @@ String? gender ;
                                         ),
                                         Expanded(
                                             child: AppTextFormFieldWidget(
+                                              maxLines: 3,
                                           textStyle: GoogleFonts.roboto(
                                               color: AppColors.colorWhite,
                                               fontSize: 15.sp),
@@ -976,7 +1004,7 @@ String? gender ;
                                 const SizedBox(height: 10),
                                 Container(
                                   color: AppColors.colorc7e,
-                                  height: 70.h,
+                                  height: 120.h,
                                   width: size.width * 0.2,
                                   child: Padding(
                                     padding: const EdgeInsets.all(8.0),
@@ -1003,6 +1031,7 @@ String? gender ;
                                         ),
                                         Expanded(
                                             child: AppTextFormFieldWidget(
+                                              maxLines: 3,
                                           textStyle: GoogleFonts.roboto(
                                               color: AppColors.colorWhite,
                                               fontSize: 15.sp),
@@ -1032,7 +1061,7 @@ String? gender ;
                                 const SizedBox(height: 10),
                                 Container(
                                   color: AppColors.colorc7e,
-                                  height: 70.h,
+                                  height: 80.h,
                                   width: size.width * 0.2,
                                   child: Padding(
                                     padding: EdgeInsets.all(8.0.sp),
@@ -1083,6 +1112,63 @@ String? gender ;
                                                   fontSize: 15.sp)),
                                           obscureText: false,
                                         )),
+                                         const SizedBox(height: 3,)
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                 const SizedBox(height: 10),
+                                Container(
+                                  color: AppColors.colorc7e,
+                                  height: 80.h,
+                                  width: size.width * 0.2,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            AppRichTextView(
+                                                title: "Qualification",
+                                                textColor: AppColors.colorWhite,
+                                                fontSize: 14.sp,
+                                                fontWeight: FontWeight.w500),
+                                            SizedBox(
+                                              width: 3.w,
+                                            ),
+                                            AppRichTextView(
+                                                title: "*",
+                                                textColor: AppColors.colorRed,
+                                                fontSize: 18.sp,
+                                                fontWeight: FontWeight.w500),
+                                          ],
+                                        ),
+                                        Expanded(
+                                            child: AppTextFormFieldWidget(
+                                          textStyle: GoogleFonts.roboto(
+                                              color: AppColors.colorWhite,
+                                              fontSize: 15.sp),
+                                          validator: (value) {
+                                            if (value == null ||
+                                                value.isEmpty) {
+                                              return "This Field is Required";
+                                            } else {
+                                              return null;
+                                            }
+                                          },
+                                          onSaved: (p0) => studentProvider
+                                              .qualificationcontroller = p0,
+                                          inputDecoration:
+                                              const InputDecoration(
+                                                  border: InputBorder.none,
+                                                  hintStyle: TextStyle(
+                                                      color:
+                                                          AppColors.colorGrey)),
+                                          obscureText: false,
+                                        )),
+                                         const SizedBox(height: 3,)
                                       ],
                                     ),
                                   ),
@@ -1090,7 +1176,7 @@ String? gender ;
                                 const SizedBox(height: 10),
                                 Container(
                                   color: AppColors.colorc7e,
-                                  height: 70.h,
+                                  height: 80.h,
                                   width: size.width * 0.2,
                                   child: Padding(
                                     padding: EdgeInsets.all(8.0.sp),
@@ -1141,6 +1227,7 @@ String? gender ;
                                                           AppColors.colorGrey)),
                                           obscureText: false,
                                         )),
+                                         const SizedBox(height: 3,)
                                       ],
                                     ),
                                   ),

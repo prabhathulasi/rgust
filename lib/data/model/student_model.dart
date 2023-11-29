@@ -51,6 +51,7 @@ class StudentList {
   String? passportNumber;
   String? citizenship;
   bool? accountCreated;
+  String? qualifiation;
   List<dynamic>? registeredCourse;
 
   StudentList(
@@ -80,6 +81,7 @@ class StudentList {
       this.passportNumber,
       this.citizenship,
       this.accountCreated,
+      this.qualifiation,
       this.registeredCourse});
 
   StudentList.fromJson(Map<String, dynamic> json) {
@@ -109,6 +111,7 @@ class StudentList {
     passportNumber = json['PassportNumber'];
     citizenship = json['Citizenship'];
     accountCreated = json['AccountCreated'];
+        qualifiation = json['Qualification'];
     // if (json['RegisteredCourse'] != null) {
     //   registeredCourse = <Null>[];
     //   json['RegisteredCourse'].forEach((v) {
@@ -145,6 +148,7 @@ class StudentList {
     data['PassportNumber'] = passportNumber;
     data['Citizenship'] = citizenship;
     data['AccountCreated'] = accountCreated;
+    data["Qualification"] = qualifiation;
     // if (this.registeredCourse != null) {
     //   data['RegisteredCourse'] =
     //       this.registeredCourse!.map((v) => v!.toJson()).toList();

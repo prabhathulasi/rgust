@@ -137,6 +137,7 @@ class ProgramProvider extends ChangeNotifier {
 // create course or add new course
   Future postCoursesList(String? token,
       {String? courseid, String? courseName, int? credits}) async {
+            try {
     var result = await ApiHelper.post(
         "PostCourse",
         {
@@ -149,7 +150,7 @@ class ProgramProvider extends ChangeNotifier {
         },
         token!);
 
-    try {
+
       if (result.statusCode == 200) {
         setLoading(false);
         ToastHelper().sucessToast("Course Added Successfully");

@@ -10,11 +10,10 @@ import 'package:intl/intl.dart';
 
 import 'package:provider/provider.dart';
 import 'package:rugst_alliance_academia/data/middleware/check_auth_middleware.dart';
-import 'package:rugst_alliance_academia/data/model/faculty_model.dart';
 import 'package:rugst_alliance_academia/data/model/gender_model.dart';
 import 'package:rugst_alliance_academia/data/model/student_model.dart';
 import 'package:rugst_alliance_academia/data/provider/faculty_provider.dart';
-import 'package:rugst_alliance_academia/data/provider/program_provider.dart';
+import 'package:rugst_alliance_academia/data/provider/student_provider.dart';
 import 'package:rugst_alliance_academia/routes/named_routes.dart';
 import 'package:rugst_alliance_academia/theme/app_colors.dart';
 import 'package:rugst_alliance_academia/util/toast_helper.dart';
@@ -25,7 +24,6 @@ import 'package:rugst_alliance_academia/web_view/screens/faculty/gender_view.dar
 
 import 'package:rugst_alliance_academia/widgets/app_elevatedbutton.dart';
 import 'package:rugst_alliance_academia/widgets/app_formfield.dart';
-import 'package:rugst_alliance_academia/widgets/app_radiobutton.dart';
 import 'package:rugst_alliance_academia/widgets/app_richtext.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -39,30 +37,19 @@ class UpdateStudentDetails extends StatefulWidget {
 
 class _AddFacultyViewState extends State<UpdateStudentDetails> {
   final _formKey = GlobalKey<FormState>();
- 
+
   List<JobType> jobType = [];
   List filterdcols = [];
- 
+
   String? jobTypeValue;
-
-
-
-  @override
-  void initState() {
-
-    jobType.add(JobType("Full-Time", false));
-    jobType.add(JobType("Part-Time", false));
-    jobType.add(JobType("Resigned", false));
-
-   
-
-    super.initState();
-  }
 
   bool dropdownSelected = false;
   Uint8List? bytesFromPicker;
   String? imageEncoded;
 
+
+  // List of items in our dropdown menu
+ 
   @override
   Widget build(BuildContext context) {
     TextEditingController dateinput =
@@ -70,7 +57,7 @@ class _AddFacultyViewState extends State<UpdateStudentDetails> {
     TextEditingController dobinput =
         TextEditingController(text: widget.studentDetails.dOB);
 
-   final programProvider = Provider.of<ProgramProvider>(context);
+    final studentProvider = Provider.of<StudentProvider>(context);
     final facultyProvider = Provider.of<FacultyProvider>(context);
 
     var size = MediaQuery.of(context).size;
@@ -79,8 +66,8 @@ class _AddFacultyViewState extends State<UpdateStudentDetails> {
         height: size.height,
         width: size.width,
         decoration: const BoxDecoration(
-            color: AppColors.color0ec,),
-         
+          color: AppColors.color0ec,
+        ),
         child: Padding(
           padding: EdgeInsets.all(29.sp),
           child: Row(
@@ -89,7 +76,7 @@ class _AddFacultyViewState extends State<UpdateStudentDetails> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   AppRichTextView(
-                      title: "Update Faculty",
+                      title: "Update Student",
                       textColor: AppColors.colorc7e,
                       fontSize: 25.sp,
                       fontWeight: FontWeight.w700),
@@ -113,8 +100,7 @@ class _AddFacultyViewState extends State<UpdateStudentDetails> {
                           CircleAvatar(
                             backgroundColor: AppColors.colorc7e,
                             radius: 60.sp,
-                            backgroundImage:
-                             imageEncoded == null
+                            backgroundImage: imageEncoded == null
                                 ? MemoryImage(base64Decode(
                                     widget.studentDetails.userImage!))
                                 : MemoryImage(bytesFromPicker!)
@@ -139,19 +125,16 @@ class _AddFacultyViewState extends State<UpdateStudentDetails> {
                           ),
                         ],
                       ),
-                      
-                     
                       SizedBox(
                         width: 15.w,
                       ),
-                     
                     ],
                   ),
                   SizedBox(
                     height: 30.h,
                   ),
                   AppRichTextView(
-                      title: "Faculty Personal Details".toUpperCase(),
+                      title: "Student Personal Details".toUpperCase(),
                       textColor: AppColors.colorBlack,
                       fontSize: 15.sp,
                       fontWeight: FontWeight.w800),
@@ -187,9 +170,7 @@ class _AddFacultyViewState extends State<UpdateStudentDetails> {
                                         initialValue:
                                             widget.studentDetails.firstName,
                                         textStyle: GoogleFonts.roboto(
-                                            color: AppColors.colorWhite),
-                                      
-                                       
+                                            color: AppColors.colorWhite, fontSize: 15.sp),
                                         onSaved: (p0) {
                                           facultyProvider.setfirstName(p0!);
                                         },
@@ -226,8 +207,7 @@ class _AddFacultyViewState extends State<UpdateStudentDetails> {
                                         initialValue:
                                             widget.studentDetails.lastName,
                                         textStyle: GoogleFonts.roboto(
-                                            color: AppColors.colorWhite),
-                                     
+                                            color: AppColors.colorWhite, fontSize: 15.sp),
                                         onSaved: (p0) {
                                           facultyProvider.setLastName(p0!);
                                         },
@@ -264,7 +244,7 @@ class _AddFacultyViewState extends State<UpdateStudentDetails> {
                                         initialValue:
                                             widget.studentDetails.email,
                                         textStyle: GoogleFonts.roboto(
-                                            color: AppColors.colorWhite),
+                                            color: AppColors.colorWhite, fontSize: 15.sp),
                                         validator: (value) {
                                           return EmailFormFieldValidator
                                               .validate(value);
@@ -302,12 +282,11 @@ class _AddFacultyViewState extends State<UpdateStudentDetails> {
                                           fontWeight: FontWeight.w500),
                                       Expanded(
                                           child: AppTextFormFieldWidget(
-                                        initialValue:
-                                            widget.studentDetails.mobileNumber.toString(),
+                                        initialValue: widget
+                                            .studentDetails.mobileNumber
+                                            .toString(),
                                         textStyle: GoogleFonts.roboto(
-                                            color: AppColors.colorWhite),
-                               
-                                     
+                                            color: AppColors.colorWhite, fontSize: 15.sp),
                                         onSaved: (p0) {
                                           facultyProvider.setMobile(p0!);
                                         },
@@ -348,7 +327,7 @@ class _AddFacultyViewState extends State<UpdateStudentDetails> {
                                             }
                                           },
                                           style: GoogleFonts.roboto(
-                                              color: AppColors.colorWhite),
+                                              color: AppColors.colorWhite, fontSize: 15.sp),
                                           controller: dobinput,
                                           decoration: InputDecoration(
                                               hintStyle: GoogleFonts.roboto(
@@ -402,9 +381,8 @@ class _AddFacultyViewState extends State<UpdateStudentDetails> {
                                           fontWeight: FontWeight.w500),
                                       Expanded(
                                         child: TextFormField(
-                                       
                                           style: GoogleFonts.roboto(
-                                              color: AppColors.colorWhite),
+                                              color: AppColors.colorWhite, fontSize: 15.sp),
                                           controller: dateinput,
                                           decoration: InputDecoration(
                                               hintStyle: GoogleFonts.roboto(
@@ -451,10 +429,11 @@ class _AddFacultyViewState extends State<UpdateStudentDetails> {
                                 color: AppColors.colorc7e,
                                 height: 70.h,
                                 width: size.width * 0.2,
-                                child:  Padding(
-                                  padding: EdgeInsets.all(8.0.sp),
-                                  child: GenderView(gender: widget.studentDetails.gender!,)
-                                ),
+                                child: Padding(
+                                    padding: EdgeInsets.all(8.0.sp),
+                                    child: GenderView(
+                                      gender: widget.studentDetails.gender!,
+                                    )),
                               ),
                               const SizedBox(height: 10),
                               Container(
@@ -477,8 +456,7 @@ class _AddFacultyViewState extends State<UpdateStudentDetails> {
                                         initialValue:
                                             widget.studentDetails.address,
                                         textStyle: GoogleFonts.roboto(
-                                            color: AppColors.colorWhite),
-                                     
+                                            color: AppColors.colorWhite, fontSize: 15.sp),
                                         onSaved: (p0) {
                                           facultyProvider.setaddrss(p0!);
                                         },
@@ -510,11 +488,10 @@ class _AddFacultyViewState extends State<UpdateStudentDetails> {
                                           fontWeight: FontWeight.w500),
                                       Expanded(
                                           child: AppTextFormFieldWidget(
-                                        initialValue:
-                                            widget.studentDetails.mailingAddress,
+                                        initialValue: widget
+                                            .studentDetails.mailingAddress,
                                         textStyle: GoogleFonts.roboto(
-                                            color: AppColors.colorWhite),
-                                      
+                                            color: AppColors.colorWhite, fontSize: 15.sp),
                                         onSaved: (p0) {
                                           facultyProvider.setqualification(p0!);
                                         },
@@ -546,11 +523,10 @@ class _AddFacultyViewState extends State<UpdateStudentDetails> {
                                           fontWeight: FontWeight.w500),
                                       Expanded(
                                           child: AppTextFormFieldWidget(
-                                        initialValue:
-                                            widget.studentDetails.passportNumber,
+                                        initialValue: widget
+                                            .studentDetails.passportNumber,
                                         textStyle: GoogleFonts.roboto(
-                                            color: AppColors.colorWhite),
-                                      
+                                            color: AppColors.colorWhite, fontSize: 15.sp),
                                         onSaved: (p0) {
                                           facultyProvider.setpassport(p0!);
                                         },
@@ -580,58 +556,76 @@ class _AddFacultyViewState extends State<UpdateStudentDetails> {
                                           textColor: AppColors.colorWhite,
                                           fontSize: 14.sp,
                                           fontWeight: FontWeight.w500),
-                                      facultyProvider.isjobTypeEdit == false? Expanded(
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            AppRichTextView(
-                                              title:
-                                                  widget.studentDetails.studentType!,
-                                              fontSize: 15.sp,
-                                              fontWeight: FontWeight.bold,
-                                              textColor: AppColors.color0ec,
-                                            ),
-                                            InkWell(
-                                              onTap: () {
-                                                facultyProvider.updateJobType(true);
-                                              },
-                                              child: const Icon(
-                                                Icons.edit,
-                                                color: AppColors.color0ec,
+                                      studentProvider.isstudentTypeEdit == false
+                                          ? Expanded(
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  AppRichTextView(
+                                                    title: widget.studentDetails
+                                                        .studentType!,
+                                                    fontSize: 15.sp,
+                                                    fontWeight: FontWeight.bold,
+                                                    textColor:
+                                                        AppColors.color0ec,
+                                                  ),
+                                                  InkWell(
+                                                    onTap: () {
+                                                      studentProvider
+                                                          .setEditStudentType(true);
+                                                    },
+                                                    child:  Icon(
+                                                      Icons.edit,
+                                                      color: AppColors.color0ec,
+                                                      size: 20.sp,
+                                                    ),
+                                                  )
+                                                ],
                                               ),
                                             )
-                                          ],
-                                        ),
-                                      ):
-                                      Expanded(
-                                          child: ListView.builder(
-                                        scrollDirection: Axis.horizontal,
-                                        shrinkWrap: true,
-                                        itemCount: jobType.length,
-                                        itemBuilder: (context, index) {
-                                          return Padding(
-                                            padding: const EdgeInsets.only(
-                                                left: 8.0),
-                                            child: InkWell(
-                                              onTap: () {
-                                                setState(() {
-                                                  for (var data in jobType) {
-                                                    data.isSelected = false;
-                                                  }
-                                                  jobType[index].isSelected =
-                                                      true;
-                                                  jobTypeValue =
-                                                      jobType[index].name;
-                                                });
-                                              },
-                                              child: AppRadioButton(
-                                                jobType: jobType[index],
+                                          : Expanded(
+                                              child:
+                                                  DropdownButtonHideUnderline(
+                                                child: DropdownButton(
+                                                  iconDisabledColor:
+                                                      AppColors.colorWhite,
+                                                  dropdownColor:
+                                                      AppColors.colorc7e,
+                                                  isExpanded: true,
+
+                                                  // Initial Value
+                                                  value: studentProvider.studetnTypeValue,
+
+                                                  // Down Arrow Icon
+                                                  icon: const Icon(Icons
+                                                      .keyboard_arrow_down,color: AppColors.colorWhite,),
+
+                                                  // Array list of items
+                                                  items:
+                                                      studentProvider.studentType.map((String items) {
+                                                    return DropdownMenuItem(
+                                                      value: items,
+                                                      child: AppRichTextView(
+                                                        fontSize: 15.sp,
+                                                        fontWeight:
+                                                            FontWeight.w700,
+                                                        title: items,
+                                                        textColor: AppColors
+                                                            .colorWhite,
+                                                      ),
+                                                    );
+                                                  }).toList(),
+                                                  // After selecting the desired option,it will
+                                                  // change button value to selected value
+                                                  onChanged:
+                                                      (String? newValue) {
+                                                 studentProvider.setStudentType(newValue!);
+                                                  },
+                                                ),
                                               ),
-                                            ),
-                                          );
-                                        },
-                                      ))
+                                            )
                                     ],
                                   ),
                                 ),
@@ -657,8 +651,7 @@ class _AddFacultyViewState extends State<UpdateStudentDetails> {
                                         initialValue:
                                             widget.studentDetails.citizenship,
                                         textStyle: GoogleFonts.roboto(
-                                            color: AppColors.colorWhite),
-                                       
+                                            color: AppColors.colorWhite, fontSize: 15.sp),
                                         onSaved: (p0) {
                                           facultyProvider.setcitizen(p0!);
                                         },
@@ -693,57 +686,49 @@ class _AddFacultyViewState extends State<UpdateStudentDetails> {
                             width: 150.w,
                             loading: facultyProvider.isLoading,
                             onPressed: (context) async {
- 
-                             var token = await getTokenAndUseIt();
-                             
-                                if (token == null) {
-                                  if (context.mounted) {
-                                    Navigator.pushNamed(
-                                        context, RouteNames.login);
-                                  }
-                                } else if (token == "Token Expired") {
-                                  ToastHelper().errorToast(
-                                      "Session Expired Please Login Again");
+                              var token = await getTokenAndUseIt();
 
-                                  if (context.mounted) {
-                                    Navigator.pushNamed(
-                                        context, RouteNames.login);
-                                  }
-                            }else{
-                              // if (_formKey.currentState!.validate()) {
-                              //       _formKey.currentState!.save();
-                              //              var data = widget.facultyDetail;
-                              //     var result = await facultyProvider.updateFacultyDetails(token, 
-                              // updatedaddress: facultyProvider.address.isEmpty ? data.address! : facultyProvider.addresscontroller!,
-                              // updatedcitizenship: facultyProvider.cizizen.isEmpty ? data.citizenship!: facultyProvider.citizenshipcontroller!,
-                              // updatedemail: facultyProvider.email.isEmpty? data.email!:facultyProvider.emailcontroller!,
-                              // updatedfirstName: facultyProvider.firstname.isEmpty? data.firstName!: facultyProvider.firstNamecontroller!,
-                              // updatedlastName: facultyProvider.lastname.isEmpty? data.lastName!: facultyProvider.lastNamecontroller!,
-                              // updatedmobile: facultyProvider.mobile.isEmpty? data.mobile!: facultyProvider.mobileController!,
-                              // updatedpassportNumber: facultyProvider.passport.isEmpty? data.passportNumber!: facultyProvider.passportcontroller!,
-                              // updatedQualifiation: facultyProvider.qualification.isEmpty? data.qualifiation!: facultyProvider.qualificationcontroller! ,
-                              // updatedfacultyId: data.facultyId!, 
-                              // updatedgender: data.gender!, 
-                              // updateddob: data.dob!, updatedjoiningDate: data.joiningDate!, 
-                              // updateduserImage: data.userImage!, 
-                              // updatedjobType: facultyProvider.isjobTypeEdit == false? data.jobType!:jobTypeValue!, 
-                              // id: data.iD!);
+                              if (token == null) {
+                                if (context.mounted) {
+                                  Navigator.pushNamed(
+                                      context, RouteNames.login);
+                                }
+                              } else if (token == "Token Expired") {
+                                ToastHelper().errorToast(
+                                    "Session Expired Please Login Again");
 
-                              //        if(result!=null && context.mounted) {
-                                      
-                              //         Navigator.pop(context);
-                                    
-                              //        }
-                              //       }
-                                  
-                      
-                       
+                                if (context.mounted) {
+                                  Navigator.pushNamed(
+                                      context, RouteNames.login);
+                                }
+                              } else {
+                                // if (_formKey.currentState!.validate()) {
+                                //       _formKey.currentState!.save();
+                                //              var data = widget.facultyDetail;
+                                //     var result = await facultyProvider.updateFacultyDetails(token,
+                                // updatedaddress: facultyProvider.address.isEmpty ? data.address! : facultyProvider.addresscontroller!,
+                                // updatedcitizenship: facultyProvider.cizizen.isEmpty ? data.citizenship!: facultyProvider.citizenshipcontroller!,
+                                // updatedemail: facultyProvider.email.isEmpty? data.email!:facultyProvider.emailcontroller!,
+                                // updatedfirstName: facultyProvider.firstname.isEmpty? data.firstName!: facultyProvider.firstNamecontroller!,
+                                // updatedlastName: facultyProvider.lastname.isEmpty? data.lastName!: facultyProvider.lastNamecontroller!,
+                                // updatedmobile: facultyProvider.mobile.isEmpty? data.mobile!: facultyProvider.mobileController!,
+                                // updatedpassportNumber: facultyProvider.passport.isEmpty? data.passportNumber!: facultyProvider.passportcontroller!,
+                                // updatedQualifiation: facultyProvider.qualification.isEmpty? data.qualifiation!: facultyProvider.qualificationcontroller! ,
+                                // updatedfacultyId: data.facultyId!,
+                                // updatedgender: data.gender!,
+                                // updateddob: data.dob!, updatedjoiningDate: data.joiningDate!,
+                                // updateduserImage: data.userImage!,
+                                // updatedjobType: facultyProvider.isjobTypeEdit == false? data.jobType!:jobTypeValue!,
+                                // id: data.iD!);
 
-                           
-                            }
-                            
-                            }
-                            ),
+                                //        if(result!=null && context.mounted) {
+
+                                //         Navigator.pop(context);
+
+                                //        }
+                                //       }
+                              }
+                            }),
                         SizedBox(
                           width: 10.h,
                         ),
@@ -755,17 +740,27 @@ class _AddFacultyViewState extends State<UpdateStudentDetails> {
                           width: 120.w,
                           onPressed: (context) {},
                         )
-                      
                       ],
                     ),
                   )
                 ],
               ),
-              SizedBox(width: 5.w,),
-              const VerticalDivider(color: AppColors.colorBlack,width: 2, ),
-              Expanded(child: 
-              Container())
-              
+              SizedBox(
+                width: 5.w,
+              ),
+              const VerticalDivider(
+                color: AppColors.colorBlack,
+                width: 2,
+              ),
+              Expanded(child: Column(
+                children: [
+                    AppRichTextView(title: "Registered Course", fontSize: 25.sp, fontWeight: FontWeight.bold,textColor: AppColors.colorc7e,),
+                    
+
+
+                ],
+
+              ))
             ],
           ),
         ),

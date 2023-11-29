@@ -14,11 +14,22 @@ class StudentProvider extends ChangeNotifier {
   // loading indicator
   bool _isLoading = false;
   bool get isLoading => _isLoading;
-
-
-
+bool _isstudentTypeEdit = false;
+  bool get isstudentTypeEdit => _isstudentTypeEdit;
+  // Initial Selected Value
+  String studetnTypeValue = 'Regular';
+ var studentType = [
+    'Regular',
+    'Widthdraw',
+    'Dropout',
+    'Transfer',
+    'Clinical',
+    "Leaf of Absent"
+  ];
   String? firstNamecontroller;
   String get firstname => firstNamecontroller!;
+   String? studentRegisterNumberController;
+  String get suddentregisterNumber => studentRegisterNumberController!;
   String? lastNamecontroller;
   String get lastname => firstNamecontroller!;
     String? emailcontroller;
@@ -36,7 +47,8 @@ class StudentProvider extends ChangeNotifier {
   String get passport => passportcontroller!;
   String? citizenshipcontroller;
   String get cizizen => citizenshipcontroller!;
-
+ String? qualificationcontroller;
+  String get qualification => qualificationcontroller!;
 
 
   int _isStandardFee = 1;
@@ -115,6 +127,7 @@ class StudentProvider extends ChangeNotifier {
             "PassportNumber":passport,
             "citizenship": cizizen,
             "UserImage": userImage,
+            "Qualification":qualification,
             "EmergencyContact":int.parse(emergencyContact),
           },
           token);
@@ -191,5 +204,23 @@ getStudentCourses(int studentId, String token)async{
     _isStandardFee = feeType;
     notifyListeners();
   }
-  
+
+   void setStudentType(String studentType) {
+    studetnTypeValue = studentType;
+    notifyListeners();
+  }
+   void setEditStudentType(bool value) {
+    _isstudentTypeEdit = value;
+    notifyListeners();
+  }
+    // set qualification value
+  void setqualification(String value) async {
+    qualificationcontroller = value;
+    notifyListeners();
+  }
+     // set qualification value
+  void setStudentId(String value) async {
+    studentRegisterNumberController = value;
+    notifyListeners();
+  }
 }

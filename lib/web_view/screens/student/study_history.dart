@@ -119,7 +119,7 @@ class _StudyHistoryViewState extends State<StudyHistoryView> {
                                   color: AppColors.colorWhite,
                                   borderRadius: BorderRadius.circular(10.sp)
                                  ),
-                                    height: 300.h,
+                                    height: 250.h,
                                     width: 200.w,
                                     child: Padding(
                                       padding: const EdgeInsets.all(8.0),
@@ -204,7 +204,8 @@ class _StudyHistoryViewState extends State<StudyHistoryView> {
                                 ),
                               ))
                           .toList(),
-                    ),)
+                    ),),
+                    
                   ],
                 );
             },

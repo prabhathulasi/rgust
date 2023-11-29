@@ -243,7 +243,9 @@ class _AddFacultyViewState extends State<AddFacultyView> {
                                       enable: false,
                                       textStyle: const TextStyle(
                                           color: AppColors.colorWhite),
-                                      onSaved: (p0) {},
+                                      onSaved: (p0) {
+                                        
+                                      },
                                       inputDecoration: InputDecoration(
                                           border: InputBorder.none,
                                           hintText: programProvider

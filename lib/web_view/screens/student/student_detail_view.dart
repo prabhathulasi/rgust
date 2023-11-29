@@ -6,6 +6,9 @@ import 'package:rugst_alliance_academia/data/model/student_model.dart';
 import 'package:rugst_alliance_academia/theme/app_colors.dart';
 import 'package:rugst_alliance_academia/web_view/screens/student/student_tab_view.dart';
 import 'package:rugst_alliance_academia/web_view/screens/student/update_student_detail.dart';
+import 'package:rugst_alliance_academia/widgets/app_elevatedbutton.dart';
+import 'package:rugst_alliance_academia/widgets/app_formfield.dart';
+import 'package:rugst_alliance_academia/widgets/app_linechart.dart';
 import 'package:rugst_alliance_academia/widgets/app_richtext.dart';
 
 class StudentDetailView extends StatefulWidget {
@@ -57,7 +60,68 @@ Navigator.pop(context);
     });
   }
 
+Future<void> remainderDialog(BuildContext context) async {
+  return showDialog(
+      context: context,
+      builder: (context) {
+        return Dialog(
+          child: Container(
+            height:  350.h,
+            width: 400.w,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(18.sp)
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  AppRichTextView(title: "Fees Remainder", fontSize: 20.sp, fontWeight: FontWeight.bold, textColor: AppColors.colorBlack,),
+                  SizedBox(height: 10.h,),
+                   AppTextFormFieldWidget(
+                    textStyle: TextStyle(fontSize: 15.sp),
+                    maxLines: 5,
+                    inputDecoration: InputDecoration(
+                      hintText: "Message",
+                      hintStyle: TextStyle(fontSize: 15.sp),
+                      border: const OutlineInputBorder()
+                    ),
+                  ),
+                  SizedBox(height: 20.h,),
 
+                  Row(
+                    children: [
+AppElevatedButon(title: "Send",
+borderColor: AppColors.colorWhite,
+buttonColor: AppColors.colorc7e,
+height: 50.h,
+width: 150.w,
+onPressed: (context) {
+  
+},
+textColor: AppColors.colorWhite,
+),
+SizedBox(width: 10.w,),
+AppElevatedButon(title: "Cancel",
+borderColor: AppColors.colorWhite,
+buttonColor: AppColors.colorc7e,
+height: 50.h,
+width: 150.w,
+onPressed: (context) {
+  Navigator.pop(context);
+},
+textColor: AppColors.colorWhite,
+)
+                    ],
+                  )
+                ],
+              ),
+            ),
+            
+          ),
+        );
+      });
+}
   @override
   Widget build(BuildContext context) {
     final studentData = widget.studentDetails;
@@ -335,7 +399,113 @@ Navigator.pop(context);
                     decoration: BoxDecoration(
                         color: AppColors.colorc7e,
                         borderRadius: BorderRadius.circular(18.sp)),
-                        // child: const FacultyAttendanceView(),
+                      child: Padding(
+                        padding:  const EdgeInsets.all(18.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Center(
+                              child: AppRichTextView(title: 'Financial Details',
+                              fontSize: 25.sp,
+                              fontWeight: FontWeight.bold,
+                              textColor: AppColors.colorWhite,
+                              ),
+                            ),
+                              SizedBox(height: 20.h,),
+                              Row(
+
+                                children: [
+                                  Expanded(
+                                    flex: 2,
+                                    child: AppRichTextView(title: 'Total Fee:',
+                                    fontSize: 15.sp,
+                                    fontWeight: FontWeight.bold,
+                                    textColor: AppColors.colorWhite,
+                                    ),
+                                  ),
+                                   Expanded(
+                                    flex: 2,
+                                    child: AppRichTextView(title: '1500 USD',
+                                    fontSize: 15.sp,
+                                    fontWeight: FontWeight.bold,
+                                    textColor: AppColors.colorWhite,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: 10.h,),
+                               Row(
+
+                                children: [
+                                  Expanded(
+                                    flex: 2,
+                                    child: AppRichTextView(title: 'Paid Fee:',
+                                    fontSize: 15.sp,
+                                    fontWeight: FontWeight.bold,
+                                    textColor: AppColors.colorWhite,
+                                    ),
+                                  ),
+                                   Expanded(
+                                    flex: 2,
+                                    child: AppRichTextView(title: '500 USD',
+                                    fontSize: 15.sp,
+                                    fontWeight: FontWeight.bold,
+                                    textColor: AppColors.colorWhite,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                               SizedBox(height: 10.h,),
+                               Row(
+
+                                children: [
+                                  Expanded(
+                                    flex: 2,
+                                    child: AppRichTextView(title: 'Payable Fee:',
+                                    fontSize: 15.sp,
+                                    fontWeight: FontWeight.bold,
+                                    textColor: AppColors.colorWhite,
+                                    ),
+                                  ),
+                                   Expanded(
+                                    flex: 2,
+                                    child: AppRichTextView(title: '1000 USD',
+                                    fontSize: 15.sp,
+                                    fontWeight: FontWeight.bold,
+                                    textColor: AppColors.colorWhite,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const Spacer(),
+                              Row(
+                                children: [
+                                  AppElevatedButon(title: "Remainder",
+                                  borderColor: AppColors.colorBlack,
+                                  buttonColor: AppColors.colorWhite,
+                                  textColor: AppColors.colorc7e,
+                                  height: 50.h,
+                                  width: 180.w,
+                                  onPressed: (context) {
+                                    remainderDialog(context);
+                                  },
+                                  ),
+                                  SizedBox(width: 5.w,),
+                                  AppElevatedButon(title: "Summary",
+                                  borderColor: AppColors.colorBlack,
+                                  buttonColor: AppColors.colorWhite,
+                                  textColor: AppColors.colorc7e,
+                                  height: 50.h,
+                                  width: 180.w,
+                                  onPressed: (context) {
+                                    
+                                  },
+                                  ),
+                                ],
+                              )
+                          ],
+                        ),
+                      ),
                  
                   ),
                 ),

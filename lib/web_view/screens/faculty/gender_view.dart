@@ -53,9 +53,10 @@ class _GenderViewState extends State<GenderView> {
                                                   onTap: () {
                                                     facultyGender.updateGender(true);
                                                   },
-                                                  child: const Icon(
+                                                  child:  Icon(
                                                     Icons.edit,
                                                     color: AppColors.color0ec,
+                                                    size: 20.sp,
                                                   ),
                                                 )
                                               ],

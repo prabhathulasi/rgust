@@ -65,7 +65,7 @@ class _OverviewViewState extends State<OverviewView> {
              crossAxisAlignment: CrossAxisAlignment.start,
             children: [
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+             
               children: [
                 Card(
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25.sp)),
@@ -139,78 +139,78 @@ class _OverviewViewState extends State<OverviewView> {
                     ),
                   ),
                 ),
-                  Card(
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25.sp)),
-                  elevation: 5.0,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      gradient: const LinearGradient(
-                        begin: Alignment.bottomLeft,
-                        end: Alignment.topRight,
-                        colors: [
-                          AppColors.coloreac,
-                          AppColors.color0e7
-                        ]
-                      ),
-                      borderRadius: BorderRadius.circular(25.sp)
-                    ),
-                    height: 200.h,
-                    width: 350.w,
-                    child: Padding(
-                      padding: const EdgeInsets.all(18.0),
-                      child: Row(
-                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
+                //   Card(
+                //   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25.sp)),
+                //   elevation: 5.0,
+                //   child: Container(
+                //     decoration: BoxDecoration(
+                //       gradient: const LinearGradient(
+                //         begin: Alignment.bottomLeft,
+                //         end: Alignment.topRight,
+                //         colors: [
+                //           AppColors.coloreac,
+                //           AppColors.color0e7
+                //         ]
+                //       ),
+                //       borderRadius: BorderRadius.circular(25.sp)
+                //     ),
+                //     height: 200.h,
+                //     width: 350.w,
+                //     child: Padding(
+                //       padding: const EdgeInsets.all(18.0),
+                //       child: Row(
+                //          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //         children: [
+                //           Column(
+                //             crossAxisAlignment: CrossAxisAlignment.start,
+                //             children: [
                               
-                              AppRichTextView(title: "25", fontSize: 50.sp, fontWeight: FontWeight.bold, textColor: AppColors.colorWhite,),
-                              AppRichTextView(title: "Total Staffs", fontSize: 30.sp, fontWeight: FontWeight.bold, textColor: AppColors.colorWhite,)
-                            ],
-                          ),
-                           Lottie.asset(LottiePath.staffLottie,width: 100.w)
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-                Card(
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25.sp)),
-                  elevation: 5.0,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      gradient: const LinearGradient(
-                        begin: Alignment.bottomLeft,
-                        end: Alignment.topRight,
-                        colors: [
-                          AppColors.color78a,
-                          AppColors.colordb8
-                        ]
-                      ),
-                      borderRadius: BorderRadius.circular(25.sp)
-                    ),
-                    height: 200.h,
-                    width: 350.w,
-                    child: Padding(
-                      padding: const EdgeInsets.all(18.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
+                //               AppRichTextView(title: "25", fontSize: 50.sp, fontWeight: FontWeight.bold, textColor: AppColors.colorWhite,),
+                //               AppRichTextView(title: "Total Staffs", fontSize: 30.sp, fontWeight: FontWeight.bold, textColor: AppColors.colorWhite,)
+                //             ],
+                //           ),
+                //            Lottie.asset(LottiePath.staffLottie,width: 100.w)
+                //         ],
+                //       ),
+                //     ),
+                //   ),
+                // ),
+                // Card(
+                //   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25.sp)),
+                //   elevation: 5.0,
+                //   child: Container(
+                //     decoration: BoxDecoration(
+                //       gradient: const LinearGradient(
+                //         begin: Alignment.bottomLeft,
+                //         end: Alignment.topRight,
+                //         colors: [
+                //           AppColors.color78a,
+                //           AppColors.colordb8
+                //         ]
+                //       ),
+                //       borderRadius: BorderRadius.circular(25.sp)
+                //     ),
+                //     height: 200.h,
+                //     width: 350.w,
+                //     child: Padding(
+                //       padding: const EdgeInsets.all(18.0),
+                //       child: Row(
+                //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //         children: [
+                //           Column(
+                //             crossAxisAlignment: CrossAxisAlignment.start,
+                //             children: [
                               
-                              AppRichTextView(title: "15", fontSize: 50.sp, fontWeight: FontWeight.bold, textColor: AppColors.colorWhite,),
-                              AppRichTextView(title: "Others", fontSize: 30.sp, fontWeight: FontWeight.bold, textColor: AppColors.colorWhite,)
-                            ],
-                          ),
-                          Lottie.asset(LottiePath.otherLottie,width: 100.w)
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
+                //               AppRichTextView(title: "15", fontSize: 50.sp, fontWeight: FontWeight.bold, textColor: AppColors.colorWhite,),
+                //               AppRichTextView(title: "Others", fontSize: 30.sp, fontWeight: FontWeight.bold, textColor: AppColors.colorWhite,)
+                //             ],
+                //           ),
+                //           Lottie.asset(LottiePath.otherLottie,width: 100.w)
+                //         ],
+                //       ),
+                //     ),
+                //   ),
+                // ),
                  
               ],
             ),
@@ -218,59 +218,8 @@ class _OverviewViewState extends State<OverviewView> {
             Row(
               
               children: [
-                Expanded(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        width: 2,
-                        color: AppColors.colorc7e
-                      ),
-                      borderRadius: BorderRadius.circular(22.sp)
-                    ),
-                    height: 300.h,
-                   
-                    child: const PieChartScreen(
-                      donutColor1:           AppColors.color6d5,
-                         donutColor2: AppColors.color4ff,
-                    )),
-                ),
-                SizedBox(width: 10.w,),
-                  Expanded(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          width: 2,
-                          color: AppColors.colorc7e
-                        ),
-                        borderRadius: BorderRadius.circular(22.sp)
-                      ),
-                      height: 300.h,
-                    
-                      child: const PieChartScreen(
-                        donutColor1:     AppColors.color3ee,
-                       donutColor2:   AppColors.colorcfe,
-                      )),
-                  ),
-                   SizedBox(width: 10.w,),
-                    Expanded(
-                      child: Container(
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            width: 2,
-                            color: AppColors.colorc7e
-                          ),
-                          borderRadius: BorderRadius.circular(22.sp)
-                        ),
-                        height: 300.h,
-                        
-                        child: const PieChartScreen(
-                          donutColor1:        AppColors.coloreac,
-                          donutColor2:AppColors.color0e7,
-                        )),
-                    ),
-                     SizedBox(width: 10.w,),
-              Expanded(
-                child: Container(
+                Container(
+                  width: 300.w,
                   decoration: BoxDecoration(
                     border: Border.all(
                       width: 2,
@@ -281,10 +230,59 @@ class _OverviewViewState extends State<OverviewView> {
                   height: 300.h,
                  
                   child: const PieChartScreen(
-                    donutColor1:     AppColors.color78a,
-                      donutColor2:    AppColors.colordb8,
+                    donutColor1:           AppColors.color6d5,
+                       donutColor2: AppColors.color4ff,
                   )),
-              )
+                SizedBox(width: 10.w,),
+                  Container(
+                    width: 300.w,
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        width: 2,
+                        color: AppColors.colorc7e
+                      ),
+                      borderRadius: BorderRadius.circular(22.sp)
+                    ),
+                    height: 300.h,
+                  
+                    child: const PieChartScreen(
+                      donutColor1:     AppColors.color3ee,
+                     donutColor2:   AppColors.colorcfe,
+                    )),
+              //      SizedBox(width: 10.w,),
+              //       Expanded(
+              //         child: Container(
+              //           decoration: BoxDecoration(
+              //             border: Border.all(
+              //               width: 2,
+              //               color: AppColors.colorc7e
+              //             ),
+              //             borderRadius: BorderRadius.circular(22.sp)
+              //           ),
+              //           height: 300.h,
+                        
+              //           child: const PieChartScreen(
+              //             donutColor1:        AppColors.coloreac,
+              //             donutColor2:AppColors.color0e7,
+              //           )),
+              //       ),
+              //        SizedBox(width: 10.w,),
+              // Expanded(
+              //   child: Container(
+              //     decoration: BoxDecoration(
+              //       border: Border.all(
+              //         width: 2,
+              //         color: AppColors.colorc7e
+              //       ),
+              //       borderRadius: BorderRadius.circular(22.sp)
+              //     ),
+              //     height: 300.h,
+                 
+              //     child: const PieChartScreen(
+              //       donutColor1:     AppColors.color78a,
+              //         donutColor2:    AppColors.colordb8,
+              //     )),
+              // )
               ],
             ),
             SizedBox(height: 20.h,),
@@ -379,7 +377,7 @@ var formatedDate= DateFormat('yMMMMd').format(date);
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       RichText(text:TextSpan(
-                        text: "Clock In : ",
+                        text: "Time In : ",
                         style: TextStyle(fontSize: 15.sp, fontWeight: FontWeight.bold),
                         children: <TextSpan>[
                           TextSpan(text:checkinTime,style: TextStyle(color: AppColors.colorc7e,fontWeight: FontWeight.bold,fontSize: 18.sp) )
@@ -387,7 +385,7 @@ var formatedDate= DateFormat('yMMMMd').format(date);
                         ]
                       )),
                          RichText(text:TextSpan(
-                        text: "Clock Out : ",
+                        text: "Time Out : ",
                         style: TextStyle(fontSize: 15.sp, fontWeight: FontWeight.bold),
                         children: <TextSpan>[
                           TextSpan(text:checkoutTime,style: TextStyle(color: AppColors.colorc7e,fontWeight: FontWeight.bold,fontSize: 18.sp) )

@@ -35,7 +35,7 @@ class StudentTabView extends StatelessWidget {
                     borderRadius: 10),
                 indicatorSize: TabBarIndicatorSize.label,
                 tabs: const [
-                   Tab(text: "Additional Information"),
+                   Tab(text: "Additional Documents"),
                   Tab(text: "Attendance"),
                   Tab(text: "Study History"),
                   Tab(text: "Results"),
