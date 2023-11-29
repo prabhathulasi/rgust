@@ -356,32 +356,78 @@ textColor: AppColors.colorWhite,
                               ),
                             ],
                           ),
+                          SizedBox(
+                            height: 10.h,
+                          ),
+                          Row(
+                            children: [
+                              AppRichTextView(
+                                title: "Qualification: ",
+                                fontSize: 12.sp,
+                                fontWeight: FontWeight.w800,
+                                textColor: AppColors.colorGrey,
+                              ),
+                              AppRichTextView(
+                                title: studentData.qualifiation!,
+                                fontSize: 12.sp,
+                                fontWeight: FontWeight.w800,
+                                textColor: AppColors.colorWhite,
+                              ),
+                            ],
+                          ),
                               ],
                             ),
                           ),
                         ),
-                        Expanded(child:  Padding(
-                          padding:  EdgeInsets.only(top:18.0.h),
-                          child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                AppRichTextView(
-                                  title: "Address: ",
-                                  fontSize: 12.sp,
-                                  fontWeight: FontWeight.w800,
-                                  textColor: AppColors.colorGrey,
+                        Expanded(child:  Column(
+                          children: [
+                            Padding(
+                              padding:  EdgeInsets.only(top:18.0.h),
+                              child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    AppRichTextView(
+                                      title: "Home Address: ",
+                                      fontSize: 12.sp,
+                                      fontWeight: FontWeight.w800,
+                                      textColor: AppColors.colorGrey,
+                                    ),
+                                    Flexible(
+                                      child: AppRichTextView(
+                                        maxLines: 3,
+                                        title: studentData.address!,
+                                        fontSize: 12.sp,
+                                        fontWeight: FontWeight.w800,
+                                        textColor: AppColors.colorWhite,
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                                Flexible(
-                                  child: AppRichTextView(
-                                    maxLines: 3,
-                                    title: studentData.address!,
-                                    fontSize: 12.sp,
-                                    fontWeight: FontWeight.w800,
-                                    textColor: AppColors.colorWhite,
-                                  ),
-                                ),
-                              ],
                             ),
+                             Padding(
+                              padding:  EdgeInsets.only(top:18.0.h),
+                              child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    AppRichTextView(
+                                      title: "Mailing Address: ",
+                                      fontSize: 12.sp,
+                                      fontWeight: FontWeight.w800,
+                                      textColor: AppColors.colorGrey,
+                                    ),
+                                    Flexible(
+                                      child: AppRichTextView(
+                                        maxLines: 3,
+                                        title: studentData.mailingAddress!,
+                                        fontSize: 12.sp,
+                                        fontWeight: FontWeight.w800,
+                                        textColor: AppColors.colorWhite,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                            ),
+                          ],
                         ),)
     
                        
