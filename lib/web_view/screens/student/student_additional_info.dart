@@ -192,14 +192,14 @@ class _StudentAdditionalInfoViewState extends State<StudentAdditionalInfoView> {
                         data.isEmpty
                     ?  Center(
                       child: Lottie.asset(LottiePath.noDocLottie)
-                    ): Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Align(
-                          alignment: Alignment.topRight,
-                          child: Icon(Icons.delete_sweep_outlined,color: AppColors.colorRed,)),
-                        Expanded(
-                          child: Wrap(
+                    ): SingleChildScrollView(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Align(
+                            alignment: Alignment.topRight,
+                            child: Icon(Icons.delete_sweep_outlined,color: AppColors.colorRed,)),
+                          Wrap(
                                     spacing: 8.0, // Spacing between items horizontally
                                           runSpacing: 8.0, // Spacing between rows vertically
                                           children: data.map((e) {
@@ -229,11 +229,14 @@ class _StudentAdditionalInfoViewState extends State<StudentAdditionalInfoView> {
                                                                       child: Column(
                                                                         children: [
                                                          Card(
-                                                          elevation: 5.0,
+                                                          elevation: 10.0,
                                                            child: Container(
-                                                                                color: AppColors.colorc7e,
+                                                                               
                                                                                 height: 200.h,
                                                                                 width: 130.w,
+                                                                                decoration: BoxDecoration(
+                                                                                  border: Border.all(color: AppColors.colorBlack)
+                                                                                ),
                                                                                 child: Padding(
                                                                                   padding: const EdgeInsets.only(top:8.0,bottom: 8),
                                                                                   child: PdfView(
@@ -257,8 +260,8 @@ class _StudentAdditionalInfoViewState extends State<StudentAdditionalInfoView> {
                                               
                                           }).toList(),
                             ),
-                        ),
-                      ],
+                        ],
+                      ),
                     );
                          }
                        );
