@@ -56,6 +56,39 @@ MediaFileModel mediaFileModel =MediaFileModel();
 uploadMediaFile(){
 
 }
+
+  Future delteMediabyId(String token, int mediaFileId, int userId) async {
+    setLoading(true);
+    try {
+      var result = await ApiHelper.delete("DeleteMedia/id=$mediaFileId", token);
+      setLoading(false);
+        
+      if (result.statusCode == 200) {
+     await getMediaFileById(token, userId);
+
+        notifyListeners();
+
+ 
+      } else if (result.statusCode == 404) {
+       
+        notifyListeners();
+        ToastHelper().errorToast("No Documents Found");
+ 
+      } else if (result.statusCode == 401) {
+        notifyListeners();
+
+        return "Invalid Token";
+      } else {
+        notifyListeners();
+        ToastHelper().errorToast("Internal Server Error");
+   
+      }
+    } catch (e) {
+      setLoading(false);
+      ToastHelper().errorToast(e.toString());
+      return e.toString();
+    }
+  }
  void setFileData(FilePickerResult result) {
     _bytesFromPicker = result.files.first.bytes;
     _selectedFileName = result.files.first.name;

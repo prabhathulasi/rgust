@@ -57,10 +57,14 @@ class ApiHelper {
     return _handleResponse(response);
   }
 
-  static Future<dynamic> delete(String endpoint) async {
+  static Future<dynamic> delete(String endpoint, String token) async {
          String flavorUrl = FlavorConfig.instance.variables["baseUrl"];
  String flavorName =FlavorConfig.instance.variables["flavorName"];
     final response = await http.delete(
+         headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+         "Authorization": "Bearer $token"
+      },
       flavorName=="dev" ?Uri.parse('$flavorUrl/$endpoint') : Uri.https(flavorUrl, "/$endpoint"),
       );
     return _handleResponse(response);

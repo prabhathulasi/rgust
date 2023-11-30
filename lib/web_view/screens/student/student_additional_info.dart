@@ -1,12 +1,15 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
+import 'package:focused_menu/focused_menu.dart';
+import 'package:focused_menu/modals.dart';
 import 'package:http/http.dart' as http;
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
 import 'package:pdfx/pdfx.dart';
+
 
 import 'package:provider/provider.dart';
 import 'package:rugst_alliance_academia/data/middleware/check_auth_middleware.dart';
@@ -64,6 +67,7 @@ class _StudentAdditionalInfoViewState extends State<StudentAdditionalInfoView> {
       },
     );
   }
+
   @override
   Widget build(BuildContext context) {
     final fileUploadProvider =
@@ -138,7 +142,30 @@ class _StudentAdditionalInfoViewState extends State<StudentAdditionalInfoView> {
         }
       }
     }
+    Future deleteMedia(int id) async {
+      var token = await getTokenAndUseIt();
+      if (token == null) {
+        if (context.mounted) {
+          Navigator.pushNamed(context, RouteNames.login);
+        }
+      } else if (token == "Token Expired") {
+        ToastHelper().errorToast("Session Expired Please Login Again");
 
+        if (context.mounted) {
+          Navigator.pushNamed(context, RouteNames.login);
+        }
+      } else {
+        fileUploadProvider.mediaFileModel.files?.clear();
+        var result =
+            await fileUploadProvider.delteMediabyId(token, id, widget.studentId);
+        if (result == "Invalid Token") {
+          ToastHelper().errorToast("Session Expired Please Login Again");
+          if (context.mounted) {
+            Navigator.pushNamed(context, RouteNames.login);
+          }
+        }
+      }
+    }
     return Scaffold(
       body: SizedBox(
         width: MediaQuery.sizeOf(context).width,
@@ -156,61 +183,94 @@ class _StudentAdditionalInfoViewState extends State<StudentAdditionalInfoView> {
                 );
               } else {
                         
-                var data= fileUploadProvider.mediaFileModel.files;
-                return data == null ||
+                
+                return 
+                       Consumer<FileUploadProvider>(
+                         builder: (context, fileUploadConsumer, child) {
+                          var data= fileUploadConsumer.mediaFileModel.files;
+                           return data == null ||
                         data.isEmpty
                     ?  Center(
                       child: Lottie.asset(LottiePath.noDocLottie)
-                    ): Wrap(
-                        spacing: 8.0, // Spacing between items horizontally
-            runSpacing: 8.0, // Spacing between rows vertically
-            children: data.map((e) {
-                        Uint8List pdfData = base64Decode(e.data!);
-                    
-                        final pdfController = PdfController(
-                          viewportFraction: 2.0,
-                          document: PdfDocument.openData(pdfData),
-                        );
-
-              return Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        children: [
-                                         Card(
-                                          elevation: 5.0,
-                                           child: Container(
-                                                                color: AppColors.colorc7e,
-                                                                height: 200.h,
-                                                                width: 130.w,
-                                                                child: Padding(
-                                                                  padding: const EdgeInsets.only(top:8.0,bottom: 8),
-                                                                  child: PdfView(
-                                                                    controller: pdfController,
+                    ): Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Align(
+                          alignment: Alignment.topRight,
+                          child: Icon(Icons.delete_sweep_outlined,color: AppColors.colorRed,)),
+                        Expanded(
+                          child: Wrap(
+                                    spacing: 8.0, // Spacing between items horizontally
+                                          runSpacing: 8.0, // Spacing between rows vertically
+                                          children: data.map((e) {
+                                    Uint8List pdfData = base64Decode(e.data!);
+                            
+                                    final pdfController = PdfController(
+                                      viewportFraction: 2.0,
+                                      document: PdfDocument.openData(pdfData),
+                                    );
+                          
+                                            return FocusedMenuHolder(
+                                               openWithTap: true, 
+                                              onPressed: (){
+                                             
+                                              },
+                                              menuWidth: 300.w,
+                                              menuItems: [
+                                                 FocusedMenuItem(title: Text("View"),trailingIcon: Icon(Icons.visibility) ,onPressed: (){
+                           showPDfView(context, pdfController);
+                                                 }),
+                                    FocusedMenuItem(title: Text("Delete"),trailingIcon: Icon(Icons.delete) ,onPressed: (){
+                                      deleteMedia(e.iD!);
+                                    }),
+                                              ],
+                                              child: Padding(
+                                                                      padding: const EdgeInsets.all(8.0),
+                                                                      child: Column(
+                                                                        children: [
+                                                         Card(
+                                                          elevation: 5.0,
+                                                           child: Container(
+                                                                                color: AppColors.colorc7e,
+                                                                                height: 200.h,
+                                                                                width: 130.w,
+                                                                                child: Padding(
+                                                                                  padding: const EdgeInsets.only(top:8.0,bottom: 8),
+                                                                                  child: PdfView(
+                                                                                    controller: pdfController,
+                                                                                  ),
+                                                                                )),
+                                                         ),
+                                                         SizedBox(height: 10.0.h,),
+                                                         AppRichTextView(
+                                                                    title: e.name!,
+                                                                    fontSize: 15.sp,
+                                                                    fontWeight: FontWeight.w800,
+                                                                    textColor: AppColors.colorBlack,
                                                                   ),
-                                                                )),
-                                         ),
-                                         SizedBox(height: 10.0.h,),
-                                         AppRichTextView(
-                                                    title: e.name!,
-                                                    fontSize: 15.sp,
-                                                    fontWeight: FontWeight.w800,
-                                                    textColor: AppColors.colorBlack,
-                                                  ),
-                    
-                        ],
-                      ),
+                                                                    
+                                                                        ],
+                                                                      ),
+                                                                    ),
+                                            );
+                                            
+                                              
+                                          }).toList(),
+                            ),
+                        ),
+                      ],
                     );
-                
-            }).toList(),
-                    );
+                         }
+                       );
+                  
                  
               }
             }),
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: AppColors.color0ec,
+        backgroundColor: AppColors.colorc7e,
 
-        child:fileUploadProvider.isLoading== false? const Icon(Icons.add_photo_alternate,color: AppColors.colorc7e,): const CircularProgressIndicator(),
+        child:fileUploadProvider.isLoading== false? const Icon(Icons.add_photo_alternate,color: AppColors.colorWhite,): const CircularProgressIndicator(),
         onPressed: () async {
           showDialog(
   context: context,
