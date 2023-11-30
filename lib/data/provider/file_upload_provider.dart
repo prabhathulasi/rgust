@@ -10,9 +10,7 @@ import 'package:rugst_alliance_academia/util/toast_helper.dart';
 class FileUploadProvider extends ChangeNotifier{
     bool _isLoading = false;
   bool get isLoading => _isLoading;
-  int _hoveredIndex = -1;
 
-  int get hoveredIndex => _hoveredIndex;
 
     Uint8List? _bytesFromPicker;
     String? _selectedFileName;
@@ -73,13 +71,6 @@ uploadMediaFile(){
     _selectedFileName = null;
     notifyListeners();
   }
-    void setHoveredIndex(int index) {
-    _hoveredIndex = index;
-    notifyListeners();
-  }
+  
 
-  void clearHoveredIndex() {
-    _hoveredIndex = -1;
-    notifyListeners();
-  }
 }

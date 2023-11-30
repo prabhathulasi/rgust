@@ -6,10 +6,21 @@
     "configurations": [
     
         {
-            "name": "rgust",
+            "name": "rgust-dev",
             "request": "launch",
             "type": "dart",
             "program": "lib/main.dart",
+            "deviceId": "chrome",
+            "args": [
+                "--web-browser-flag",
+                "--disable-web-security"
+            ]
+        },
+        {
+            "name": "rgust-prod",
+            "request": "launch",
+            "type": "dart",
+            "program": "lib/main_prod.dart",
             "deviceId": "chrome",
             "args": [
                 "--web-browser-flag",

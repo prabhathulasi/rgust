@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:lottie/lottie.dart';
 import 'package:pdfx/pdfx.dart';
 
 import 'package:provider/provider.dart';
@@ -12,6 +13,7 @@ import 'package:rugst_alliance_academia/data/middleware/check_auth_middleware.da
 import 'package:rugst_alliance_academia/data/provider/file_upload_provider.dart';
 import 'package:rugst_alliance_academia/routes/named_routes.dart';
 import 'package:rugst_alliance_academia/theme/app_colors.dart';
+import 'package:rugst_alliance_academia/util/index.dart';
 import 'package:rugst_alliance_academia/util/toast_helper.dart';
 import 'package:rugst_alliance_academia/widgets/app_richtext.dart';
 import 'package:rugst_alliance_academia/widgets/app_spining.dart';
@@ -138,9 +140,10 @@ class _StudentAdditionalInfoViewState extends State<StudentAdditionalInfoView> {
     }
 
     return Scaffold(
-      body: Container(
+      body: SizedBox(
         width: MediaQuery.sizeOf(context).width,
-        color: AppColors.colorc7e,
+
+        // color: AppColors.colorc7e,
         child: FutureBuilder(
             future: getMediaList(),
             builder: (context, snapshot) {
@@ -152,105 +155,55 @@ class _StudentAdditionalInfoViewState extends State<StudentAdditionalInfoView> {
                   ),
                 );
               } else {
-                
-                return fileUploadProvider.mediaFileModel.files == null ||
-                        fileUploadProvider.mediaFileModel.files!.isEmpty
-                    ? Center(
-                      child: AppRichTextView(
-                              title: "No Documents Uploaded Yet",
-                              fontSize: 15.sp,
-                              fontWeight: FontWeight.w800,
-                              textColor: AppColors.colorWhite,
-                            ),
-                    )
-                    : ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      shrinkWrap: true,
-                      itemCount:
-                          fileUploadProvider.mediaFileModel.files!.length,
-                      itemBuilder: (context, index) {
-                        Uint8List pdfData = base64Decode(fileUploadProvider
-                            .mediaFileModel.files![index].data!);
-
+                        
+                var data= fileUploadProvider.mediaFileModel.files;
+                return data == null ||
+                        data.isEmpty
+                    ?  Center(
+                      child: Lottie.asset(LottiePath.noDocLottie)
+                    ): Wrap(
+                        spacing: 8.0, // Spacing between items horizontally
+            runSpacing: 8.0, // Spacing between rows vertically
+            children: data.map((e) {
+                        Uint8List pdfData = base64Decode(e.data!);
+                    
                         final pdfController = PdfController(
                           viewportFraction: 2.0,
                           document: PdfDocument.openData(pdfData),
                         );
-                        return Padding(
-                          padding: EdgeInsets.only(top: 8.0.h, left: 8.0.w),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Consumer<FileUploadProvider>(
-                                builder: (context, fileuploadProvider, child) {
-                                  return MouseRegion(
-                                     onHover: (_) {
-            fileuploadProvider.setHoveredIndex(index);
-          },
-          onExit: (_) {
-            fileuploadProvider.setHoveredIndex(-1);
-          },
-                                    child: Column(
-                                      children: [
-                                        Stack(
-                                          children: [
-                                            Container(
-                                                      color: AppColors.color7ff,
-                                                      height: 200.h,
-                                                      width: 130.w,
-                                                      child: PdfView(
-                                                        controller: pdfController,
-                                                      )),
-                                               fileUploadProvider.hoveredIndex == index?  Padding(
-                                                 padding:  EdgeInsets.only(top:8.0.h,left: 8.w),
-                                                 child: Column(
-                                                   children: [
-                                                     Container(
-                                                       color: AppColors.color42b,
-                                                       child: IconButton( 
-                                                    
-                                                       
-                                                        
-                                                         onPressed: (){
-                                                     
-                                                         },
-                                                         icon:const Icon(Icons.delete_outlined),color: AppColors.colorWhite,),
-                                                     ),
-                                                      SizedBox(height: 5.h,),
-                                                       Container(
-                                                      color: AppColors.color42b,
-                                                      child: IconButton(
-                                                        onPressed: () {
-                                                          showPDfView(context, pdfController);
-                                                        },
-                                                        icon: const Icon(Icons.visibility_outlined,color: AppColors.colorWhite,))),
-                                         
-                                                   ],
-                                                 ),
-                                               ):Container()
-                                          ],
-                                        ),
-                                        SizedBox(height: 10.h,),
-                                        Expanded(
-                                          child: AppRichTextView(
-                                            title: fileUploadProvider
-                                                .mediaFileModel.files![index].name!,
-                                            fontSize: 12.sp,
-                                            fontWeight: FontWeight.w800,
-                                            textColor: AppColors.colorWhite,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  );
-                                }
-                              ),
-                            ],
-                          ),
-                        );
-                      },
+
+              return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        children: [
+                                         Card(
+                                          elevation: 5.0,
+                                           child: Container(
+                                                                color: AppColors.colorc7e,
+                                                                height: 200.h,
+                                                                width: 130.w,
+                                                                child: Padding(
+                                                                  padding: const EdgeInsets.only(top:8.0,bottom: 8),
+                                                                  child: PdfView(
+                                                                    controller: pdfController,
+                                                                  ),
+                                                                )),
+                                         ),
+                                         SizedBox(height: 10.0.h,),
+                                         AppRichTextView(
+                                                    title: e.name!,
+                                                    fontSize: 15.sp,
+                                                    fontWeight: FontWeight.w800,
+                                                    textColor: AppColors.colorBlack,
+                                                  ),
+                    
+                        ],
+                      ),
                     );
+                
+            }).toList(),
+                    );
+                 
               }
             }),
       ),

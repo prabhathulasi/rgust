@@ -6,6 +6,7 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:rugst_alliance_academia/data/provider/login_provider.dart';
 import 'package:rugst_alliance_academia/routes/named_routes.dart';
@@ -76,9 +77,7 @@ class _WebLoginViewState extends State<WebLoginView> {
               ),
               child: Padding(
                 padding: EdgeInsets.all(20.0.sp),
-                child: Image.asset(
-                  ImagePath.webLoginLogo,
-                ),
+                child: Lottie.asset(LottiePath.overViewLottie)
               ),
             ),
             Expanded(

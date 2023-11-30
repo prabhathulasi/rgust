@@ -30,10 +30,10 @@ void main() async {
     DeviceOrientation.portraitUp,
   ]);
  FlavorConfig(
-  name: "dev",
+  name: "prod",
     variables: {
-     "flavorName":"dev",
-      "baseUrl": "http://localhost:3014",
+     "flavorName":"prod",
+      "baseUrl": "rgustpanel.azurewebsites.net",
     },
   );
   runApp(const MyApp());

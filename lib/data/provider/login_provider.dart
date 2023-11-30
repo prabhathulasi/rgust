@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'package:flutter_flavor/flutter_flavor.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -10,7 +11,8 @@ import 'package:rugst_alliance_academia/util/api_service.dart';
 class LoginProvider extends ChangeNotifier {
   bool _isLoading = false;
   bool get isLoading => _isLoading;
-
+ String flavorUrl = FlavorConfig.instance.variables["baseUrl"];
+ String flavorName =FlavorConfig.instance.variables["flavorName"];
   Future<http.Response> login(String email, String password) async {
     var bodyData = {"email": email, "password": password};
     setLoading(true);
@@ -18,7 +20,7 @@ class LoginProvider extends ChangeNotifier {
     // Make your login API call here using the http package
 
     var result = await http.post(
-      Uri.parse("http://localhost:3014/login"),
+   flavorName=="dev"?Uri.parse("$flavorUrl/login") : Uri.https(flavorUrl,'/login'),
       body: jsonEncode(bodyData),
       headers: {
         'Content-Type': 'application/json; charset=UTF-8',

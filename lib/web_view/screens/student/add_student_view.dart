@@ -11,7 +11,6 @@ import 'package:provider/provider.dart';
 import 'package:rugst_alliance_academia/custom_plugin/editable.dart';
 import 'package:rugst_alliance_academia/data/middleware/check_auth_middleware.dart';
 import 'package:rugst_alliance_academia/data/model/gender_model.dart';
-import 'package:rugst_alliance_academia/data/provider/common_provider.dart';
 import 'package:rugst_alliance_academia/data/provider/program_provider.dart';
 import 'package:rugst_alliance_academia/data/provider/student_provider.dart';
 import 'package:rugst_alliance_academia/routes/named_routes.dart';
@@ -24,6 +23,7 @@ import 'package:rugst_alliance_academia/web_view/screens/department/class_dropdo
 import 'package:rugst_alliance_academia/web_view/screens/department/program_dropdown_view.dart';
 import 'package:rugst_alliance_academia/web_view/screens/department/year_dropdown_view.dart';
 import 'package:rugst_alliance_academia/web_view/screens/student/doa_drop_down.dart';
+import 'package:rugst_alliance_academia/web_view/screens/student/instruction_view.dart';
 import 'package:rugst_alliance_academia/web_view/screens/student/student_fees_details.dart';
 import 'package:rugst_alliance_academia/widgets/app_elevatedbutton.dart';
 import 'package:rugst_alliance_academia/widgets/app_formfield.dart';
@@ -72,116 +72,13 @@ class _AddStudentViewState extends State<AddStudentView> {
   Uint8List? bytesFromPicker;
   String? imageEncoded;
 String? gender ; 
-  showTermsDialog(BuildContext context, StudentProvider studentProvider,
-      String token, ProgramProvider programProvider , CommonProvider commonProvider) {
-    Dialog alert = Dialog(
-      child: SizedBox(
-        height: MediaQuery.sizeOf(context).height / 2,
-        width: MediaQuery.sizeOf(context).width / 2,
-        child: Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "Confirmation",
-                style: TextStyle(fontSize: 30.sp, fontWeight: FontWeight.bold),
-              ),
-              SizedBox(
-                height: 10.h,
-              ),
-              const Text(
-                "1.I confirm that all the information provided is accurate and up to date to the best of my knowledge.",
-                
-              ),
-              const Text(
-                "2.I ensure that there are no duplicate entries or redundant information in the submitted data.",
-                
-              ),
-              const Text(
-                "3.The provided image adheres to the requirement of a white background as specified for identification purposes.",
-                
-              ),
-              const Text(
-                "4.I have verified that there are no errors or inaccuracies in the information submitted, ensuring its correctness.",
-                
-              ),
-              const Text(
-                "5.I affirm that the information submitted maintains its integrity and authenticity without manipulation or misrepresentation.",
-                
-              ),
-              const Text(
-                "6.The image submitted complies with the mandated criteria, ensuring clarity and adherence to guidelines.",
-                
-              ),
-              SizedBox(
-                height: 10.h,
-              ),
-              Row(
-                children: [
-                  AppElevatedButon(
-                      title: "Submit",
-                      buttonColor: AppColors.colorc7e,
-                      textColor: AppColors.colorWhite,
-                      height: 50.h,
-                      width: 130.w,
-                      loading: studentProvider.isLoading,
-                      onPressed: (context) async {
-                        var result = await studentProvider.addStudent(
-                          token,
-                          programId: int.parse(programProvider.selectedDept!),
-                          classId: int.parse(programProvider.selectedClass!),
-                          admissionDate:commonProvider.doaController,
-                          studentType: "Regular",
-                          batch: programProvider.selectedBatch!,
-                          registerNo:
-                              "${DateTime.now().year}/${programProvider.selectedDept}/${studentProvider.studentRegisterNumberController}",
-                          gender: genderValue!,
-                          dob: dobinput.text,
-                          userImage: imageEncoded!,
-                        );
 
-                        if (result != null) {
-                          if (context.mounted) {
-                            Navigator.pop(context);
-                                   Navigator.pop(context);
-                          }
-                        }
-                      }),
-                  SizedBox(
-                    width: 10.w,
-                  ),
-                  AppElevatedButon(
-                      title: "Close",
-                      buttonColor: AppColors.colorc7e,
-                      textColor: AppColors.colorWhite,
-                      height: 50.h,
-                      width: 130.w,
-                      loading: studentProvider.isLoading,
-                      onPressed: (context) async {})
-                ],
-              )
-            ],
-          ),
-        ),
-      ),
-    );
-
-    // show the dialog
-    showDialog(
-      barrierDismissible: false,
-      context: context,
-      builder: (BuildContext context) {
-        return alert;
-      },
-    );
-  }
-
+bool loading = false;
   @override
   Widget build(BuildContext context) {
     final programProvider = Provider.of<ProgramProvider>(context);
     final studentProvider = Provider.of<StudentProvider>(context);
-    final commonProvider = Provider.of<CommonProvider>(context);
+   
     
 
     var size = MediaQuery.of(context).size;
@@ -254,14 +151,35 @@ String? gender ;
                             SizedBox(
                               height: 10.h,
                             ),
-                            CircleAvatar(
-                                backgroundColor: AppColors.colorc7e,
-                                radius: 60.sp,
-                                backgroundImage: imageEncoded == null
-                                    ? const AssetImage(
-                                        ImagePath.webfacultyfLogo)
-                                    : MemoryImage(bytesFromPicker!)
-                                        as ImageProvider),
+                            InkWell(
+                              onTap: () async{
+                                   bytesFromPicker =
+                                    await ImagePickerWeb.getImageAsBytes();
+                                    // Get the size of the base64 string in bytes
+int imageSizeInBytes = (base64.encode(bytesFromPicker!).length * 3 / 4).ceil();
+
+// Convert bytes to kilobytes
+double imageSizeInKB = imageSizeInBytes / 1024;
+if (imageSizeInKB > 50) {
+  ToastHelper().errorToast("Image size exceeds 50KB. Please choose a smaller image.");
+  setState(() {
+    imageEncoded = null;
+  });
+} else {
+  imageEncoded = base64.encode(bytesFromPicker!);
+
+                                setState(() {});
+}
+                              },
+                              child: CircleAvatar(
+                                  backgroundColor: AppColors.colorc7e,
+                                  radius: 60.sp,
+                                  backgroundImage: imageEncoded == null
+                                      ? const AssetImage(
+                                          ImagePath.webfacultyfLogo)
+                                      : MemoryImage(bytesFromPicker!)
+                                          as ImageProvider),
+                            ),
                             SizedBox(
                               height: 10.h,
                             ),
@@ -354,11 +272,20 @@ if (imageSizeInKB > 50) {
                             SizedBox(
                               height: 10.h,
                             ),
-                            AppRichTextView(
-                                title: "Student Id",
-                                textColor: AppColors.colorc7e,
-                                fontSize: 15.sp,
-                                fontWeight: FontWeight.w500),
+                            Row(
+                              children: [
+                                AppRichTextView(
+                                    title: "Student Id",
+                                    textColor: AppColors.colorc7e,
+                                    fontSize: 15.sp,
+                                    fontWeight: FontWeight.w500),
+                                     AppRichTextView(
+                                    title: "*",
+                                    textColor: AppColors.colorRed,
+                                    fontSize: 15.sp,
+                                    fontWeight: FontWeight.w500),
+                              ],
+                            ),
                             Container(
                               color: AppColors.colorc7e,
                               height: 60.h,
@@ -802,6 +729,18 @@ if (imageSizeInKB > 50) {
                                             onTap: () async {
                                               DateTime? pickedDate =
                                                   await showDatePicker(
+                                                     builder: (context, child) {
+                                                      return Theme(
+                  data: ThemeData.light().copyWith(
+                    primaryColor: Colors.green, // Change calendar header color
+               
+                    colorScheme: const ColorScheme.light(primary: AppColors.colorc7e), // Change days' colors
+                    buttonTheme: const ButtonThemeData(
+                      textTheme: ButtonTextTheme.primary,
+                    ),
+                  ),
+                  child: child!);
+                                                    },
                                                       context: context,
                                                       initialDate:
                                                           DateTime.now(),
@@ -1291,11 +1230,25 @@ if (imageSizeInKB > 50) {
                                       // Save the form
                                       _formKey.currentState!.save();
                                       if (context.mounted) {
-                                        showTermsDialog(
-                                            context,
-                                            studentProvider,
-                                            token,
-                                            programProvider, commonProvider);
+                                  showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+      title:  Text(
+                "Confirmation",
+                style: TextStyle(fontSize: 30.sp, fontWeight: FontWeight.bold),
+              ),
+      content:  StudentInstructionView(
+        dobInput: dobinput.text,
+        gender: genderValue,
+        imageEncoded: imageEncoded,
+        token: token,
+
+      )
+    );
+      },
+    );
                                       }
                                     }
                                   }

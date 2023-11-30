@@ -382,7 +382,7 @@ textColor: AppColors.colorWhite,
                         Expanded(child:  Column(
                           children: [
                             Padding(
-                              padding:  EdgeInsets.only(top:18.0.h),
+                              padding:  EdgeInsets.only(top:80.0.h),
                               child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [

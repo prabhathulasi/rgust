@@ -284,10 +284,10 @@ class _StudentGridViewState extends State<StudentGridView> {
                         dob: studentData.dOB!,
                         email: studentData.email!,
                         mobileNumber: studentData.mobileNumber!.toString(),
-                        pasportNumber: studentData.passportNumber!,
+                        studentRegNo: studentData.studentRegiterNumber!,
                         studentName: studentData.firstName!+studentData.lastName!,
                         studentType: studentData.studentType!,
-                        studentStatus: "Active",
+                       
                         program: studentData.currentProgramName!,
 
 

@@ -13,6 +13,18 @@ class DoaDropdown extends StatelessWidget {
 showAlert(CommonProvider commonConsumer, BuildContext context)async{
            DateTime? pickedDate =
                                                   await showDatePicker(
+                                                    builder: (context, child) {
+                                                      return Theme(
+                  data: ThemeData.light().copyWith(
+                    primaryColor: Colors.green, // Change calendar header color
+               
+                    colorScheme: const ColorScheme.light(primary: AppColors.colorc7e), // Change days' colors
+                    buttonTheme: const ButtonThemeData(
+                      textTheme: ButtonTextTheme.primary,
+                    ),
+                  ),
+                  child: child!);
+                                                    },
                                                       context: context,
                                                       initialDate: DateTime.now(),
                                                       firstDate: DateTime(

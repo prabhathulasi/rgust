@@ -9,7 +9,7 @@ class StudentCardWidget extends StatelessWidget {
 
   
   final String studentName;
-  final String studentStatus;
+
   final String studentType;
   final String mobileNumber;
   final String email;
@@ -18,12 +18,12 @@ class StudentCardWidget extends StatelessWidget {
   final String program;
   final String currentClass;
   final String address;
-  final String pasportNumber;
+  final String studentRegNo;
   final Uint8List userImage;
 
   const StudentCardWidget({super.key,
   required this.studentName,
-  required this.studentStatus,
+ 
   required this.studentType,
   required this.mobileNumber,
   required this.email,
@@ -32,7 +32,7 @@ class StudentCardWidget extends StatelessWidget {
   required this.program, 
   required this.currentClass,
   required this.address,
-  required this.pasportNumber,
+  required this.studentRegNo,
   required this.userImage
   });
 
@@ -174,11 +174,11 @@ Row(
          Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            AppRichTextView(title: "Passport Number: ",   fontSize: 12.sp,
+            AppRichTextView(title: "Registration Number: ",   fontSize: 12.sp,
                     fontWeight: FontWeight.w800,
                     textColor: AppColors.colorGrey,),
             
-            AppRichTextView(title: pasportNumber,   fontSize: 12.sp,
+            AppRichTextView(title: studentRegNo,   fontSize: 12.sp,
                     fontWeight: FontWeight.w800,
                     textColor: AppColors.colorWhite,),
           ],
