@@ -31,7 +31,7 @@ bool _isstudentTypeEdit = false;
    String? studentRegisterNumberController;
   String get suddentregisterNumber => studentRegisterNumberController!;
   String? lastNamecontroller;
-  String get lastname => firstNamecontroller!;
+  String get lastname => lastNamecontroller!;
     String? emailcontroller;
   String get email => emailcontroller!;
   String? mobileController;
