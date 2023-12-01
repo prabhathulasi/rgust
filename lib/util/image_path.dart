@@ -21,6 +21,7 @@ class ImagePath {
   static const String webNoDataLogo = "assets/Nodata.png";
   static const String webMDILogo = "assets/mdi.png";
   static const String webclockLogo = "assets/clock.png";
+    static const String rgustLogo = "assets/rgust_logo.gif";
   
 }
 class LottiePath{

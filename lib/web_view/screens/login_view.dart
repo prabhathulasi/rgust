@@ -53,8 +53,15 @@ class _WebLoginViewState extends State<WebLoginView> {
     var size = MediaQuery.sizeOf(context);
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: 100.h,
+        toolbarHeight: 200.h,
+        leadingWidth: 100,
         backgroundColor: AppColors.colorc7e,
+        leading: const Padding(
+          padding: EdgeInsets.all(8.0),
+          child: CircleAvatar(
+            backgroundImage: AssetImage(ImagePath.rgustLogo),
+          ),
+        ),
         title: AppRichTextView(
             title: "Rgust Alliance academia",
             textColor: AppColors.colorWhite,
@@ -106,7 +113,7 @@ class _WebLoginViewState extends State<WebLoginView> {
                         style: GoogleFonts.oswald(
                           fontSize: 30.sp,
                           fontWeight: FontWeight.w400,
-                          color: AppColors.color582,
+                          color: AppColors.colorPurple,
                         ),
                         child: AnimatedTextKit(
                           isRepeatingAnimation: false,
