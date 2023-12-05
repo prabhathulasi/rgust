@@ -174,13 +174,19 @@ Row(
          Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            AppRichTextView(title: "Registration Number: ",   fontSize: 12.sp,
-                    fontWeight: FontWeight.w800,
-                    textColor: AppColors.colorGrey,),
+            Expanded(
+              child: AppRichTextView(title: "Registration Number: ",   fontSize: 12.sp,
+                      fontWeight: FontWeight.w800,
+                      textColor: AppColors.colorGrey,),
+            ),
             
-            AppRichTextView(title: studentRegNo,   fontSize: 12.sp,
-                    fontWeight: FontWeight.w800,
-                    textColor: AppColors.colorWhite,),
+            Expanded(
+              child: AppRichTextView(
+                maxLines: 2,
+                title: studentRegNo,   fontSize: 12.sp,
+                      fontWeight: FontWeight.w800,
+                      textColor: AppColors.colorWhite,),
+            ),
           ],
         ),
 

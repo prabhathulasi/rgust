@@ -21,6 +21,7 @@ import 'package:rugst_alliance_academia/util/toast_helper.dart';
 import 'package:rugst_alliance_academia/util/validator.dart';
 
 import 'package:rugst_alliance_academia/web_view/screens/faculty/gender_view.dart';
+import 'package:rugst_alliance_academia/web_view/screens/student/student_registered_course.dart';
 
 import 'package:rugst_alliance_academia/widgets/app_elevatedbutton.dart';
 import 'package:rugst_alliance_academia/widgets/app_formfield.dart';
@@ -57,8 +58,9 @@ class _AddFacultyViewState extends State<UpdateStudentDetails> {
     TextEditingController dobinput =
         TextEditingController(text: widget.studentDetails.dOB);
 
-    final studentProvider = Provider.of<StudentProvider>(context);
+    final studentProvider = Provider.of<StudentProvider>(context, listen:  false);
     final facultyProvider = Provider.of<FacultyProvider>(context);
+
 
     var size = MediaQuery.of(context).size;
     return Scaffold(
@@ -754,9 +756,129 @@ class _AddFacultyViewState extends State<UpdateStudentDetails> {
               ),
               Expanded(child: Column(
                 children: [
-                    AppRichTextView(title: "Registered Course", fontSize: 25.sp, fontWeight: FontWeight.bold,textColor: AppColors.colorc7e,),
+                    AppRichTextView(title: "Study History", fontSize: 25.sp, fontWeight: FontWeight.bold,textColor: AppColors.colorc7e,),
+                    SizedBox(height: 15.h,),
                     
-
+Expanded(child: Padding(
+  padding: const EdgeInsets.all(8.0),
+  child:   Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                                  color: AppColors.colorc7e,
+                                  height: 70.h,
+                                  width: size.width * 0.2,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        AppRichTextView(
+                                            title: "Current Program",
+                                            textColor: AppColors.colorWhite,
+                                            fontSize: 14.sp,
+                                            fontWeight: FontWeight.w500),
+                                        Expanded(
+                                            child: AppTextFormFieldWidget(
+  
+  enable: false,                                        initialValue:widget.studentDetails.currentProgramName
+                                             ,
+                                          textStyle: GoogleFonts.roboto(
+                                              color: AppColors.colorWhite, fontSize: 15.sp),
+                                          onSaved: (p0) {
+                                            // facultyProvider.setLastName(p0!);
+                                          },
+                                          inputDecoration:  const InputDecoration(
+                                            
+                                              border: InputBorder.none,
+                                              hintStyle: TextStyle(
+                                                  color: AppColors.colorGrey)),
+                                          obscureText: false,
+                                        )),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(height: 15.h,),
+                                Container(
+                                  color: AppColors.colorc7e,
+                                  height: 70.h,
+                                  width: size.width * 0.2,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        AppRichTextView(
+                                            title: "Current class",
+                                            textColor: AppColors.colorWhite,
+                                            fontSize: 14.sp,
+                                            fontWeight: FontWeight.w500),
+                                        Expanded(
+                                            child: AppTextFormFieldWidget(
+  
+  enable: false,                                        initialValue:widget.studentDetails.currentClassName
+                                             ,
+                                          textStyle: GoogleFonts.roboto(
+                                              color: AppColors.colorWhite, fontSize: 15.sp),
+                                          onSaved: (p0) {
+                                            // facultyProvider.setLastName(p0!);
+                                          },
+                                          inputDecoration:  const InputDecoration(
+                                            
+                                              border: InputBorder.none,
+                                              hintStyle: TextStyle(
+                                                  color: AppColors.colorGrey)),
+                                          obscureText: false,
+                                        )),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                 SizedBox(height: 15.h,),
+                                Container(
+                                  color: AppColors.colorc7e,
+                                  height: 70.h,
+                                  width: size.width * 0.2,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        AppRichTextView(
+                                            title: "Batch",
+                                            textColor: AppColors.colorWhite,
+                                            fontSize: 14.sp,
+                                            fontWeight: FontWeight.w500),
+                                        Expanded(
+                                            child: AppTextFormFieldWidget(
+  
+  enable: false,                                        initialValue:widget.studentDetails.batch
+                                             ,
+                                          textStyle: GoogleFonts.roboto(
+                                              color: AppColors.colorWhite, fontSize: 15.sp),
+                                          onSaved: (p0) {
+                                            // facultyProvider.setLastName(p0!);
+                                          },
+                                          inputDecoration:  const InputDecoration(
+                                            
+                                              border: InputBorder.none,
+                                              hintStyle: TextStyle(
+                                                  color: AppColors.colorGrey)),
+                                          obscureText: false,
+                                        )),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                 SizedBox(height: 15.h,),
+                                Divider(height: 2.h,)
+              ],
+             ),
+))
 
                 ],
 

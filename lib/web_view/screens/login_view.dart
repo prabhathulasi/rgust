@@ -55,18 +55,13 @@ class _WebLoginViewState extends State<WebLoginView> {
       appBar: AppBar(
         toolbarHeight: 200.h,
         leadingWidth: 100,
-        backgroundColor: AppColors.colorc7e,
-        leading: const Padding(
-          padding: EdgeInsets.all(8.0),
-          child: CircleAvatar(
-            backgroundImage: AssetImage(ImagePath.rgustLogo),
-          ),
-        ),
+        backgroundColor: AppColors.colorWhite,
+        leading:  Image.asset(ImagePath.rgustLogo,width: 60.w,),
         title: AppRichTextView(
             title: "Rgust Alliance academia",
-            textColor: AppColors.colorWhite,
+            textColor: AppColors.colorc7e,
             fontSize: 45.sp,
-            fontWeight: FontWeight.w400),
+            fontWeight: FontWeight.bold),
       ),
       body: SizedBox(
         height: size.height,

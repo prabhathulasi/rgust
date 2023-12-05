@@ -2,13 +2,14 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
 import 'package:rugst_alliance_academia/data/model/student_model.dart';
 import 'package:rugst_alliance_academia/theme/app_colors.dart';
 import 'package:rugst_alliance_academia/web_view/screens/student/student_tab_view.dart';
 import 'package:rugst_alliance_academia/web_view/screens/student/update_student_detail.dart';
 import 'package:rugst_alliance_academia/widgets/app_elevatedbutton.dart';
 import 'package:rugst_alliance_academia/widgets/app_formfield.dart';
-import 'package:rugst_alliance_academia/widgets/app_linechart.dart';
+
 import 'package:rugst_alliance_academia/widgets/app_richtext.dart';
 
 class StudentDetailView extends StatefulWidget {
@@ -198,8 +199,6 @@ textColor: AppColors.colorWhite,
                             Row(
                               children: [
                                 Tooltip(
-                                 
-                                
                                   message:studentData.mobileNumber.toString() ,
                                   child: const Icon(Icons.phone,color: AppColors.colorWhite,)),
                                 SizedBox(width: 5.w,),
@@ -379,7 +378,8 @@ textColor: AppColors.colorWhite,
                             ),
                           ),
                         ),
-                        Expanded(child:  Column(
+                        Expanded(
+                          child:  Column(
                           children: [
                             Padding(
                               padding:  EdgeInsets.only(top:80.0.h),
@@ -427,6 +427,52 @@ textColor: AppColors.colorWhite,
                                   ],
                                 ),
                             ),
+                               Padding(
+                                                           padding:  EdgeInsets.only(top:18.0.h),
+                                                           child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    AppRichTextView(
+                                      title: "Created By: ",
+                                      fontSize: 12.sp,
+                                      fontWeight: FontWeight.w800,
+                                      textColor: AppColors.colorGrey,
+                                    ),
+                                    Flexible(
+                                      child: AppRichTextView(
+                                        maxLines: 2,
+                                        title: studentData.createdBy!,
+                                        fontSize: 12.sp,
+                                        fontWeight: FontWeight.w800,
+                                        textColor: AppColors.colorWhite,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                                         ),
+                               Padding(
+                                                           padding:  EdgeInsets.only(top:18.0.h),
+                                                           child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    AppRichTextView(
+                                      title: "Created at: ",
+                                      fontSize: 12.sp,
+                                      fontWeight: FontWeight.w800,
+                                      textColor: AppColors.colorGrey,
+                                    ),
+                                    Flexible(
+                                      child: AppRichTextView(
+                                        maxLines: 2,
+                                        title: DateFormat.yMMMd().format(DateTime.parse(studentData.createdAt!)),
+                                        fontSize: 12.sp,
+                                        fontWeight: FontWeight.w800,
+                                        textColor: AppColors.colorWhite,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                                         ),
                           ],
                         ),)
     
@@ -565,7 +611,7 @@ textColor: AppColors.colorWhite,
               decoration:
                   BoxDecoration(borderRadius: BorderRadius.circular(18.sp)),
               child:  StudentTabView(
-                studentId: studentData.iD!,
+                studentDetail: studentData,
               ),
             ))
           ],

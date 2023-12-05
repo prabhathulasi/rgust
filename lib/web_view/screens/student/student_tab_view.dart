@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:rugst_alliance_academia/data/model/student_model.dart';
 
 import 'package:rugst_alliance_academia/theme/app_colors.dart';
 
@@ -9,8 +10,8 @@ import 'package:rugst_alliance_academia/web_view/screens/student/study_history.d
 import 'package:rugst_alliance_academia/widgets/app_indicator.dart';
 
 class StudentTabView extends StatelessWidget {
-  final int studentId;
-  const StudentTabView({super.key, required this.studentId});
+  final StudentList studentDetail;
+  const StudentTabView({super.key, required this.studentDetail});
 
   @override
   Widget build(BuildContext context) {
@@ -46,9 +47,9 @@ class StudentTabView extends StatelessWidget {
              Expanded(
               child: TabBarView(
                 children: [
-                     StudentAdditionalInfoView(studentId: studentId),
+                     StudentAdditionalInfoView(studentDetail: studentDetail),
                const FacultyCheckInView(),
-                 StudyHistoryView(studentId: studentId,),
+                 StudyHistoryView(studentId: studentDetail.iD!,),
                   const Text("History"),
                    const Text("History")
                 ],

@@ -95,8 +95,7 @@ class MyApp extends StatelessWidget {
                           routes: {
                             RouteNames.welcome: (context) =>
                                 const VerticalTabView(),
-                     
-                          },
+                             },
                           title: 'Academia',
                           theme: ThemeData(
                             primarySwatch: Colors.grey,

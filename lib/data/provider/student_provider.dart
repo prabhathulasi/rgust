@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 
 import 'package:flutter/material.dart';
@@ -157,12 +158,15 @@ bool _isstudentTypeEdit = false;
     }
   }
 
-getStudentCourses(int studentId, String token)async{
+Future getStudentCourses(int studentId, String token)async{
    setLoading(true);
     try {
+
       var result = await ApiHelper.get("GetStudentCourses/id=$studentId", token);
+      
       setLoading(false);
       if (result.statusCode == 200) {
+        
         var data = json.decode(result.body);
 
         studentRegisterCourseModel = StudentRegisterCourseModel.fromJson(data);

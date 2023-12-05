@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
 import 'package:rugst_alliance_academia/theme/app_colors.dart';
 import 'package:rugst_alliance_academia/util/index.dart';
+import 'package:rugst_alliance_academia/web_view/screens/admission/admission_form.dart';
 import 'package:rugst_alliance_academia/web_view/screens/dashboard/account_creation.dart';
 import 'package:rugst_alliance_academia/web_view/screens/dashboard/overview_view.dart';
 import 'package:rugst_alliance_academia/web_view/screens/department/program_view.dart';
@@ -29,6 +30,7 @@ class VerticalTabViewState extends State<VerticalTabView> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: VerticalTabs(
+          
         selectedTabTextStyle: TextStyle(color: AppColors.colorc7e,fontWeight: FontWeight.bold,fontSize: 20.sp),
         tabTextStyle: const TextStyle(color: AppColors.color0ec,fontWeight: FontWeight.bold,),
           tabBackgroundColor: AppColors.colorc7e,
@@ -162,7 +164,7 @@ class VerticalTabViewState extends State<VerticalTabView> {
          const StaffListView(),
             const FacultyListView(),
             const ProgramView(),
-              tabsContent('Dart'),
+           const CompleteForm(),
                 tabsContent('Dart'),
                   tabsContent('Dart'),
                    tabsContent('Dart'),
