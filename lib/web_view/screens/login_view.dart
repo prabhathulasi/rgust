@@ -232,8 +232,8 @@ class _WebLoginViewState extends State<WebLoginView> {
                                 if (result.statusCode == 200) {
                                   await prefs.setString(
                                       'Token', decodedData["token"]);
-                                  // await prefs.setString(
-                                  //     "Email", decodedData["user"]);
+                                  await prefs.setString(
+                                      "username", decodedData["userName"]);
                                   // await prefs.setInt("userId", decodedData["user"]);
                                   if (context.mounted) {
                                     Navigator.pushNamed(

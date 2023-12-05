@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'dart:typed_data';
-
+import 'dart:html' as html;
 import 'package:flutter_flavor/flutter_flavor.dart';
 import 'package:focused_menu/focused_menu.dart';
 import 'package:focused_menu/modals.dart';
@@ -10,7 +10,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
 import 'package:pdfx/pdfx.dart';
-
 import 'package:provider/provider.dart';
 import 'package:rugst_alliance_academia/data/middleware/check_auth_middleware.dart';
 import 'package:rugst_alliance_academia/data/model/student_model.dart';
@@ -91,8 +90,8 @@ class _StudentAdditionalInfoViewState extends State<StudentAdditionalInfoView> {
         }
       } else {
         fileUploadProvider.mediaFileModel.files?.clear();
-        var result =
-            await fileUploadProvider.getMediaFileById(token, widget.studentDetail.iD!);
+        var result = await fileUploadProvider.getMediaFileById(
+            token, widget.studentDetail.iD!);
         if (result == "Invalid Token") {
           ToastHelper().errorToast("Session Expired Please Login Again");
           if (context.mounted) {
@@ -200,45 +199,58 @@ class _StudentAdditionalInfoViewState extends State<StudentAdditionalInfoView> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Padding(
-                                padding: EdgeInsets.only(right: 18.w,top: 18.h),
-                                child:  Align(
+                                padding:
+                                    EdgeInsets.only(right: 18.w, top: 18.h),
+                                child: Align(
                                     alignment: Alignment.topRight,
                                     child: InkWell(
                                       onTap: () {
-                                          showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return Dialog(
-      child: SizedBox(
-        height: MediaQuery.sizeOf(context).height,
-        width: 600.w,
-        child: Stack(
-          children: [
-            StudentPersonalProfile(
-            files:data ,
-            studentData: widget.studentDetail,
-           ),
-            Transform.translate(
-              offset: Offset(10.w, -13.h),
-              child: GestureDetector(
-                  onTap: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: const Align(
-                    alignment: Alignment.topRight,
-                    child: CircleAvatar(
-                      radius: 14.0,
-                      backgroundColor: AppColors.colorc7e,
-                      child: Icon(Icons.close, color: AppColors.color0ec),
-                    ),
-                  )),
-            )
-          ],
-        ),
-      ),
-    );
-    },
-  );
+                                        showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return Dialog(
+                                              child: SizedBox(
+                                                height:
+                                                    MediaQuery.sizeOf(context)
+                                                        .height,
+                                                width: 600.w,
+                                                child: Stack(
+                                                  children: [
+                                                    StudentPersonalProfile(
+                                                      files: data,
+                                                      studentData:
+                                                          widget.studentDetail,
+                                                    ),
+                                                    Transform.translate(
+                                                      offset:
+                                                          Offset(10.w, -13.h),
+                                                      child: GestureDetector(
+                                                          onTap: () {
+                                                            Navigator.of(
+                                                                    context)
+                                                                .pop();
+                                                          },
+                                                          child: const Align(
+                                                            alignment: Alignment
+                                                                .topRight,
+                                                            child: CircleAvatar(
+                                                              radius: 14.0,
+                                                              backgroundColor:
+                                                                  AppColors
+                                                                      .colorc7e,
+                                                              child: Icon(
+                                                                  Icons.close,
+                                                                  color: AppColors
+                                                                      .color0ec),
+                                                            ),
+                                                          )),
+                                                    )
+                                                  ],
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                        );
                                       },
                                       child: const Icon(
                                         Icons.summarize_outlined,
@@ -269,7 +281,15 @@ class _StudentAdditionalInfoViewState extends State<StudentAdditionalInfoView> {
                                           trailingIcon:
                                               const Icon(Icons.visibility),
                                           onPressed: () {
-                                            showPDfView(context, pdfController);
+                                            // Create a blob URL for the PDF
+                                            final blob = html.Blob(
+                                                [pdfData], 'application/pdf');
+                                            final url = html.Url
+                                                .createObjectUrlFromBlob(blob);
+
+                                            // Open the blob URL in a new tab
+                                            html.window.open(url, '_blank');
+                                            // showPDfView(context, pdfController);
                                           }),
                                       FocusedMenuItem(
                                           title: const Text("Delete"),

@@ -13,6 +13,7 @@ import 'package:rugst_alliance_academia/web_view/screens/staffs/staff_list_view.
 import 'package:rugst_alliance_academia/web_view/screens/student/student_list_view.dart';
 import 'package:rugst_alliance_academia/widgets/app_richtext.dart';
 import 'package:rugst_alliance_academia/widgets/app_vertical_tab.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 
@@ -26,6 +27,23 @@ class VerticalTabView extends StatefulWidget {
 }
 
 class VerticalTabViewState extends State<VerticalTabView> {
+String ?userName;
+getUserName() async{
+SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+setState(() {
+  
+userName= sharedPreferences.getString("username");
+});
+
+
+}
+@override
+  void initState() {
+    getUserName(); 
+    
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,14 +64,14 @@ class VerticalTabViewState extends State<VerticalTabView> {
                 child: AppRichTextView(
                   fontSize: 20.sp,
                   fontWeight: FontWeight.bold,
-                  title: "A",
+                  title: userName?[0] ?? "A",
                 ),
               ),
             ),
             title: AppRichTextView(
               fontSize: 20.sp,
               fontWeight: FontWeight.bold,
-              title: "ADMIN",
+              title: userName??"Admin",
               textColor: AppColors.color0ec,
             ),
           ),
