@@ -99,7 +99,7 @@ class _StudentGridViewState extends State<StudentGridView> {
   Widget build(BuildContext context) {
     var size = MediaQuery.sizeOf(context);
      final studentProvider =
-        Provider.of<StudentProvider>(context);
+        Provider.of<StudentProvider>(context, listen:  false);
     final programProvider = Provider.of<ProgramProvider>(context);
 
     return Scaffold(
@@ -118,21 +118,22 @@ class _StudentGridViewState extends State<StudentGridView> {
                   child: Padding(
                     padding: EdgeInsets.only(left: 18.0.w, right: 18.w),
                     child: AppTextFormFieldWidget(
+                      
                       key: textFieldKey,
                    
                       onChanged: (p0) {
-                        // facultyProvider.setEnableFilter(true);
-                        // facultyProvider.filterFaculty(p0);
+                        studentProvider.setEnableFilter(true);
+                        studentProvider.filterStudent(p0);
                       },
                       
-                      textStyle: GoogleFonts.oswald(color: AppColors.colorWhite),
+                      textStyle: GoogleFonts.oswald(color: AppColors.colorWhite,fontSize: 15.sp),
                       inputDecoration: InputDecoration(
-                        suffixIcon :const Icon(Icons.search, color: AppColors.colorWhite,),
+                        suffixIcon : Icon(Icons.search, color: AppColors.colorWhite,size: 25.sp,),
                           border: InputBorder.none,
                           
                           hintText: "Search by Name",
                           hintStyle:
-                              GoogleFonts.oswald(color: AppColors.colorWhite)),
+                              GoogleFonts.oswald(color: AppColors.colorWhite,fontSize: 15.sp)),
                     ),
                   ),
                 ),
@@ -255,7 +256,46 @@ class _StudentGridViewState extends State<StudentGridView> {
             SizedBox(
               height: 10.h,
             ),
-        
+         studentProvider.filteredEnable == true? 
+            Expanded(child: GridView.builder(
+                shrinkWrap: true,
+                itemCount: studentProvider.filteredList.length,
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: size.width <= 1400 ? 4 : 6,
+                    //  childAspectRatio:
+                    childAspectRatio: size.width <= 1400 ? 1 / 1 : 1 / 1.3),
+                itemBuilder: (context, index) {
+                  var studentData =
+                     studentProvider.filteredList[index];
+                     var memoryImagedata = base64Decode(studentData.userImage!);
+                  return InkWell(
+                    onTap: () {
+                      showDetailAlertDialog(context, studentData);
+                    },
+                    child: Card(
+                      color: AppColors.colorc7e,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(18.sp)),
+                      child: StudentCardWidget(
+                        userImage: memoryImagedata,
+                        address: studentData.address!,
+                        citizenship: studentData.citizenship!,
+                        currentClass: studentData.currentClassName!,
+                        dob: studentData.dOB!,
+                        email: studentData.email!,
+                        mobileNumber: studentData.mobileNumber!.toString(),
+                        studentRegNo: studentData.studentRegiterNumber!,
+                        studentName: studentData.firstName!+studentData.lastName!,
+                        studentType: studentData.studentType!,
+                       
+                        program: studentData.currentProgramName!,
+
+
+                      )
+                    ),
+                  );
+                },
+              ),):
             Expanded(
               child: GridView.builder(
                 shrinkWrap: true,

@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'dart:developer';
+
 
 
 import 'package:flutter/material.dart';
@@ -12,6 +12,14 @@ import 'package:rugst_alliance_academia/util/toast_helper.dart';
 class StudentProvider extends ChangeNotifier {
   StudentModel studentModel = StudentModel();
   StudentRegisterCourseModel studentRegisterCourseModel = StudentRegisterCourseModel();
+List<StudentList> filteredList = [];
+
+    bool filteredEnable = false;
+
+
+      // updated course from the Student
+   bool _selectedCourseIndex =false;
+   bool get selectedCourseIndex => _selectedCourseIndex;
   // loading indicator
   bool _isLoading = false;
   bool get isLoading => _isLoading;
@@ -54,6 +62,15 @@ bool _isstudentTypeEdit = false;
 
   int _isStandardFee = 1;
   int get isStandardFee => _isStandardFee;
+
+
+void filterStudent(String query) {
+    filteredList = studentModel.studentList!
+        .where((element) =>
+            element.firstName!.toLowerCase().startsWith(query.toLowerCase()))
+        .toList();
+    notifyListeners();
+  }
 
   //  getStudent list
   Future getStudent(String token) async {
@@ -226,5 +243,15 @@ Future getStudentCourses(int studentId, String token)async{
   void setStudentId(String value) async {
     studentRegisterNumberController = value;
     notifyListeners();
+  }
+
+  void setEnableFilter(bool value) {
+    filteredEnable = value;
+    notifyListeners();
+  }
+
+   void selectCourseIndex(bool value) {
+   _selectedCourseIndex = value;
+   notifyListeners();
   }
 }

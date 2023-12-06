@@ -9,16 +9,24 @@ import 'package:image_picker_web/image_picker_web.dart';
 import 'package:intl/intl.dart';
 
 import 'package:provider/provider.dart';
+import 'package:rugst_alliance_academia/custom_plugin/commons/helper.dart';
+import 'package:rugst_alliance_academia/custom_plugin/editable.dart';
 import 'package:rugst_alliance_academia/data/middleware/check_auth_middleware.dart';
 import 'package:rugst_alliance_academia/data/model/gender_model.dart';
+import 'package:rugst_alliance_academia/data/model/student_course_model.dart';
 import 'package:rugst_alliance_academia/data/model/student_model.dart';
 import 'package:rugst_alliance_academia/data/provider/faculty_provider.dart';
+import 'package:rugst_alliance_academia/data/provider/program_provider.dart';
 import 'package:rugst_alliance_academia/data/provider/student_provider.dart';
 import 'package:rugst_alliance_academia/routes/named_routes.dart';
 import 'package:rugst_alliance_academia/theme/app_colors.dart';
 import 'package:rugst_alliance_academia/util/toast_helper.dart';
 
 import 'package:rugst_alliance_academia/util/validator.dart';
+import 'package:rugst_alliance_academia/web_view/screens/department/batch_dropdown.dart';
+import 'package:rugst_alliance_academia/web_view/screens/department/class_dropdown.dart';
+import 'package:rugst_alliance_academia/web_view/screens/department/program_dropdown_view.dart';
+import 'package:rugst_alliance_academia/web_view/screens/department/year_dropdown_view.dart';
 
 import 'package:rugst_alliance_academia/web_view/screens/faculty/gender_view.dart';
 import 'package:rugst_alliance_academia/web_view/screens/student/student_registered_course.dart';
@@ -40,17 +48,42 @@ class _AddFacultyViewState extends State<UpdateStudentDetails> {
   final _formKey = GlobalKey<FormState>();
 
   List<JobType> jobType = [];
-  List filterdcols = [];
+
 
   String? jobTypeValue;
 
   bool dropdownSelected = false;
   Uint8List? bytesFromPicker;
   String? imageEncoded;
-
-
+ final _noneditableKey = GlobalKey<EditableState>();
   // List of items in our dropdown menu
- 
+List rows = [];
+  List filterdcols = [];
+    addRow() {
+    rows = addOneRow(filterdcols, rows);
+
+    setState(() {});
+  }
+  @override
+  void initState() {
+    addRow();
+    filterdcols = [
+      {
+        "title": 'Course Code',
+        'widthFactor': 0.15,
+        'key': 'coursecode',
+      },
+      {"title": 'Course Name', 'widthFactor': 0.2, 'key': 'coursename'},
+      {"title": 'Credits', 'widthFactor': 0.1, 'key': 'credits'},
+      {
+        "title": 'Assigned Lectures',
+        'widthFactor': 0.2,
+        'key': 'lectures',
+        'editable': false
+      },
+    ];
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     TextEditingController dateinput =
@@ -58,9 +91,10 @@ class _AddFacultyViewState extends State<UpdateStudentDetails> {
     TextEditingController dobinput =
         TextEditingController(text: widget.studentDetails.dOB);
 
-    final studentProvider = Provider.of<StudentProvider>(context, listen:  false);
+    final studentProvider =
+        Provider.of<StudentProvider>(context, listen: false);
     final facultyProvider = Provider.of<FacultyProvider>(context);
-
+        final prgProvider = Provider.of<ProgramProvider>(context);
 
     var size = MediaQuery.of(context).size;
     return Scaffold(
@@ -172,7 +206,8 @@ class _AddFacultyViewState extends State<UpdateStudentDetails> {
                                         initialValue:
                                             widget.studentDetails.firstName,
                                         textStyle: GoogleFonts.roboto(
-                                            color: AppColors.colorWhite, fontSize: 15.sp),
+                                            color: AppColors.colorWhite,
+                                            fontSize: 15.sp),
                                         onSaved: (p0) {
                                           facultyProvider.setfirstName(p0!);
                                         },
@@ -209,7 +244,8 @@ class _AddFacultyViewState extends State<UpdateStudentDetails> {
                                         initialValue:
                                             widget.studentDetails.lastName,
                                         textStyle: GoogleFonts.roboto(
-                                            color: AppColors.colorWhite, fontSize: 15.sp),
+                                            color: AppColors.colorWhite,
+                                            fontSize: 15.sp),
                                         onSaved: (p0) {
                                           facultyProvider.setLastName(p0!);
                                         },
@@ -246,7 +282,8 @@ class _AddFacultyViewState extends State<UpdateStudentDetails> {
                                         initialValue:
                                             widget.studentDetails.email,
                                         textStyle: GoogleFonts.roboto(
-                                            color: AppColors.colorWhite, fontSize: 15.sp),
+                                            color: AppColors.colorWhite,
+                                            fontSize: 15.sp),
                                         validator: (value) {
                                           return EmailFormFieldValidator
                                               .validate(value);
@@ -288,7 +325,8 @@ class _AddFacultyViewState extends State<UpdateStudentDetails> {
                                             .studentDetails.mobileNumber
                                             .toString(),
                                         textStyle: GoogleFonts.roboto(
-                                            color: AppColors.colorWhite, fontSize: 15.sp),
+                                            color: AppColors.colorWhite,
+                                            fontSize: 15.sp),
                                         onSaved: (p0) {
                                           facultyProvider.setMobile(p0!);
                                         },
@@ -329,7 +367,8 @@ class _AddFacultyViewState extends State<UpdateStudentDetails> {
                                             }
                                           },
                                           style: GoogleFonts.roboto(
-                                              color: AppColors.colorWhite, fontSize: 15.sp),
+                                              color: AppColors.colorWhite,
+                                              fontSize: 15.sp),
                                           controller: dobinput,
                                           decoration: InputDecoration(
                                               hintStyle: GoogleFonts.roboto(
@@ -384,7 +423,8 @@ class _AddFacultyViewState extends State<UpdateStudentDetails> {
                                       Expanded(
                                         child: TextFormField(
                                           style: GoogleFonts.roboto(
-                                              color: AppColors.colorWhite, fontSize: 15.sp),
+                                              color: AppColors.colorWhite,
+                                              fontSize: 15.sp),
                                           controller: dateinput,
                                           decoration: InputDecoration(
                                               hintStyle: GoogleFonts.roboto(
@@ -458,7 +498,8 @@ class _AddFacultyViewState extends State<UpdateStudentDetails> {
                                         initialValue:
                                             widget.studentDetails.address,
                                         textStyle: GoogleFonts.roboto(
-                                            color: AppColors.colorWhite, fontSize: 15.sp),
+                                            color: AppColors.colorWhite,
+                                            fontSize: 15.sp),
                                         onSaved: (p0) {
                                           facultyProvider.setaddrss(p0!);
                                         },
@@ -493,7 +534,8 @@ class _AddFacultyViewState extends State<UpdateStudentDetails> {
                                         initialValue: widget
                                             .studentDetails.mailingAddress,
                                         textStyle: GoogleFonts.roboto(
-                                            color: AppColors.colorWhite, fontSize: 15.sp),
+                                            color: AppColors.colorWhite,
+                                            fontSize: 15.sp),
                                         onSaved: (p0) {
                                           facultyProvider.setqualification(p0!);
                                         },
@@ -528,7 +570,8 @@ class _AddFacultyViewState extends State<UpdateStudentDetails> {
                                         initialValue: widget
                                             .studentDetails.passportNumber,
                                         textStyle: GoogleFonts.roboto(
-                                            color: AppColors.colorWhite, fontSize: 15.sp),
+                                            color: AppColors.colorWhite,
+                                            fontSize: 15.sp),
                                         onSaved: (p0) {
                                           facultyProvider.setpassport(p0!);
                                         },
@@ -576,9 +619,10 @@ class _AddFacultyViewState extends State<UpdateStudentDetails> {
                                                   InkWell(
                                                     onTap: () {
                                                       studentProvider
-                                                          .setEditStudentType(true);
+                                                          .setEditStudentType(
+                                                              true);
                                                     },
-                                                    child:  Icon(
+                                                    child: Icon(
                                                       Icons.edit,
                                                       color: AppColors.color0ec,
                                                       size: 20.sp,
@@ -598,15 +642,19 @@ class _AddFacultyViewState extends State<UpdateStudentDetails> {
                                                   isExpanded: true,
 
                                                   // Initial Value
-                                                  value: studentProvider.studetnTypeValue,
+                                                  value: studentProvider
+                                                      .studetnTypeValue,
 
                                                   // Down Arrow Icon
-                                                  icon: const Icon(Icons
-                                                      .keyboard_arrow_down,color: AppColors.colorWhite,),
+                                                  icon: const Icon(
+                                                    Icons.keyboard_arrow_down,
+                                                    color: AppColors.colorWhite,
+                                                  ),
 
                                                   // Array list of items
-                                                  items:
-                                                      studentProvider.studentType.map((String items) {
+                                                  items: studentProvider
+                                                      .studentType
+                                                      .map((String items) {
                                                     return DropdownMenuItem(
                                                       value: items,
                                                       child: AppRichTextView(
@@ -623,7 +671,9 @@ class _AddFacultyViewState extends State<UpdateStudentDetails> {
                                                   // change button value to selected value
                                                   onChanged:
                                                       (String? newValue) {
-                                                 studentProvider.setStudentType(newValue!);
+                                                    studentProvider
+                                                        .setStudentType(
+                                                            newValue!);
                                                   },
                                                 ),
                                               ),
@@ -653,7 +703,8 @@ class _AddFacultyViewState extends State<UpdateStudentDetails> {
                                         initialValue:
                                             widget.studentDetails.citizenship,
                                         textStyle: GoogleFonts.roboto(
-                                            color: AppColors.colorWhite, fontSize: 15.sp),
+                                            color: AppColors.colorWhite,
+                                            fontSize: 15.sp),
                                         onSaved: (p0) {
                                           facultyProvider.setcitizen(p0!);
                                         },
@@ -754,135 +805,273 @@ class _AddFacultyViewState extends State<UpdateStudentDetails> {
                 color: AppColors.colorBlack,
                 width: 2,
               ),
-              Expanded(child: Column(
+              Expanded(
+                  child: Consumer<StudentProvider>(
+                    builder: (context, studentConsumer, child) {
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                    AppRichTextView(title: "Study History", fontSize: 25.sp, fontWeight: FontWeight.bold,textColor: AppColors.colorc7e,),
-                    SizedBox(height: 15.h,),
-                    
-Expanded(child: Padding(
-  padding: const EdgeInsets.all(8.0),
-  child:   Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                                  color: AppColors.colorc7e,
-                                  height: 70.h,
-                                  width: size.width * 0.2,
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        AppRichTextView(
-                                            title: "Current Program",
-                                            textColor: AppColors.colorWhite,
-                                            fontSize: 14.sp,
-                                            fontWeight: FontWeight.w500),
-                                        Expanded(
-                                            child: AppTextFormFieldWidget(
-  
-  enable: false,                                        initialValue:widget.studentDetails.currentProgramName
-                                             ,
-                                          textStyle: GoogleFonts.roboto(
-                                              color: AppColors.colorWhite, fontSize: 15.sp),
-                                          onSaved: (p0) {
-                                            // facultyProvider.setLastName(p0!);
-                                          },
-                                          inputDecoration:  const InputDecoration(
-                                            
-                                              border: InputBorder.none,
-                                              hintStyle: TextStyle(
-                                                  color: AppColors.colorGrey)),
-                                          obscureText: false,
-                                        )),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(height: 15.h,),
-                                Container(
-                                  color: AppColors.colorc7e,
-                                  height: 70.h,
-                                  width: size.width * 0.2,
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        AppRichTextView(
-                                            title: "Current class",
-                                            textColor: AppColors.colorWhite,
-                                            fontSize: 14.sp,
-                                            fontWeight: FontWeight.w500),
-                                        Expanded(
-                                            child: AppTextFormFieldWidget(
-  
-  enable: false,                                        initialValue:widget.studentDetails.currentClassName
-                                             ,
-                                          textStyle: GoogleFonts.roboto(
-                                              color: AppColors.colorWhite, fontSize: 15.sp),
-                                          onSaved: (p0) {
-                                            // facultyProvider.setLastName(p0!);
-                                          },
-                                          inputDecoration:  const InputDecoration(
-                                            
-                                              border: InputBorder.none,
-                                              hintStyle: TextStyle(
-                                                  color: AppColors.colorGrey)),
-                                          obscureText: false,
-                                        )),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                                 SizedBox(height: 15.h,),
-                                Container(
-                                  color: AppColors.colorc7e,
-                                  height: 70.h,
-                                  width: size.width * 0.2,
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        AppRichTextView(
-                                            title: "Batch",
-                                            textColor: AppColors.colorWhite,
-                                            fontSize: 14.sp,
-                                            fontWeight: FontWeight.w500),
-                                        Expanded(
-                                            child: AppTextFormFieldWidget(
-  
-  enable: false,                                        initialValue:widget.studentDetails.batch
-                                             ,
-                                          textStyle: GoogleFonts.roboto(
-                                              color: AppColors.colorWhite, fontSize: 15.sp),
-                                          onSaved: (p0) {
-                                            // facultyProvider.setLastName(p0!);
-                                          },
-                                          inputDecoration:  const InputDecoration(
-                                            
-                                              border: InputBorder.none,
-                                              hintStyle: TextStyle(
-                                                  color: AppColors.colorGrey)),
-                                          obscureText: false,
-                                        )),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                                 SizedBox(height: 15.h,),
-                                Divider(height: 2.h,)
-              ],
-             ),
-))
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          AppRichTextView(
+                            title: "Current Class",
+                            fontSize: 25.sp,
+                            fontWeight: FontWeight.bold,
+                            textColor: AppColors.colorc7e,
+                          ),
+                          SizedBox(width: 10.w,),
+                          InkWell(
+                            onTap: () {
+                              if(studentConsumer.selectedCourseIndex== false){
+    studentConsumer.selectCourseIndex(true);
+                              }else{
+                                  studentConsumer.selectCourseIndex(false);
+                              }
+                          
+                            },
+                            child:studentConsumer.selectedCourseIndex== false? const Icon(Icons.edit,color: AppColors.colorc7e,): const Icon(Icons.close,color: AppColors.colorc7e,))
+                        ],
+                      ),
+                      SizedBox(
+                        height: 15.h,
+                      ),
+                                        studentConsumer.selectedCourseIndex== false? Padding(
+                                          padding: const EdgeInsets.only(top:18.0,left: 18),
+                                          child: Container(
+                                                                  color: AppColors.colorc7e,
+                                                                  height: 75.h,
+                                                                  width: size.width * 0.2,
+                                                                  child: Padding(
+                                                                    padding: const EdgeInsets.all(8.0),
+                                                                    child: Column(
+                                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                                                      children: [
+                                                                        AppRichTextView(
+                                           title: "Current Program",
+                                           textColor: AppColors.colorWhite,
+                                           fontSize: 14.sp,
+                                           fontWeight: FontWeight.w500),
+                                                                        
+                                                                        Expanded(
+                                           child: AppTextFormFieldWidget(
+                                        
+                                                                          enable: false,
+                                                                          initialValue:
+                                             widget.studentDetails.currentProgramName,
+                                                                          textStyle: GoogleFonts.roboto(
+                                             color: AppColors.colorWhite,
+                                             fontSize: 15.sp),
+                                                                          onSaved: (p0) {
+                                           // facultyProvider.setLastName(p0!);
+                                                                          },
+                                                                          inputDecoration: const InputDecoration(
+                                                                       
+                                             border: InputBorder.none,
+                                             hintStyle: TextStyle(
+                                                 color: AppColors.colorGrey)),
+                                                                          obscureText: false,
+                                                                        )),
+                                                                      ],
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                        ):const Padding(
+                                         padding: EdgeInsets.only(top:18.0,left: 18),
+                                          child: ProgramDropdown(),
+                                        ),
 
+                            SizedBox(
+                              height: 15.h,
+                            ),
+                            studentConsumer.selectedCourseIndex== false?  Padding(
+                             padding: const EdgeInsets.only(left: 18),
+                              child: Container(
+                                color: AppColors.colorc7e,
+                                height: 70.h,
+                                width: size.width * 0.2,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      AppRichTextView(
+                                          title: "Current class",
+                                          textColor: AppColors.colorWhite,
+                                          fontSize: 14.sp,
+                                          fontWeight: FontWeight.w500),
+                                      Expanded(
+                                          child: AppTextFormFieldWidget(
+                                        enable: false,
+                                        initialValue:
+                                            widget.studentDetails.currentClassName,
+                                        textStyle: GoogleFonts.roboto(
+                                            color: AppColors.colorWhite,
+                                            fontSize: 15.sp),
+                                        onSaved: (p0) {
+                                          // facultyProvider.setLastName(p0!);
+                                        },
+                                        inputDecoration: const InputDecoration(
+                                            border: InputBorder.none,
+                                            hintStyle: TextStyle(
+                                                color: AppColors.colorGrey)),
+                                        obscureText: false,
+                                      )),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ):const Padding(
+                              padding: EdgeInsets.only(left: 18),
+                              child: ClassDropdown(),
+                            ),
+                            SizedBox(
+                              height: 15.h,
+                            ),
+                                   studentConsumer.selectedCourseIndex== false? Padding(
+                                       padding: const EdgeInsets.only(left: 18),
+                                     child: Container(
+                                                             color: AppColors.colorc7e,
+                                                             height: 70.h,
+                                                             width: size.width * 0.2,
+                                                             child: Padding(
+                                                               padding: const EdgeInsets.all(8.0),
+                                                               child: Column(
+                                                                 crossAxisAlignment: CrossAxisAlignment.start,
+                                                                 children: [
+                                      AppRichTextView(
+                                          title: "Batch",
+                                          textColor: AppColors.colorWhite,
+                                          fontSize: 14.sp,
+                                          fontWeight: FontWeight.w500),
+                                      Expanded(
+                                          child: AppTextFormFieldWidget(
+                                        enable: false,
+                                        initialValue: widget.studentDetails.batch,
+                                        textStyle: GoogleFonts.roboto(
+                                            color: AppColors.colorWhite,
+                                            fontSize: 15.sp),
+                                        onSaved: (p0) {
+                                          // facultyProvider.setLastName(p0!);
+                                        },
+                                        inputDecoration: const InputDecoration(
+                                            border: InputBorder.none,
+                                            hintStyle: TextStyle(
+                                                color: AppColors.colorGrey)),
+                                        obscureText: false,
+                                      )),
+                                                                 ],
+                                                               ),
+                                                             ),
+                                                           ),
+                                   ):  Padding(
+                                     padding: const EdgeInsets.only(left: 18),
+                                     child: Column(
+                                       children: [
+                                         const DynamicYearsDropdown(),
+                                         SizedBox(height: 10.h,),
+                                         const BatchDropdown(),
+                                       ],
+                                     ),
+                                   ),
+                      
+                                           SizedBox(
+                              height: 15.h,
+                            ),
+                            Divider(
+                              height: 2.h,
+                            ),
+                                SizedBox(
+                              height: 15.h,
+                            ),    
+                          studentConsumer.selectedCourseIndex== true? Center(
+                                    child: AppRichTextView(
+                                  title: "Registered Course",
+                                  fontSize: 25.sp,
+                                  fontWeight: FontWeight.bold,
+                                  textColor: AppColors.colorc7e,
+                                )): Container(),
+                             
+                                        prgProvider.newData.isEmpty
+                        ? Container()
+                        : Expanded(
+                         
+                          child: Consumer<ProgramProvider>(builder:
+                              (context, departmentProvider, child) {
+                            return Editable(
+                              enabled: false,
+                              key: _noneditableKey,
+                              showRemoveIcon: false,
+                              columns: filterdcols,
+                              rows: departmentProvider.newData,
+                              zebraStripe: true,
+                              stripeColor1: AppColors.colorc7e,
+                              stripeColor2: AppColors.colorc7e,
+                              onRowSaved: (value) async {
+                           
+                                //   await departmentProvider.patchCoursesList(context,
+                                //  courseName: value["coursename"],
+                                // courseid: value["coursecode"],
+                                // credits: int.parse(value["credits"]));
+                              },
+                              onSubmitted: (value) {
+                                print(value);
+                              },
+
+                              borderColor: Colors.blueGrey,
+                              tdStyle:  TextStyle(
+                                fontSize: 15.sp,
+                                  fontWeight: FontWeight.bold,
+                                  color: AppColors.colorWhite),
+                              trHeight: 100.h,
+                              thStyle:  TextStyle(
+                                  fontSize: 18.sp,
+                                  fontWeight: FontWeight.bold,
+                                  color: AppColors.colorWhite),
+                              thAlignment: TextAlign.center,
+                              thVertAlignment: CrossAxisAlignment.end,
+                              thPaddingBottom: 3,
+                              showSaveIcon: false,
+                              saveIconColor: Colors.black,
+                              showCreateButton: false,
+                              tdAlignment: TextAlign.left,
+                              tdEditableMaxLines:
+                                  100, // don't limit and allow data to wrap
+                              tdPaddingTop: 10.h,
+                               tdPaddingBottom: 14.h,
+                              tdPaddingLeft: 10.w,
+                              tdPaddingRight: 8.w,
+                              focusedBorder: const OutlineInputBorder(
+                                  borderSide:
+                                      BorderSide(color: Colors.blue),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(0))),
+                            );
+                          }),
+                        ),
+                     prgProvider.newData.isEmpty? Container(): 
+                     Row(
+                      children: [
+                        AppElevatedButon(title: "Amend",buttonColor: AppColors.colorc7e,height: 50.h,width: 150.w,onPressed: (context) {
+                          
+                        },
+                        borderColor: AppColors.colorWhite,
+                        textColor: AppColors.colorWhite,
+                        ),
+    AppElevatedButon(title: "Cancel",buttonColor: AppColors.colorc7e,height: 50.h,width: 150.w,onPressed: (context) {
+                          
+                        },
+                        borderColor: AppColors.colorWhite,
+                        textColor: AppColors.colorWhite,
+                        )
+
+                      ],
+                     )
+               
                 ],
-
-              ))
+              );
+                    }
+                  ))
             ],
           ),
         ),

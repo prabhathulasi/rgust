@@ -1,13 +1,14 @@
 
 
-import 'dart:io';
-import 'dart:ui' as ui;
-import 'dart:html' as html;
+
 import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:syncfusion_flutter_pdf/pdf.dart';
+import 'package:flutter_to_pdf/export_delegate.dart';
+import 'package:flutter_to_pdf/export_frame.dart';
+import 'dart:html' as html;
 import 'package:rugst_alliance_academia/data/model/media_file_model.dart';
 import 'package:rugst_alliance_academia/data/model/student_model.dart';
 import 'package:rugst_alliance_academia/theme/app_colors.dart';
@@ -25,7 +26,7 @@ class StudentPersonalProfile extends StatefulWidget {
 }
 
 class _StudentPersonalProfileState extends State<StudentPersonalProfile> {
- 
+ final ExportDelegate exportDelegate = ExportDelegate();
 
   @override
   Widget build(BuildContext context) {
@@ -232,14 +233,7 @@ class _StudentPersonalProfileState extends State<StudentPersonalProfile> {
             ],
           ),
         ),
-      
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: AppColors.colorc7e,
-        onPressed: () async{
-  
-        },
-        child: const Icon(Icons.picture_as_pdf_outlined,color: AppColors.colorWhite,),
-      ),
+     
     );
   }
 }

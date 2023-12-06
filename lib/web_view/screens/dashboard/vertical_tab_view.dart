@@ -19,7 +19,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 
 class VerticalTabView extends StatefulWidget {
-  const VerticalTabView({super.key});
+
+  const VerticalTabView({super.key, });
 
   @override
   VerticalTabViewState createState() => VerticalTabViewState();

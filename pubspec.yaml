@@ -60,7 +60,8 @@ dependencies:
   focused_menu: ^1.0.5
   flutter_form_builder: ^9.1.1
   form_builder_validators: ^9.1.0
-  syncfusion_flutter_pdf: ^23.2.6
+  flutter_to_pdf: ^0.1.1
+  url_strategy: ^0.2.0
  
 
   

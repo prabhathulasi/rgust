@@ -58,88 +58,51 @@ class _StudentRegistedCourseState extends State<StudentRegistedCourse> {
               child: SpinKitSpinningLines(color: AppColors.colorc7e),
             );
           }else{
-           return Column(
-            children: [
-              // Container(
-              //                   color: AppColors.colorc7e,
-              //                   height: 70.h,
-              //                   width: size.width * 0.2,
-              //                   child: Padding(
-              //                     padding: const EdgeInsets.all(8.0),
-              //                     child: Column(
-              //                       crossAxisAlignment:
-              //                           CrossAxisAlignment.start,
-              //                       children: [
-              //                         AppRichTextView(
-              //                             title: "Current Program",
-              //                             textColor: AppColors.colorWhite,
-              //                             fontSize: 14.sp,
-              //                             fontWeight: FontWeight.w500),
-              //                         Expanded(
-              //                             child: AppTextFormFieldWidget(
-              //                           initialValue:
-              //                              ,
-              //                           textStyle: GoogleFonts.roboto(
-              //                               color: AppColors.colorWhite, fontSize: 15.sp),
-              //                           onSaved: (p0) {
-              //                             facultyProvider.setLastName(p0!);
-              //                           },
-              //                           inputDecoration: const InputDecoration(
-              //                               border: InputBorder.none,
-              //                               hintStyle: TextStyle(
-              //                                   color: AppColors.colorGrey)),
-              //                           obscureText: false,
-              //                         )),
-              //                       ],
-              //                     ),
-              //                   ),
-              //                 ),
-            ],
-           );
-    //        var data = studentCourseDetail.studentRegisterCourseModel.studentCourses;
-    //         Map<String, List<StudentCourses>> coursesByProgram = {};
+           
+           var data = studentCourseDetail.studentRegisterCourseModel.studentCourses;
+            Map<String, List<StudentCourses>> coursesByProgram = {};
 
-    //       // Group courses by ProgramName
-    //       for (var course in data!) {
-    //         final programName = course.className!;
-    //         if (!coursesByProgram.containsKey(programName)) {
-    //           coursesByProgram[programName] = [];
-    //         }
-    //         coursesByProgram[programName]!.add(course);
-    //       }
-    //       return ListView.builder(
-    //         itemCount: data.length,
-    //         itemBuilder: (context, index) {
-    //             final programNames = coursesByProgram.keys.toList();
-    //             if (index >= programNames.length) {
-    //   return const SizedBox(); // Return an empty SizedBox if index is out of range
-    // }
-    //             String programName = coursesByProgram.keys.elementAt(index);
-    //           return Card(
-    //             elevation: 5.0,
-    //             child: ExpansionTile(
-    //               title: AppRichTextView(
-    //                 title: programName,
-    //                 fontSize: 18.sp,
-    //                 fontWeight: FontWeight.bold,
-    //                 textColor: AppColors.colorc7e,
+          // Group courses by ProgramName
+          for (var course in data!) {
+            final programName = course.className!;
+            if (!coursesByProgram.containsKey(programName)) {
+              coursesByProgram[programName] = [];
+            }
+            coursesByProgram[programName]!.add(course);
+          }
+          return ListView.builder(
+            itemCount: data.length,
+            itemBuilder: (context, index) {
+                final programNames = coursesByProgram.keys.toList();
+                if (index >= programNames.length) {
+      return const SizedBox(); // Return an empty SizedBox if index is out of range
+    }
+                String programName = coursesByProgram.keys.elementAt(index);
+              return Card(
+                elevation: 5.0,
+                child: ExpansionTile(
+                  title: AppRichTextView(
+                    title: programName,
+                    fontSize: 18.sp,
+                    fontWeight: FontWeight.bold,
+                    textColor: AppColors.colorc7e,
                     
-    //               ),
-    //               children: data.map((e) {
-    //                 return Padding(
-    //                   padding: const EdgeInsets.all(18.0),
-    //                   child: Row(
-    //                     children: [
-    //                       AppRichTextView(title: e.courseCode!, fontSize: 15.sp, fontWeight: FontWeight.w600,textColor: AppColors.colorBlack,),
-    //                       AppRichTextView(title: e.courseName!, fontSize: 15.sp, fontWeight: FontWeight.w600,textColor: AppColors.colorBlack,),
-    //                     ],
-    //                   ),
-    //                 );
-    //               }).toList(),
-    //             ),
-    //           );
-    //         },
-    //       );
+                  ),
+                  children: data.map((e) {
+                    return Padding(
+                      padding: const EdgeInsets.all(18.0),
+                      child: Row(
+                        children: [
+                          AppRichTextView(title: e.courseCode!, fontSize: 15.sp, fontWeight: FontWeight.w600,textColor: AppColors.colorBlack,),
+                          AppRichTextView(title: e.courseName!, fontSize: 15.sp, fontWeight: FontWeight.w600,textColor: AppColors.colorBlack,),
+                        ],
+                      ),
+                    );
+                  }).toList(),
+                ),
+              );
+            },
+          );
 
           }
         },
