@@ -10,7 +10,7 @@ import 'package:rugst_alliance_academia/util/api_service.dart';
 import 'package:rugst_alliance_academia/util/toast_helper.dart';
 
 class ProgramProvider extends ChangeNotifier {
-  int startYear = 2022; // Specify your start year
+  int startYear = 2010; // Specify your start year
   int endYear = DateTime.now().year; // Specify your end year (current year)
   int selectedYear = DateTime.now().year;
   ProgramModel programModel = ProgramModel();
@@ -150,13 +150,20 @@ class ProgramProvider extends ChangeNotifier {
         },
         token!);
 
-
+var data = json.decode(result.body);
       if (result.statusCode == 200) {
         setLoading(false);
         ToastHelper().sucessToast("Course Added Successfully");
         await getCoursesList(token);
         notifyListeners();
-      } else {
+      }else if(result.statusCode == 409){
+               setLoading(false);
+        notifyListeners();
+        ToastHelper().errorToast(data["Message"]);
+        return null; 
+      } 
+      
+      else {
         setLoading(false);
         notifyListeners();
         ToastHelper().errorToast("Internal Server Error");
@@ -233,6 +240,8 @@ class ProgramProvider extends ChangeNotifier {
   void setSelectedYear(int value) {
     selectedYear = value;
     selectedCourse = null;
+    selectedBatch=null;
+    newData.clear();
     notifyListeners();
   }
 
@@ -264,6 +273,14 @@ class ProgramProvider extends ChangeNotifier {
 
   void selectStudentType(int isNew) {
     _isNewStudent = isNew;
+    notifyListeners();
+  }
+
+   clearAllTemp(){
+    selectedDept = null;
+    selectedClass = null;
+    selectedBatch = null;
+    newData.clear();
     notifyListeners();
   }
 

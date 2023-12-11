@@ -1,9 +1,8 @@
 import 'dart:convert';
 
-
-
 import 'package:flutter/material.dart';
 import 'package:rugst_alliance_academia/data/model/student_course_model.dart';
+import 'package:rugst_alliance_academia/data/model/student_detail_model.dart';
 
 import 'package:rugst_alliance_academia/data/model/student_model.dart';
 import 'package:rugst_alliance_academia/util/api_service.dart';
@@ -11,23 +10,25 @@ import 'package:rugst_alliance_academia/util/toast_helper.dart';
 
 class StudentProvider extends ChangeNotifier {
   StudentModel studentModel = StudentModel();
-  StudentRegisterCourseModel studentRegisterCourseModel = StudentRegisterCourseModel();
-List<StudentList> filteredList = [];
+  StudentRegisterCourseModel studentRegisterCourseModel =
+      StudentRegisterCourseModel();
 
-    bool filteredEnable = false;
+  StudentDetailModel studentDetailModel = StudentDetailModel();
+  List<StudentList> filteredList = [];
 
+  bool filteredEnable = false;
 
-      // updated course from the Student
-   bool _selectedCourseIndex =false;
-   bool get selectedCourseIndex => _selectedCourseIndex;
+  // updated course from the Student
+  bool _selectedCourseIndex = false;
+  bool get selectedCourseIndex => _selectedCourseIndex;
   // loading indicator
   bool _isLoading = false;
   bool get isLoading => _isLoading;
-bool _isstudentTypeEdit = false;
+  bool _isstudentTypeEdit = false;
   bool get isstudentTypeEdit => _isstudentTypeEdit;
   // Initial Selected Value
   String studetnTypeValue = 'Regular';
- var studentType = [
+  var studentType = [
     'Regular',
     'Widthdraw',
     'Dropout',
@@ -37,34 +38,32 @@ bool _isstudentTypeEdit = false;
   ];
   String? firstNamecontroller;
   String get firstname => firstNamecontroller!;
-   String? studentRegisterNumberController;
+  String? studentRegisterNumberController;
   String get suddentregisterNumber => studentRegisterNumberController!;
   String? lastNamecontroller;
   String get lastname => lastNamecontroller!;
-    String? emailcontroller;
+  String? emailcontroller;
   String get email => emailcontroller!;
   String? mobileController;
   String get mobile => mobileController!;
   String? addresscontroller;
   String get address => addresscontroller!;
-    String? mailingaddresscontroller;
+  String? mailingaddresscontroller;
   String get mailingaddress => mailingaddresscontroller!;
 
-   String? emergencyContactcontroller;
+  String? emergencyContactcontroller;
   String get emergencyContact => emergencyContactcontroller!;
-    String? passportcontroller;
+  String? passportcontroller;
   String get passport => passportcontroller!;
   String? citizenshipcontroller;
   String get cizizen => citizenshipcontroller!;
- String? qualificationcontroller;
+  String? qualificationcontroller;
   String get qualification => qualificationcontroller!;
-
 
   int _isStandardFee = 1;
   int get isStandardFee => _isStandardFee;
 
-
-void filterStudent(String query) {
+  void filterStudent(String query) {
     filteredList = studentModel.studentList!
         .where((element) =>
             element.firstName!.toLowerCase().startsWith(query.toLowerCase()))
@@ -84,14 +83,13 @@ void filterStudent(String query) {
         studentModel = StudentModel.fromJson(data);
 
         notifyListeners();
-     
 
         return studentModel;
       } else if (result.statusCode == 204) {
         studentModel.studentList?.clear();
         notifyListeners();
         ToastHelper().errorToast("No Student Added Yet");
-  
+
         return null;
       } else if (result.statusCode == 401) {
         notifyListeners();
@@ -131,32 +129,30 @@ void filterStudent(String query) {
             "ProgramId": programId,
             "CurrentClassId": classId,
             "Batch": batch,
-            "AdmissionDate":admissionDate,
+            "AdmissionDate": admissionDate,
             "FirstName": firstname,
             "LastName": lastname,
             "Email": email,
             "Gender": gender,
-            "Mobile":int.parse(mobile),
+            "Mobile": int.parse(mobile),
             "DOB": dob,
             "Address": address,
-            "FeesId": 1,// have to change this dynamically later
+            "FeesId": 1, // have to change this dynamically later
             "StudentType": studentType,
             "MailingAddress": mailingaddress,
-            "PassportNumber":passport,
+            "PassportNumber": passport,
             "citizenship": cizizen,
             "UserImage": userImage,
-            "Qualification":qualification,
-            "EmergencyContact":int.parse(emergencyContact),
+            "Qualification": qualification,
+            "EmergencyContact": int.parse(emergencyContact),
           },
           token);
       var data = json.decode(result.body);
-    
 
       if (result.statusCode == 200) {
-             setLoading(false);
+        setLoading(false);
         var data = json.decode(result.body);
         await getStudent(token);
-   
 
         notifyListeners();
         ToastHelper().sucessToast("Student Added Sucessfully");
@@ -175,28 +171,26 @@ void filterStudent(String query) {
     }
   }
 
-Future getStudentCourses(int studentId, String token)async{
-   setLoading(true);
+  Future getStudentCourses(int studentId, String token) async {
+    setLoading(true);
     try {
+      var result =
+          await ApiHelper.get("GetStudentCourses/id=$studentId", token);
 
-      var result = await ApiHelper.get("GetStudentCourses/id=$studentId", token);
-      
       setLoading(false);
       if (result.statusCode == 200) {
-        
         var data = json.decode(result.body);
 
         studentRegisterCourseModel = StudentRegisterCourseModel.fromJson(data);
 
         notifyListeners();
-     
 
         return studentRegisterCourseModel;
       } else if (result.statusCode == 204) {
         studentRegisterCourseModel.studentCourses?.clear();
         notifyListeners();
         ToastHelper().errorToast("No Courses Registered Yet");
-  
+
         return null;
       } else if (result.statusCode == 401) {
         notifyListeners();
@@ -212,8 +206,83 @@ Future getStudentCourses(int studentId, String token)async{
       ToastHelper().errorToast(e.toString());
       return e.toString();
     }
-}
+  }
 
+  Future getStudentDetailById(int studentId, String token) async {
+    setLoading(true);
+    try {
+      var result = await ApiHelper.get("GetStudentById/id=$studentId", token);
+
+      setLoading(false);
+      if (result.statusCode == 200) {
+        var data = json.decode(result.body);
+
+        studentDetailModel = StudentDetailModel.fromJson(data);
+
+        notifyListeners();
+
+        return studentDetailModel;
+      } else if (result.statusCode == 204) {
+        notifyListeners();
+        ToastHelper().errorToast("No Courses Registered Yet");
+
+        return null;
+      } else if (result.statusCode == 401) {
+        notifyListeners();
+
+        return "Invalid Token";
+      } else {
+        notifyListeners();
+        ToastHelper().errorToast("Internal Server Error");
+        return null;
+      }
+    } catch (e) {
+      setLoading(false);
+      ToastHelper().errorToast(e.toString());
+      return e.toString();
+    }
+  }
+
+  Future updateStudentClass(String token,
+      {int? programId,
+      int? classId,
+      String? batch,
+      int? studentId,
+      bool? currentClass}) async {
+    setLoading(true);
+    try {
+      var data = {
+        "ProgramId": programId,
+        "ClassId": classId,
+        "Batch": batch,
+        "StudentId": studentId,
+        "CurrentClass": currentClass
+      };
+      var result = await ApiHelper.post(
+          "UpdateStudentCourses", data, token);
+
+      setLoading(false);
+      var decodedJson = json.decode(result.body);
+      if (result.statusCode == 200) {
+        notifyListeners();
+
+        return decodedJson;
+      } else if (result.statusCode == 409) {
+        notifyListeners();
+        ToastHelper().errorToast(decodedJson["Message"]);
+
+        return null;
+      } else {
+        notifyListeners();
+        ToastHelper().errorToast("Internal Server Error");
+        return null;
+      }
+    } catch (e) {
+      setLoading(false);
+      ToastHelper().errorToast(e.toString());
+      return null;
+    }
+  }
 
 // set loading value
   void setLoading(bool value) async {
@@ -221,25 +290,28 @@ Future getStudentCourses(int studentId, String token)async{
     notifyListeners();
   }
 
-   void selectFeesType(int feeType) {
+  void selectFeesType(int feeType) {
     _isStandardFee = feeType;
     notifyListeners();
   }
 
-   void setStudentType(String studentType) {
+  void setStudentType(String studentType) {
     studetnTypeValue = studentType;
     notifyListeners();
   }
-   void setEditStudentType(bool value) {
+
+  void setEditStudentType(bool value) {
     _isstudentTypeEdit = value;
     notifyListeners();
   }
-    // set qualification value
+
+  // set qualification value
   void setqualification(String value) async {
     qualificationcontroller = value;
     notifyListeners();
   }
-     // set qualification value
+
+  // set qualification value
   void setStudentId(String value) async {
     studentRegisterNumberController = value;
     notifyListeners();
@@ -250,8 +322,13 @@ Future getStudentCourses(int studentId, String token)async{
     notifyListeners();
   }
 
-   void selectCourseIndex(bool value) {
-   _selectedCourseIndex = value;
-   notifyListeners();
+  void selectCourseIndex(bool value) {
+    _selectedCourseIndex = value;
+    notifyListeners();
+  }
+
+  clearStudentTemp() {
+    _selectedCourseIndex = false;
+    notifyListeners();
   }
 }

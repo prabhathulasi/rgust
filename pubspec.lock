@@ -198,6 +198,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "9.1.1"
+  flutter_glow:
+    dependency: "direct main"
+    description:
+      name: flutter_glow
+      sha256: "158f041ddbc18f199dcfd9375d40b983a2bf887752598cdf7b41ac6ff36362bf"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.3.0"
   flutter_lints:
     dependency: "direct dev"
     description:
@@ -240,14 +248,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_to_pdf:
-    dependency: "direct main"
-    description:
-      name: flutter_to_pdf
-      sha256: c0311c9d15d6cd0ffb81c7fd9628794219c9201b165b707310f8070cfc694715
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.1.1"
   flutter_web_plugins:
     dependency: transitive
     description: flutter
@@ -470,7 +470,7 @@ packages:
     source: hosted
     version: "2.2.1"
   pdf:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: pdf
       sha256: "93cbb2c06de9bab91844550f19896b2373e7a5ce25173995e7e5ec5e1741429d"
@@ -654,10 +654,10 @@ packages:
     dependency: transitive
     description:
       name: syncfusion_flutter_core
-      sha256: "88366a5e95ccb4091feb531021567f76ed3ceddab7424de02a9ac4a335d22a44"
+      sha256: a2427697bfad5b611db78ea4c4daef82d3350b83c729a8dc37959662a31547f9
       url: "https://pub.dev"
     source: hosted
-    version: "23.2.6"
+    version: "23.2.7"
   syncfusion_flutter_datepicker:
     dependency: transitive
     description:

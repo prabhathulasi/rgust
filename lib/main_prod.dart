@@ -23,8 +23,10 @@ import 'package:rugst_alliance_academia/web_view/screens/dashboard/vertical_tab_
 import 'package:rugst_alliance_academia/web_view/screens/login_view.dart';
 
 import 'package:flutter/foundation.dart';
+import 'package:url_strategy/url_strategy.dart';
 
 void main() async {
+   setPathUrlStrategy();
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
@@ -92,11 +94,21 @@ class MyApp extends StatelessWidget {
                         
                           debugShowCheckedModeBanner: false,
                           initialRoute: RouteNames.login,
-                          routes: {
-                            RouteNames.welcome: (context) =>
-                                const VerticalTabView(),
-                     
+                          onGenerateRoute: (settings) {
+                            if(settings.name == '/'){
+                              return MaterialPageRoute(builder: (context)=> const WebLoginView());
+                            }else{
+                            
+                           return MaterialPageRoute(
+            builder: (context) => const VerticalTabView(),
+          );
+                            }
                           },
+                          // routes: {
+                          //   RouteNames.welcome: (context) =>
+                          //       const VerticalTabView(),
+                     
+                          // },
                           title: 'Academia',
                           theme: ThemeData(
                             primarySwatch: Colors.grey,

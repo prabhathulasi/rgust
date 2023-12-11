@@ -12,6 +12,7 @@ import 'package:lottie/lottie.dart';
 import 'package:pdfx/pdfx.dart';
 import 'package:provider/provider.dart';
 import 'package:rugst_alliance_academia/data/middleware/check_auth_middleware.dart';
+import 'package:rugst_alliance_academia/data/model/student_detail_model.dart';
 import 'package:rugst_alliance_academia/data/model/student_model.dart';
 import 'package:rugst_alliance_academia/data/provider/file_upload_provider.dart';
 import 'package:rugst_alliance_academia/routes/named_routes.dart';
@@ -23,7 +24,7 @@ import 'package:rugst_alliance_academia/widgets/app_richtext.dart';
 import 'package:rugst_alliance_academia/widgets/app_spining.dart';
 
 class StudentAdditionalInfoView extends StatefulWidget {
-  final StudentList studentDetail;
+  final StudentDetail studentDetail;
   const StudentAdditionalInfoView({super.key, required this.studentDetail});
 
   @override
@@ -281,6 +282,7 @@ class _StudentAdditionalInfoViewState extends State<StudentAdditionalInfoView> {
                                           trailingIcon:
                                               const Icon(Icons.visibility),
                                           onPressed: () {
+                                            
                                             // Create a blob URL for the PDF
                                             final blob = html.Blob(
                                                 [pdfData], 'application/pdf');

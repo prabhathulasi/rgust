@@ -1,3 +1,6 @@
+
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -72,6 +75,7 @@ class _ClassDropdownState extends State<ClassDropdown> {
                           textColor: AppColors.colorWhite,
                         ),
                         onChanged: (String? value) {
+                        log(value.toString());
                           programProvider.setSelectedClass(value!, context);
                           // deptProvider.selectedBatch = null;
                         },

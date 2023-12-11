@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:rugst_alliance_academia/data/model/student_detail_model.dart';
 import 'package:rugst_alliance_academia/data/model/student_model.dart';
 
 import 'package:rugst_alliance_academia/theme/app_colors.dart';
 
 import 'package:rugst_alliance_academia/web_view/screens/faculty/faculty_checkin_view.dart';
+import 'package:rugst_alliance_academia/web_view/screens/student/exam_result.dart';
 import 'package:rugst_alliance_academia/web_view/screens/student/student_additional_info.dart';
 import 'package:rugst_alliance_academia/web_view/screens/student/study_history.dart';
 import 'package:rugst_alliance_academia/widgets/app_indicator.dart';
 
 class StudentTabView extends StatelessWidget {
-  final StudentList studentDetail;
+  final StudentDetail studentDetail;
   const StudentTabView({super.key, required this.studentDetail});
 
   @override
@@ -49,8 +51,8 @@ class StudentTabView extends StatelessWidget {
                 children: [
                      StudentAdditionalInfoView(studentDetail: studentDetail),
                const FacultyCheckInView(),
-                 StudyHistoryView(studentId: studentDetail.iD!,),
-                  const Text("History"),
+                 StudyHistoryView(studentData: studentDetail,),
+               const ExamResult(),
                    const Text("History")
                 ],
               ),

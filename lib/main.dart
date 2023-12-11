@@ -94,21 +94,20 @@ class MyApp extends StatelessWidget {
                         
                           debugShowCheckedModeBanner: false,
                           initialRoute: RouteNames.login,
-          //                 onGenerateRoute: (settings) {
-          //                   if(settings.name == '/'){
-          //                     return MaterialPageRoute(builder: (context)=> const WebLoginView());
-          //                   }else{
-          //                     final uri = Uri.parse(settings.name!);
-          //                     final tabNumber = int.tryParse(uri.pathSegments.last);
-          //                  return MaterialPageRoute(
-          //   builder: (context) => VerticalTabView(initialTabIndex: tabNumber ?? 0),
-          // );
-          //                   }
-          //                 },
-                          routes: {
-                            RouteNames.welcome: (context) =>
-                                const VerticalTabView(),
-                             },
+                          onGenerateRoute: (settings) {
+                            if(settings.name == '/'){
+                              return MaterialPageRoute(builder: (context)=> const WebLoginView());
+                            }else{
+                            
+                           return MaterialPageRoute(
+            builder: (context) => const VerticalTabView(),
+          );
+                            }
+                          },
+                          // routes: {
+                          //   RouteNames.welcome: (context) =>
+                          //       const VerticalTabView(),
+                          //    },
                           title: 'Academia',
                           theme: ThemeData(
                             primarySwatch: Colors.grey,

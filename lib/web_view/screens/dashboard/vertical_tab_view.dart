@@ -11,6 +11,7 @@ import 'package:rugst_alliance_academia/web_view/screens/faculty/faculty_list_vi
 import 'package:rugst_alliance_academia/web_view/screens/fees/fees_view.dart';
 import 'package:rugst_alliance_academia/web_view/screens/staffs/staff_list_view.dart';
 import 'package:rugst_alliance_academia/web_view/screens/student/student_list_view.dart';
+import 'package:rugst_alliance_academia/web_view/screens/student/testing.dart';
 import 'package:rugst_alliance_academia/widgets/app_richtext.dart';
 import 'package:rugst_alliance_academia/widgets/app_vertical_tab.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -184,7 +185,8 @@ userName= sharedPreferences.getString("username");
             const FacultyListView(),
             const ProgramView(),
            const CompleteForm(),
-                tabsContent('Dart'),
+           tabsContent('Dart'),
+            
                   tabsContent('Dart'),
                    tabsContent('Dart'),
                 

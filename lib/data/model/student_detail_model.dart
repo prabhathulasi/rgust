@@ -1,35 +1,33 @@
-class StudentModel {
+class StudentDetailModel {
   String? message;
-  List<StudentList>? studentList;
+  StudentDetail? studentDetail;
 
-  StudentModel({this.message, this.studentList});
+  StudentDetailModel({this.message, this.studentDetail});
 
-  StudentModel.fromJson(Map<String, dynamic> json) {
+  StudentDetailModel.fromJson(Map<String, dynamic> json) {
     message = json['Message'];
-    if (json['StudentList'] != null) {
-      studentList = <StudentList>[];
-      json['StudentList'].forEach((v) {
-        studentList!.add(StudentList.fromJson(v));
-      });
-    }
+    studentDetail = json['StudentDetail'] != null
+        ? StudentDetail.fromJson(json['StudentDetail'])
+        : null;
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['Message'] = message;
-    if (studentList != null) {
-      data['StudentList'] = studentList!.map((v) => v.toJson()).toList();
+    if (studentDetail != null) {
+      data['StudentDetail'] = studentDetail!.toJson();
     }
     return data;
   }
 }
 
-class StudentList {
+class StudentDetail {
   int? iD;
   String? createdAt;
   String? updatedAt;
   String? deletedAt;
-  String? studentRegiterNumber;
+  int? userId;
+  String? studentId;
   int? currentProgramId;
   String? currentProgramName;
   int? currentClassId;
@@ -44,23 +42,25 @@ class StudentList {
   String? dOB;
   String? gender;
   String? address;
-  int? tutionFee;
+  int? feesId;
   String? userImage;
   String? studentType;
   String? mailingAddress;
   String? passportNumber;
+  String? qualification;
   String? citizenship;
   bool? accountCreated;
-  String? qualifiation;
-   String? createdBy;
-  
+  String? createdBy;
 
-  StudentList(
+  List<RegisteredCourse>? registeredCourse;
+
+  StudentDetail(
       {this.iD,
       this.createdAt,
       this.updatedAt,
       this.deletedAt,
-      this.studentRegiterNumber,
+      this.userId,
+      this.studentId,
       this.currentProgramId,
       this.currentProgramName,
       this.currentClassId,
@@ -75,24 +75,25 @@ class StudentList {
       this.dOB,
       this.gender,
       this.address,
-      this.tutionFee,
+      this.feesId,
       this.userImage,
       this.studentType,
       this.mailingAddress,
       this.passportNumber,
+      this.qualification,
       this.citizenship,
       this.accountCreated,
-      this.qualifiation,
+      this.createdBy,
    
-      this.createdBy
-      });
+      this.registeredCourse});
 
-  StudentList.fromJson(Map<String, dynamic> json) {
+  StudentDetail.fromJson(Map<String, dynamic> json) {
     iD = json['ID'];
     createdAt = json['CreatedAt'];
     updatedAt = json['UpdatedAt'];
     deletedAt = json['DeletedAt'];
-    studentRegiterNumber = json['StudentId'];
+    userId = json['UserId'];
+    studentId = json['StudentId'];
     currentProgramId = json['CurrentProgramId'];
     currentProgramName = json['CurrentProgramName'];
     currentClassId = json['CurrentClassId'];
@@ -107,16 +108,22 @@ class StudentList {
     dOB = json['DOB'];
     gender = json['Gender'];
     address = json['Address'];
-    tutionFee = json['TutionFee'];
+    feesId = json['FeesId'];
     userImage = json['UserImage'];
     studentType = json['StudentType'];
     mailingAddress = json['MailingAddress'];
     passportNumber = json['PassportNumber'];
+    qualification = json['Qualification'];
     citizenship = json['Citizenship'];
     accountCreated = json['AccountCreated'];
-    createdBy =json["CreatedBy"];
-        qualifiation = json['Qualification'];
- 
+    createdBy = json['CreatedBy'];
+   
+    if (json['RegisteredCourse'] != null) {
+      registeredCourse = <RegisteredCourse>[];
+      json['RegisteredCourse'].forEach((v) {
+        registeredCourse!.add(RegisteredCourse.fromJson(v));
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -125,7 +132,8 @@ class StudentList {
     data['CreatedAt'] = createdAt;
     data['UpdatedAt'] = updatedAt;
     data['DeletedAt'] = deletedAt;
-    data['StudentId'] = studentRegiterNumber;
+    data['UserId'] = userId;
+    data['StudentId'] = studentId;
     data['CurrentProgramId'] = currentProgramId;
     data['CurrentProgramName'] = currentProgramName;
     data['CurrentClassId'] = currentClassId;
@@ -140,16 +148,89 @@ class StudentList {
     data['DOB'] = dOB;
     data['Gender'] = gender;
     data['Address'] = address;
-    data['TutionFee'] = tutionFee;
+    data['FeesId'] = feesId;
     data['UserImage'] = userImage;
     data['StudentType'] = studentType;
     data['MailingAddress'] = mailingAddress;
     data['PassportNumber'] = passportNumber;
+    data['Qualification'] = qualification;
     data['Citizenship'] = citizenship;
     data['AccountCreated'] = accountCreated;
-    data["Qualification"] = qualifiation;
-    data["CreatedBy"]=createdBy;
- 
+    data['CreatedBy'] = createdBy;
+
+    if (registeredCourse != null) {
+      data['RegisteredCourse'] =
+          registeredCourse!.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
+}
+
+class RegisteredCourse {
+  int? iD;
+  String? createdAt;
+  String? updatedAt;
+  String? deletedAt;
+  int? programId;
+  int? classId;
+  String? courseName;
+  String? courseCode;
+  int? studentId;
+  String? batch;
+  String? programName;
+  String? className;
+  String? status;
+  String? approvedBy;
+
+  RegisteredCourse(
+      {this.iD,
+      this.createdAt,
+      this.updatedAt,
+      this.deletedAt,
+      this.programId,
+      this.classId,
+      this.courseName,
+      this.courseCode,
+      this.studentId,
+      this.batch,
+      this.programName,
+      this.className,
+      this.status,
+      this.approvedBy});
+
+  RegisteredCourse.fromJson(Map<String, dynamic> json) {
+    iD = json['ID'];
+    createdAt = json['CreatedAt'];
+    updatedAt = json['UpdatedAt'];
+    deletedAt = json['DeletedAt'];
+    programId = json['ProgramId'];
+    classId = json['ClassId'];
+    courseName = json['CourseName'];
+    courseCode = json['CourseCode'];
+    studentId = json['StudentId'];
+    batch = json['Batch'];
+    programName = json['ProgramName'];
+    className = json['ClassName'];
+    status = json['Status'];
+    approvedBy = json['ApprovedBy'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['ID'] = iD;
+    data['CreatedAt'] = createdAt;
+    data['UpdatedAt'] = updatedAt;
+    data['DeletedAt'] = deletedAt;
+    data['ProgramId'] = programId;
+    data['ClassId'] = classId;
+    data['CourseName'] = courseName;
+    data['CourseCode'] = courseCode;
+    data['StudentId'] = studentId;
+    data['Batch'] = batch;
+    data['ProgramName'] = programName;
+    data['ClassName'] = className;
+    data['Status'] = status;
+    data['ApprovedBy'] = approvedBy;
     return data;
   }
 }

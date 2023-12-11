@@ -56,7 +56,7 @@ class _StudentGridViewState extends State<StudentGridView> {
     );
   }
 
-  showDetailAlertDialog(BuildContext context, StudentList details) {
+  showDetailAlertDialog(BuildContext context, int studentId) {
     // set up the AlertDialog
     Dialog alert = Dialog(
       child: Container(
@@ -65,7 +65,7 @@ class _StudentGridViewState extends State<StudentGridView> {
         color: AppColors.color0ec,
         child: Stack(
           children: [
-            StudentDetailView(studentDetails: details),
+            StudentDetailView(studentId:studentId ),
             Transform.translate(
               offset: Offset(10.w, -13.h),
               child: GestureDetector(
@@ -99,7 +99,7 @@ class _StudentGridViewState extends State<StudentGridView> {
   Widget build(BuildContext context) {
     var size = MediaQuery.sizeOf(context);
      final studentProvider =
-        Provider.of<StudentProvider>(context, listen:  false);
+        Provider.of<StudentProvider>(context);
     final programProvider = Provider.of<ProgramProvider>(context);
 
     return Scaffold(
@@ -269,8 +269,9 @@ class _StudentGridViewState extends State<StudentGridView> {
                      studentProvider.filteredList[index];
                      var memoryImagedata = base64Decode(studentData.userImage!);
                   return InkWell(
-                    onTap: () {
-                      showDetailAlertDialog(context, studentData);
+                    onTap: () async{
+        
+                      showDetailAlertDialog(context, studentData.iD!);
                     },
                     child: Card(
                       color: AppColors.colorc7e,
@@ -310,7 +311,7 @@ class _StudentGridViewState extends State<StudentGridView> {
                        var memoryImagedata = base64Decode(studentData.userImage!);
                   return InkWell(
                     onTap: () {
-                      showDetailAlertDialog(context, studentData);
+                      showDetailAlertDialog(context, studentData.iD!);
                     },
                     child: Card(
                       color: AppColors.colorc7e,
