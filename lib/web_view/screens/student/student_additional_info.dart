@@ -368,7 +368,7 @@ class _StudentAdditionalInfoViewState extends State<StudentAdditionalInfoView> {
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                     SizedBox(height: 10),
-                    Text("1. File size should not be more than 50KB."),
+                    Text("1. File size should not be more than 100KB."),
                     Text("2. File type should be PDF only."),
                     Text(
                         "3. The filename should not contain special characters, spaces, or symbols"),
@@ -393,12 +393,12 @@ class _StudentAdditionalInfoViewState extends State<StudentAdditionalInfoView> {
                         allowMultiple: false,
                       );
                       if (result != null) {
-                        if (result.files.first.size <= 50 * 1024) {
+                        if (result.files.first.size <= 100 * 1024) {
                           fileUploadProvider.setFileData(result);
                           uploadImage(); // Update the selected file data and name
                         } else {
                           ToastHelper().errorToast(
-                              "Selected file must be less than 50KB.");
+                              "Selected file must be less than 100KB.");
                         }
                       }
                       Navigator.of(context).pop(); // Close the dialog
