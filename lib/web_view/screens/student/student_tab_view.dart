@@ -6,7 +6,7 @@ import 'package:rugst_alliance_academia/data/model/student_model.dart';
 import 'package:rugst_alliance_academia/theme/app_colors.dart';
 
 import 'package:rugst_alliance_academia/web_view/screens/faculty/faculty_checkin_view.dart';
-import 'package:rugst_alliance_academia/web_view/screens/student/exam_result.dart';
+import 'package:rugst_alliance_academia/web_view/screens/student/exam_result_view.dart';
 import 'package:rugst_alliance_academia/web_view/screens/student/student_additional_info.dart';
 import 'package:rugst_alliance_academia/web_view/screens/student/study_history.dart';
 import 'package:rugst_alliance_academia/widgets/app_indicator.dart';
@@ -52,7 +52,7 @@ class StudentTabView extends StatelessWidget {
                      StudentAdditionalInfoView(studentDetail: studentDetail),
                const FacultyCheckInView(),
                  StudyHistoryView(studentData: studentDetail,),
-               const ExamResult(),
+                ExamResult(studentData: studentDetail),
                    const Text("History")
                 ],
               ),

@@ -135,16 +135,19 @@ class _StudentAdditionalInfoViewState extends State<StudentAdditionalInfoView> {
           );
 
         final response = await request.send();
+        var responseBody = await response.stream.bytesToString();
+        var decodedData = json.decode(responseBody);
         if (response.statusCode == 200) {
           fileUploadProvider.setLoading(false);
           fileUploadProvider.setSelectedFileName();
           await getMediaList();
           setState(() {});
-          print('File uploaded successfully');
+            ToastHelper().sucessToast("${decodedData["Message"]} ");
         } else {
           fileUploadProvider.setLoading(false);
+          ToastHelper().errorToast("${decodedData["Message"]} ");
           // Handle errors
-          print('Error uploading file: ${response.statusCode}');
+          print('Error uploading file: ${decodedData["Message"]}');
         }
       }
     }

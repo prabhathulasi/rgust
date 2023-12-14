@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:rugst_alliance_academia/data/model/exam_result_model.dart';
 import 'package:rugst_alliance_academia/data/model/student_course_model.dart';
 import 'package:rugst_alliance_academia/data/model/student_detail_model.dart';
 
@@ -12,7 +13,8 @@ class StudentProvider extends ChangeNotifier {
   StudentModel studentModel = StudentModel();
   StudentRegisterCourseModel studentRegisterCourseModel =
       StudentRegisterCourseModel();
-
+      
+ExamResultModel examResultModel = ExamResultModel();
   StudentDetailModel studentDetailModel = StudentDetailModel();
   List<StudentList> filteredList = [];
 
@@ -104,6 +106,43 @@ class StudentProvider extends ChangeNotifier {
       setLoading(false);
       ToastHelper().errorToast(e.toString());
       return e.toString();
+    }
+  }
+
+
+   //  getStudent result
+  Future getStudentResult(String token, int studentId) async {
+    setLoading(true);
+    try {
+      var result = await ApiHelper.get("GetResult/id=$studentId", token);
+      setLoading(false);
+      if (result.statusCode == 200) {
+        var data = json.decode(result.body);
+
+        examResultModel = ExamResultModel.fromJson(data);
+
+        notifyListeners();
+
+        return examResultModel;
+      } else if (result.statusCode == 204) {
+        examResultModel.result?.clear();
+        notifyListeners();
+        ToastHelper().errorToast("No Result Data Added Yet");
+
+        return null;
+      } else if (result.statusCode == 401) {
+        notifyListeners();
+
+        return "Invalid Token";
+      } else {
+        notifyListeners();
+        ToastHelper().errorToast("Internal Server Error");
+        return null;
+      }
+    } catch (e) {
+      setLoading(false);
+      ToastHelper().errorToast(e.toString());
+      return null;
     }
   }
 

@@ -6,7 +6,8 @@ class ToastHelper {
         webPosition: 'right',
         webBgColor: "linear-gradient(to right, #008000, #008000)",
         msg: msg,
-        gravity: ToastGravity.TOP,
+           webShowClose: true,
+             gravity: ToastGravity.BOTTOM_RIGHT,
         timeInSecForIosWeb: 2);
   }
 
@@ -15,7 +16,7 @@ class ToastHelper {
       webShowClose: true,
       msg: msg,
       webPosition: 'right',
-      gravity: ToastGravity.TOP_RIGHT,
+      gravity: ToastGravity.BOTTOM_RIGHT,
       timeInSecForIosWeb: 2,
       webBgColor: "linear-gradient(to right, #ff0000, #ff0000)",
     );

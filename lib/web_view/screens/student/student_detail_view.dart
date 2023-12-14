@@ -139,7 +139,7 @@ class _FacultyDetailViewState extends State<StudentDetailView> {
 
   @override
   Widget build(BuildContext context) {
-    final programProvider = Provider.of<ProgramProvider>(context);
+    final programProvider = Provider.of<ProgramProvider>(context,listen: false);
       final studentProvider = Provider.of<StudentProvider>(context,listen: false);
   
     Future getStudentDetail() async {

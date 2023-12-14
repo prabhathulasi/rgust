@@ -58,8 +58,8 @@ class _StudyHistoryViewState extends State<StudyHistoryView> {
                         scrollDirection: Axis.horizontal,
                         child: DataTable(
                           border: TableBorder.all(),
-                          columns: const [
-                            DataColumn(label: Text('Course Name',style: TextStyle(fontWeight: FontWeight.bold),)),
+                          columns:  const [
+                            DataColumn(label: Text('Course Name',style: TextStyle(fontWeight: FontWeight.bold),softWrap: true,)),
                             DataColumn(label: Text('Course Code',style: TextStyle(fontWeight: FontWeight.bold),)),
                              DataColumn(label: Text('Batch',style: TextStyle(fontWeight: FontWeight.bold),)),
                               DataColumn(label: Text('Approved Date',style: TextStyle(fontWeight: FontWeight.bold),)),
