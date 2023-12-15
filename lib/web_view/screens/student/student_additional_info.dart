@@ -14,6 +14,7 @@ import 'package:provider/provider.dart';
 import 'package:rugst_alliance_academia/data/middleware/check_auth_middleware.dart';
 import 'package:rugst_alliance_academia/data/model/student_detail_model.dart';
 import 'package:rugst_alliance_academia/data/model/student_model.dart';
+import 'package:rugst_alliance_academia/data/provider/common_provider.dart';
 import 'package:rugst_alliance_academia/data/provider/file_upload_provider.dart';
 import 'package:rugst_alliance_academia/routes/named_routes.dart';
 import 'package:rugst_alliance_academia/theme/app_colors.dart';
@@ -77,6 +78,8 @@ class _StudentAdditionalInfoViewState extends State<StudentAdditionalInfoView> {
   Widget build(BuildContext context) {
     final fileUploadProvider =
         Provider.of<FileUploadProvider>(context, listen: false);
+            final commonProvider =
+        Provider.of<CommonProvider>(context , listen: false);
     Future getMediaList() async {
       var token = await getTokenAndUseIt();
       if (token == null) {
@@ -102,7 +105,7 @@ class _StudentAdditionalInfoViewState extends State<StudentAdditionalInfoView> {
       }
     }
 
-    uploadImage() async {
+    uploadImage(String formType) async {
       var token = await getTokenAndUseIt();
       if (token == null) {
         if (context.mounted) {
@@ -120,12 +123,16 @@ class _StudentAdditionalInfoViewState extends State<StudentAdditionalInfoView> {
         final headers = <String, String>{
           'Authorization': 'Bearer $token', // Add any headers you need
         };
+        final body = {
+          "Formtype": formType
+        };
         final request = http.MultipartRequest(
             'POST',
             flavorName == "dev"
                 ? Uri.parse("$flavorUrl/upload/id=${widget.studentDetail.iD}")
                 : Uri.https(flavorUrl, '/upload/id=${widget.studentDetail.iD}'))
           ..headers.addAll(headers)
+          ..fields.addAll(body)
           ..files.add(
             http.MultipartFile.fromBytes(
               'file',
@@ -357,12 +364,97 @@ class _StudentAdditionalInfoViewState extends State<StudentAdditionalInfoView> {
               )
             : const CircularProgressIndicator(),
         onPressed: () async {
+          commonProvider.updateSelectedOption("");
           showDialog(
             context: context,
             builder: (BuildContext context) {
               return AlertDialog(
-                title: const Text("Upload Restrictions"),
-                content: const Column(
+                title: const Text("Please Select Form Type"),
+                content: Row(
+                  children: [
+                    Expanded(
+                      child: Consumer<CommonProvider>(
+                        builder: (context, radioConsumer, child) {
+                          return Wrap(
+                           direction: Axis.horizontal,
+                            children: [
+                                RadioListTile<String>(
+                                  activeColor: AppColors.colorc7e,
+                                    title: Text('Form A'),
+                                    value: 'Form A',
+                                    groupValue: radioConsumer.selectedOption,
+                                    onChanged: (value) {
+                                     radioConsumer
+                            .updateSelectedOption(value!);
+                                    },
+                                  ),
+                                       RadioListTile<String>(
+                           activeColor: AppColors.colorc7e,
+                                    title: Text('Form B'),
+                                    value: 'Form B',
+                                    groupValue: radioConsumer.selectedOption,
+                                    onChanged: (value) {
+                                     radioConsumer
+                            .updateSelectedOption(value!);
+                                    },
+                                  ),
+                                       RadioListTile<String>(
+                           activeColor: AppColors.colorc7e,
+                                    title: Text('Form C'),
+                                    value: 'Form C',
+                                    groupValue:radioConsumer.selectedOption,
+                                    onChanged: (value) {
+                                      radioConsumer
+                            .updateSelectedOption(value!);
+                                    },
+                                  ),
+                                       RadioListTile<String>(
+                           activeColor: AppColors.colorc7e,
+                                    title: Text('Form D'),
+                                    value: 'Form D',
+                                    groupValue: radioConsumer.selectedOption,
+                                    onChanged: (value) {
+                                      radioConsumer
+                            .updateSelectedOption(value!);
+                                    },
+                                  ),
+                                       RadioListTile<String>(
+                           activeColor: AppColors.colorc7e,
+                                    title: Text('Form E'),
+                                    value: 'Form E',
+                                    groupValue: radioConsumer.selectedOption,
+                                    onChanged: (value) {
+                                     radioConsumer
+                            .updateSelectedOption(value!);
+                                    },
+                                  ),
+                                  RadioListTile<String>(
+                                     activeColor: AppColors.colorc7e,
+                                    title: Text('Form F'),
+                                    value: 'Form F',
+                                    groupValue: radioConsumer.selectedOption,
+                                    onChanged: (value) {
+                                      radioConsumer
+                            .updateSelectedOption(value!);
+                                    },
+                                  ),
+                                  RadioListTile<String>(
+                                     activeColor: AppColors.colorc7e,
+                                    title: Text('Form G'),
+                                    value: 'Form G',
+                                    groupValue: radioConsumer.selectedOption,
+                                    onChanged: (value) {
+                                     radioConsumer
+                            .updateSelectedOption(value!);
+                                    },
+                                  ),
+                                  
+                            ],
+                          );
+                        }
+                      ),
+                    ),
+                    const Expanded(child:Column(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
@@ -385,11 +477,17 @@ class _StudentAdditionalInfoViewState extends State<StudentAdditionalInfoView> {
 
                     // Add more restriction statements as needed
                   ],
+                ), )
+                  ],
                 ),
-                actions: <Widget>[
+                        actions: <Widget>[
                   ElevatedButton(
+                    
                     onPressed: () async {
-                      FilePickerResult? result =
+                      if(commonProvider.selectedOption == ''){
+ToastHelper().errorToast("Please Select the Form Type");
+                      }else{
+ FilePickerResult? result =
                           await FilePicker.platform.pickFiles(
                         type: FileType.custom,
                         allowedExtensions: ['pdf'],
@@ -398,13 +496,16 @@ class _StudentAdditionalInfoViewState extends State<StudentAdditionalInfoView> {
                       if (result != null) {
                         if (result.files.first.size <= 100 * 1024) {
                           fileUploadProvider.setFileData(result);
-                          uploadImage(); // Update the selected file data and name
+                          uploadImage(commonProvider.selectedOption); // Update the selected file data and name
                         } else {
                           ToastHelper().errorToast(
                               "Selected file must be less than 100KB.");
                         }
                       }
-                      Navigator.of(context).pop(); // Close the dialog
+                      Navigator.of(context).pop();
+                      }
+                       
+                 
                     },
                     child: const Text("OK"),
                   ),
@@ -415,7 +516,64 @@ class _StudentAdditionalInfoViewState extends State<StudentAdditionalInfoView> {
                     child: const Text("Cancel"),
                   ),
                 ],
+              
               );
+              // return AlertDialog(
+              //   title: const Text("Upload Restrictions"),
+              //   content: const Column(
+              //     mainAxisSize: MainAxisSize.min,
+              //     crossAxisAlignment: CrossAxisAlignment.start,
+              //     children: <Widget>[
+              //       Text(
+              //         "Please ensure that your file meets the following restrictions:",
+              //         style: TextStyle(fontWeight: FontWeight.bold),
+              //       ),
+              //       SizedBox(height: 10),
+              //       Text("1. File size should not be more than 100KB."),
+              //       Text("2. File type should be PDF only."),
+              //       Text(
+              //           "3. The filename should not contain special characters, spaces, or symbols"),
+              //       Text("4. Ensure the document is legible and not corrupted"),
+              //       Text(
+              //           "5. Do not upload copyrighted or confidential materials"),
+              //       Text("6. File names should be unique and descriptive"),
+              //       Text(
+              //           "7. Do not upload offensive or inappropriate content."),
+              //       Text("8. Files should not contain viruses or malware."),
+
+              //       // Add more restriction statements as needed
+              //     ],
+              //   ),
+              //   actions: <Widget>[
+              //     ElevatedButton(
+              //       onPressed: () async {
+              //         FilePickerResult? result =
+              //             await FilePicker.platform.pickFiles(
+              //           type: FileType.custom,
+              //           allowedExtensions: ['pdf'],
+              //           allowMultiple: false,
+              //         );
+              //         if (result != null) {
+              //           if (result.files.first.size <= 100 * 1024) {
+              //             fileUploadProvider.setFileData(result);
+              //             uploadImage(); // Update the selected file data and name
+              //           } else {
+              //             ToastHelper().errorToast(
+              //                 "Selected file must be less than 100KB.");
+              //           }
+              //         }
+              //         Navigator.of(context).pop(); // Close the dialog
+              //       },
+              //       child: const Text("OK"),
+              //     ),
+              //     ElevatedButton(
+              //       onPressed: () {
+              //         Navigator.of(context).pop(); // Close the dialog
+              //       },
+              //       child: const Text("Cancel"),
+              //     ),
+              //   ],
+              // );
             },
           );
         },
