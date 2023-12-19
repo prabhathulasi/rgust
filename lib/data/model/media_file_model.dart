@@ -25,6 +25,7 @@ class Files {
   int? iD;
   String? name;
   String? data;
+  String? formType;
   int? userID;
 
   Files({this.iD, this.name, this.data, this.userID});
@@ -34,6 +35,7 @@ class Files {
     name = json['Name'];
     data = json['Data'];
     userID = json['UserID'];
+    formType= json["FormType"];
   }
 
   Map<String, dynamic> toJson() {
@@ -42,6 +44,7 @@ class Files {
     data['Name'] = name;
     data['Data'] = this.data;
     data['UserID'] = userID;
+    data["FormType"]= formType;
     return data;
   }
 }

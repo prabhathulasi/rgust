@@ -85,7 +85,7 @@ Expanded(
    padding: const EdgeInsets.all(18.0),
    child: AppRichTextView(
      title:
-         "Tution Fee:",
+         "Semester Tution Fee:",
      fontSize: 18.sp,
      fontWeight: FontWeight.bold,
      textColor: AppColors.colorc7e,

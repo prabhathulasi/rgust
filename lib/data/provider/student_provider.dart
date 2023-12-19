@@ -17,6 +17,7 @@ class StudentProvider extends ChangeNotifier {
 ExamResultModel examResultModel = ExamResultModel();
   StudentDetailModel studentDetailModel = StudentDetailModel();
   List<StudentList> filteredList = [];
+  List<dynamic> editResult =[];
 
   bool filteredEnable = false;
 
@@ -323,6 +324,27 @@ ExamResultModel examResultModel = ExamResultModel();
     }
   }
 
+
+updateStudentResult(List<Result> result){
+  editResult.clear();
+  for (var examData in result) {
+          editResult.add({
+            "id":examData.iD,
+            "coursecode": examData.courseCode,
+            "coursename": examData.courseName,
+            "batch":examData.batch,
+            "cw1":examData.cw1 == 0 ?"":examData.cw1,
+            "cw2":examData.cw2 == 0?"":examData.cw2,
+            "cw3":examData.cw3 == 0? "":examData.cw3,
+            "cw4":examData.cw4 == 0? "":examData.cw4,
+            "finalexam":examData.finalMark == 0?"":examData.finalMark,
+            "grade":examData.grade       
+          });
+        }
+        notifyListeners();
+         return editResult;
+
+}
 // set loading value
   void setLoading(bool value) async {
     _isLoading = value;

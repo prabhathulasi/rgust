@@ -10,6 +10,7 @@ import 'package:rugst_alliance_academia/routes/named_routes.dart';
 import 'package:rugst_alliance_academia/theme/app_colors.dart';
 import 'package:rugst_alliance_academia/util/toast_helper.dart';
 import 'package:rugst_alliance_academia/web_view/screens/pdf_generate/student_result_summary.dart';
+import 'package:rugst_alliance_academia/web_view/screens/student/update_result_view.dart';
 import 'package:rugst_alliance_academia/widgets/app_spining.dart';
 
 class ExamResult extends StatefulWidget {
@@ -140,8 +141,27 @@ class _ExamResultState extends State<ExamResult> {
                               width: 5.w,
                             ),
                              InkWell(
-                              onTap: () {
-                                
+                              onTap: () async{
+                               await studentProvider.updateStudentResult(categoryItems);
+                               if(context.mounted){
+      showDialog(  
+    context: context,  
+    builder: (BuildContext context) {  
+      return Dialog(
+        child: Card(
+          elevation: 5.0,
+          child: SizedBox(
+            height: 700.h,
+            width: 1200.w,
+            child: const UpdateResultView(),
+              
+          ),
+        ),
+      );  
+    },  
+  );  
+                               }
+                       
                               },
                               child: Icon(Icons.edit,color: AppColors.colorc7e,size: 25.sp,))
                           ],

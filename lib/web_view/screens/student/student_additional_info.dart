@@ -269,6 +269,10 @@ class _StudentAdditionalInfoViewState extends State<StudentAdditionalInfoView> {
                                       ),
                                     )),
                               ),
+                              // Padding(
+                              //   padding: const EdgeInsets.only(left:8.0),
+                              //   child: AppRichTextView(title: "Form A", fontSize: 20.sp, fontWeight: FontWeight.bold,textColor: AppColors.colorc7e,),
+                              // ),
                               Wrap(
                                 spacing:
                                     8.0, // Spacing between items horizontally
@@ -482,7 +486,10 @@ class _StudentAdditionalInfoViewState extends State<StudentAdditionalInfoView> {
                 ),
                         actions: <Widget>[
                   ElevatedButton(
-                    
+                     style: ElevatedButton.styleFrom(
+                backgroundColor: AppColors.colorc7e,
+               
+              ),
                     onPressed: () async {
                       if(commonProvider.selectedOption == ''){
 ToastHelper().errorToast("Please Select the Form Type");
@@ -507,7 +514,7 @@ ToastHelper().errorToast("Please Select the Form Type");
                        
                  
                     },
-                    child: const Text("OK"),
+                    child: const Text("OK",style: TextStyle(color: AppColors.colorWhite),),
                   ),
                   ElevatedButton(
                     onPressed: () {

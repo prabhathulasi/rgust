@@ -82,7 +82,7 @@ class _StudentInstructionViewState extends State<StudentInstructionView> {
                         studentType: "Regular",
                         batch: programProvider.selectedBatch!,
                         registerNo:
-                            "${DateTime.now().year}/${programProvider.selectedDept}/${studentProvider.studentRegisterNumberController}",
+                            studentProvider.studentRegisterNumberController!,
                         gender: widget.gender!,
                         dob: widget.dobInput!,
                         userImage: widget.imageEncoded!,

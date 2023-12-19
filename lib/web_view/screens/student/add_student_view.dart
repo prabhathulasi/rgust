@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -10,6 +9,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:rugst_alliance_academia/custom_plugin/editable.dart';
 import 'package:rugst_alliance_academia/data/middleware/check_auth_middleware.dart';
+import 'package:rugst_alliance_academia/data/model/course_model.dart';
 import 'package:rugst_alliance_academia/data/model/gender_model.dart';
 import 'package:rugst_alliance_academia/data/provider/program_provider.dart';
 import 'package:rugst_alliance_academia/data/provider/student_provider.dart';
@@ -67,19 +67,18 @@ class _AddStudentViewState extends State<AddStudentView> {
     ];
   }
 
+  Map<int, bool> checkedItems = {};
 
   TextEditingController dobinput = TextEditingController();
   Uint8List? bytesFromPicker;
   String? imageEncoded;
-String? gender ; 
+  String? gender;
 
-bool loading = false;
+  bool loading = false;
   @override
   Widget build(BuildContext context) {
     final programProvider = Provider.of<ProgramProvider>(context);
     final studentProvider = Provider.of<StudentProvider>(context);
-   
-    
 
     var size = MediaQuery.of(context).size;
     return Scaffold(
@@ -111,9 +110,7 @@ bool loading = false;
                           value: 1,
                           groupValue: programProvider.isNewStudent,
                           onChanged: (value) {
-                          
                             programProvider.selectStudentType(value!);
-                            
                           },
                         ),
                         AppRichTextView(
@@ -152,24 +149,30 @@ bool loading = false;
                               height: 10.h,
                             ),
                             InkWell(
-                              onTap: () async{
-                                   bytesFromPicker =
+                              onTap: () async {
+                                bytesFromPicker =
                                     await ImagePickerWeb.getImageAsBytes();
-                                    // Get the size of the base64 string in bytes
-int imageSizeInBytes = (base64.encode(bytesFromPicker!).length * 3 / 4).ceil();
+                                // Get the size of the base64 string in bytes
+                                int imageSizeInBytes =
+                                    (base64.encode(bytesFromPicker!).length *
+                                            3 /
+                                            4)
+                                        .ceil();
 
 // Convert bytes to kilobytes
-double imageSizeInKB = imageSizeInBytes / 1024;
-if (imageSizeInKB > 50) {
-  ToastHelper().errorToast("Image size exceeds 50KB. Please choose a smaller image.");
-  setState(() {
-    imageEncoded = null;
-  });
-} else {
-  imageEncoded = base64.encode(bytesFromPicker!);
+                                double imageSizeInKB = imageSizeInBytes / 1024;
+                                if (imageSizeInKB > 50) {
+                                  ToastHelper().errorToast(
+                                      "Image size exceeds 50KB. Please choose a smaller image.");
+                                  setState(() {
+                                    imageEncoded = null;
+                                  });
+                                } else {
+                                  imageEncoded =
+                                      base64.encode(bytesFromPicker!);
 
-                                setState(() {});
-}
+                                  setState(() {});
+                                }
                               },
                               child: CircleAvatar(
                                   backgroundColor: AppColors.colorc7e,
@@ -187,22 +190,27 @@ if (imageSizeInKB > 50) {
                               onTap: () async {
                                 bytesFromPicker =
                                     await ImagePickerWeb.getImageAsBytes();
-                                    // Get the size of the base64 string in bytes
-int imageSizeInBytes = (base64.encode(bytesFromPicker!).length * 3 / 4).ceil();
+                                // Get the size of the base64 string in bytes
+                                int imageSizeInBytes =
+                                    (base64.encode(bytesFromPicker!).length *
+                                            3 /
+                                            4)
+                                        .ceil();
 
 // Convert bytes to kilobytes
-double imageSizeInKB = imageSizeInBytes / 1024;
-if (imageSizeInKB > 50) {
-  ToastHelper().errorToast("Image size exceeds 50KB. Please choose a smaller image.");
-  setState(() {
-    imageEncoded = null;
-  });
-} else {
-  imageEncoded = base64.encode(bytesFromPicker!);
+                                double imageSizeInKB = imageSizeInBytes / 1024;
+                                if (imageSizeInKB > 50) {
+                                  ToastHelper().errorToast(
+                                      "Image size exceeds 50KB. Please choose a smaller image.");
+                                  setState(() {
+                                    imageEncoded = null;
+                                  });
+                                } else {
+                                  imageEncoded =
+                                      base64.encode(bytesFromPicker!);
 
-                                setState(() {});
-}
-                                
+                                  setState(() {});
+                                }
                               },
                               child: AppRichTextView(
                                   title: "Select Profile Image",
@@ -279,7 +287,7 @@ if (imageSizeInKB > 50) {
                                     textColor: AppColors.colorc7e,
                                     fontSize: 15.sp,
                                     fontWeight: FontWeight.w500),
-                                     AppRichTextView(
+                                AppRichTextView(
                                     title: "*",
                                     textColor: AppColors.colorRed,
                                     fontSize: 15.sp,
@@ -297,15 +305,15 @@ if (imageSizeInKB > 50) {
                                   children: [
                                     Expanded(
                                       child: AppTextFormFieldWidget(
-                                          inputFormatters: [
-                                                 FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
-                                              ],
+                                        inputFormatters: [
+                                          FilteringTextInputFormatter.allow(
+                                              RegExp(r'[0-9]')),
+                                        ],
                                         validator: (p0) {
-                                          if(p0 == null || p0.isEmpty){
+                                          if (p0 == null || p0.isEmpty) {
                                             return "This Field is required";
-                                          }else{
-                                             return null;
-                                      
+                                          } else {
+                                            return null;
                                           }
                                         },
                                         textStyle: const TextStyle(
@@ -315,8 +323,7 @@ if (imageSizeInKB > 50) {
                                         },
                                         inputDecoration: const InputDecoration(
                                             border: InputBorder.none,
-                                            hintText: "123"
-                                               ,
+                                            hintText: "00/000/000",
                                             hintStyle: TextStyle(
                                                 color: AppColors.colorGrey)),
                                         obscureText: false,
@@ -421,7 +428,7 @@ if (imageSizeInKB > 50) {
                               ],
                             ),
                             const DoaDropdown()
-                           //////
+                            //////
                           ],
                         )
                       ],
@@ -475,16 +482,18 @@ if (imageSizeInKB > 50) {
                                         ),
                                         Expanded(
                                             child: AppTextFormFieldWidget(
-                                              inputFormatters: [
-                                                FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z\s]'))
-                                              ],
+                                          inputFormatters: [
+                                            FilteringTextInputFormatter.allow(
+                                                RegExp(r'[a-zA-Z\s]'))
+                                          ],
                                           textStyle: GoogleFonts.roboto(
                                               color: AppColors.colorWhite,
                                               fontSize: 15.sp),
                                           validator: (value) {
                                             if (value == null ||
                                                 value.isEmpty) {
-                                              return ToastHelper().errorToast("First Name is Required");
+                                              return ToastHelper().errorToast(
+                                                  "First Name is Required");
                                             } else {
                                               return null;
                                             }
@@ -499,7 +508,9 @@ if (imageSizeInKB > 50) {
                                                           AppColors.colorGrey)),
                                           obscureText: false,
                                         )),
-                                        const SizedBox(height: 3,)
+                                        const SizedBox(
+                                          height: 3,
+                                        )
                                       ],
                                     ),
                                   ),
@@ -536,9 +547,10 @@ if (imageSizeInKB > 50) {
                                         ),
                                         Expanded(
                                             child: AppTextFormFieldWidget(
-                                               inputFormatters: [
-                                                FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z\s]'))
-                                              ],
+                                          inputFormatters: [
+                                            FilteringTextInputFormatter.allow(
+                                                RegExp(r'[a-zA-Z\s]'))
+                                          ],
                                           textStyle: GoogleFonts.roboto(
                                               color: AppColors.colorWhite,
                                               fontSize: 15.sp),
@@ -560,7 +572,9 @@ if (imageSizeInKB > 50) {
                                                           AppColors.colorGrey)),
                                           obscureText: false,
                                         )),
-                                         const SizedBox(height: 3,)
+                                        const SizedBox(
+                                          height: 3,
+                                        )
                                       ],
                                     ),
                                   ),
@@ -613,7 +627,9 @@ if (imageSizeInKB > 50) {
                                                   fontSize: 15.sp)),
                                           obscureText: false,
                                         )),
-                                         const SizedBox(height: 3,)
+                                        const SizedBox(
+                                          height: 3,
+                                        )
                                       ],
                                     ),
                                   ),
@@ -650,14 +666,15 @@ if (imageSizeInKB > 50) {
                                         ),
                                         Expanded(
                                             child: AppTextFormFieldWidget(
-                                              inputFormatters: [
-                                                 FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
-                                              ],
+                                          inputFormatters: [
+                                            FilteringTextInputFormatter.allow(
+                                                RegExp(r'[0-9]')),
+                                          ],
                                           textStyle: GoogleFonts.roboto(
                                               color: AppColors.colorWhite,
                                               fontSize: 15.sp),
                                           validator: (value) {
-                                        if (value == null ||
+                                            if (value == null ||
                                                 value.isEmpty) {
                                               return "This Field is Required";
                                             } else {
@@ -674,7 +691,9 @@ if (imageSizeInKB > 50) {
                                                           AppColors.colorGrey)),
                                           obscureText: false,
                                         )),
-                                         const SizedBox(height: 3,)
+                                        const SizedBox(
+                                          height: 3,
+                                        )
                                       ],
                                     ),
                                   ),
@@ -729,18 +748,30 @@ if (imageSizeInKB > 50) {
                                             onTap: () async {
                                               DateTime? pickedDate =
                                                   await showDatePicker(
-                                                     builder: (context, child) {
-                                                      return Theme(
-                  data: ThemeData.light().copyWith(
-                    primaryColor: Colors.green, // Change calendar header color
-               
-                    colorScheme: const ColorScheme.light(primary: AppColors.colorc7e), // Change days' colors
-                    buttonTheme: const ButtonThemeData(
-                      textTheme: ButtonTextTheme.primary,
-                    ),
-                  ),
-                  child: child!);
-                                                    },
+                                                      builder:
+                                                          (context, child) {
+                                                        return Theme(
+                                                            data: ThemeData
+                                                                    .light()
+                                                                .copyWith(
+                                                              primaryColor: Colors
+                                                                  .green, // Change calendar header color
+
+                                                              colorScheme:
+                                                                  const ColorScheme
+                                                                      .light(
+                                                                      primary:
+                                                                          AppColors
+                                                                              .colorc7e), // Change days' colors
+                                                              buttonTheme:
+                                                                  const ButtonThemeData(
+                                                                textTheme:
+                                                                    ButtonTextTheme
+                                                                        .primary,
+                                                              ),
+                                                            ),
+                                                            child: child!);
+                                                      },
                                                       context: context,
                                                       initialDate:
                                                           DateTime.now(),
@@ -765,7 +796,9 @@ if (imageSizeInKB > 50) {
                                             },
                                           ),
                                         ),
-                                         const SizedBox(height: 3,)
+                                        const SizedBox(
+                                          height: 3,
+                                        )
                                       ],
                                     ),
                                   ),
@@ -821,7 +854,9 @@ if (imageSizeInKB > 50) {
                                                           AppColors.colorGrey)),
                                           obscureText: false,
                                         )),
-                                         const SizedBox(height: 3,)
+                                        const SizedBox(
+                                          height: 3,
+                                        )
                                       ],
                                     ),
                                   ),
@@ -850,7 +885,9 @@ if (imageSizeInKB > 50) {
                                             textColor: AppColors.colorWhite,
                                             fontSize: 14.sp,
                                             fontWeight: FontWeight.w500),
-                                             SizedBox(height: 5.h,),
+                                        SizedBox(
+                                          height: 5.h,
+                                        ),
                                         Expanded(
                                             child: ListView.builder(
                                           scrollDirection: Axis.horizontal,
@@ -880,7 +917,6 @@ if (imageSizeInKB > 50) {
                                             );
                                           },
                                         )),
-                                        
                                       ],
                                     ),
                                   ),
@@ -915,7 +951,7 @@ if (imageSizeInKB > 50) {
                                         ),
                                         Expanded(
                                             child: AppTextFormFieldWidget(
-                                              maxLines: 3,
+                                          maxLines: 3,
                                           textStyle: GoogleFonts.roboto(
                                               color: AppColors.colorWhite,
                                               fontSize: 15.sp),
@@ -970,7 +1006,7 @@ if (imageSizeInKB > 50) {
                                         ),
                                         Expanded(
                                             child: AppTextFormFieldWidget(
-                                              maxLines: 3,
+                                          maxLines: 3,
                                           textStyle: GoogleFonts.roboto(
                                               color: AppColors.colorWhite,
                                               fontSize: 15.sp),
@@ -996,7 +1032,6 @@ if (imageSizeInKB > 50) {
                                     ),
                                   ),
                                 ),
-                               
                                 const SizedBox(height: 10),
                                 Container(
                                   color: AppColors.colorc7e,
@@ -1028,9 +1063,10 @@ if (imageSizeInKB > 50) {
                                         ),
                                         Expanded(
                                             child: AppTextFormFieldWidget(
-                                              inputFormatters: [
-                                                 FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
-                                              ],
+                                          inputFormatters: [
+                                            FilteringTextInputFormatter.allow(
+                                                RegExp(r'[0-9]')),
+                                          ],
                                           textStyle: GoogleFonts.roboto(
                                               color: AppColors.colorWhite,
                                               fontSize: 15.sp),
@@ -1051,12 +1087,14 @@ if (imageSizeInKB > 50) {
                                                   fontSize: 15.sp)),
                                           obscureText: false,
                                         )),
-                                         const SizedBox(height: 3,)
+                                        const SizedBox(
+                                          height: 3,
+                                        )
                                       ],
                                     ),
                                   ),
                                 ),
-                                 const SizedBox(height: 10),
+                                const SizedBox(height: 10),
                                 Container(
                                   color: AppColors.colorc7e,
                                   height: 80.h,
@@ -1107,7 +1145,9 @@ if (imageSizeInKB > 50) {
                                                           AppColors.colorGrey)),
                                           obscureText: false,
                                         )),
-                                         const SizedBox(height: 3,)
+                                        const SizedBox(
+                                          height: 3,
+                                        )
                                       ],
                                     ),
                                   ),
@@ -1142,9 +1182,10 @@ if (imageSizeInKB > 50) {
                                         ),
                                         Expanded(
                                             child: AppTextFormFieldWidget(
-                                              inputFormatters: [
-                                                FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z\s]'))
-                                              ],
+                                          inputFormatters: [
+                                            FilteringTextInputFormatter.allow(
+                                                RegExp(r'[a-zA-Z\s]'))
+                                          ],
                                           textStyle: GoogleFonts.roboto(
                                               color: AppColors.colorWhite,
                                               fontSize: 15.sp),
@@ -1166,7 +1207,9 @@ if (imageSizeInKB > 50) {
                                                           AppColors.colorGrey)),
                                           obscureText: false,
                                         )),
-                                         const SizedBox(height: 3,)
+                                        const SizedBox(
+                                          height: 3,
+                                        )
                                       ],
                                     ),
                                   ),
@@ -1230,25 +1273,26 @@ if (imageSizeInKB > 50) {
                                       // Save the form
                                       _formKey.currentState!.save();
                                       if (context.mounted) {
-                                  showDialog(
-      barrierDismissible: false,
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-      title:  Text(
-                "Confirmation",
-                style: TextStyle(fontSize: 30.sp, fontWeight: FontWeight.bold),
-              ),
-      content:  StudentInstructionView(
-        dobInput: dobinput.text,
-        gender: genderValue,
-        imageEncoded: imageEncoded,
-        token: token,
-
-      )
-    );
-      },
-    );
+                                        showDialog(
+                                          barrierDismissible: false,
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return AlertDialog(
+                                                title: Text(
+                                                  "Confirmation",
+                                                  style: TextStyle(
+                                                      fontSize: 30.sp,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
+                                                content: StudentInstructionView(
+                                                  dobInput: dobinput.text,
+                                                  gender: genderValue,
+                                                  imageEncoded: imageEncoded,
+                                                  token: token,
+                                                ));
+                                          },
+                                        );
                                       }
                                     }
                                   }
@@ -1286,57 +1330,98 @@ if (imageSizeInKB > 50) {
                           SizedBox(
                             width: 10.w,
                           ),
-
                           Builder(builder: (context) {
                             return Expanded(
                               child: Consumer<ProgramProvider>(builder:
                                   (context, departmentProvider, child) {
-                                return Editable(
-                                  key: _editableKey,
-                                  showRemoveIcon: false,
-                                  columns: filterdcols,
-                                  rows: departmentProvider.newData,
-                                  zebraStripe: true,
-                                  stripeColor1: AppColors.colorc7e,
-                                  stripeColor2: AppColors.colorc7e,
-                                  onRowSaved: (value) async {},
-                                  onSubmitted: (value) {
-                                    print(value);
+                                return ListView.builder(
+                                  shrinkWrap: true,
+                                  itemCount: departmentProvider
+                                      .coursesModel.courses!.length,
+                                  itemBuilder: (context, index) {
+                                    var currentItem = departmentProvider
+                                        .coursesModel.courses![index];
+                                    return Card(
+                                      color: AppColors.colorc7e,
+                                      child: CheckboxListTile(
+                                        side:
+                                            MaterialStateBorderSide.resolveWith(
+                                          (states) => const BorderSide(
+                                              width: 2.0,
+                                              color: AppColors.colorWhite),
+                                        ),
+                                        checkColor: AppColors.colorc7e,
+                                        activeColor: AppColors.colorWhite,
+                                        title: AppRichTextView(
+                                          title: currentItem.courseName!.trim(),
+                                          fontSize: 15.sp,
+                                          fontWeight: FontWeight.bold,
+                                          textColor: AppColors.colorWhite,
+                                        ),
+                                        subtitle: AppRichTextView(
+                                          title: currentItem.courseId!,
+                                          fontSize: 12.sp,
+                                          fontWeight: FontWeight.w500,
+                                          textColor: AppColors.colorWhite,
+                                        ),
+                                        value: checkedItems[currentItem.iD] ??
+                                            false,
+                                        onChanged: (value) {
+                                          setState(() {
+                                            checkedItems[currentItem.iD!] =
+                                                value!;
+                                          });
+                                        },
+                                      ),
+                                    );
                                   },
-
-                                  borderColor: Colors.blueGrey,
-                                  tdStyle:  TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: AppColors.colorWhite,fontSize: 15.sp),
-                                  trHeight: 40.h,
-                                  thStyle:  TextStyle(
-                                      fontSize: 15.sp,
-                                      fontWeight: FontWeight.bold,
-                                      color: AppColors.colorWhite),
-                                  thAlignment: TextAlign.center,
-                                  thVertAlignment: CrossAxisAlignment.end,
-                                  thPaddingBottom: 3,
-                                  showSaveIcon: false,
-                                  saveIconColor: Colors.black,
-                                  showCreateButton: false,
-                                  tdAlignment: TextAlign.left,
-                                  tdEditableMaxLines:
-                                      100, // don't limit and allow data to wrap
-                                  tdPaddingTop: 0,
-                                  tdPaddingBottom: 14,
-                                  tdPaddingLeft: 10,
-                                  tdPaddingRight: 8,
-                                  focusedBorder: const OutlineInputBorder(
-                                      borderSide:
-                                          BorderSide(color: Colors.blue),
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(0))),
                                 );
+                                // return Editable(
+                                //   key: _editableKey,
+                                //   showRemoveIcon: false,
+                                //   columns: filterdcols,
+                                //   rows: departmentProvider.newData,
+                                //   zebraStripe: true,
+                                //   stripeColor1: AppColors.colorc7e,
+                                //   stripeColor2: AppColors.colorc7e,
+                                //   onRowSaved: (value) async {},
+                                //   onSubmitted: (value) {
+                                //     print(value);
+                                //   },
+
+                                //   borderColor: Colors.blueGrey,
+                                //   tdStyle:  TextStyle(
+                                //       fontWeight: FontWeight.bold,
+                                //       color: AppColors.colorWhite,fontSize: 15.sp),
+                                //   trHeight: 40.h,
+                                //   thStyle:  TextStyle(
+                                //       fontSize: 15.sp,
+                                //       fontWeight: FontWeight.bold,
+                                //       color: AppColors.colorWhite),
+                                //   thAlignment: TextAlign.center,
+                                //   thVertAlignment: CrossAxisAlignment.end,
+                                //   thPaddingBottom: 3,
+                                //   showSaveIcon: false,
+                                //   saveIconColor: Colors.black,
+                                //   showCreateButton: false,
+                                //   tdAlignment: TextAlign.left,
+                                //   tdEditableMaxLines:
+                                //       100, // don't limit and allow data to wrap
+                                //   tdPaddingTop: 0,
+                                //   tdPaddingBottom: 14,
+                                //   tdPaddingLeft: 10,
+                                //   tdPaddingRight: 8,
+                                //   focusedBorder: const OutlineInputBorder(
+                                //       borderSide:
+                                //           BorderSide(color: Colors.blue),
+                                //       borderRadius:
+                                //           BorderRadius.all(Radius.circular(0))),
+                                // );
                               }),
                             );
                           }),
-const Divider(),
-                            const Expanded(child: StudentFeesDetails())
+                          const Divider(),
+                          const Expanded(child: StudentFeesDetails())
                         ],
                       ),
               )
@@ -1346,6 +1431,4 @@ const Divider(),
       ),
     );
   }
-
-
 }

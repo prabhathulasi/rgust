@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:rugst_alliance_academia/custom_plugin/commons/helper.dart';
 import 'package:rugst_alliance_academia/custom_plugin/editable.dart';
 import 'package:rugst_alliance_academia/data/middleware/check_auth_middleware.dart';
+import 'package:rugst_alliance_academia/data/provider/common_provider.dart';
 import 'package:rugst_alliance_academia/data/provider/program_provider.dart';
 import 'package:rugst_alliance_academia/routes/named_routes.dart';
 import 'package:rugst_alliance_academia/theme/app_colors.dart';
@@ -122,7 +123,36 @@ class _ProgramViewState extends State<ProgramView> {
                     SizedBox(
                       height: 10.h,
                     ),
+
                     const BatchDropdown(),
+                    SizedBox(
+                      height: 10.h,
+                    ),
+          //           Consumer<CommonProvider>(
+          //             builder: (context, radioConsumer, child) {
+          //               return Row(
+          //                 children: [
+          //                         RadioListTile<String>(
+          //   title: Text('Old Syllabus'),
+          //   value: 'Old Syllabus',
+          //   groupValue: commonProvider.selectedOption,
+          //   onChanged: (value) {
+          //    commonProvider
+          //         .updateSelectedOption(value!);
+          //   },
+          // ),
+          // RadioListTile<String>(
+          //   title: Text('New Syllabus'),
+          //   value: 'New Syllabus',
+          //   groupValue: commonProvider.selectedOption,
+          //   onChanged: (value) {
+          //     commonProvider.updateSelectedOption(value!);
+          //   },
+          // ),
+          //                 ],
+          //               );
+          //             }
+          //           ),
                     programProvider.selectedBatch == null
                         ? Container()
                         : Expanded(
