@@ -14,13 +14,14 @@ updateExamresult(String token, int id, dynamic data) async{
      setLoading(true);
     try {
       Map<String, dynamic> body ={
- "Cw1":10,
- "Cw2":11,
- "CW3":12,
- "CW4":15,
- "FinalMark":50,
- "Grade":"A"
+ "Cw1":int.parse(data["CW1"] ),
+ "Cw2":int.parse(data["CW2"]),
+ "CW3":int.parse(data["CW3"]),
+ "CW4":int.parse(data["CW4"]),
+ "FinalMark":int.parse(data["FinalExam"]),
+ "Grade":data["Grade"]
       };
+      print(body);
       var result = await ApiHelper.put("UpdateResult/id=$id", body,token);
 
       setLoading(false);
@@ -29,8 +30,8 @@ updateExamresult(String token, int id, dynamic data) async{
 
         
         notifyListeners();
-
-        // return studentDetailModel;
+ ToastHelper().sucessToast("Result Updated Sucessfully");
+         return 200;
       } else if (result.statusCode == 204) {
         notifyListeners();
         ToastHelper().errorToast("No Courses Registered Yet");

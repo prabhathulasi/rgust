@@ -305,9 +305,10 @@ class _AddStudentViewState extends State<AddStudentView> {
                                   children: [
                                     Expanded(
                                       child: AppTextFormFieldWidget(
+        
                                         inputFormatters: [
                                           FilteringTextInputFormatter.allow(
-                                              RegExp(r'[0-9]')),
+                                              RegExp(r'[0-9/]')),
                                         ],
                                         validator: (p0) {
                                           if (p0 == null || p0.isEmpty) {

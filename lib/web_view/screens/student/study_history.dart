@@ -57,6 +57,8 @@ class _StudyHistoryViewState extends State<StudyHistoryView> {
                       SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
                         child: DataTable(
+                           columnSpacing: 40, // Adjust column spacing as needed
+                            // Adjust row height as needed
                           border: TableBorder.all(),
                           columns:  const [
                             DataColumn(label: Text('Course Name',style: TextStyle(fontWeight: FontWeight.bold),softWrap: true,)),

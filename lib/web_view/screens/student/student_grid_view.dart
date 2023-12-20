@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:rugst_alliance_academia/data/model/student_model.dart';
 import 'package:rugst_alliance_academia/data/provider/program_provider.dart';
 import 'package:rugst_alliance_academia/data/provider/student_provider.dart';
 import 'package:rugst_alliance_academia/theme/app_colors.dart';

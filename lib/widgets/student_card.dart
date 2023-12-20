@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import 'package:rugst_alliance_academia/theme/app_colors.dart';
 import 'package:rugst_alliance_academia/widgets/app_richtext.dart';
 
@@ -53,6 +54,7 @@ class StudentCardWidget extends StatelessWidget {
                 padding:  EdgeInsets.only(top:4.0.h,right: 4.w),
                 child: Align(alignment: Alignment.topRight,
                 child: Container(
+                   
                           width: 10,
                           height: 10,
                           decoration:  BoxDecoration(

@@ -333,11 +333,11 @@ updateStudentResult(List<Result> result){
             "coursecode": examData.courseCode,
             "coursename": examData.courseName,
             "batch":examData.batch,
-            "cw1":examData.cw1 == 0 ?"":examData.cw1,
-            "cw2":examData.cw2 == 0?"":examData.cw2,
-            "cw3":examData.cw3 == 0? "":examData.cw3,
-            "cw4":examData.cw4 == 0? "":examData.cw4,
-            "finalexam":examData.finalMark == 0?"":examData.finalMark,
+            "cw1":examData.cw1,
+            "cw2":examData.cw2,
+            "cw3":examData.cw3,
+            "cw4":examData.cw4,
+            "finalexam":examData.finalMark,
             "grade":examData.grade       
           });
         }
