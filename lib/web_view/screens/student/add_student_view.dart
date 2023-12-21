@@ -9,7 +9,6 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:rugst_alliance_academia/custom_plugin/editable.dart';
 import 'package:rugst_alliance_academia/data/middleware/check_auth_middleware.dart';
-import 'package:rugst_alliance_academia/data/model/course_model.dart';
 import 'package:rugst_alliance_academia/data/model/gender_model.dart';
 import 'package:rugst_alliance_academia/data/provider/program_provider.dart';
 import 'package:rugst_alliance_academia/data/provider/student_provider.dart';
@@ -67,7 +66,7 @@ class _AddStudentViewState extends State<AddStudentView> {
     ];
   }
 
-  Map<int, bool> checkedItems = {};
+  List<int> selectedIDs = []; // List to store selected checkbox IDs
 
   TextEditingController dobinput = TextEditingController();
   Uint8List? bytesFromPicker;
@@ -305,7 +304,6 @@ class _AddStudentViewState extends State<AddStudentView> {
                                   children: [
                                     Expanded(
                                       child: AppTextFormFieldWidget(
-        
                                         inputFormatters: [
                                           FilteringTextInputFormatter.allow(
                                               RegExp(r'[0-9/]')),
@@ -1291,6 +1289,7 @@ class _AddStudentViewState extends State<AddStudentView> {
                                                   gender: genderValue,
                                                   imageEncoded: imageEncoded,
                                                   token: token,
+                                                  selectedCourse: selectedIDs,
                                                 ));
                                           },
                                         );
@@ -1342,6 +1341,8 @@ class _AddStudentViewState extends State<AddStudentView> {
                                   itemBuilder: (context, index) {
                                     var currentItem = departmentProvider
                                         .coursesModel.courses![index];
+                                    int itemId = currentItem.iD!;
+
                                     return Card(
                                       color: AppColors.colorc7e,
                                       child: CheckboxListTile(
@@ -1365,13 +1366,19 @@ class _AddStudentViewState extends State<AddStudentView> {
                                           fontWeight: FontWeight.w500,
                                           textColor: AppColors.colorWhite,
                                         ),
-                                        value: checkedItems[currentItem.iD] ??
-                                            false,
+                                        value: selectedIDs.contains(itemId),
                                         onChanged: (value) {
+
                                           setState(() {
-                                            checkedItems[currentItem.iD!] =
-                                                value!;
+                                            if (value!) {
+                                              // Add the selected ID to the list
+                                              selectedIDs.add(itemId);
+                                            } else {
+                                              // Remove the ID if the checkbox is unchecked
+                                              selectedIDs.remove(itemId);
+                                            }
                                           });
+                                          print(selectedIDs);
                                         },
                                       ),
                                     );

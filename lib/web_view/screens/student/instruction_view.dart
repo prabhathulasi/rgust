@@ -14,7 +14,8 @@ final String ? token;
 final String ? dobInput;
 final String ? imageEncoded;
 final String? gender;
-  const StudentInstructionView({super.key,required this.token,required this.dobInput,  required this.imageEncoded,required this.gender});
+final List<int>? selectedCourse;
+  const StudentInstructionView({super.key,required this.token,required this.dobInput,  required this.imageEncoded,required this.gender, this.selectedCourse});
 
   @override
   State<StudentInstructionView> createState() => _StudentInstructionViewState();
@@ -86,6 +87,7 @@ class _StudentInstructionViewState extends State<StudentInstructionView> {
                         gender: widget.gender!,
                         dob: widget.dobInput!,
                         userImage: widget.imageEncoded!,
+                        selectedCourseList: widget.selectedCourse!
                       );
 
                       if (result != null) {
@@ -96,6 +98,10 @@ class _StudentInstructionViewState extends State<StudentInstructionView> {
                           Navigator.pop(context);
                                  Navigator.pop(context);
                         }
+                      }else{
+                        setState(() {
+                          loading= false;
+                        });
                       }
                     }),
                 SizedBox(

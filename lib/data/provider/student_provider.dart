@@ -158,6 +158,7 @@ ExamResultModel examResultModel = ExamResultModel();
     required String dob,
     required String studentType,
     required String userImage,
+    required List<int> selectedCourseList
   }) async {
     setLoading(true);
 
@@ -185,6 +186,7 @@ ExamResultModel examResultModel = ExamResultModel();
             "UserImage": userImage,
             "Qualification": qualification,
             "EmergencyContact": int.parse(emergencyContact),
+            "SelectedCourse":selectedCourseList
           },
           token);
       var data = json.decode(result.body);
