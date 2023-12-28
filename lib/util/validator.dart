@@ -59,3 +59,41 @@ class MobileNumberValidator {
     return null; // Return null if the mobile number is valid
   }
 }
+
+String abbreviateString(String input) {
+  RegExp mdFormat = RegExp(r'^[A-Z]{2}-\d+$'); // Regex pattern for "MD-1" format
+
+  // Check if the input matches the "MD-1" format, return it directly if it does
+  if (mdFormat.hasMatch(input)) {
+    return input;
+  }
+
+  List<String> words = input.split(' ');
+  String abbreviation = '';
+
+  bool isFirstWord = true;
+  bool isHyphenEncountered = false;
+
+  for (String word in words) {
+    if (word == '-') {
+      isHyphenEncountered = true;
+      continue; // Skip hyphens
+    }
+
+    if (isFirstWord || isHyphenEncountered) {
+      abbreviation += word[0].toUpperCase(); // Take the first character of the word
+      isHyphenEncountered = false;
+    }
+    isFirstWord = false;
+  }
+
+  // Find the number after the hyphen and append it to the abbreviation
+  RegExp regExp = RegExp(r'(\d+)$');
+  Iterable<Match> matches = regExp.allMatches(input);
+  if (matches.isNotEmpty) {
+    Match match = matches.first;
+    abbreviation += '-${match.group(0)}';
+  }
+
+  return abbreviation;
+}

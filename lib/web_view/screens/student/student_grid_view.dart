@@ -4,9 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:rotated_corner_decoration/rotated_corner_decoration.dart';
 import 'package:rugst_alliance_academia/data/provider/program_provider.dart';
 import 'package:rugst_alliance_academia/data/provider/student_provider.dart';
 import 'package:rugst_alliance_academia/theme/app_colors.dart';
+import 'package:rugst_alliance_academia/util/validator.dart';
 import 'package:rugst_alliance_academia/web_view/screens/student/add_student_view.dart';
 import 'package:rugst_alliance_academia/web_view/screens/student/student_detail_view.dart';
 import 'package:rugst_alliance_academia/widgets/app_formfield.dart';
@@ -305,9 +307,15 @@ class _StudentGridViewState extends State<StudentGridView> {
                     //  childAspectRatio:
                     childAspectRatio: size.width <= 1400 ? 1 / 1 : 1 / 1.3),
                 itemBuilder: (context, index) {
+
+
+
                   var studentData =
                       studentProvider.studentModel.studentList![index];
                        var memoryImagedata = base64Decode(studentData.userImage!);
+String abbreviatedText1 = abbreviateString(studentData.currentClassName!);
+
+
                   return InkWell(
                     onTap: () {
                       showDetailAlertDialog(context, studentData.iD!);
@@ -316,21 +324,42 @@ class _StudentGridViewState extends State<StudentGridView> {
                       color: AppColors.colorc7e,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(18.sp)),
-                      child: StudentCardWidget(
-                        userImage: memoryImagedata,
-                        address: studentData.address!,
-                        citizenship: studentData.citizenship!,
-                        currentClass: studentData.currentClassName!,
-                        dob: studentData.dOB!,
-                        email: studentData.email!,
-                        mobileNumber: studentData.mobileNumber!.toString(),
-                        studentRegNo: studentData.studentRegiterNumber!,
-                        studentName: studentData.firstName!+studentData.lastName!,
-                        studentType: studentData.studentType!,
-                       
-                        program: studentData.currentProgramName!,
-
-
+                      child: Container(
+                        foregroundDecoration: RotatedCornerDecoration.withColor(
+    color: Colors.red,
+    spanBaselineShift: 4,
+    badgeSize: const Size(64, 64),
+    badgeCornerRadius: const Radius.circular(8),
+    badgePosition: BadgePosition.topStart,
+    textSpan: TextSpan(
+      text: abbreviatedText1,
+      style: const TextStyle(
+        color: Colors.white,
+        fontSize: 12,
+        letterSpacing: 1,
+        fontWeight: FontWeight.bold,
+        shadows: [
+          BoxShadow(color: Colors.yellowAccent, blurRadius: 8),
+        ],
+      ),
+    ),
+  ),
+                        child: StudentCardWidget(
+                          userImage: memoryImagedata,
+                          address: studentData.address!,
+                          citizenship: studentData.citizenship!,
+                          currentClass: studentData.currentClassName!,
+                          dob: studentData.dOB!,
+                          email: studentData.email!,
+                          mobileNumber: studentData.mobileNumber!.toString(),
+                          studentRegNo: studentData.studentRegiterNumber!,
+                          studentName: studentData.firstName!+studentData.lastName!,
+                          studentType: studentData.studentType!,
+                         
+                          program: studentData.currentProgramName!,
+                      
+                      
+                        ),
                       )
                     ),
                   );
@@ -341,6 +370,7 @@ class _StudentGridViewState extends State<StudentGridView> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
+        elevation: 10.0,
           backgroundColor: AppColors.colorc7e,
           onPressed: () async {
             programProvider.selectedDept = null;

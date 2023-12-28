@@ -1251,7 +1251,10 @@ class _AddStudentViewState extends State<AddStudentView> {
                                     null) {
                                   ToastHelper()
                                       .errorToast("Please Select the Batch");
-                                } else {
+                                } else if(selectedIDs.isEmpty){
+                                  ToastHelper()
+                                      .errorToast("Please select the course");
+                                }else {
                                   var token = await getTokenAndUseIt();
                                   if (token == null) {
                                     if (context.mounted) {

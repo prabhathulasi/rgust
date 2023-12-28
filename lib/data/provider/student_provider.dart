@@ -347,6 +347,38 @@ updateStudentResult(List<Result> result){
          return editResult;
 
 }
+
+
+
+ Future createAccount(
+      String token, String email, String password,String userName) async {
+    setLoading(true);
+
+    // Make your login API call here using the http package
+
+    try {
+      var result = await ApiHelper.post("CreateAccount",
+          {"email": email, "password": password, "usertype": "Student","username":userName}, token);
+      setLoading(false);
+       var data = json.decode(result.body);
+      if (result.statusCode == 200) {
+  
+        ToastHelper().sucessToast("Account Created Sucessfully");
+        notifyListeners();
+        return data;
+      }else if(result.statusCode == 403){
+        ToastHelper().errorToast(data["Message"]);
+      } else {
+        notifyListeners();
+        ToastHelper().errorToast("Internal Server Error");
+        return null;
+      }
+    } catch (e) {
+      setLoading(false);
+      ToastHelper().errorToast(e.toString());
+      return null;
+    }
+  }
 // set loading value
   void setLoading(bool value) async {
     _isLoading = value;

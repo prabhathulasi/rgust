@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:http/retry.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:rugst_alliance_academia/custom_plugin/editable.dart';
@@ -52,9 +51,11 @@ class _UpdateResultViewState extends State<UpdateResultView> {
     );
     final resultProvider = Provider.of<ResultProvider>(context);
     return Scaffold(
+      backgroundColor: AppColors.colorc7e,
       body: Column(
         children: [
           Expanded(
+            flex: 3,
             child: Editable(
               key: _editableKey,
               showRemoveIcon: false,
@@ -112,7 +113,6 @@ class _UpdateResultViewState extends State<UpdateResultView> {
               tdStyle: const TextStyle(fontWeight: FontWeight.bold),
               trHeight: 40.h,
               removeIconColor: AppColors.colorRed,
-
               thStyle: TextStyle(
                   fontSize: 15.sp,
                   fontWeight: FontWeight.bold,
@@ -121,7 +121,7 @@ class _UpdateResultViewState extends State<UpdateResultView> {
               thVertAlignment: CrossAxisAlignment.end,
               thPaddingBottom: 3,
               showSaveIcon: true,
-              saveIconColor: AppColors.colorc7e,
+              saveIconColor: AppColors.colorWhite,
               showCreateButton: false,
               tdAlignment: TextAlign.left,
               tdEditableMaxLines: 100, // don't limit and allow data to wrap
@@ -135,6 +135,7 @@ class _UpdateResultViewState extends State<UpdateResultView> {
             ),
           ),
           Expanded(
+            flex: 1,
             child: Consumer<ResultProvider>(
               builder: (context, resultConsumer, child) {
                 return resultConsumer.isLoading == true

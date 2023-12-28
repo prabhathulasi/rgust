@@ -21,6 +21,31 @@ class ExamResult extends StatefulWidget {
 }
 
 class _ExamResultState extends State<ExamResult> {
+
+
+  updateResultAlert(BuildContext context) {
+    // set up the AlertDialog
+    Dialog alert = Dialog(
+                                                  child: Card(
+                                                    elevation: 5.0,
+                                                    child: SizedBox(
+                                                      height: 700.h,
+                                                      width: 1200.w,
+                                                      child: UpdateResultView(
+                                                          studenId: widget
+                                                              .studentData!.iD),
+                                                    ),
+                                                  ),
+                                                );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
   @override
   Widget build(BuildContext context) {
     final studentProvider =
@@ -50,6 +75,7 @@ class _ExamResultState extends State<ExamResult> {
       }
     }
 
+  
     return Scaffold(
       body: FutureBuilder(
         future: getStudentResult(),
@@ -145,25 +171,10 @@ class _ExamResultState extends State<ExamResult> {
                                         onTap: () async {
                                           await studentConsumer
                                               .updateStudentResult(categoryItems);
-                                          if (context.mounted) {
-                                            showDialog(
-                                              context: context,
-                                              builder: (BuildContext context) {
-                                                return Dialog(
-                                                  child: Card(
-                                                    elevation: 5.0,
-                                                    child: SizedBox(
-                                                      height: 700.h,
-                                                      width: 1200.w,
-                                                      child: UpdateResultView(
-                                                          studenId: widget
-                                                              .studentData!.iD),
-                                                    ),
-                                                  ),
-                                                );
-                                              },
-                                            );
-                                          }
+                                              if(context.mounted){
+
+                                        updateResultAlert(context);
+                                              }
                                         },
                                         child: Icon(
                                           Icons.edit,

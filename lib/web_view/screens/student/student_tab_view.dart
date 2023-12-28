@@ -7,6 +7,7 @@ import 'package:rugst_alliance_academia/theme/app_colors.dart';
 
 import 'package:rugst_alliance_academia/web_view/screens/faculty/faculty_checkin_view.dart';
 import 'package:rugst_alliance_academia/web_view/screens/student/exam_result_view.dart';
+import 'package:rugst_alliance_academia/web_view/screens/student/settings_tab_view.dart';
 import 'package:rugst_alliance_academia/web_view/screens/student/student_additional_info.dart';
 import 'package:rugst_alliance_academia/web_view/screens/student/study_history.dart';
 import 'package:rugst_alliance_academia/widgets/app_indicator.dart';
@@ -18,7 +19,7 @@ class StudentTabView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-        length: 5,
+        length: 6,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -43,6 +44,7 @@ class StudentTabView extends StatelessWidget {
                   Tab(text: "Study History"),
                   Tab(text: "Results"),
                   Tab(text: "Invoice"),
+                  Tab(text: "Settings"),
                 ],
               ),
             ),
@@ -53,7 +55,8 @@ class StudentTabView extends StatelessWidget {
                const FacultyCheckInView(),
                  StudyHistoryView(studentData: studentDetail,),
                 ExamResult(studentData: studentDetail),
-                   const Text("History")
+                   const Text("History"),
+                    SettingsTabView(studentDetail: studentDetail,)
                 ],
               ),
             )
