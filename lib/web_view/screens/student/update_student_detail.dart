@@ -57,6 +57,7 @@ class _AddFacultyViewState extends State<UpdateStudentDetails> {
   // List of items in our dropdown menu
   List rows = [];
   List filterdcols = [];
+  List<int> selectedIDs = [];
   addRow() {
     rows = addOneRow(filterdcols, rows);
 
@@ -1089,52 +1090,69 @@ class _AddFacultyViewState extends State<UpdateStudentDetails> {
                         : Expanded(
                             child: Consumer<ProgramProvider>(
                                 builder: (context, departmentProvider, child) {
-                              return Editable(
-                                enabled: false,
-                                key: _noneditableKey,
-                                showRemoveIcon: false,
-                                columns: filterdcols,
-                                rows: departmentProvider.newData,
-                                zebraStripe: true,
-                                stripeColor1: AppColors.colorc7e,
-                                stripeColor2: AppColors.colorc7e,
-                                onRowSaved: (value) async {
-                                  //   await departmentProvider.patchCoursesList(context,
-                                  //  courseName: value["coursename"],
-                                  // courseid: value["coursecode"],
-                                  // credits: int.parse(value["credits"]));
-                                },
-                                onSubmitted: (value) {
-                                  print(value);
-                                },
+                              return ListView.builder(
+                                shrinkWrap: true,
+                                itemCount: departmentProvider
+                                    .coursesModel.courses!.length,
+                                itemBuilder: (context, index) {
+                                  var currentItem = departmentProvider
+                                      .coursesModel.courses![index];
+                                  int itemId = currentItem.iD!;
 
-                                borderColor: Colors.blueGrey,
-                                tdStyle: TextStyle(
-                                    fontSize: 15.sp,
-                                    fontWeight: FontWeight.bold,
-                                    color: AppColors.colorWhite),
-                                trHeight: 100.h,
-                                thStyle: TextStyle(
-                                    fontSize: 18.sp,
-                                    fontWeight: FontWeight.bold,
-                                    color: AppColors.colorWhite),
-                                thAlignment: TextAlign.center,
-                                thVertAlignment: CrossAxisAlignment.end,
-                                thPaddingBottom: 3,
-                                showSaveIcon: false,
-                                saveIconColor: Colors.black,
-                                showCreateButton: false,
-                                tdAlignment: TextAlign.left,
-                                tdEditableMaxLines:
-                                    100, // don't limit and allow data to wrap
-                                tdPaddingTop: 10.h,
-                                tdPaddingBottom: 14.h,
-                                tdPaddingLeft: 10.w,
-                                tdPaddingRight: 8.w,
-                                focusedBorder: const OutlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.blue),
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(0))),
+                                  return Card(
+                                    color: AppColors.colorc7e,
+                                    child: CheckboxListTile(
+                                      side: MaterialStateBorderSide.resolveWith(
+                                        (states) => const BorderSide(
+                                            width: 2.0,
+                                            color: AppColors.colorWhite),
+                                      ),
+                                      checkColor: AppColors.colorc7e,
+                                      activeColor: AppColors.colorWhite,
+                                      title: AppRichTextView(
+                                        title: currentItem.courseName!.trim(),
+                                        fontSize: 15.sp,
+                                        fontWeight: FontWeight.bold,
+                                        textColor: AppColors.colorWhite,
+                                      ),
+                                      subtitle: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          AppRichTextView(
+                                            title: currentItem.courseId!,
+                                            fontSize: 12.sp,
+                                            fontWeight: FontWeight.w500,
+                                            textColor: AppColors.colorWhite,
+                                          ),
+                                          AppRichTextView(
+                                            title:
+                                                "Assigned Lecture: ${currentItem.assignedLec! == "" ? "Not Assigned" : currentItem.assignedLec!}",
+                                            fontSize: 12.sp,
+                                            fontWeight: FontWeight.w500,
+                                            textColor:
+                                                currentItem.assignedLec! == ""
+                                                    ? AppColors.colorRed
+                                                    : AppColors.colorWhite,
+                                          ),
+                                        ],
+                                      ),
+                                      value: selectedIDs.contains(itemId),
+                                      onChanged: (value) {
+                                        setState(() {
+                                          if (value!) {
+                                            // Add the selected ID to the list
+                                            selectedIDs.add(itemId);
+                                          } else {
+                                            // Remove the ID if the checkbox is unchecked
+                                            selectedIDs.remove(itemId);
+                                          }
+                                        });
+                                        print(selectedIDs);
+                                      },
+                                    ),
+                                  );
+                                },
                               );
                             }),
                           ),
@@ -1160,39 +1178,45 @@ class _AddFacultyViewState extends State<UpdateStudentDetails> {
                                         height: 50.h,
                                         width: 150.w,
                                         onPressed: (context) async {
-                                          var token = await getTokenAndUseIt();
-                                          if (token == null) {
-                                            if (context.mounted) {
-                                              Navigator.pushNamed(
-                                                  context, RouteNames.login);
-                                            }
-                                          } else if (token == "Token Expired") {
+                                          if (selectedIDs.isEmpty) {
                                             ToastHelper().errorToast(
-                                                "Session Expired Please Login Again");
-
-                                            if (context.mounted) {
-                                              Navigator.pushNamed(
-                                                  context, RouteNames.login);
-                                            }
+                                                "Please Select the Course");
                                           } else {
-                                            var result = await studentProvider
-                                                .updateStudentClass(token,
-                                                    programId: int.parse(
-                                                        prgProvider
-                                                            .selectedDept!),
-                                                    batch: prgProvider
-                                                        .selectedBatch,
-                                                    classId: int.parse(
-                                                        prgProvider
-                                                            .selectedClass!),
-                                                    currentClass: false,
-                                                    studentId: widget
-                                                        .studentDetails.iD);
-                                       if (result != null) {
-                                      if (context.mounted) {
-                                        Navigator.pop(context);
-                                      }
-                                    }
+                                            var token =
+                                                await getTokenAndUseIt();
+                                            if (token == null) {
+                                              if (context.mounted) {
+                                                Navigator.pushNamed(
+                                                    context, RouteNames.login);
+                                              }
+                                            } else if (token ==
+                                                "Token Expired") {
+                                              ToastHelper().errorToast(
+                                                  "Session Expired Please Login Again");
+
+                                              if (context.mounted) {
+                                                Navigator.pushNamed(
+                                                    context, RouteNames.login);
+                                              }
+                                            } else {
+                                              var result = await studentProvider
+                                                  .updateStudentClass(token,
+                                                      selectedCourseList:
+                                                          selectedIDs,
+                                                      programId: int.parse(
+                                                          prgProvider
+                                                              .selectedDept!),
+                                                      classId: int.parse(
+                                                          prgProvider
+                                                              .selectedClass!),
+                                                      studentId: widget
+                                                          .studentDetails.iD);
+                                              if (result != null) {
+                                                if (context.mounted) {
+                                                  Navigator.pop(context);
+                                                }
+                                              }
+                                            }
                                           }
                                         },
                                         borderColor: AppColors.colorWhite,

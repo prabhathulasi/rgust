@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:rugst_alliance_academia/data/model/exam_result_model.dart';
+import 'package:rugst_alliance_academia/data/model/exam_result_model.dart' as prefix;
 import 'package:rugst_alliance_academia/data/model/student_course_model.dart';
 import 'package:rugst_alliance_academia/data/model/student_detail_model.dart';
 
@@ -14,7 +14,7 @@ class StudentProvider extends ChangeNotifier {
   StudentRegisterCourseModel studentRegisterCourseModel =
       StudentRegisterCourseModel();
       
-ExamResultModel examResultModel = ExamResultModel();
+prefix.ExamResultModel examResultModel = prefix.ExamResultModel();
   StudentDetailModel studentDetailModel = StudentDetailModel();
   List<StudentList> filteredList = [];
   List<dynamic> editResult =[];
@@ -120,7 +120,7 @@ ExamResultModel examResultModel = ExamResultModel();
       if (result.statusCode == 200) {
         var data = json.decode(result.body);
 
-        examResultModel = ExamResultModel.fromJson(data);
+        examResultModel = prefix.ExamResultModel.fromJson(data);
 
         notifyListeners();
 
@@ -213,42 +213,7 @@ ExamResultModel examResultModel = ExamResultModel();
     }
   }
 
-  Future getStudentCourses(int studentId, String token) async {
-    setLoading(true);
-    try {
-      var result =
-          await ApiHelper.get("GetStudentCourses/id=$studentId", token);
 
-      setLoading(false);
-      if (result.statusCode == 200) {
-        var data = json.decode(result.body);
-
-        studentRegisterCourseModel = StudentRegisterCourseModel.fromJson(data);
-
-        notifyListeners();
-
-        return studentRegisterCourseModel;
-      } else if (result.statusCode == 204) {
-        studentRegisterCourseModel.studentCourses?.clear();
-        notifyListeners();
-        ToastHelper().errorToast("No Courses Registered Yet");
-
-        return null;
-      } else if (result.statusCode == 401) {
-        notifyListeners();
-
-        return "Invalid Token";
-      } else {
-        notifyListeners();
-        ToastHelper().errorToast("Internal Server Error");
-        return null;
-      }
-    } catch (e) {
-      setLoading(false);
-      ToastHelper().errorToast(e.toString());
-      return e.toString();
-    }
-  }
 
   Future getStudentDetailById(int studentId, String token) async {
     setLoading(true);
@@ -260,6 +225,7 @@ ExamResultModel examResultModel = ExamResultModel();
         var data = json.decode(result.body);
 
         studentDetailModel = StudentDetailModel.fromJson(data);
+
 
         notifyListeners();
 
@@ -288,17 +254,15 @@ ExamResultModel examResultModel = ExamResultModel();
   Future updateStudentClass(String token,
       {int? programId,
       int? classId,
-      String? batch,
       int? studentId,
-      bool? currentClass}) async {
+       required List<int> selectedCourseList}) async {
     setLoading(true);
     try {
       var data = {
         "ProgramId": programId,
         "ClassId": classId,
-        "Batch": batch,
         "StudentId": studentId,
-        "CurrentClass": currentClass
+        "SelectedCourse":selectedCourseList
       };
       var result = await ApiHelper.post(
           "UpdateStudentCourses", data, token);
@@ -327,7 +291,7 @@ ExamResultModel examResultModel = ExamResultModel();
   }
 
 
-updateStudentResult(List<Result> result){
+updateStudentResult(List<prefix.Result> result){
   editResult.clear();
   for (var examData in result) {
           editResult.add({
@@ -392,6 +356,7 @@ updateStudentResult(List<Result> result){
 
   void setStudentType(String studentType) {
     studetnTypeValue = studentType;
+
     notifyListeners();
   }
 

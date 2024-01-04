@@ -45,4 +45,5 @@ class LottiePath{
               static const String noDocLottie= "assets/lottie/no_doc_found.json";
               static const String overViewLottie= "assets/lottie/overview.json";
               static const String uploadingLottie= "assets/lottie/uploading.json";
+               static const String resultLottie= "assets/lottie/result.json";
 }

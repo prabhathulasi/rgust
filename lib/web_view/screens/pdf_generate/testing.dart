@@ -23,7 +23,7 @@ import 'package:intl/intl.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
-import 'package:rugst_alliance_academia/data/model/exam_result_model.dart';
+import 'package:rugst_alliance_academia/data/model/exam_result_model.dart'as prefix;
 import 'package:rugst_alliance_academia/data/model/student_detail_model.dart';
 
 class CustomData {
@@ -33,7 +33,7 @@ class CustomData {
 }
 
 Future<Uint8List> generateInvoice(PdfPageFormat pageFormat, CustomData data,
-    StudentDetail studentData, List<Result> resultData) async {
+    StudentDetail studentData, List<prefix.Result> resultData) async {
 
 
   final invoice = Invoice(
@@ -72,7 +72,7 @@ class Invoice {
   pw.MemoryImage? image;
 
   Future<Uint8List> buildPdf(PdfPageFormat pageFormat,
-      StudentDetail studentDetail, List<Result> data) async {
+      StudentDetail studentDetail, List<prefix.Result> data) async {
     // Create a PDF document.
     final doc = pw.Document();
 
@@ -328,15 +328,15 @@ class Invoice {
 
 
 
-  List<String> _getCategories(List<Result>? data) {
+  List<String> _getCategories(List<prefix.Result>? data) {
     return data!.map((item) => item.className!).toSet().toList();
   }
 
-  List<Result> _getItemsForCategory(String category, List<Result>? data) {
+  List<prefix.Result> _getItemsForCategory(String category, List<prefix.Result>? data) {
     return data!.where((item) => item.className! == category).toList();
   }
 
-  pw.Widget _contentTable(pw.Context context, List<Result> data) {
+  pw.Widget _contentTable(pw.Context context, List<prefix.Result> data) {
     const tableHeaders = [
       "Course Name",
       "Course Code",

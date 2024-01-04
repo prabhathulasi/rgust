@@ -384,7 +384,7 @@ class _StudentAdditionalInfoViewState extends State<StudentAdditionalInfoView> {
                             children: [
                                 RadioListTile<String>(
                                   activeColor: AppColors.colorc7e,
-                                    title: Text('Form A'),
+                                    title: const Text('Form A'),
                                     value: 'Form A',
                                     groupValue: radioConsumer.selectedOption,
                                     onChanged: (value) {
@@ -394,7 +394,7 @@ class _StudentAdditionalInfoViewState extends State<StudentAdditionalInfoView> {
                                   ),
                                        RadioListTile<String>(
                            activeColor: AppColors.colorc7e,
-                                    title: Text('Form B'),
+                                    title: const Text('Form B'),
                                     value: 'Form B',
                                     groupValue: radioConsumer.selectedOption,
                                     onChanged: (value) {
@@ -404,7 +404,7 @@ class _StudentAdditionalInfoViewState extends State<StudentAdditionalInfoView> {
                                   ),
                                        RadioListTile<String>(
                            activeColor: AppColors.colorc7e,
-                                    title: Text('Form C'),
+                                    title: const Text('Form C'),
                                     value: 'Form C',
                                     groupValue:radioConsumer.selectedOption,
                                     onChanged: (value) {
@@ -414,7 +414,7 @@ class _StudentAdditionalInfoViewState extends State<StudentAdditionalInfoView> {
                                   ),
                                        RadioListTile<String>(
                            activeColor: AppColors.colorc7e,
-                                    title: Text('Form D'),
+                                    title: const Text('Form D'),
                                     value: 'Form D',
                                     groupValue: radioConsumer.selectedOption,
                                     onChanged: (value) {
@@ -424,7 +424,7 @@ class _StudentAdditionalInfoViewState extends State<StudentAdditionalInfoView> {
                                   ),
                                        RadioListTile<String>(
                            activeColor: AppColors.colorc7e,
-                                    title: Text('Form E'),
+                                    title: const Text('Form E'),
                                     value: 'Form E',
                                     groupValue: radioConsumer.selectedOption,
                                     onChanged: (value) {
@@ -434,7 +434,7 @@ class _StudentAdditionalInfoViewState extends State<StudentAdditionalInfoView> {
                                   ),
                                   RadioListTile<String>(
                                      activeColor: AppColors.colorc7e,
-                                    title: Text('Form F'),
+                                    title: const Text('Form F'),
                                     value: 'Form F',
                                     groupValue: radioConsumer.selectedOption,
                                     onChanged: (value) {
@@ -444,7 +444,7 @@ class _StudentAdditionalInfoViewState extends State<StudentAdditionalInfoView> {
                                   ),
                                   RadioListTile<String>(
                                      activeColor: AppColors.colorc7e,
-                                    title: Text('Form G'),
+                                    title: const Text('Form G'),
                                     value: 'Form G',
                                     groupValue: radioConsumer.selectedOption,
                                     onChanged: (value) {
@@ -525,62 +525,7 @@ ToastHelper().errorToast("Please Select the Form Type");
                 ],
               
               );
-              // return AlertDialog(
-              //   title: const Text("Upload Restrictions"),
-              //   content: const Column(
-              //     mainAxisSize: MainAxisSize.min,
-              //     crossAxisAlignment: CrossAxisAlignment.start,
-              //     children: <Widget>[
-              //       Text(
-              //         "Please ensure that your file meets the following restrictions:",
-              //         style: TextStyle(fontWeight: FontWeight.bold),
-              //       ),
-              //       SizedBox(height: 10),
-              //       Text("1. File size should not be more than 100KB."),
-              //       Text("2. File type should be PDF only."),
-              //       Text(
-              //           "3. The filename should not contain special characters, spaces, or symbols"),
-              //       Text("4. Ensure the document is legible and not corrupted"),
-              //       Text(
-              //           "5. Do not upload copyrighted or confidential materials"),
-              //       Text("6. File names should be unique and descriptive"),
-              //       Text(
-              //           "7. Do not upload offensive or inappropriate content."),
-              //       Text("8. Files should not contain viruses or malware."),
-
-              //       // Add more restriction statements as needed
-              //     ],
-              //   ),
-              //   actions: <Widget>[
-              //     ElevatedButton(
-              //       onPressed: () async {
-              //         FilePickerResult? result =
-              //             await FilePicker.platform.pickFiles(
-              //           type: FileType.custom,
-              //           allowedExtensions: ['pdf'],
-              //           allowMultiple: false,
-              //         );
-              //         if (result != null) {
-              //           if (result.files.first.size <= 100 * 1024) {
-              //             fileUploadProvider.setFileData(result);
-              //             uploadImage(); // Update the selected file data and name
-              //           } else {
-              //             ToastHelper().errorToast(
-              //                 "Selected file must be less than 100KB.");
-              //           }
-              //         }
-              //         Navigator.of(context).pop(); // Close the dialog
-              //       },
-              //       child: const Text("OK"),
-              //     ),
-              //     ElevatedButton(
-              //       onPressed: () {
-              //         Navigator.of(context).pop(); // Close the dialog
-              //       },
-              //       child: const Text("Cancel"),
-              //     ),
-              //   ],
-              // );
+           
             },
           );
         },

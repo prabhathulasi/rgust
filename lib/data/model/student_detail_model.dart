@@ -1,3 +1,5 @@
+import 'package:rugst_alliance_academia/data/model/exam_result_model.dart';
+
 class StudentDetailModel {
   String? message;
   StudentDetail? studentDetail;
@@ -53,6 +55,7 @@ class StudentDetail {
   String? createdBy;
 
   List<RegisteredCourse>? registeredCourse;
+   List<Result>? result;
 
   StudentDetail(
       {this.iD,
@@ -84,6 +87,7 @@ class StudentDetail {
       this.citizenship,
       this.accountCreated,
       this.createdBy,
+      this.result,
    
       this.registeredCourse});
 
@@ -95,9 +99,9 @@ class StudentDetail {
     userId = json['UserId'];
     studentId = json['StudentId'];
     currentProgramId = json['CurrentProgramId'];
-    currentProgramName = json['CurrentProgramName'];
+    currentProgramName = json['ProgramName'];
     currentClassId = json['CurrentClassId'];
-    currentClassName = json['CurrentClassName'];
+    currentClassName = json['ClassName'];
     batch = json['Batch'];
     admissionDate = json['AdmissionDate'];
     emergencyContact = json['EmergencyContact'];
@@ -118,7 +122,13 @@ class StudentDetail {
     accountCreated = json['AccountCreated'];
     createdBy = json['CreatedBy'];
    
-    if (json['RegisteredCourse'] != null) {
+    if (json['Result'] != null) {
+      result = <Result>[];
+      json['Result'].forEach((v) {
+        result!.add(Result.fromJson(v));
+      });
+    }
+     if (json['RegisteredCourse'] != null) {
       registeredCourse = <RegisteredCourse>[];
       json['RegisteredCourse'].forEach((v) {
         registeredCourse!.add(RegisteredCourse.fromJson(v));
@@ -135,9 +145,9 @@ class StudentDetail {
     data['UserId'] = userId;
     data['StudentId'] = studentId;
     data['CurrentProgramId'] = currentProgramId;
-    data['CurrentProgramName'] = currentProgramName;
+    data['ProgramName'] = currentProgramName;
     data['CurrentClassId'] = currentClassId;
-    data['CurrentClassName'] = currentClassName;
+    data['ClassName'] = currentClassName;
     data['Batch'] = batch;
     data['AdmissionDate'] = admissionDate;
     data['EmergencyContact'] = emergencyContact;
@@ -158,7 +168,11 @@ class StudentDetail {
     data['AccountCreated'] = accountCreated;
     data['CreatedBy'] = createdBy;
 
-    if (registeredCourse != null) {
+    if (result != null) {
+      data['Result'] =
+          result!.map((v) => v.toJson()).toList();
+    }
+     if (registeredCourse != null) {
       data['RegisteredCourse'] =
           registeredCourse!.map((v) => v.toJson()).toList();
     }
@@ -234,3 +248,5 @@ class RegisteredCourse {
     return data;
   }
 }
+
+

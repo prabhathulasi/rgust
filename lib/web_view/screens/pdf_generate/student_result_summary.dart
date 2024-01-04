@@ -7,12 +7,13 @@ import 'package:pdf/pdf.dart';
 
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
-import 'package:rugst_alliance_academia/data/model/exam_result_model.dart';
+import 'package:rugst_alliance_academia/data/model/exam_result_model.dart'as prefix;
 import 'package:rugst_alliance_academia/data/model/student_detail_model.dart';
 import 'package:rugst_alliance_academia/web_view/screens/pdf_generate/testing.dart';
 
+
 class StudentResultSummary extends StatefulWidget {
-  final List<Result>? result;
+  final List<prefix.Result>? result;
   final StudentDetail? studentData;
   const StudentResultSummary({super.key, this.result, this.studentData});
 
@@ -434,11 +435,11 @@ class _StudentPersonalProfileState extends State<StudentResultSummary> {
     );
   }
 
-  List<String> _getCategories(List<Result>? data) {
+  List<String> _getCategories(List<prefix.Result>? data) {
     return data!.map((item) => item.className!).toSet().toList();
   }
 
-  List<Result> _getItemsForCategory(String category, List<Result>? data) {
+  List<prefix.Result> _getItemsForCategory(String category, List<prefix.Result>? data) {
     return data!.where((item) => item.className! == category).toList();
   }
 }

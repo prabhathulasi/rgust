@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:rugst_alliance_academia/data/middleware/check_auth_middleware.dart';
-import 'package:rugst_alliance_academia/data/model/exam_result_model.dart';
+import 'package:rugst_alliance_academia/data/model/exam_result_model.dart' as prefix;
 import 'package:rugst_alliance_academia/data/model/student_detail_model.dart';
 import 'package:rugst_alliance_academia/data/provider/student_provider.dart';
-import 'package:rugst_alliance_academia/routes/named_routes.dart';
 import 'package:rugst_alliance_academia/theme/app_colors.dart';
-import 'package:rugst_alliance_academia/util/toast_helper.dart';
 import 'package:rugst_alliance_academia/web_view/screens/pdf_generate/student_result_summary.dart';
 import 'package:rugst_alliance_academia/web_view/screens/student/update_result_view.dart';
-import 'package:rugst_alliance_academia/widgets/app_spining.dart';
+
 
 class ExamResult extends StatefulWidget {
   final StudentDetail? studentData;
@@ -48,47 +45,15 @@ class _ExamResultState extends State<ExamResult> {
   }
   @override
   Widget build(BuildContext context) {
-    final studentProvider =
-        Provider.of<StudentProvider>(context, listen: false);
+    
+  var examData = widget.studentData!.result;
 
-    Future getStudentResult() async {
-      var token = await getTokenAndUseIt();
-      if (token == null) {
-        if (context.mounted) {
-          Navigator.pushNamed(context, RouteNames.login);
-        }
-      } else if (token == "Token Expired") {
-        ToastHelper().errorToast("Session Expired Please Login Again");
-
-        if (context.mounted) {
-          Navigator.pushNamed(context, RouteNames.login);
-        }
-      } else {
-        var result = await studentProvider.getStudentResult(
-            token, widget.studentData!.iD!);
-        if (result == "Invalid Token") {
-          ToastHelper().errorToast("Session Expired Please Login Again");
-          if (context.mounted) {
-            Navigator.pushNamed(context, RouteNames.login);
-          }
-        }
-      }
-    }
+   
 
   
     return Scaffold(
-      body: FutureBuilder(
-        future: getStudentResult(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
-              child: SpinKitSpinningLines(
-                color: AppColors.colorc7e,
-              ),
-            );
-          } else {
-            var data = studentProvider.examResultModel.result;
-            return Column(
+      body: 
+             Column(
               children: [
                 Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -106,7 +71,7 @@ class _ExamResultState extends State<ExamResult> {
                                     child: Stack(
                                       children: [
                                         StudentResultSummary(
-                                          result: data,
+                                          result: widget.studentData!.result,
                                           studentData: widget.studentData,
                                         ),
                                         Transform.translate(
@@ -139,13 +104,12 @@ class _ExamResultState extends State<ExamResult> {
                             color: AppColors.colorc7e,
                           ))),
                 ),
-                Consumer<StudentProvider>(
-                  builder: (context, studentConsumer, child) {
-                      var examData = studentConsumer.examResultModel.result;
-                    return Expanded(
+           
+                     
+                    Expanded(
                       child: ListView.builder(
                         shrinkWrap: true,
-                        itemCount: _getCategories(examData!).length,
+                        itemCount: _getCategories(examData).length,
                         itemBuilder: (context, index) {
                           final category = _getCategories(examData)[index];
                           final categoryItems =
@@ -167,20 +131,24 @@ class _ExamResultState extends State<ExamResult> {
                                     SizedBox(
                                       width: 5.w,
                                     ),
-                                    InkWell(
-                                        onTap: () async {
-                                          await studentConsumer
-                                              .updateStudentResult(categoryItems);
-                                              if(context.mounted){
+                                    Consumer<StudentProvider>(
+                                      builder: (context, studentConsumer, child) {
+                                        return InkWell(
+                                            onTap: () async {
+                                              await studentConsumer
+                                                  .updateStudentResult(categoryItems);
+                                                  if(context.mounted){
 
-                                        updateResultAlert(context);
-                                              }
-                                        },
-                                        child: Icon(
-                                          Icons.edit,
-                                          color: AppColors.colorc7e,
-                                          size: 25.sp,
-                                        ))
+                                            updateResultAlert(context);
+                                                  }
+                                            },
+                                            child: Icon(
+                                              Icons.edit,
+                                              color: AppColors.colorc7e,
+                                              size: 25.sp,
+                                            ));
+                                      }
+                                    )
                                   ],
                                 ),
                               ),
@@ -333,26 +301,19 @@ class _ExamResultState extends State<ExamResult> {
                           );
                         },
                       ),
-                    );
-                  }
-                ),
+                    )
+               
               ],
-            );
-          }
-        },
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        child: const Icon(Icons.upload),
-      ),
+            )
+    
     );
   }
 
-  List<String> _getCategories(List<Result>? data) {
+  List<String> _getCategories(List<prefix.Result>? data) {
     return data!.map((item) => item.className!).toSet().toList();
   }
 
-  List<Result> _getItemsForCategory(String category, List<Result>? data) {
+  List<prefix.Result> _getItemsForCategory(String category, List<prefix.Result>? data) {
     return data!.where((item) => item.className! == category).toList();
   }
 }

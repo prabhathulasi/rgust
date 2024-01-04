@@ -80,7 +80,7 @@ class _StudentInstructionViewState extends State<StudentInstructionView> {
                         programId: int.parse(programProvider.selectedDept!),
                         classId: int.parse(programProvider.selectedClass!),
                         admissionDate:commonProvider.doaController,
-                        studentType: "Regular",
+                        studentType: programProvider.isNewStudent==1? "Regular":"Transfer",
                         batch: programProvider.selectedBatch!,
                         registerNo:
                             studentProvider.studentRegisterNumberController!,

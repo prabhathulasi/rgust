@@ -1363,11 +1363,22 @@ class _AddStudentViewState extends State<AddStudentView> {
                                           fontWeight: FontWeight.bold,
                                           textColor: AppColors.colorWhite,
                                         ),
-                                        subtitle: AppRichTextView(
-                                          title: currentItem.courseId!,
-                                          fontSize: 12.sp,
-                                          fontWeight: FontWeight.w500,
-                                          textColor: AppColors.colorWhite,
+                                        subtitle: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            AppRichTextView(
+                                              title: currentItem.courseId!,
+                                              fontSize: 12.sp,
+                                              fontWeight: FontWeight.w500,
+                                              textColor: AppColors.colorWhite,
+                                            ),
+                                             AppRichTextView(
+                                              title:"Assigned Lecture: ${currentItem.assignedLec! == ""? "Not Assigned":currentItem.assignedLec!}",
+                                              fontSize: 12.sp,
+                                              fontWeight: FontWeight.w500,
+                                              textColor:currentItem.assignedLec! == ""? AppColors.colorRed: AppColors.colorWhite,
+                                            ),
+                                          ],
                                         ),
                                         value: selectedIDs.contains(itemId),
                                         onChanged: (value) {
@@ -1387,47 +1398,7 @@ class _AddStudentViewState extends State<AddStudentView> {
                                     );
                                   },
                                 );
-                                // return Editable(
-                                //   key: _editableKey,
-                                //   showRemoveIcon: false,
-                                //   columns: filterdcols,
-                                //   rows: departmentProvider.newData,
-                                //   zebraStripe: true,
-                                //   stripeColor1: AppColors.colorc7e,
-                                //   stripeColor2: AppColors.colorc7e,
-                                //   onRowSaved: (value) async {},
-                                //   onSubmitted: (value) {
-                                //     print(value);
-                                //   },
-
-                                //   borderColor: Colors.blueGrey,
-                                //   tdStyle:  TextStyle(
-                                //       fontWeight: FontWeight.bold,
-                                //       color: AppColors.colorWhite,fontSize: 15.sp),
-                                //   trHeight: 40.h,
-                                //   thStyle:  TextStyle(
-                                //       fontSize: 15.sp,
-                                //       fontWeight: FontWeight.bold,
-                                //       color: AppColors.colorWhite),
-                                //   thAlignment: TextAlign.center,
-                                //   thVertAlignment: CrossAxisAlignment.end,
-                                //   thPaddingBottom: 3,
-                                //   showSaveIcon: false,
-                                //   saveIconColor: Colors.black,
-                                //   showCreateButton: false,
-                                //   tdAlignment: TextAlign.left,
-                                //   tdEditableMaxLines:
-                                //       100, // don't limit and allow data to wrap
-                                //   tdPaddingTop: 0,
-                                //   tdPaddingBottom: 14,
-                                //   tdPaddingLeft: 10,
-                                //   tdPaddingRight: 8,
-                                //   focusedBorder: const OutlineInputBorder(
-                                //       borderSide:
-                                //           BorderSide(color: Colors.blue),
-                                //       borderRadius:
-                                //           BorderRadius.all(Radius.circular(0))),
-                                // );
+                             
                               }),
                             );
                           }),

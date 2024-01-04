@@ -94,9 +94,9 @@ class StudentList {
     deletedAt = json['DeletedAt'];
     studentRegiterNumber = json['StudentId'];
     currentProgramId = json['CurrentProgramId'];
-    currentProgramName = json['CurrentProgramName'];
+    currentProgramName = json['ProgramName'];
     currentClassId = json['CurrentClassId'];
-    currentClassName = json['CurrentClassName'];
+    currentClassName = json['ClassName'];
     batch = json['Batch'];
     admissionDate = json['AdmissionDate'];
     emergencyContact = json['EmergencyContact'];
@@ -127,9 +127,9 @@ class StudentList {
     data['DeletedAt'] = deletedAt;
     data['StudentId'] = studentRegiterNumber;
     data['CurrentProgramId'] = currentProgramId;
-    data['CurrentProgramName'] = currentProgramName;
+    data['ProgramName'] = currentProgramName;
     data['CurrentClassId'] = currentClassId;
-    data['CurrentClassName'] = currentClassName;
+    data['ClassName'] = currentClassName;
     data['Batch'] = batch;
     data['AdmissionDate'] = admissionDate;
     data['EmergencyContact'] = emergencyContact;

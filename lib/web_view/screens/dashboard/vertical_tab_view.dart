@@ -9,6 +9,7 @@ import 'package:rugst_alliance_academia/web_view/screens/dashboard/overview_view
 import 'package:rugst_alliance_academia/web_view/screens/department/program_view.dart';
 import 'package:rugst_alliance_academia/web_view/screens/faculty/faculty_list_view.dart';
 import 'package:rugst_alliance_academia/web_view/screens/fees/fees_view.dart';
+import 'package:rugst_alliance_academia/web_view/screens/result/result_settings_view.dart';
 import 'package:rugst_alliance_academia/web_view/screens/staffs/staff_list_view.dart';
 import 'package:rugst_alliance_academia/web_view/screens/student/student_list_view.dart';
 import 'package:rugst_alliance_academia/web_view/screens/student/testing.dart';
@@ -175,6 +176,11 @@ userName= sharedPreferences.getString("username");
               child: Icon(Icons.attach_money_outlined,color: AppColors.colorc7e,),
             ),
             ),
+              const Tab(
+            text: "Results",
+            icon:   CircleAvatar(
+              child: Icon(Icons.checklist_sharp)),
+            ),
             
           
           ],
@@ -192,7 +198,8 @@ userName= sharedPreferences.getString("username");
                 
 
             const AccountCreationView(),
-          const FeesView()
+          const FeesView(),
+          const ResultSettingsView()
           ],
         ),
       
