@@ -77,10 +77,17 @@ class ResultProvider extends ChangeNotifier {
     }
   }
 
-  getAllResult(String token) async {
+  getAllResult(String token,
+      {String? programId, String? classId, String? batch}) async {
     setLoading(true);
+    resultPublishModel.results?.clear();
+    Map<String, dynamic> body = {
+      "ProgramId": int.parse(programId!),
+      "ClassId": int.parse(classId!),
+      "Batch": batch
+    };
     try {
-      var result = await ApiHelper.get("GetAllResult", token);
+      var result = await ApiHelper.post("PublishResult", body, token);
 
       setLoading(false);
       var data = json.decode(result.body);
@@ -88,18 +95,21 @@ class ResultProvider extends ChangeNotifier {
         resultPublishModel = PublishResultModel.fromJson(data);
 
         notifyListeners();
-        
+
         return 200;
       } else if (result.statusCode == 401) {
+        resultPublishModel.results?.clear();
         notifyListeners();
 
         return "Invalid Token";
       } else {
+        resultPublishModel.results?.clear();
         notifyListeners();
-        ToastHelper().errorToast("Internal Server Error");
+        ToastHelper().errorToast(data["Message"]);
         return null;
       }
     } catch (e) {
+      resultPublishModel.results?.clear();
       setLoading(false);
       ToastHelper().errorToast(e.toString());
       return null;

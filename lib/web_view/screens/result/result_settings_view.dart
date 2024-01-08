@@ -1,7 +1,10 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:rugst_alliance_academia/data/middleware/check_auth_middleware.dart';
+import 'package:rugst_alliance_academia/data/provider/common_provider.dart';
 import 'package:rugst_alliance_academia/data/provider/program_provider.dart';
 import 'package:rugst_alliance_academia/data/provider/result_provider.dart';
 import 'package:rugst_alliance_academia/routes/named_routes.dart';
@@ -12,6 +15,8 @@ import 'package:rugst_alliance_academia/web_view/screens/department/batch_dropdo
 import 'package:rugst_alliance_academia/web_view/screens/department/class_dropdown.dart';
 import 'package:rugst_alliance_academia/web_view/screens/department/program_dropdown_view.dart';
 import 'package:rugst_alliance_academia/web_view/screens/department/year_dropdown_view.dart';
+import 'package:rugst_alliance_academia/web_view/screens/result/publish_result.dart';
+import 'package:rugst_alliance_academia/widgets/app_elevatedbutton.dart';
 import 'package:rugst_alliance_academia/widgets/app_richtext.dart';
 import 'package:rugst_alliance_academia/widgets/app_spining.dart';
 
@@ -24,47 +29,74 @@ class ResultSettingsView extends StatefulWidget {
 
 class _ResultSettingsViewState extends State<ResultSettingsView> {
 
+  showPublishDialgue(BuildContext context) {
+    // set up the AlertDialog
+    Dialog alert = Dialog(
+      child: SizedBox(
+        width: MediaQuery.sizeOf(context).width / 2,
+        height: MediaQuery.sizeOf(context).height / 1.5,
+        child: const PublishResultView()
+      ),
+    );
 
- 
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
- final programProvider = Provider.of<ProgramProvider>(context);
-        final resultProvider =
-        Provider.of<ResultProvider>(context, listen: false);
+    final programProvider = Provider.of<ProgramProvider>(context);
+    final resultProvider = Provider.of<ResultProvider>(context, listen: false);
 
-    //       Future getResultData() async {
-    //   var token = await getTokenAndUseIt();
-    //   if (token == null) {
-    //     if (context.mounted) {
-    //       Navigator.pushNamed(context, RouteNames.login);
-    //     }
-    //   } else if (token == "Token Expired") {
-    //     ToastHelper().errorToast("Session Expired Please Login Again");
+    Future getOverallResult() async {
+      var token = await getTokenAndUseIt();
+      if (token == null) {
+        if (context.mounted) {
+          Navigator.pushNamed(context, RouteNames.login);
+        }
+      } else if (token == "Token Expired") {
+        ToastHelper().errorToast("Session Expired Please Login Again");
 
-    //     if (context.mounted) {
-    //       Navigator.pushNamed(context, RouteNames.login);
-    //     }
-    //   } else {
-    //     var result = await resultProvider.getAllResult(token);
-    //      if(result =="Invalid Token"){
-    //        ToastHelper().errorToast("Session Expired Please Login Again");
-    //        if (context.mounted) {
-    //       Navigator.pushNamed(context, RouteNames.login);
-    //     }}
-    //   }
-    // }
-    return Padding(
-      padding: const EdgeInsets.all(18.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Center(
-            child:     AppRichTextView(
-                          title: "Publish Results",
-                          fontSize: 30.sp,
-                          fontWeight: FontWeight.bold),
-          ),
-       AppRichTextView(
+        if (context.mounted) {
+          Navigator.pushNamed(context, RouteNames.login);
+        }
+      } else {
+        var result = await resultProvider.getAllResult(token,
+            batch: programProvider.selectedBatch,
+            classId: programProvider.selectedClass,
+            programId: programProvider.selectedDept);
+        if (result == "Invalid Token") {
+          ToastHelper().errorToast("Session Expired Please Login Again");
+          if (context.mounted) {
+            Navigator.pushNamed(context, RouteNames.login);
+          }
+        }
+      }
+    }
+
+    return Scaffold(
+      body: Padding(
+        padding: const EdgeInsets.all(18.0),
+        child: Column(
+          children: [
+            Center(
+              child: AppRichTextView(
+                  title: "Publish Results",
+                  fontSize: 30.sp,
+                  fontWeight: FontWeight.bold),
+            ),
+            Expanded(
+              child: Row(
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      AppRichTextView(
                           title: "Program",
                           fontSize: 25.sp,
                           fontWeight: FontWeight.w500),
@@ -104,16 +136,318 @@ class _ResultSettingsViewState extends State<ResultSettingsView> {
                       SizedBox(
                         height: 10.h,
                       ),
-    
                       const BatchDropdown(),
                       SizedBox(
-                        height: 10.h,
+                        height: 20.h,
                       ),
-        ],
+                      Consumer<ResultProvider>(
+                        builder: (context, value, child) {
+                          return value.resultPublishModel.results == null
+                              ? Container()
+                              : AppElevatedButon(
+                                  title: "Publish",
+                                  borderColor: AppColors.colorWhite,
+                                  buttonColor: AppColors.colorc7e,
+                                  height: 50.h,
+                                  width: 150.w,
+                                  onPressed: (context) {
+                                    showPublishDialgue(context);
+                                  },
+                                  textColor: AppColors.colorWhite,
+                                );
+                        },
+                      )
+                    ],
+                  ),
+                  const VerticalDivider(),
+                  programProvider.selectedBatch == null
+                      ? Container()
+                      : FutureBuilder(
+                      future: getOverallResult(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const Center(
+                            child: SpinKitSpinningLines(
+                                color: AppColors.colorc7e),
+                          );
+                        } else {
+                          return Consumer<ResultProvider>(
+                            builder: (context, resultConsumer, child) {
+                              var examData =
+                                  resultConsumer.resultPublishModel.results;
+
+                              return examData == null
+                                  ? const Center(
+                                      child: Text("No Records Found"),
+                                    )
+                                  : Expanded(
+                                      child: ListView.builder(
+                                        shrinkWrap: true,
+                                        itemCount:
+                                            _getCategories(examData).length,
+                                        itemBuilder: (context, index) {
+                                          final category = _getCategories(
+                                              examData)[index];
+                                          final categoryItems =
+                                              _getItemsForCategory(
+                                                  category, examData);
+
+                                          return Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.all(
+                                                        8.0),
+                                                child: Text(
+                                                  category,
+                                                  style: const TextStyle(
+                                                      fontSize: 18,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
+                                              ),
+                                              SingleChildScrollView(
+                                                child: FractionallySizedBox(
+                                                  widthFactor: 0.99,
+                                                  child: DataTable(
+                                                    border:
+                                                        TableBorder.all(),
+                                                    columns: [
+                                                      DataColumn(
+                                                          label: Text(
+                                                        'Name',
+                                                        style: TextStyle(
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold,
+                                                            fontSize:
+                                                                15.sp),
+                                                      )),
+                                                      DataColumn(
+                                                          label: Text(
+                                                        'Code',
+                                                        style: TextStyle(
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold,
+                                                            fontSize:
+                                                                15.sp),
+                                                      )),
+                                                      DataColumn(
+                                                          label: Text(
+                                                        'Batch',
+                                                        style: TextStyle(
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold,
+                                                            fontSize:
+                                                                15.sp),
+                                                      )),
+                                                      DataColumn(
+                                                          label: Text(
+                                                        'CW-1',
+                                                        style: TextStyle(
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold,
+                                                            fontSize:
+                                                                15.sp),
+                                                      )),
+                                                      DataColumn(
+                                                          label: Text(
+                                                        'CW-2',
+                                                        style: TextStyle(
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold,
+                                                            fontSize:
+                                                                15.sp),
+                                                      )),
+                                                      DataColumn(
+                                                          label: Text(
+                                                        'CW-3',
+                                                        style: TextStyle(
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold,
+                                                            fontSize:
+                                                                15.sp),
+                                                      )),
+                                                      DataColumn(
+                                                          label: Text(
+                                                        'CW-4',
+                                                        style: TextStyle(
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold,
+                                                            fontSize:
+                                                                15.sp),
+                                                      )),
+                                                      DataColumn(
+                                                          label: Text(
+                                                        'Final',
+                                                        style: TextStyle(
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold,
+                                                            fontSize:
+                                                                15.sp),
+                                                      )),
+                                                      DataColumn(
+                                                          label: Text(
+                                                        'Grade',
+                                                        style: TextStyle(
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold,
+                                                            fontSize:
+                                                                15.sp),
+                                                      )),
+                                                    ],
+                                                    rows: categoryItems
+                                                        .map(
+                                                          (item) => DataRow(
+                                                            cells: [
+                                                              DataCell(Text(
+                                                                item.courseName!
+                                                                    .trim(),
+                                                                style: TextStyle(
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w500,
+                                                                    color: AppColors
+                                                                        .colorBlack,
+                                                                    fontSize:
+                                                                        12.sp),
+                                                              )),
+                                                              DataCell(Text(
+                                                                item.courseCode!,
+                                                                style: TextStyle(
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w500,
+                                                                    color: AppColors
+                                                                        .colorBlack,
+                                                                    fontSize:
+                                                                        12.sp),
+                                                              )),
+                                                              DataCell(Text(
+                                                                item.batch!,
+                                                                style: TextStyle(
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w500,
+                                                                    color: AppColors
+                                                                        .colorBlack,
+                                                                    fontSize:
+                                                                        12.sp),
+                                                              )),
+                                                              DataCell(Text(
+                                                                item.cw1
+                                                                    .toString(),
+                                                                style: TextStyle(
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w500,
+                                                                    color: AppColors
+                                                                        .colorBlack,
+                                                                    fontSize:
+                                                                        12.sp),
+                                                              )),
+                                                              DataCell(Text(
+                                                                item.cw2
+                                                                    .toString(),
+                                                                style: TextStyle(
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w500,
+                                                                    color: AppColors
+                                                                        .colorBlack,
+                                                                    fontSize:
+                                                                        12.sp),
+                                                              )),
+                                                              DataCell(Text(
+                                                                item.cw3
+                                                                    .toString(),
+                                                                style: TextStyle(
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w500,
+                                                                    color: AppColors
+                                                                        .colorBlack,
+                                                                    fontSize:
+                                                                        12.sp),
+                                                              )),
+                                                              DataCell(Text(
+                                                                item.cw4
+                                                                    .toString(),
+                                                                style: TextStyle(
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w500,
+                                                                    color: AppColors
+                                                                        .colorBlack,
+                                                                    fontSize:
+                                                                        12.sp),
+                                                              )),
+                                                              DataCell(Text(
+                                                                item.finalMark
+                                                                    .toString(),
+                                                                style: TextStyle(
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w500,
+                                                                    color: AppColors
+                                                                        .colorBlack,
+                                                                    fontSize:
+                                                                        12.sp),
+                                                              )),
+                                                              DataCell(Text(
+                                                                item.grade!,
+                                                                style: TextStyle(
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w500,
+                                                                    color: AppColors
+                                                                        .colorBlack,
+                                                                    fontSize:
+                                                                        12.sp),
+                                                              )),
+                                                            ],
+                                                          ),
+                                                        )
+                                                        .toList(),
+                                                  ),
+                                                ),
+                                              ),
+                                              const Divider(),
+                                            ],
+                                          );
+                                        },
+                                      ),
+                                    );
+                            },
+                          );
+                        }
+                      },
+                        )
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
 
-  
-}
+  List<String> _getCategories(List<Results>? data) {
+    return data!.map((item) => item.studentReg!).toSet().toList();
+  }
 
+  List<Results> _getItemsForCategory(String category, List<Results>? data) {
+    return data!.where((item) => item.studentReg! == category).toList();
+  }
+}

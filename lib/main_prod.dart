@@ -16,6 +16,7 @@ import 'package:rugst_alliance_academia/data/provider/program_provider.dart';
 import 'package:rugst_alliance_academia/data/provider/result_provider.dart';
 import 'package:rugst_alliance_academia/data/provider/staff_provider.dart';
 import 'package:rugst_alliance_academia/data/provider/student_provider.dart';
+import 'package:rugst_alliance_academia/data/provider/study_history_provider.dart';
 import 'package:rugst_alliance_academia/data/provider/timesheet_provider.dart';
 
 import 'package:rugst_alliance_academia/mobile_view/screens/splash_screen.dart';
@@ -91,6 +92,9 @@ class MyApp extends StatelessWidget {
                       ),
                        ChangeNotifierProvider(
                         create: (context) => ResultProvider(),
+                      ),
+                         ChangeNotifierProvider(
+                        create: (context) => StudyHistoryProvider(),
                       ),
                     ],
                     builder: (context, child) {
