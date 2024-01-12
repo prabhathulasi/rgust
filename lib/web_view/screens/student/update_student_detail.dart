@@ -53,37 +53,8 @@ class _AddFacultyViewState extends State<UpdateStudentDetails> {
   bool dropdownSelected = false;
   Uint8List? bytesFromPicker;
   String? imageEncoded;
-  final _noneditableKey = GlobalKey<EditableState>();
-  // List of items in our dropdown menu
-  List rows = [];
-  List filterdcols = [];
+
   List<int> selectedIDs = [];
-  addRow() {
-    rows = addOneRow(filterdcols, rows);
-
-    setState(() {});
-  }
-
-  @override
-  void initState() {
-    addRow();
-    filterdcols = [
-      {
-        "title": 'Course Code',
-        'widthFactor': 0.15,
-        'key': 'coursecode',
-      },
-      {"title": 'Course Name', 'widthFactor': 0.2, 'key': 'coursename'},
-      {"title": 'Credits', 'widthFactor': 0.1, 'key': 'credits'},
-      {
-        "title": 'Assigned Lectures',
-        'widthFactor': 0.2,
-        'key': 'lectures',
-        'editable': false
-      },
-    ];
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -94,7 +65,7 @@ class _AddFacultyViewState extends State<UpdateStudentDetails> {
 
     final studentProvider =
         Provider.of<StudentProvider>(context, listen: false);
-    final facultyProvider = Provider.of<FacultyProvider>(context);
+    
     final prgProvider = Provider.of<ProgramProvider>(context);
 
     var size = MediaQuery.of(context).size;
@@ -210,7 +181,7 @@ class _AddFacultyViewState extends State<UpdateStudentDetails> {
                                               color: AppColors.colorWhite,
                                               fontSize: 15.sp),
                                           onSaved: (p0) {
-                                            facultyProvider.setfirstName(p0!);
+                                            studentProvider.setfirstName(p0!);
                                           },
                                           inputDecoration:
                                               const InputDecoration(
@@ -250,7 +221,7 @@ class _AddFacultyViewState extends State<UpdateStudentDetails> {
                                               color: AppColors.colorWhite,
                                               fontSize: 15.sp),
                                           onSaved: (p0) {
-                                            facultyProvider.setLastName(p0!);
+                                            studentProvider.setLastName(p0!);
                                           },
                                           inputDecoration:
                                               const InputDecoration(
@@ -294,7 +265,7 @@ class _AddFacultyViewState extends State<UpdateStudentDetails> {
                                                 .validate(value);
                                           },
                                           onSaved: (p0) {
-                                            facultyProvider.setemail(p0!);
+                                            studentProvider.setemail(p0!);
                                           },
                                           inputDecoration:
                                               const InputDecoration(
@@ -335,7 +306,7 @@ class _AddFacultyViewState extends State<UpdateStudentDetails> {
                                               color: AppColors.colorWhite,
                                               fontSize: 15.sp),
                                           onSaved: (p0) {
-                                            facultyProvider.setMobile(p0!);
+                                            studentProvider.setMobile(p0!);
                                           },
                                           inputDecoration:
                                               const InputDecoration(
@@ -427,7 +398,7 @@ class _AddFacultyViewState extends State<UpdateStudentDetails> {
                                           CrossAxisAlignment.start,
                                       children: [
                                         AppRichTextView(
-                                            title: "Starts On",
+                                            title: "Admission Date",
                                             textColor: AppColors.colorWhite,
                                             fontSize: 14.sp,
                                             fontWeight: FontWeight.w500),
@@ -517,7 +488,7 @@ class _AddFacultyViewState extends State<UpdateStudentDetails> {
                                               color: AppColors.colorWhite,
                                               fontSize: 15.sp),
                                           onSaved: (p0) {
-                                            facultyProvider.setaddrss(p0!);
+                                            studentProvider.setHomeaddrss(p0!);
                                           },
                                           inputDecoration:
                                               const InputDecoration(
@@ -556,8 +527,7 @@ class _AddFacultyViewState extends State<UpdateStudentDetails> {
                                               color: AppColors.colorWhite,
                                               fontSize: 15.sp),
                                           onSaved: (p0) {
-                                            facultyProvider
-                                                .setqualification(p0!);
+                                            studentProvider.setmailaddrss(p0!);
                                           },
                                           inputDecoration:
                                               const InputDecoration(
@@ -595,7 +565,7 @@ class _AddFacultyViewState extends State<UpdateStudentDetails> {
                                               color: AppColors.colorWhite,
                                               fontSize: 15.sp),
                                           onSaved: (p0) {
-                                            facultyProvider.setpassport(p0!);
+                                            studentProvider.setpassport(p0!);
                                           },
                                           inputDecoration:
                                               const InputDecoration(
@@ -610,107 +580,112 @@ class _AddFacultyViewState extends State<UpdateStudentDetails> {
                                   ),
                                 ),
                                 const SizedBox(height: 10),
-                                Container(
-                                  color: AppColors.colorc7e,
-                                  height: 70.h,
-                                  width: size.width * 0.2,
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        AppRichTextView(
-                                            title: "Student-Type",
-                                            textColor: AppColors.colorWhite,
-                                            fontSize: 14.sp,
-                                            fontWeight: FontWeight.w500),
-                                        studentProvider.isstudentTypeEdit ==
-                                                false
-                                            ? Expanded(
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    AppRichTextView(
-                                                      title: widget
-                                                          .studentDetails
-                                                          .studentType!,
-                                                      fontSize: 15.sp,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      textColor:
-                                                          AppColors.color0ec,
-                                                    ),
-                                                    InkWell(
-                                                      onTap: () {
-                                                        studentProvider
-                                                            .setEditStudentType(
-                                                                true);
-                                                      },
-                                                      child: Icon(
-                                                        Icons.edit,
-                                                        color:
+                                Consumer<StudentProvider>(
+                                    builder: (context, studentConsumer, child) {
+                                  return Container(
+                                    color: AppColors.colorc7e,
+                                    height: 70.h,
+                                    width: size.width * 0.2,
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          AppRichTextView(
+                                              title: "Student-Type",
+                                              textColor: AppColors.colorWhite,
+                                              fontSize: 14.sp,
+                                              fontWeight: FontWeight.w500),
+                                          studentConsumer.isstudentTypeEdit ==
+                                                  false
+                                              ? Expanded(
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      AppRichTextView(
+                                                        title: widget
+                                                            .studentDetails
+                                                            .studentType!,
+                                                        fontSize: 15.sp,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        textColor:
                                                             AppColors.color0ec,
-                                                        size: 20.sp,
                                                       ),
-                                                    )
-                                                  ],
-                                                ),
-                                              )
-                                            : Expanded(
-                                                child:
-                                                    DropdownButtonHideUnderline(
-                                                  child: DropdownButton(
-                                                    iconDisabledColor:
-                                                        AppColors.colorWhite,
-                                                    dropdownColor:
-                                                        AppColors.colorc7e,
-                                                    isExpanded: true,
-
-                                                    // Initial Value
-                                                    value: studentProvider
-                                                        .studetnTypeValue,
-
-                                                    // Down Arrow Icon
-                                                    icon: const Icon(
-                                                      Icons.keyboard_arrow_down,
-                                                      color:
-                                                          AppColors.colorWhite,
-                                                    ),
-
-                                                    // Array list of items
-                                                    items: studentProvider
-                                                        .studentType
-                                                        .map((String items) {
-                                                      return DropdownMenuItem(
-                                                        value: items,
-                                                        child: AppRichTextView(
-                                                          fontSize: 15.sp,
-                                                          fontWeight:
-                                                              FontWeight.w700,
-                                                          title: items,
-                                                          textColor: AppColors
-                                                              .colorWhite,
+                                                      InkWell(
+                                                        onTap: () {
+                                                          studentConsumer
+                                                              .setEditStudentType(
+                                                                  true);
+                                                        },
+                                                        child: Icon(
+                                                          Icons.edit,
+                                                          color: AppColors
+                                                              .color0ec,
+                                                          size: 20.sp,
                                                         ),
-                                                      );
-                                                    }).toList(),
-                                                    // After selecting the desired option,it will
-                                                    // change button value to selected value
-                                                    onChanged:
-                                                        (String? newValue) {
-                                                      studentProvider
-                                                          .setStudentType(
-                                                              newValue!);
-                                                    },
+                                                      )
+                                                    ],
                                                   ),
-                                                ),
-                                              )
-                                      ],
+                                                )
+                                              : Expanded(
+                                                  child:
+                                                      DropdownButtonHideUnderline(
+                                                    child: DropdownButton(
+                                                      iconDisabledColor:
+                                                          AppColors.colorWhite,
+                                                      dropdownColor:
+                                                          AppColors.colorc7e,
+                                                      isExpanded: true,
+
+                                                      // Initial Value
+                                                      value: studentProvider
+                                                          .studetnTypeValue,
+
+                                                      // Down Arrow Icon
+                                                      icon: const Icon(
+                                                        Icons
+                                                            .keyboard_arrow_down,
+                                                        color: AppColors
+                                                            .colorWhite,
+                                                      ),
+
+                                                      // Array list of items
+                                                      items: studentProvider
+                                                          .studentType
+                                                          .map((String items) {
+                                                        return DropdownMenuItem(
+                                                          value: items,
+                                                          child:
+                                                              AppRichTextView(
+                                                            fontSize: 15.sp,
+                                                            fontWeight:
+                                                                FontWeight.w700,
+                                                            title: items,
+                                                            textColor: AppColors
+                                                                .colorWhite,
+                                                          ),
+                                                        );
+                                                      }).toList(),
+                                                      // After selecting the desired option,it will
+                                                      // change button value to selected value
+                                                      onChanged:
+                                                          (String? newValue) {
+                                                        studentProvider
+                                                            .setStudentType(
+                                                                newValue!);
+                                                      },
+                                                    ),
+                                                  ),
+                                                )
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                ),
+                                  );
+                                }),
                                 const SizedBox(height: 10),
                                 Container(
                                   color: AppColors.colorc7e,
@@ -735,7 +710,7 @@ class _AddFacultyViewState extends State<UpdateStudentDetails> {
                                               color: AppColors.colorWhite,
                                               fontSize: 15.sp),
                                           onSaved: (p0) {
-                                            facultyProvider.setcitizen(p0!);
+                                            studentProvider.setcitizen(p0!);
                                           },
                                           inputDecoration:
                                               const InputDecoration(
@@ -768,7 +743,7 @@ class _AddFacultyViewState extends State<UpdateStudentDetails> {
                             textColor: AppColors.colorWhite,
                             height: 50.h,
                             width: 150.w,
-                            loading: facultyProvider.isLoading,
+                            loading: studentProvider.isLoading,
                             onPressed: (context) async {
                               var token = await getTokenAndUseIt();
 
@@ -786,31 +761,32 @@ class _AddFacultyViewState extends State<UpdateStudentDetails> {
                                       context, RouteNames.login);
                                 }
                               } else {
-                                // if (_formKey.currentState!.validate()) {
-                                //       _formKey.currentState!.save();
-                                //              var data = widget.facultyDetail;
-                                //     var result = await facultyProvider.updateFacultyDetails(token,
-                                // updatedaddress: facultyProvider.address.isEmpty ? data.address! : facultyProvider.addresscontroller!,
-                                // updatedcitizenship: facultyProvider.cizizen.isEmpty ? data.citizenship!: facultyProvider.citizenshipcontroller!,
-                                // updatedemail: facultyProvider.email.isEmpty? data.email!:facultyProvider.emailcontroller!,
-                                // updatedfirstName: facultyProvider.firstname.isEmpty? data.firstName!: facultyProvider.firstNamecontroller!,
-                                // updatedlastName: facultyProvider.lastname.isEmpty? data.lastName!: facultyProvider.lastNamecontroller!,
-                                // updatedmobile: facultyProvider.mobile.isEmpty? data.mobile!: facultyProvider.mobileController!,
-                                // updatedpassportNumber: facultyProvider.passport.isEmpty? data.passportNumber!: facultyProvider.passportcontroller!,
-                                // updatedQualifiation: facultyProvider.qualification.isEmpty? data.qualifiation!: facultyProvider.qualificationcontroller! ,
-                                // updatedfacultyId: data.facultyId!,
-                                // updatedgender: data.gender!,
-                                // updateddob: data.dob!, updatedjoiningDate: data.joiningDate!,
-                                // updateduserImage: data.userImage!,
-                                // updatedjobType: facultyProvider.isjobTypeEdit == false? data.jobType!:jobTypeValue!,
-                                // id: data.iD!);
+                                if (_formKey.currentState!.validate()) {
+                                  _formKey.currentState!.save();
+                                  var data = widget.studentDetails;
+                                  var result = await studentProvider
+                                      .updateStudentDetails(token,
 
-                                //        if(result!=null && context.mounted) {
+                                      data.iD!.toString(),
+                                          admissionDate: dateinput.text.isEmpty
+                                              ? data.admissionDate!
+                                              : dateinput.text,
+                                          dob: dobinput.text.isEmpty
+                                              ? data.dOB!
+                                              : dobinput.text,
+                                          gender: data.gender!,
+                                 
+                                          studentType: studentProvider
+                                                      .isstudentTypeEdit ==
+                                                  true
+                                              ? studentProvider.studetnTypeValue
+                                              : data.studentType!,
+                                          userImage: data.userImage!);
 
-                                //         Navigator.pop(context);
-
-                                //        }
-                                //       }
+                                  if (result != null && context.mounted) {
+                                    Navigator.pop(context);
+                                  }
+                                }
                               }
                             }),
                         SizedBox(

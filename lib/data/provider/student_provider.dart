@@ -1,7 +1,8 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:rugst_alliance_academia/data/model/exam_result_model.dart' as prefix;
+import 'package:rugst_alliance_academia/data/model/exam_result_model.dart'
+    as prefix;
 import 'package:rugst_alliance_academia/data/model/student_course_model.dart';
 import 'package:rugst_alliance_academia/data/model/student_detail_model.dart';
 
@@ -13,11 +14,11 @@ class StudentProvider extends ChangeNotifier {
   StudentModel studentModel = StudentModel();
   StudentRegisterCourseModel studentRegisterCourseModel =
       StudentRegisterCourseModel();
-      
-prefix.ExamResultModel examResultModel = prefix.ExamResultModel();
+
+  prefix.ExamResultModel examResultModel = prefix.ExamResultModel();
   StudentDetailModel studentDetailModel = StudentDetailModel();
   List<StudentList> filteredList = [];
-  List<dynamic> editResult =[];
+  List<dynamic> editResult = [];
 
   bool filteredEnable = false;
 
@@ -110,8 +111,7 @@ prefix.ExamResultModel examResultModel = prefix.ExamResultModel();
     }
   }
 
-
-   //  getStudent result
+  //  getStudent result
   Future getStudentResult(String token, int studentId) async {
     setLoading(true);
     try {
@@ -147,19 +147,17 @@ prefix.ExamResultModel examResultModel = prefix.ExamResultModel();
     }
   }
 
-  Future addStudent(
-    String token, {
-    required String registerNo,
-    required int programId,
-    required int classId,
-    required String batch,
-    required String admissionDate,
-    required String gender,
-    required String dob,
-    required String studentType,
-    required String userImage,
-    required List<int> selectedCourseList
-  }) async {
+  Future addStudent(String token,
+      {required String registerNo,
+      required int programId,
+      required int classId,
+      required String batch,
+      required String admissionDate,
+      required String gender,
+      required String dob,
+      required String studentType,
+      required String userImage,
+      required List<int> selectedCourseList}) async {
     setLoading(true);
 
     try {
@@ -186,7 +184,7 @@ prefix.ExamResultModel examResultModel = prefix.ExamResultModel();
             "UserImage": userImage,
             "Qualification": qualification,
             "EmergencyContact": int.parse(emergencyContact),
-            "SelectedCourse":selectedCourseList
+            "SelectedCourse": selectedCourseList
           },
           token);
       var data = json.decode(result.body);
@@ -213,8 +211,6 @@ prefix.ExamResultModel examResultModel = prefix.ExamResultModel();
     }
   }
 
-
-
   Future getStudentDetailById(int studentId, String token) async {
     setLoading(true);
     try {
@@ -225,7 +221,6 @@ prefix.ExamResultModel examResultModel = prefix.ExamResultModel();
         var data = json.decode(result.body);
 
         studentDetailModel = StudentDetailModel.fromJson(data);
-
 
         notifyListeners();
 
@@ -255,23 +250,23 @@ prefix.ExamResultModel examResultModel = prefix.ExamResultModel();
       {int? programId,
       int? classId,
       int? studentId,
-       required List<int> selectedCourseList}) async {
+      required List<int> selectedCourseList}) async {
     setLoading(true);
     try {
       var data = {
         "ProgramId": programId,
         "ClassId": classId,
         "StudentId": studentId,
-        "SelectedCourse":selectedCourseList
+        "SelectedCourse": selectedCourseList,
+        "CurrentClass": true //TODO Remove Later and parse the checkbox value
       };
-      var result = await ApiHelper.post(
-          "UpdateStudentCourses", data, token);
+      var result = await ApiHelper.post("UpdateStudentCourses", data, token);
 
       setLoading(false);
       var decodedJson = json.decode(result.body);
       if (result.statusCode == 200) {
         notifyListeners();
-
+        ToastHelper().sucessToast(decodedJson["Message"]);
         return decodedJson;
       } else if (result.statusCode == 409) {
         notifyListeners();
@@ -280,7 +275,7 @@ prefix.ExamResultModel examResultModel = prefix.ExamResultModel();
         return null;
       } else {
         notifyListeners();
-        ToastHelper().errorToast("Internal Server Error");
+        ToastHelper().errorToast(decodedJson["Message"]);
         return null;
       }
     } catch (e) {
@@ -290,47 +285,107 @@ prefix.ExamResultModel examResultModel = prefix.ExamResultModel();
     }
   }
 
+  updateStudentResult(List<prefix.Result> result) {
+    editResult.clear();
+    for (var examData in result) {
+      editResult.add({
+        "id": examData.iD,
+        "coursecode": examData.courseCode,
+        "coursename": examData.courseName,
+        "batch": examData.batch,
+        "cw1": examData.cw1,
+        "cw2": examData.cw2,
+        "cw3": examData.cw3,
+        "cw4": examData.cw4,
+        "finalexam": examData.finalMark,
+        "grade": examData.grade
+      });
+    }
+    notifyListeners();
+    return editResult;
+  }
 
-updateStudentResult(List<prefix.Result> result){
-  editResult.clear();
-  for (var examData in result) {
-          editResult.add({
-            "id":examData.iD,
-            "coursecode": examData.courseCode,
-            "coursename": examData.courseName,
-            "batch":examData.batch,
-            "cw1":examData.cw1,
-            "cw2":examData.cw2,
-            "cw3":examData.cw3,
-            "cw4":examData.cw4,
-            "finalexam":examData.finalMark,
-            "grade":examData.grade       
-          });
-        }
+  updateStudentDetails(
+    String token,String id, {
+ 
+    required String admissionDate,
+    required String gender,
+    required String dob,
+    required String studentType,
+    required String userImage,
+  }) async {
+    setLoading(true);
+
+    try {
+      var result = await ApiHelper.put(
+          "UpdateStudentDetails/id=$id ",
+          {
+          
+            "AdmissionDate": admissionDate,
+            "FirstName": firstname,
+            "LastName": lastname,
+            "Email": email,
+            "Gender": gender,
+            "Mobile": int.parse(mobile),
+            "DOB": dob,
+            "Address": address,
+            "StudentType": studentType,
+            "MailingAddress": mailingaddress,
+            "PassportNumber": passport,
+            "citizenship": cizizen,
+            "UserImage": userImage,
+  
+
+          },
+          token);
+      var data = json.decode(result.body);
+
+      if (result.statusCode == 200) {
+        setEditStudentType(false);
+        setLoading(false);
+        var data = json.decode(result.body);
+        await getStudent(token);
+
         notifyListeners();
-         return editResult;
+        ToastHelper().sucessToast("Student Added Sucessfully");
 
-}
+        return data;
+      } else {
+        setLoading(false);
+        notifyListeners();
+        ToastHelper().errorToast(data["Message"]);
+        return null;
+      }
+    } catch (e) {
+      setLoading(false);
+      ToastHelper().errorToast(e.toString());
+      return null;
+    }
+  }
 
-
-
- Future createAccount(
-      String token, String email, String password,String userName) async {
+  Future createAccount(
+      String token, String email, String password, String userName) async {
     setLoading(true);
 
     // Make your login API call here using the http package
 
     try {
-      var result = await ApiHelper.post("CreateAccount",
-          {"email": email, "password": password, "usertype": "Student","username":userName}, token);
+      var result = await ApiHelper.post(
+          "CreateAccount",
+          {
+            "email": email,
+            "password": password,
+            "usertype": "Student",
+            "username": userName
+          },
+          token);
       setLoading(false);
-       var data = json.decode(result.body);
+      var data = json.decode(result.body);
       if (result.statusCode == 200) {
-  
         ToastHelper().sucessToast("Account Created Sucessfully");
         notifyListeners();
         return data;
-      }else if(result.statusCode == 403){
+      } else if (result.statusCode == 403) {
         ToastHelper().errorToast(data["Message"]);
       } else {
         notifyListeners();
@@ -343,6 +398,52 @@ updateStudentResult(List<prefix.Result> result){
       return null;
     }
   }
+// set FIRSTNAME value
+  void setfirstName(String value) async {
+    firstNamecontroller = value;
+    notifyListeners();
+  }
+
+  // set LASTNAME value
+  void setLastName(String value) async {
+    lastNamecontroller = value;
+    notifyListeners();
+  }
+
+  // set email value
+  void setemail(String value) async {
+    emailcontroller = value;
+    notifyListeners();
+  }
+
+  // set mobile value
+  void setMobile(String value) async {
+    mobileController = value;
+    notifyListeners();
+  }
+
+  // set address value
+  void setHomeaddrss(String value) async {
+    addresscontroller = value;
+    notifyListeners();
+  }
+  // set address value
+  void setmailaddrss(String value) async {
+    mailingaddresscontroller = value;
+    notifyListeners();
+  }
+   // set passport value
+  void setpassport(String value) async {
+    passportcontroller = value;
+    notifyListeners();
+  }
+
+  // set passport value
+  void setcitizen(String value) async {
+    citizenshipcontroller = value;
+    notifyListeners();
+  }
+
 // set loading value
   void setLoading(bool value) async {
     _isLoading = value;

@@ -144,7 +144,7 @@ class _ResultSettingsViewState extends State<ResultSettingsView> {
                         builder: (context, value, child) {
                           return value.resultPublishModel.results == null
                               ? Container()
-                              : AppElevatedButon(
+                              : value.resultPublishModel.userType == "COE" || value.resultPublishModel.userType == "Admin"? AppElevatedButon(
                                   title: "Publish",
                                   borderColor: AppColors.colorWhite,
                                   buttonColor: AppColors.colorc7e,
@@ -152,6 +152,26 @@ class _ResultSettingsViewState extends State<ResultSettingsView> {
                                   width: 150.w,
                                   onPressed: (context) {
                                     showPublishDialgue(context);
+                                  },
+                                  textColor: AppColors.colorWhite,
+                                ):value.resultPublishModel.userType == "Registrar" ? AppElevatedButon(
+                                  title: "Upload",
+                                  borderColor: AppColors.colorWhite,
+                                  buttonColor: AppColors.colorc7e,
+                                  height: 50.h,
+                                  width: 150.w,
+                                  onPressed: (context) {
+                                    // showPublishDialgue(context);
+                                  },
+                                  textColor: AppColors.colorWhite,
+                                ):AppElevatedButon(
+                                  title: "Approve",
+                                  borderColor: AppColors.colorWhite,
+                                  buttonColor: AppColors.colorc7e,
+                                  height: 50.h,
+                                  width: 150.w,
+                                  onPressed: (context) {
+                                    // showPublishDialgue(context);
                                   },
                                   textColor: AppColors.colorWhite,
                                 );

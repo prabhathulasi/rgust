@@ -16,117 +16,63 @@ class PublishResultView extends StatefulWidget {
 }
 
 class _PublishResultViewState extends State<PublishResultView> {
-List<String> selectedIDs =[];
+  List<int> selectedIDs = [];
   @override
   Widget build(BuildContext context) {
-    return Consumer<CommonProvider>(
-          builder: (context, commonConsumer, child) {
-            return Column(
-              children: [
-                Row(
-                  children: [
-                    Expanded(
-                      child: Card(
-                        child: RadioListTile<String>(
-                          activeColor: AppColors.colorc7e,
-                          title: const Text('All'),
-                          value: 'All',
-                          groupValue: commonConsumer.selectedOption,
-                          onChanged: (value) {
-                            commonConsumer.updateSelectedOption(value!);
-                          },
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: Card(
-                        child: RadioListTile<String>(
-                          activeColor: AppColors.colorc7e,
-                          title: const Text('Except'),
-                          value: 'Not ALL',
-                          groupValue: commonConsumer.selectedOption,
-                          onChanged: (value) {
-                            commonConsumer.updateSelectedOption(value!);
-                          },
-                        ),
-                      ),
-                    ),
-                  ],
+    return Consumer<CommonProvider>(builder: (context, commonConsumer, child) {
+      return Column(
+        children: [
+          Row(
+            children: [
+              Expanded(
+                child: Card(
+                  child: RadioListTile<String>(
+                    activeColor: AppColors.colorc7e,
+                    title: const Text('All'),
+                    value: 'All',
+                    groupValue: commonConsumer.selectedOption,
+                    onChanged: (value) {
+                      commonConsumer.updateSelectedOption(value!);
+                    },
+                  ),
                 ),
-              commonConsumer.selectedOption == ""? Padding(
-                padding:  EdgeInsets.only(top:260.0.h),
-                child: const Text("Please Select Any One Option"),
-              ): commonConsumer.selectedOption == "All"? Expanded(child: Consumer<ResultProvider>(
-                  builder: (context,resultProvider, child) {
+              ),
+              Expanded(
+                child: Card(
+                  child: RadioListTile<String>(
+                    activeColor: AppColors.colorc7e,
+                    title: const Text('Except'),
+                    value: 'Not ALL',
+                    groupValue: commonConsumer.selectedOption,
+                    onChanged: (value) {
+                      commonConsumer.updateSelectedOption(value!);
+                    },
+                  ),
+                ),
+              ),
+            ],
+          ),
+          commonConsumer.selectedOption == ""
+              ? Padding(
+                  padding: EdgeInsets.only(top: 260.0.h),
+                  child: const Text("Please Select Any One Option"),
+                )
+              : commonConsumer.selectedOption == "All"
+                  ? Expanded(child: Consumer<ResultProvider>(
+                      builder: (context, resultProvider, child) {
+                      var data = resultProvider.resultPublishModel.results;
 
-                    var data =  resultProvider.resultPublishModel.results;
-                  
-                    return Padding(
-                      padding: const EdgeInsets.all(18.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          AppRichTextView(title: "Students", fontSize: 30.sp, fontWeight: FontWeight.bold,textColor: AppColors.colorc7e,),
-                          SizedBox(
-                            height: 10.h,
-                          ),
-                          Expanded(
-                            child: ListView.builder(
-                              itemCount: _getCategories(data).length,
-                              itemBuilder: (context, index) {
-                                  final category = _getCategories(
-                                                          data)[index];
-                                                          return Row(
-                                                            children: [
-                                                              AppRichTextView(title: "${index+1}. ".toString(), fontSize: 20.sp, fontWeight: FontWeight.bold,textColor: AppColors.colorBlack,),
-                                                              AppRichTextView(title: category, fontSize: 20.sp, fontWeight: FontWeight.bold,textColor: AppColors.colorBlack,),
-                                                            ],
-                                                          );
-                          
-                              },
-                            ),
-                          ),
-                            SizedBox(height: 20.h,),
-                            Row(
-                              children: [
-                                AppElevatedButon(title: "Publish",
-                                borderColor: AppColors.colorWhite,
-                                buttonColor: AppColors.colorc7e,
-                                height: 50.h,
-                                width: 150.w,
-                                onPressed: (context) {
-                                  
-                                },
-                                textColor: AppColors.colorWhite,
-                                ),
-                                 AppElevatedButon(title: "Cancel",
-                                borderColor: AppColors.colorWhite,
-                                buttonColor: AppColors.colorc7e,
-                                height: 50.h,
-                                width: 150.w,
-                                onPressed: (context) {
-                                  
-                                },
-                                textColor: AppColors.colorWhite,
-                                )
-                              ],
-                            )
-                        ],
-                      ),
-                    );
-                  }
-                )):Expanded(
-                  child: Consumer<ResultProvider>(
-                    builder: (context,resultProvider, child) {
-                
-                      var data =  resultProvider.resultPublishModel.results;
-                    
                       return Padding(
                         padding: const EdgeInsets.all(18.0),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            AppRichTextView(title: "Students", fontSize: 30.sp, fontWeight: FontWeight.bold,textColor: AppColors.colorc7e,),
+                            AppRichTextView(
+                              title: "Students",
+                              fontSize: 30.sp,
+                              fontWeight: FontWeight.bold,
+                              textColor: AppColors.colorc7e,
+                            ),
                             SizedBox(
                               height: 10.h,
                             ),
@@ -134,9 +80,84 @@ List<String> selectedIDs =[];
                               child: ListView.builder(
                                 itemCount: _getCategories(data).length,
                                 itemBuilder: (context, index) {
-                                    final category = _getCategories(
-                                                            data)[index];
-                                                        return Card(
+                                  final category = _getCategories(data)[index];
+                                  return Row(
+                                    children: [
+                                      AppRichTextView(
+                                        title: "${index + 1}. ".toString(),
+                                        fontSize: 20.sp,
+                                        fontWeight: FontWeight.bold,
+                                        textColor: AppColors.colorBlack,
+                                      ),
+                                      AppRichTextView(
+                                        title: category,
+                                        fontSize: 20.sp,
+                                        fontWeight: FontWeight.bold,
+                                        textColor: AppColors.colorBlack,
+                                      ),
+                                    ],
+                                  );
+                                },
+                              ),
+                            ),
+                            SizedBox(
+                              height: 20.h,
+                            ),
+                            Row(
+                              children: [
+                                AppElevatedButon(
+                                  title: "Publish",
+                                  borderColor: AppColors.colorWhite,
+                                  buttonColor: AppColors.colorc7e,
+                                  height: 50.h,
+                                  width: 150.w,
+                                  onPressed: (context) {},
+                                  textColor: AppColors.colorWhite,
+                                ),
+                                AppElevatedButon(
+                                  title: "Cancel",
+                                  borderColor: AppColors.colorWhite,
+                                  buttonColor: AppColors.colorc7e,
+                                  height: 50.h,
+                                  width: 150.w,
+                                  onPressed: (context) {},
+                                  textColor: AppColors.colorWhite,
+                                )
+                              ],
+                            )
+                          ],
+                        ),
+                      );
+                    }))
+                  : Expanded(
+                      child: Consumer<ResultProvider>(
+                          builder: (context, resultProvider, child) {
+                        var data = resultProvider.resultPublishModel.results;
+
+                        return Padding(
+                          padding: const EdgeInsets.all(18.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              AppRichTextView(
+                                title: "Students",
+                                fontSize: 30.sp,
+                                fontWeight: FontWeight.bold,
+                                textColor: AppColors.colorc7e,
+                              ),
+                              SizedBox(
+                                height: 10.h,
+                              ),
+                              Expanded(
+                                child: ListView.builder(
+                                  itemCount: _getCategories(data).length,
+                                  itemBuilder: (context, index) {
+                                    final category =
+                                        _getCategories(data)[index];
+
+                                    final studentIndex =
+                                        _getStudentId(data)[index];
+                                    return Card(
                                       color: AppColors.colorc7e,
                                       child: CheckboxListTile(
                                         side:
@@ -153,66 +174,67 @@ List<String> selectedIDs =[];
                                           fontWeight: FontWeight.bold,
                                           textColor: AppColors.colorWhite,
                                         ),
-                                    
-                                        value: selectedIDs.contains(category),
+                                        value:
+                                            selectedIDs.contains(studentIndex),
                                         onChanged: (value) {
-
                                           setState(() {
                                             if (value!) {
                                               // Add the selected ID to the list
-                                              selectedIDs.add(category);
+                                              selectedIDs.add(studentIndex);
                                             } else {
                                               // Remove the ID if the checkbox is unchecked
-                                              selectedIDs.remove(category);
+                                              selectedIDs.remove(studentIndex);
                                             }
                                           });
                                           print(selectedIDs);
                                         },
                                       ),
                                     );
-                            
-                                },
-                              ),
-                            ),
-                            SizedBox(height: 20.h,),
-                            Row(
-                              children: [
-                                AppElevatedButon(title: "Publish",
-                                borderColor: AppColors.colorWhite,
-                                buttonColor: AppColors.colorc7e,
-                                height: 50.h,
-                                width: 150.w,
-                                onPressed: (context) {
-                                  
-                                },
-                                textColor: AppColors.colorWhite,
+                                  },
                                 ),
-                                 AppElevatedButon(title: "Cancel",
-                                borderColor: AppColors.colorWhite,
-                                buttonColor: AppColors.colorc7e,
-                                height: 50.h,
-                                width: 150.w,
-                                onPressed: (context) {
-                                  
-                                },
-                                textColor: AppColors.colorWhite,
-                                )
-                              ],
-                            )
-                          ],
-                        ),
-                      );
-                    }
-                  ),
-                )
-              ],
-            );
-          }
-        );
+                              ),
+                              SizedBox(
+                                height: 20.h,
+                              ),
+                              Row(
+                                children: [
+                                  AppElevatedButon(
+                                    title: "Publish",
+                                    borderColor: AppColors.colorWhite,
+                                    buttonColor: AppColors.colorc7e,
+                                    height: 50.h,
+                                    width: 150.w,
+                                    onPressed: (context) {
+                                      _getStudentId(data);
+                                    },
+                                    textColor: AppColors.colorWhite,
+                                  ),
+                                  AppElevatedButon(
+                                    title: "Cancel",
+                                    borderColor: AppColors.colorWhite,
+                                    buttonColor: AppColors.colorc7e,
+                                    height: 50.h,
+                                    width: 150.w,
+                                    onPressed: (context) {},
+                                    textColor: AppColors.colorWhite,
+                                  )
+                                ],
+                              )
+                            ],
+                          ),
+                        );
+                      }),
+                    )
+        ],
+      );
+    });
   }
 
   List<String> _getCategories(List<Results>? data) {
     return data!.map((item) => item.studentReg!).toSet().toList();
   }
 
+  List<int> _getStudentId(List<Results>? data) {
+    return data!.map((item) => item.studentId!).toSet().toList();
+  }
 }

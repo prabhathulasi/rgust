@@ -1,9 +1,13 @@
 class PublishResultModel {
+  String? message;
+  String? userType;
   List<Results>? results;
 
   PublishResultModel({this.results});
 
   PublishResultModel.fromJson(Map<String, dynamic> json) {
+     message = json['Message'];
+     userType=json["UserType"];
     if (json['Results'] != null) {
       results = <Results>[];
       json['Results'].forEach((v) {
@@ -14,6 +18,8 @@ class PublishResultModel {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
+     data['Message'] = message;
+      data['UserType'] = userType;
     if (results != null) {
       data['Results'] = results!.map((v) => v.toJson()).toList();
     }

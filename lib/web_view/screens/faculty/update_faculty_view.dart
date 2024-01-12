@@ -727,7 +727,8 @@ class _AddFacultyViewState extends State<UpdateFacultyView> {
                               updatedQualifiation: facultyProvider.qualification.isEmpty? data.qualifiation!: facultyProvider.qualificationcontroller! ,
                               updatedfacultyId: data.facultyId!, 
                               updatedgender: data.gender!, 
-                              updateddob: data.dob!, updatedjoiningDate: data.joiningDate!, 
+                              updateddob: data.dob!, 
+                              updatedjoiningDate: data.joiningDate!, 
                               updateduserImage: data.userImage!, 
                               updatedjobType: facultyProvider.isjobTypeEdit == false? data.jobType!:jobTypeValue!, 
                               id: data.iD!);
