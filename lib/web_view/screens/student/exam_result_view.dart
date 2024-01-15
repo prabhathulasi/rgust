@@ -341,10 +341,7 @@ class _ExamResultState extends State<ExamResult> {
           }
         },
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        child: const Icon(Icons.upload),
-      ),
+    
     );
   }
 

@@ -258,7 +258,7 @@ class StudentProvider extends ChangeNotifier {
         "ClassId": classId,
         "StudentId": studentId,
         "SelectedCourse": selectedCourseList,
-        "CurrentClass": true //TODO Remove Later and parse the checkbox value
+        "CurrentClass": false //TODO Remove Later and parse the checkbox value
       };
       var result = await ApiHelper.post("UpdateStudentCourses", data, token);
 

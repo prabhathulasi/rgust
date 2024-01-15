@@ -1,7 +1,13 @@
 import 'dart:convert';
 
+import 'package:calendar_view/calendar_view.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
+import 'package:rugst_alliance_academia/custom_plugin/timeline/timeline_item.dart';
 import 'package:rugst_alliance_academia/data/model/publish_result_model.dart';
+import 'package:rugst_alliance_academia/data/model/result_approval_model.dart';
+import 'package:rugst_alliance_academia/theme/app_colors.dart';
 import 'package:rugst_alliance_academia/util/api_service.dart';
 import 'package:rugst_alliance_academia/util/toast_helper.dart';
 
@@ -10,6 +16,8 @@ class ResultProvider extends ChangeNotifier {
   bool _isLoading = false;
   bool get isLoading => _isLoading;
   PublishResultModel resultPublishModel = PublishResultModel();
+  ApprovalModel approvalModel = ApprovalModel();
+  List<TimelineItem> timeline = [];
   updateExamresult(String token, int id, dynamic data) async {
     setLoading(true);
     try {
@@ -116,6 +124,83 @@ class ResultProvider extends ChangeNotifier {
     }
   }
 
+ getApprovalData(String token,
+      {String? programId, String? classId, String? batch}) async {
+    setLoading(true);
+    resultPublishModel.results?.clear();
+    Map<String, dynamic> body = {
+      "ProgramId": int.parse(programId!),
+      "ClassId": int.parse(classId!),
+      "Batch": batch
+    };
+    try {
+      var result = await ApiHelper.post("GetApprovals", body, token);
+
+      setLoading(false);
+      var data = json.decode(result.body);
+      if (result.statusCode == 200) {
+        approvalModel = ApprovalModel.fromJson(data);
+       timeline = approvalModel.approvalData!.map((e) {
+        return TimelineItem(title: e.status!, subtitle: e.userType!, description:e.approvedAt==null?"" :DateFormat('E,d MMM yyyy HH:mm').format(DateTime.parse(e.approvedAt!)), child: Icon(Icons.person,color: AppColors.colorWhite,size: 50.sp,), bubbleColor:e.status== "Pending"? AppColors.colorGrey :AppColors.colorc7e);
+       }) .toList();
+
+        notifyListeners();
+
+        return 200;
+      } else if (result.statusCode == 401) {
+        approvalModel.approvalData?.clear();
+        notifyListeners();
+
+        return "Invalid Token";
+      } else {
+        approvalModel.approvalData?.clear();
+        notifyListeners();
+        ToastHelper().errorToast(data["Message"]);
+        return null;
+      }
+    } catch (e) {
+      approvalModel.approvalData?.clear();
+      setLoading(false);
+      ToastHelper().errorToast(e.toString());
+      return null;
+    }
+  }
+
+
+updateResultStatusUploaded(String token,{String? programId, String? classId, String? batch})async{
+      Map<String, dynamic> body = {
+      "ProgramId": int.parse(programId!),
+      "ClassId": int.parse(classId!),
+      "Batch": batch
+    };
+ try {
+      var result = await ApiHelper.post("CreateApproval", body, token);
+
+      setLoading(false);
+      var data = json.decode(result.body);
+      if (result.statusCode == 200) {
+       
+        notifyListeners();
+
+        return 200;
+      } else if (result.statusCode == 401) {
+      
+        notifyListeners();
+
+        return "Invalid Token";
+      } else {
+      
+        notifyListeners();
+        ToastHelper().errorToast(data["Message"]);
+        return null;
+      }
+    } catch (e) {
+     
+      setLoading(false);
+      ToastHelper().errorToast(e.toString());
+      return null;
+    }
+}
   // set loading value
   void setLoading(bool value) async {
     _isLoading = value;
