@@ -37,7 +37,7 @@ void main() async {
   name: "dev",
     variables: {
      "flavorName":"dev",
-      "baseUrl": "http://localhost:3014",
+      "baseUrl": "http://localhost:3015",
     },
   );
   runApp(const MyApp());

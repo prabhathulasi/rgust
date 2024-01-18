@@ -21,7 +21,7 @@ class PasswordFormFieldValidator {
     }
 
     final passwordRegex =
-        RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$');
+        RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{6,}$');
     if (!passwordRegex.hasMatch(value)) {
       return 'Password must be at least 8 characters long with 1 uppercase, 1 lowercase, and 1 numeric character.';
     }

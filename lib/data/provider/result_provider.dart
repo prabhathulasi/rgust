@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:calendar_view/calendar_view.dart';
 import 'package:flutter/material.dart';
@@ -95,7 +96,7 @@ class ResultProvider extends ChangeNotifier {
       "Batch": batch
     };
     try {
-      var result = await ApiHelper.post("PublishResult", body, token);
+      var result = await ApiHelper.post("GetOverAllResult", body, token);
 
       setLoading(false);
       var data = json.decode(result.body);
@@ -110,6 +111,9 @@ class ResultProvider extends ChangeNotifier {
         notifyListeners();
 
         return "Invalid Token";
+      } else if (result.statusCode == 204) {
+        ToastHelper().errorToast("No Record Found");
+        return null;
       } else {
         resultPublishModel.results?.clear();
         notifyListeners();
@@ -124,8 +128,9 @@ class ResultProvider extends ChangeNotifier {
     }
   }
 
- getApprovalData(String token,
+  getApprovalData(String token,
       {String? programId, String? classId, String? batch}) async {
+        approvalModel.approvalData?.clear();
     setLoading(true);
     resultPublishModel.results?.clear();
     Map<String, dynamic> body = {
@@ -137,70 +142,93 @@ class ResultProvider extends ChangeNotifier {
       var result = await ApiHelper.post("GetApprovals", body, token);
 
       setLoading(false);
-      var data = json.decode(result.body);
+      if(result.body.isNotEmpty){
+     var data = json.decode(result.body);
+
       if (result.statusCode == 200) {
         approvalModel = ApprovalModel.fromJson(data);
-       timeline = approvalModel.approvalData!.map((e) {
-        return TimelineItem(title: e.status!, subtitle: e.userType!, description:e.approvedAt==null?"" :DateFormat('E,d MMM yyyy HH:mm').format(DateTime.parse(e.approvedAt!)), child: Icon(Icons.person,color: AppColors.colorWhite,size: 50.sp,), bubbleColor:e.status== "Pending"? AppColors.colorGrey :AppColors.colorc7e);
-       }) .toList();
+        timeline = approvalModel.approvalData!.map((e) {
+          return TimelineItem(
+              title: e.status!,
+              subtitle: e.userType!,
+              description: e.approvedAt == null 
+                  ? ""
+                  : DateFormat('E,d MMM yyyy HH:mm')
+                      .format(DateTime.parse(e.approvedAt!)),
+              child: Icon(
+                Icons.person,
+                color: AppColors.colorWhite,
+                size: 50.sp,
+              ),
+              bubbleColor: e.status == "Pending"
+                  ? AppColors.colorGrey
+                  : AppColors.colorc7e);
+        }).toList();
 
         notifyListeners();
 
-        return 200;
+        return approvalModel;
       } else if (result.statusCode == 401) {
         approvalModel.approvalData?.clear();
         notifyListeners();
 
         return "Invalid Token";
+      } else if (result.statusCode == 204) {
+        approvalModel.approvalData?.clear();
+        notifyListeners();
+        ToastHelper().errorToast("No Records Found");
+        return null;
       } else {
         approvalModel.approvalData?.clear();
         notifyListeners();
         ToastHelper().errorToast(data["Message"]);
         return null;
       }
+      }
+     
     } catch (e) {
       approvalModel.approvalData?.clear();
+      setLoading(false);
+      ToastHelper().errorToast("Internal Server Error");
+      return null;
+    }
+  }
+
+  createApproval(String token,
+      {String? programId, String? classId, String? batch}) async {
+    Map<String, dynamic> body = {
+      "ProgramId": int.parse(programId!),
+      "ClassId": int.parse(classId!),
+      "Batch": batch
+    };
+    setLoading(true);
+    try {
+      var result = await ApiHelper.post("CreateApproval", body, token);
+
+      setLoading(false);
+      var data = json.decode(result.body);
+      if (result.statusCode == 200) {
+        await getApprovalData(token,
+            programId: programId, classId: classId, batch: batch);
+        notifyListeners();
+
+        return 200;
+      } else if (result.statusCode == 401) {
+        notifyListeners();
+
+        return "Invalid Token";
+      } else {
+        notifyListeners();
+        ToastHelper().errorToast(data["Message"]);
+        return null;
+      }
+    } catch (e) {
       setLoading(false);
       ToastHelper().errorToast(e.toString());
       return null;
     }
   }
 
-
-updateResultStatusUploaded(String token,{String? programId, String? classId, String? batch})async{
-      Map<String, dynamic> body = {
-      "ProgramId": int.parse(programId!),
-      "ClassId": int.parse(classId!),
-      "Batch": batch
-    };
- try {
-      var result = await ApiHelper.post("CreateApproval", body, token);
-
-      setLoading(false);
-      var data = json.decode(result.body);
-      if (result.statusCode == 200) {
-       
-        notifyListeners();
-
-        return 200;
-      } else if (result.statusCode == 401) {
-      
-        notifyListeners();
-
-        return "Invalid Token";
-      } else {
-      
-        notifyListeners();
-        ToastHelper().errorToast(data["Message"]);
-        return null;
-      }
-    } catch (e) {
-     
-      setLoading(false);
-      ToastHelper().errorToast(e.toString());
-      return null;
-    }
-}
   // set loading value
   void setLoading(bool value) async {
     _isLoading = value;

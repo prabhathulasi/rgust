@@ -1,7 +1,8 @@
 class ApprovalModel {
+   String? userType;
   List<ApprovalData>? approvalData;
 
-  ApprovalModel({this.approvalData});
+  ApprovalModel({this.approvalData, this.userType});
 
   ApprovalModel.fromJson(Map<String, dynamic> json) {
     if (json['ApprovalData'] != null) {
@@ -10,6 +11,8 @@ class ApprovalModel {
         approvalData!.add(ApprovalData.fromJson(v));
       });
     }
+      userType = json['UserType'];
+  
   }
 
   Map<String, dynamic> toJson() {
@@ -17,6 +20,7 @@ class ApprovalModel {
     if (approvalData != null) {
       data['ApprovalData'] = approvalData!.map((v) => v.toJson()).toList();
     }
+     data['userType'] = userType;
     return data;
   }
 }
