@@ -217,7 +217,10 @@ var data = json.decode(result.body);
     selectedCourse = null;
 
     notifyListeners();
-    await getClasses(token);
+    if(value != "300"){
+await getClasses(token);
+    }
+    
   }
 
 //set class

@@ -39,8 +39,20 @@ class _ProgramViewState extends State<ProgramView> {
     {"title": 'Course Name', 'widthFactor': 0.2, 'key': 'coursename'},
     {"title": 'Credits', 'widthFactor': 0.2, 'key': 'credits'},
   ];
+    List clinicalcols = [
+    {
+      "title": 'Core Rotations',
+      'widthFactor': 0.2,
+      'key': 'corerotations',
+    },
+     {"title": 'Credits', 'widthFactor': 0.2, 'key': 'credits'},
+    {"title": 'Duration (weeks)', 'widthFactor': 0.2, 'key': 'duration'},
+   
+  ];
+  List clinicalRows = [];
 
   final _editableKey = GlobalKey<EditableState>();
+    final _clinicaleditableKey = GlobalKey<EditableState>();
   final _noneditableKey = GlobalKey<EditableState>();
 
   List filterdcols = [];
@@ -67,6 +79,8 @@ class _ProgramViewState extends State<ProgramView> {
 
   addRow() {
     rows = addOneRow(cols, rows);
+    clinicalRows = addOneRow(clinicalcols, clinicalRows);
+    
 
     setState(() {});
   }
@@ -96,11 +110,11 @@ class _ProgramViewState extends State<ProgramView> {
                     ),
                     programProvider.selectedDept == null
                         ? Container()
-                        : AppRichTextView(
+                        :programProvider.selectedDept == "300"? Container(): AppRichTextView(
                             title: "Class",
                             fontSize: 25.sp,
                             fontWeight: FontWeight.w500),
-                    const ClassDropdown(),
+                   programProvider.selectedDept == "300"? Container(): const ClassDropdown(),
                     SizedBox(
                       height: 10.h,
                     ),
@@ -128,32 +142,86 @@ class _ProgramViewState extends State<ProgramView> {
                     SizedBox(
                       height: 10.h,
                     ),
-          //           Consumer<CommonProvider>(
-          //             builder: (context, radioConsumer, child) {
-          //               return Row(
-          //                 children: [
-          //                         RadioListTile<String>(
-          //   title: Text('Old Syllabus'),
-          //   value: 'Old Syllabus',
-          //   groupValue: commonProvider.selectedOption,
-          //   onChanged: (value) {
-          //    commonProvider
-          //         .updateSelectedOption(value!);
-          //   },
-          // ),
-          // RadioListTile<String>(
-          //   title: Text('New Syllabus'),
-          //   value: 'New Syllabus',
-          //   groupValue: commonProvider.selectedOption,
-          //   onChanged: (value) {
-          //     commonProvider.updateSelectedOption(value!);
-          //   },
-          // ),
-          //                 ],
-          //               );
-          //             }
-          //           ),
-                    programProvider.selectedBatch == null
+
+
+                   programProvider.selectedDept=="300"? Expanded(
+                            child: Editable(
+                              key: _clinicaleditableKey,
+                              showRemoveIcon: true,
+                              columns: clinicalcols,
+                              rows: clinicalRows,
+                              zebraStripe: true,
+                              stripeColor1: Colors.blue[50]!,
+                              stripeColor2: Colors.grey[200]!,
+                              onRowSaved: (value) async {
+                                // if (value["coursename"] == null) {
+                                //   Fluttertoast.showToast(
+                                //       msg: "Course Name is Required ");
+                                // } else if (value["coursecode"] == null) {
+                                //   Fluttertoast.showToast(
+                                //       msg: "Course Code is Required ");
+                                // } else if (value["credits"] == null) {
+                                //   Fluttertoast.showToast(
+                                //       msg: "credits is Required ");
+                                // } else {
+                                //   var token = await getTokenAndUseIt();
+                                //   if (token == null) {
+                                //     if (context.mounted) {
+                                //       Navigator.pushNamed(
+                                //           context, RouteNames.login);
+                                //     }
+                                //   } else if (token == "Token Expired") {
+                                //     ToastHelper().errorToast(
+                                //         "Session Expired Please Login Again");
+
+                                //     if (context.mounted) {
+                                //       Navigator.pushNamed(
+                                //           context, RouteNames.login);
+                                //     }
+                                //   } else {
+                                //     // await programProvider.postCoursesList(token,
+                                //     //     courseName: value["coursename"],
+                                //     //     courseid: value["coursecode"],
+                                //     //     credits: int.parse(value["credits"]));
+
+                                //     rows = removeOneRow(cols, rows, rows[0]);
+                                //     programProvider.setCreateButton(true);
+                                //   }
+                                // }
+                              },
+                              onSubmitted: (value) {
+                                print(value);
+                              },
+                              borderColor: Colors.blueGrey,
+                              tdStyle:
+                                  const TextStyle(fontWeight: FontWeight.bold),
+                              trHeight: 40.h,
+                              removeIconColor: AppColors.colorRed,
+
+                              thStyle:  TextStyle(
+                                  fontSize: 15.sp,
+                                  fontWeight: FontWeight.bold,
+                                  color: AppColors.colorWhite),
+                              thAlignment: TextAlign.center,
+                              thVertAlignment: CrossAxisAlignment.end,
+                              thPaddingBottom: 3,
+                              showSaveIcon: true,
+                              saveIconColor: AppColors.colorc7e,
+                              showCreateButton:
+                                  programProvider.showCreateButton,
+                              tdAlignment: TextAlign.left,
+                              tdEditableMaxLines:
+                                  100, // don't limit and allow data to wrap
+                              tdPaddingTop: 0,
+                              tdPaddingBottom: 14,
+                              tdPaddingLeft: 10,
+                              tdPaddingRight: 8,
+                              focusedBorder: const OutlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.blue),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(0))),
+                            ),
+                          ):  programProvider.selectedBatch == null
                         ? Container()
                         : Expanded(
                             child: Editable(

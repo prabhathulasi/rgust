@@ -100,6 +100,7 @@ class ResultProvider extends ChangeNotifier {
 
       setLoading(false);
       var data = json.decode(result.body);
+      
       if (result.statusCode == 200) {
         resultPublishModel = PublishResultModel.fromJson(data);
 

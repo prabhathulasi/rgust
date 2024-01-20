@@ -219,7 +219,7 @@ class StudentProvider extends ChangeNotifier {
       setLoading(false);
       if (result.statusCode == 200) {
         var data = json.decode(result.body);
-
+print(data);
         studentDetailModel = StudentDetailModel.fromJson(data);
 
         notifyListeners();

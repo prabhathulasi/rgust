@@ -99,9 +99,9 @@ class StudentDetail {
     userId = json['UserId'];
     studentId = json['StudentId'];
     currentProgramId = json['CurrentProgramId'];
-    currentProgramName = json['ProgramName'];
+    currentProgramName = json['program_name'];
     currentClassId = json['CurrentClassId'];
-    currentClassName = json['ClassName'];
+    currentClassName = json['class_name'];
     batch = json['Batch'];
     admissionDate = json['AdmissionDate'];
     emergencyContact = json['EmergencyContact'];
@@ -145,9 +145,9 @@ class StudentDetail {
     data['UserId'] = userId;
     data['StudentId'] = studentId;
     data['CurrentProgramId'] = currentProgramId;
-    data['ProgramName'] = currentProgramName;
+    data['program_name'] = currentProgramName;
     data['CurrentClassId'] = currentClassId;
-    data['ClassName'] = currentClassName;
+    data['class_name'] = currentClassName;
     data['Batch'] = batch;
     data['AdmissionDate'] = admissionDate;
     data['EmergencyContact'] = emergencyContact;

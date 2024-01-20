@@ -105,6 +105,7 @@ class _ProgramDropdownState extends State<ProgramDropdown> {
                               textColor: AppColors.colorWhite,
                             ),
                             onChanged: (String? value) async {
+                              print(value);
                               var token = await getTokenAndUseIt();
                               if (token == null) {
                                 if (context.mounted) {
