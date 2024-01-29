@@ -31,12 +31,13 @@ class _CompleteFormState extends State<CompleteForm> {
 
   @override
   Widget build(BuildContext context) {
-    var yearProvider = Provider.of<ProgramProvider>(context);
-
+    
+  int startYear = DateTime.now().year -1; // Specify your start year
+  int endYear = DateTime.now().year; // Specify your end year (current year)
     List<int> years = [];
 
     // Generate a list of years based on the start and end years
-    for (int i = yearProvider.startYear; i <= yearProvider.endYear; i++) {
+    for (int i = startYear; i <= endYear; i++) {
       years.add(i);
     }
     return SingleChildScrollView(
@@ -50,6 +51,7 @@ class _CompleteFormState extends State<CompleteForm> {
             debugPrint(_formKey.currentState!.value.toString());
           },
           autovalidateMode: AutovalidateMode.disabled,
+          //TODO have to remove these later
           initialValue: const {
             'movie_rating': 5,
             'best_language': 'Dart',
@@ -59,18 +61,28 @@ class _CompleteFormState extends State<CompleteForm> {
           },
           skipDisabled: true,
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              AppRichTextView(
-                  title: "Program Applying For".toUpperCase(),
-                  fontSize: 20.sp,
-                  fontWeight: FontWeight.bold),
+              Center(
+                child: AppRichTextView(
+                    title: "Program Applying For".toUpperCase(),
+                    fontSize: 20.sp,
+                    
+                    fontWeight: FontWeight.bold),
+              ),
               // student Type
+                   AppRichTextView(
+                                     title: "Select Student Type",
+                                     fontSize: 18.sp,
+                                     fontWeight: FontWeight.bold),
               FormBuilderCheckboxGroup<String>(
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 decoration:
-                    const InputDecoration(labelText: 'Select Student Type'),
+                     const InputDecoration(
+                       border: InputBorder.none,
+               ),
                 name: 'Student Type',
-                // initialValue: const ['Dart'],
+            
                 options: const [
                   FormBuilderFieldOption(value: 'Regular Student'),
                   FormBuilderFieldOption(value: 'Transfer Student'),
@@ -86,14 +98,19 @@ class _CompleteFormState extends State<CompleteForm> {
                   FormBuilderValidators.maxLength(3),
                 ]),
               ),
-
+const Divider(),
               // Programme
+                 AppRichTextView(
+                  title: "Programme Applying for",
+                  fontSize: 18.sp,
+                  
+                  fontWeight: FontWeight.bold),
               FormBuilderCheckboxGroup<String>(
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 decoration:
-                    const InputDecoration(labelText: 'Programme Applying For'),
+                    const InputDecoration( border: InputBorder.none,),
                 name: 'Program',
-                // initialValue: const ['Dart'],
+               
                 options: const [
                   FormBuilderFieldOption(value: 'Doctor of Medicine'),
                   FormBuilderFieldOption(value: 'Pre Medicals'),
@@ -109,72 +126,97 @@ class _CompleteFormState extends State<CompleteForm> {
                   FormBuilderValidators.maxLength(3),
                 ]),
               ),
-              FormBuilderDropdown<int>(
-                name: 'Year',
-                decoration: const InputDecoration(
-                  labelText: 'Year',
-                  hintText: 'Select Year',
-                ),
-                validator: FormBuilderValidators.compose(
-                    [FormBuilderValidators.required()]),
-                items: years
-                    .map((year) => DropdownMenuItem(
-                          alignment: AlignmentDirectional.center,
-                          value: year,
-                          child: Text(year.toString()),
-                        ))
-                    .toList(),
-                onChanged: (val) {
-                  setState(() {
-                    (_formKey.currentState?.fields['Year']?.validate() ??
-                        false);
-                  });
-                },
-                valueTransformer: (val) => val?.toString(),
-              ),
-              // Programme
-              FormBuilderCheckboxGroup<String>(
-                autovalidateMode: AutovalidateMode.onUserInteraction,
-                decoration:
-                    const InputDecoration(labelText: 'Semester Applying For'),
-                name: 'Semester',
-                // initialValue: const ['Dart'],
-                options: const [
-                  FormBuilderFieldOption(value: 'January'),
-                  FormBuilderFieldOption(value: 'May'),
-                  FormBuilderFieldOption(value: 'September'),
+              const Divider(),
+              //Select Year 
+                AppRichTextView(
+                                  title: "Semester Applying For",
+                                  fontSize: 18.sp,
+                                  fontWeight: FontWeight.bold),
+                                  SizedBox(height: 10.h,),
+              Row(
+                children: [
+                  SizedBox(
+                    height: 50.h,
+                    width: 100.w,
+                    child: FormBuilderDropdown<int>(
+                    
+                      isDense: true,
+                      isExpanded: true,
+                      name: 'Year',
+                      decoration: const InputDecoration(
+                  hintText: "Year"
+                      ),
+                      validator: FormBuilderValidators.compose(
+                        
+                          [FormBuilderValidators.required()]),
+                      items: years
+                          .map((year) => DropdownMenuItem(
+                                alignment: AlignmentDirectional.center,
+                                value: year,
+                                child: Text(year.toString()),
+                              ))
+                          .toList(),
+                      onChanged: (val) {
+                        setState(() {
+                          (_formKey.currentState?.fields['Year']?.validate() ??
+                              false);
+                        });
+                      },
+                      valueTransformer: (val) => val?.toString(),
+                    ),
+                  ),
+                  SizedBox(width: 10.w,),
+                    Expanded(
+                      child: FormBuilderCheckboxGroup<String>(
+                                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                                      decoration:
+                      const InputDecoration(border: InputBorder.none),
+                                      name: 'Semester',
+                                      // initialValue: const ['Dart'],
+                                      options: const [
+                                        FormBuilderFieldOption(value: 'January'),
+                                        FormBuilderFieldOption(value: 'May'),
+                                        FormBuilderFieldOption(value: 'September'),
+                                      ],
+                                      onChanged: _onChanged,
+                                      separator: const VerticalDivider(
+                                        width: 10,
+                                        thickness: 5,
+                                        color: Colors.red,
+                                      ),
+                                      validator: FormBuilderValidators.compose([
+                                        FormBuilderValidators.minLength(1),
+                                        FormBuilderValidators.maxLength(3),
+                                      ]),
+                                    ),
+                    ),
                 ],
-                onChanged: _onChanged,
-                separator: const VerticalDivider(
-                  width: 10,
-                  thickness: 5,
-                  color: Colors.red,
-                ),
-                validator: FormBuilderValidators.compose([
-                  FormBuilderValidators.minLength(1),
-                  FormBuilderValidators.maxLength(3),
-                ]),
               ),
+
+            
+            
               SizedBox(
                 height: 10.h,
               ),
-              AppRichTextView(
-                  title: "Previous Enrolment".toUpperCase(),
-                  fontSize: 20.sp,
-                  fontWeight: FontWeight.bold),
+              Center(
+                child: AppRichTextView(
+                    title: "Previous Enrolment".toUpperCase(),
+                    fontSize: 20.sp,
+                    fontWeight: FontWeight.bold),
+              ),
               SizedBox(
-                height: 10.h,
+                height: 20.h,
               ),
               Align(
                   alignment: Alignment.topLeft,
                   child: AppRichTextView(
                       title:
-                          "Have you previously applied to stydy, or enroll at Rajiv Gandhi Univeristy of Science and Technology(RGUST) or one of its predecessor colleges?",
+                          "Have you previously applied to study, or enroll at Rajiv Gandhi Univeristy of Science and Technology(RGUST) or one of its predecessor colleges?",
                       fontSize: 15.sp,
-                      fontWeight: FontWeight.w500)),
+                      fontWeight: FontWeight.w400,)),
               FormBuilderRadioGroup<String>(
                 decoration: const InputDecoration(
-                  labelText: 'Previous Enrolment',
+                  border: InputBorder.none
                 ),
                 initialValue: null,
                 name: 'Previous Enrolment',
@@ -192,14 +234,18 @@ class _CompleteFormState extends State<CompleteForm> {
                     .toList(growable: false),
                 controlAffinity: ControlAffinity.trailing,
               ),
+           
+              const Divider(),
               SizedBox(
                 height: 10.h,
               ),
-              AppRichTextView(
-                  title:
-                      "${"Personal Details".toUpperCase()} (As they appear on your passport where applicable)",
-                  fontSize: 20.sp,
-                  fontWeight: FontWeight.bold),
+              Center(
+                child: AppRichTextView(
+                    title:
+                        "${"Personal Details".toUpperCase()} (As they appear on your passport where applicable)",
+                    fontSize: 20.sp,
+                    fontWeight: FontWeight.bold),
+              ),
               SizedBox(
                 height: 10.h,
               ),
@@ -317,6 +363,7 @@ class _CompleteFormState extends State<CompleteForm> {
                   FormBuilderDropdown<String>(
                     name: 'gender',
                     decoration: InputDecoration(
+                      
                       labelText: 'Gender',
                       suffix: _genderHasError
                           ? const Icon(Icons.error)
@@ -327,7 +374,7 @@ class _CompleteFormState extends State<CompleteForm> {
                         [FormBuilderValidators.required()]),
                     items: genderOptions
                         .map((gender) => DropdownMenuItem(
-                              alignment: AlignmentDirectional.center,
+                              alignment: AlignmentDirectional.topStart,
                               value: gender,
                               child: Text(gender),
                             ))
@@ -407,41 +454,103 @@ class _CompleteFormState extends State<CompleteForm> {
                     keyboardType: TextInputType.text,
                     textInputAction: TextInputAction.next,
                   ),
-                  FormBuilderSlider(
-                    name: 'slider',
-                    validator: FormBuilderValidators.compose([
-                      FormBuilderValidators.min(6),
-                    ]),
-                    onChanged: _onChanged,
-                    min: 0.0,
-                    max: 10.0,
-                    initialValue: 7.0,
-                    divisions: 20,
-                    activeColor: Colors.red,
-                    inactiveColor: Colors.pink[100],
+               
+               SizedBox(
+                height: 20.h,
+              ),
+              Align(
+                alignment: Alignment.topLeft,
+                child: AppRichTextView(
+                    title:
+                        "Which Country do you Currently Reside In?",
+                    fontSize: 15.sp,
+                    fontWeight: FontWeight.w400),
+              ),
+               FormBuilderTextField(
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    name: 'Country Reside In',
                     decoration: const InputDecoration(
-                      labelText: 'Number of things',
+                      labelText: 'My Country of Citizenship is',
                     ),
+                    onChanged: (val) {
+                      setState(() {
+                        !(_formKey.currentState?.fields['Birth']?.validate() ??
+                            false);
+                      });
+                    },
+                    // valueTransformer: (text) => num.tryParse(text),
+                    validator: FormBuilderValidators.compose([
+                      FormBuilderValidators.required(),
+                      FormBuilderValidators.max(70),
+                    ]),
+
+                    keyboardType: TextInputType.text,
+                    textInputAction: TextInputAction.next,
                   ),
-                  FormBuilderRangeSlider(
-                    name: 'range_slider',
-                    onChanged: _onChanged,
-                    min: 0.0,
-                    max: 100.0,
-                    initialValue: const RangeValues(4, 7),
-                    divisions: 20,
-                    maxValueWidget: (max) => TextButton(
-                      onPressed: () {
-                        _formKey.currentState?.patchValue(
-                          {'range_slider': const RangeValues(4, 100)},
-                        );
-                      },
-                      child: Text(max),
-                    ),
-                    activeColor: Colors.red,
-                    inactiveColor: Colors.pink[100],
-                    decoration: const InputDecoration(labelText: 'Price Range'),
-                  ),
+                       SizedBox(
+                height: 20.h,
+              ),
+              Align(
+                alignment: Alignment.topLeft,
+                child: AppRichTextView(
+                    title:
+                        "Will you be studying on a student visa ?",
+                    fontSize: 15.sp,
+                    fontWeight: FontWeight.w400),
+              ),
+              FormBuilderRadioGroup<String>(
+                decoration: const InputDecoration(
+            
+                ),
+                initialValue: null,
+                name: 'student visa',
+                onChanged: _onChanged,
+                validator: FormBuilderValidators.compose(
+                    [FormBuilderValidators.required()]),
+                options: [
+                  'Yes',
+                  'No',
+                ]
+                    .map((lang) => FormBuilderFieldOption(
+                          value: lang,
+                          child: Text(lang),
+                        ))
+                    .toList(growable: false),
+                controlAffinity: ControlAffinity.trailing,
+              ),
+
+                  SizedBox(
+                height: 20.h,
+              ),
+              Align(
+                alignment: Alignment.topLeft,
+                child: AppRichTextView(
+                    title:
+                        "Do you speak a language other than English at you Permanent home address?",
+                    fontSize: 15.sp,
+                    fontWeight: FontWeight.w400),
+              ),
+              FormBuilderRadioGroup<String>(
+                decoration: const InputDecoration(
+                border: InputBorder.none
+            
+                ),
+                initialValue: null,
+                name: 'Eng Lang',
+                onChanged: _onChanged,
+                validator: FormBuilderValidators.compose(
+                    [FormBuilderValidators.required()]),
+                options: [
+                  'Yes',
+                  'No',
+                ]
+                    .map((lang) => FormBuilderFieldOption(
+                          value: lang,
+                          child: Text(lang),
+                        ))
+                    .toList(growable: false),
+                controlAffinity: ControlAffinity.trailing,
+              ),
                   FormBuilderCheckbox(
                     name: 'accept_terms',
                     initialValue: false,
@@ -620,8 +729,9 @@ class _CompleteFormState extends State<CompleteForm> {
                     child: ElevatedButton(
                       onPressed: () {
                         if (_formKey.currentState?.saveAndValidate() ?? false) {
-                          debugPrint(_formKey.currentState?.value.toString());
+                          debugPrint(_formKey.currentState?.value["Previous Enrolment"].toString());
                         } else {
+                           debugPrint(_formKey.currentState?.value["Previous Enrolment"].toString());
                           debugPrint(_formKey.currentState?.value.toString());
                           debugPrint('validation failed');
                         }

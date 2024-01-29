@@ -53,7 +53,6 @@ dependencies:
   shared_preferences: ^2.2.1
   jwt_decoder: ^2.0.1
   file_picker: ^6.0.0
-  pdfx: ^2.4.0
   lottie: ^2.7.0
   grouped_list: ^5.1.2
   flutter_flavor: ^3.1.3

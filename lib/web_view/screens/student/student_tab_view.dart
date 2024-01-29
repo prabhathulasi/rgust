@@ -29,7 +29,8 @@ class StudentTabView extends StatelessWidget {
 
               // ignore: prefer_const_constructors
               child: TabBar(
-                labelColor: AppColors.colorWhite,
+                unselectedLabelColor: AppColors.colorWhite,
+                labelColor: AppColors.color582,
                 indicatorWeight: 1.0,
 
                 indicator: CustomTabIndicator(

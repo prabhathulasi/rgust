@@ -219,7 +219,7 @@ class StudentProvider extends ChangeNotifier {
       setLoading(false);
       if (result.statusCode == 200) {
         var data = json.decode(result.body);
-print(data);
+
         studentDetailModel = StudentDetailModel.fromJson(data);
 
         notifyListeners();
@@ -258,7 +258,7 @@ print(data);
         "ClassId": classId,
         "StudentId": studentId,
         "SelectedCourse": selectedCourseList,
-        "CurrentClass": false //TODO Remove Later and parse the checkbox value
+        "CurrentClass": true //TODO Remove Later and parse the checkbox value
       };
       var result = await ApiHelper.post("UpdateStudentCourses", data, token);
 
@@ -364,7 +364,7 @@ print(data);
   }
 
   Future createAccount(
-      String token, String email, String password, String userName) async {
+      String token, String email, String password, String userName, int studentId) async {
     setLoading(true);
 
     // Make your login API call here using the http package
@@ -383,6 +383,7 @@ print(data);
       var data = json.decode(result.body);
       if (result.statusCode == 200) {
         ToastHelper().sucessToast("Account Created Sucessfully");
+        await getStudentDetailById(studentId, token);
         notifyListeners();
         return data;
       } else if (result.statusCode == 403) {

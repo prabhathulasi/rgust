@@ -22,35 +22,38 @@ class _PublishResultViewState extends State<PublishResultView> {
     return Consumer<CommonProvider>(builder: (context, commonConsumer, child) {
       return Column(
         children: [
-          Row(
-            children: [
-              Expanded(
-                child: Card(
-                  child: RadioListTile<String>(
-                    activeColor: AppColors.colorc7e,
-                    title: const Text('All'),
-                    value: 'All',
-                    groupValue: commonConsumer.selectedOption,
-                    onChanged: (value) {
-                      commonConsumer.updateSelectedOption(value!);
-                    },
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Card(
+                    child: RadioListTile<String>(
+                      activeColor: AppColors.colorc7e,
+                      title: const Text('All'),
+                      value: 'All',
+                      groupValue: commonConsumer.selectedOption,
+                      onChanged: (value) {
+                        commonConsumer.updateSelectedOption(value!);
+                      },
+                    ),
                   ),
                 ),
-              ),
-              Expanded(
-                child: Card(
-                  child: RadioListTile<String>(
-                    activeColor: AppColors.colorc7e,
-                    title: const Text('Except'),
-                    value: 'Not ALL',
-                    groupValue: commonConsumer.selectedOption,
-                    onChanged: (value) {
-                      commonConsumer.updateSelectedOption(value!);
-                    },
+                Expanded(
+                  child: Card(
+                    child: RadioListTile<String>(
+                      activeColor: AppColors.colorc7e,
+                      title: const Text('Except'),
+                      value: 'Not ALL',
+                      groupValue: commonConsumer.selectedOption,
+                      onChanged: (value) {
+                        commonConsumer.updateSelectedOption(value!);
+                      },
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
           commonConsumer.selectedOption == ""
               ? Padding(

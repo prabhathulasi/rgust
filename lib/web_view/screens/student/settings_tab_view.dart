@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:rugst_alliance_academia/data/middleware/check_auth_middleware.dart';
 import 'package:rugst_alliance_academia/data/model/student_detail_model.dart';
-import 'package:rugst_alliance_academia/data/provider/faculty_provider.dart';
+
 import 'package:rugst_alliance_academia/data/provider/student_provider.dart';
 import 'package:rugst_alliance_academia/routes/named_routes.dart';
 import 'package:rugst_alliance_academia/theme/app_colors.dart';
@@ -143,41 +143,45 @@ class _SettingsTabViewState extends State<SettingsTabView> {
                     Consumer<StudentProvider>(
                         builder: (context, studentPRovider, child) {
                       return AppElevatedButon(
-                        title: "Create",
-                        buttonColor: AppColors.colorc7e,
-                        height: 50.h,
-                        width: 120.w,
-                        textColor: AppColors.colorWhite,
-                        onPressed: (context) async {
-                          if (formKey.currentState!.validate()) {
-                            formKey.currentState!.save();
-                            var token = await getTokenAndUseIt();
-                            if (token == null) {
-                              if (context.mounted) {
-                                Navigator.pushNamed(context, RouteNames.login);
-                              }
-                            } else if (token == "Token Expired") {
-                              ToastHelper().errorToast(
-                                  "Session Expired Please Login Again");
+                              title: "Create",
+                              buttonColor: AppColors.colorc7e,
+                              height: 50.h,
+                              width: 140.w,
+                              textColor: AppColors.colorWhite,
+                              onPressed: (context) async {
+                                if (formKey.currentState!.validate()) {
+                                  formKey.currentState!.save();
+                                  var token = await getTokenAndUseIt();
+                                  if (token == null) {
+                                    if (context.mounted) {
+                                      Navigator.pushNamed(
+                                          context, RouteNames.login);
+                                    }
+                                  } else if (token == "Token Expired") {
+                                    ToastHelper().errorToast(
+                                        "Session Expired Please Login Again");
 
-                              if (context.mounted) {
-                                Navigator.pushNamed(context, RouteNames.login);
-                              }
-                            } else {
-                              var result = await studentPRovider.createAccount(
-                                  token,
-                                  widget.studentDetail!.email!,
-                                  password!,
-                                  userName!);
-                              if (result != null) {
-                                if (context.mounted) {
-                                  Navigator.pop(context);
+                                    if (context.mounted) {
+                                      Navigator.pushNamed(
+                                          context, RouteNames.login);
+                                    }
+                                  } else {
+                                    var result =
+                                        await studentPRovider.createAccount(
+                                            token,
+                                            widget.studentDetail!.email!,
+                                            password!,
+                                            userName!,
+                                            widget.studentDetail!.iD!);
+                                    if (result != null) {
+                                      if (context.mounted) {
+                                        Navigator.pop(context);
+                                      }
+                                    }
+                                  }
                                 }
-                              }
-                            }
-                          }
-                        },
-                      );
+                              },
+                            );
                     }),
                     SizedBox(
                       width: 10.w,
@@ -186,7 +190,7 @@ class _SettingsTabViewState extends State<SettingsTabView> {
                       title: "cancel",
                       buttonColor: AppColors.colorc7e,
                       height: 50.h,
-                      width: 120.w,
+                      width: 140.w,
                       textColor: AppColors.colorWhite,
                       onPressed: (context) {
                         Navigator.pop(context);
@@ -229,19 +233,24 @@ class _SettingsTabViewState extends State<SettingsTabView> {
               SizedBox(
                 height: 10.h,
               ),
-             widget.studentDetail!.accountCreated== false? InkWell(
-                onTap: () {
-                  showCreateAccountDialogue(context);
-                },
-                child: const Card(
-                  elevation: 5.0,
-                  child: ListTile(
-                    leading: Icon(Icons.person_add),
-                    title: Text("Create Account"),
-                    trailing: Icon(Icons.chevron_right),
-                  ),
-                ),
-              ):Container(),
+             Consumer<StudentProvider>(
+               builder: (context, studentConsumer, child) {
+                 return studentConsumer.studentDetailModel.studentDetail!.accountCreated == true? Container(): InkWell(
+                          onTap: () {
+                            showCreateAccountDialogue(context);
+                          },
+                          child: const Card(
+                            elevation: 5.0,
+                            child: ListTile(
+                              leading: Icon(Icons.person_add),
+                              title: Text("Create Account"),
+                              trailing: Icon(Icons.chevron_right),
+                            ),
+                          ),
+                        );
+               }
+             ),
+                 
               SizedBox(
                 height: 10.h,
               ),

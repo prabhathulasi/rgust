@@ -64,6 +64,7 @@ class _StudyHistoryViewState extends State<StudyHistoryView> {
                             DataColumn(label: Text('Course Name',style: TextStyle(fontWeight: FontWeight.bold),softWrap: true,)),
                             DataColumn(label: Text('Course Code',style: TextStyle(fontWeight: FontWeight.bold),)),
                              DataColumn(label: Text('Batch',style: TextStyle(fontWeight: FontWeight.bold),)),
+                             DataColumn(label: Text('Status',style: TextStyle(fontWeight: FontWeight.bold),)),
                               DataColumn(label: Text('Approved Date',style: TextStyle(fontWeight: FontWeight.bold),)),
                                DataColumn(label: Text('Approved By',style: TextStyle(fontWeight: FontWeight.bold),)),
                           ],
@@ -74,8 +75,10 @@ class _StudyHistoryViewState extends State<StudyHistoryView> {
                                     DataCell(Text(item.courseName!.trim(),style: const TextStyle(fontWeight: FontWeight.w500, color: AppColors.colorBlack),)),
                                     DataCell(Text(item.courseCode!,style: const TextStyle(fontWeight: FontWeight.w500, color: AppColors.colorBlack),)),
                                     DataCell(Text(item.batch!,style: const TextStyle(fontWeight: FontWeight.w500, color: AppColors.colorBlack),)),
+                                            DataCell(Text(item.status!,style: const TextStyle(fontWeight: FontWeight.w500, color: AppColors.colorBlack),)),
                                     DataCell(Text(DateFormat.yMMMEd().format(DateTime.parse(item.createdAt!)),style: const TextStyle(fontWeight: FontWeight.w500, color: AppColors.colorBlack),)),
                                     DataCell(Text(item.approvedBy!,style: const TextStyle(fontWeight: FontWeight.w500, color: AppColors.colorBlack),)),
+                            
                                   ],
                                 ),
                               )

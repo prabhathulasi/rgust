@@ -1309,7 +1309,7 @@ class _AddStudentViewState extends State<AddStudentView> {
                             buttonColor: AppColors.colorc7e,
                             textColor: AppColors.colorWhite,
                             height: 50.h,
-                            width: 120.w,
+                            width: 140.w,
                             onPressed: (context) {},
                           )
                         ],

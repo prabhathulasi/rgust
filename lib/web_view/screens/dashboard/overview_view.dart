@@ -300,7 +300,7 @@ class _OverviewViewState extends State<OverviewView> {
                     Row(
           
                       children: [
-                        AppRichTextView(title: "ClockIn and ClockOut", fontSize: 20.sp, fontWeight:FontWeight.bold,textColor: AppColors.colorBlack,),
+                        AppRichTextView(title: " Students ClockIn and ClockOut", fontSize: 20.sp, fontWeight:FontWeight.bold,textColor: AppColors.colorBlack,),
                         InkWell(
                           onTap: () {
                             getClockInDeatils();

@@ -152,10 +152,10 @@ class ResultProvider extends ChangeNotifier {
           return TimelineItem(
               title: e.status!,
               subtitle: e.userType!,
-              description: e.approvedAt == null 
-                  ? ""
-                  : DateFormat('E,d MMM yyyy HH:mm')
-                      .format(DateTime.parse(e.approvedAt!)),
+              description: e.status == "Uploaded" ?
+                   DateFormat('E,d MMM yyyy HH:mm')
+                      .format(DateTime.parse(e.createdAt!)):e.status =="Approved"? DateFormat('E,d MMM yyyy HH:mm')
+                      .format(DateTime.parse(e.updatedAt!)):"",
               child: Icon(
                 Icons.person,
                 color: AppColors.colorWhite,
@@ -230,6 +230,40 @@ class ResultProvider extends ChangeNotifier {
     }
   }
 
+
+approveResult(String token,{required String resultId, required int userLevel, required String batch, required String programId, required String classId}) async{
+    Map<String, dynamic> body = {
+   "ResultId":  resultId,
+		"UserLevel": userLevel,
+		"Status":    "Approved",
+    };
+    setLoading(true);
+    try {
+      var result = await ApiHelper.post("ApproveResult", body, token);
+
+      setLoading(false);
+      var data = json.decode(result.body);
+      if (result.statusCode == 200) {
+      await getApprovalData(token,batch:batch, classId: classId,programId: programId);
+  ToastHelper().sucessToast("Approved");
+        notifyListeners();
+
+        return 200;
+      } else if (result.statusCode == 401) {
+        notifyListeners();
+
+        return "Invalid Token";
+      } else {
+        notifyListeners();
+        ToastHelper().errorToast(data["Message"]);
+        return null;
+      }
+    } catch (e) {
+      setLoading(false);
+      ToastHelper().errorToast(e.toString());
+      return null;
+    }
+}
   // set loading value
   void setLoading(bool value) async {
     _isLoading = value;

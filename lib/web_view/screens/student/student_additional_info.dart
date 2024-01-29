@@ -9,7 +9,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
-import 'package:pdfx/pdfx.dart';
+
 import 'package:provider/provider.dart';
 import 'package:rugst_alliance_academia/data/middleware/check_auth_middleware.dart';
 import 'package:rugst_alliance_academia/data/model/student_detail_model.dart';
@@ -38,41 +38,41 @@ String flavorName = FlavorConfig.instance.variables["flavorName"];
 
 class _StudentAdditionalInfoViewState extends State<StudentAdditionalInfoView> {
   bool isHovered = false;
-  showPDfView(BuildContext context, PdfController pdfController) {
-    // set up the AlertDialog
-    Dialog alert = Dialog(
-      child: Stack(
-        children: [
-          PdfView(
-            controller: pdfController,
-          ),
-          Transform.translate(
-            offset: Offset(10.w, -13.h),
-            child: GestureDetector(
-                onTap: () {
-                  Navigator.of(context).pop();
-                },
-                child: const Align(
-                  alignment: Alignment.topRight,
-                  child: CircleAvatar(
-                    radius: 14.0,
-                    backgroundColor: AppColors.colorc7e,
-                    child: Icon(Icons.close, color: AppColors.color0ec),
-                  ),
-                )),
-          )
-        ],
-      ),
-    );
+  // showPDfView(BuildContext context, PdfController pdfController) {
+  //   // set up the AlertDialog
+  //   Dialog alert = Dialog(
+  //     child: Stack(
+  //       children: [
+  //         PdfView(
+  //           controller: pdfController,
+  //         ),
+  //         Transform.translate(
+  //           offset: Offset(10.w, -13.h),
+  //           child: GestureDetector(
+  //               onTap: () {
+  //                 Navigator.of(context).pop();
+  //               },
+  //               child: const Align(
+  //                 alignment: Alignment.topRight,
+  //                 child: CircleAvatar(
+  //                   radius: 14.0,
+  //                   backgroundColor: AppColors.colorc7e,
+  //                   child: Icon(Icons.close, color: AppColors.color0ec),
+  //                 ),
+  //               )),
+  //         )
+  //       ],
+  //     ),
+  //   );
 
-    // show the dialog
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return alert;
-      },
-    );
-  }
+  //   // show the dialog
+  //   showDialog(
+  //     context: context,
+  //     builder: (BuildContext context) {
+  //       return alert;
+  //     },
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -281,10 +281,10 @@ class _StudentAdditionalInfoViewState extends State<StudentAdditionalInfoView> {
                                 children: data.map((e) {
                                   Uint8List pdfData = base64Decode(e.data!);
 
-                                  final pdfController = PdfController(
-                                    viewportFraction: 2.0,
-                                    document: PdfDocument.openData(pdfData),
-                                  );
+                                  // final pdfController = PdfController(
+                                  //   viewportFraction: 2.0,
+                                  //   document: PdfDocument.openData(pdfData),
+                                  // );
 
                                   return FocusedMenuHolder(
                                     openWithTap: true,
@@ -328,14 +328,15 @@ class _StudentAdditionalInfoViewState extends State<StudentAdditionalInfoView> {
                                                     border: Border.all(
                                                         color: AppColors
                                                             .colorBlack)),
-                                                child: Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          top: 8.0, bottom: 8),
-                                                  child: PdfView(
-                                                    controller: pdfController,
-                                                  ),
-                                                )),
+                                                // child: Padding(
+                                                //   padding:
+                                                //       const EdgeInsets.only(
+                                                //           top: 8.0, bottom: 8),
+                                                //   child: PdfView(
+                                                //     controller: pdfController,
+                                                //   ),
+                                                // )
+                                                ),
                                           ),
                                           SizedBox(
                                             height: 10.0.h,

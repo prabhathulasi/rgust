@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:rugst_alliance_academia/data/model/clinical_course_model.dart';
 import 'package:rugst_alliance_academia/data/model/course_model.dart';
 import 'package:rugst_alliance_academia/data/model/program_class_model.dart';
 import 'package:rugst_alliance_academia/data/model/program_model.dart';
@@ -16,6 +17,7 @@ class ProgramProvider extends ChangeNotifier {
   ProgramModel programModel = ProgramModel();
   ProgramClassModel programClassModel = ProgramClassModel();
   CoursesModel coursesModel = CoursesModel();
+  ClinicalCoursesModel clinicalCoursesModel = ClinicalCoursesModel();
   bool showCreateButton = false;
   List<dynamic> newData = [];
   String? selectedDept;
@@ -26,7 +28,9 @@ class ProgramProvider extends ChangeNotifier {
 
    int _isNewStudent = 1;
   int get isNewStudent => _isNewStudent;
-
+// change the value of radio button in add faculty screen
+   bool _isCore = false;
+  bool get isCore => _isCore;
 
   ProgramModel get getDepts => programModel;
   ProgramClassModel get getDeptsClass => programClassModel;
@@ -176,6 +180,80 @@ var data = json.decode(result.body);
     }
   }
 
+  // get course List depend on the selected class and the batch
+  Future getClinicalCourses(String token) async {
+    var result = await ApiHelper.get(
+        "GetClinical", token);
+    try {
+      if (result.statusCode == 200) {
+        setLoading(false);
+        var data = json.decode(result.body);
+
+        clinicalCoursesModel = ClinicalCoursesModel.fromJson(data);
+
+     
+
+        notifyListeners();
+
+        return clinicalCoursesModel;
+      } else if (result.statusCode == 204) {
+        setLoading(false);
+        notifyListeners();
+        ToastHelper().errorToast("No Clinical Courses Added Yet");
+        return null;
+      } else {
+        setLoading(false);
+        notifyListeners();
+        ToastHelper().errorToast("Internal Server Error");
+        return null;
+      }
+    } catch (e) {
+      setLoading(false);
+      Fluttertoast.showToast(msg: e.toString());
+      return e.toString();
+    }
+  }
+
+// create course or add new course
+  Future postClinicalCourse(String? token,
+      {String? rotationName, int? duration, int? credits}) async {
+            try {
+    var result = await ApiHelper.post(
+        "PostClinical",
+        {
+          "ProgramId": int.parse(selectedDept!),
+        "RotationName":rotationName,
+        "RotationCredits":credits,
+        "RotationDuration":duration,
+        "RotationType":_isCore == false?"Core":"Elective"
+        },
+        token!);
+
+var data = json.decode(result.body);
+      if (result.statusCode == 200) {
+        setLoading(false);
+        ToastHelper().sucessToast("Course Added Successfully");
+        await getClinicalCourses(token);
+        notifyListeners();
+      }else if(result.statusCode == 409){
+               setLoading(false);
+        notifyListeners();
+        ToastHelper().errorToast(data["Message"]);
+        return null; 
+      } 
+      
+      else {
+        setLoading(false);
+        notifyListeners();
+        ToastHelper().errorToast("Internal Server Error");
+        return null;
+      }
+    } catch (e) {
+      setLoading(false);
+      Fluttertoast.showToast(msg: e.toString());
+      return e.toString();
+    }
+  }
 //TODO have to parse the token and complete the patch work in front end
 // create course or add new course
   Future<void> patchCoursesList(BuildContext context,
@@ -219,6 +297,8 @@ var data = json.decode(result.body);
     notifyListeners();
     if(value != "300"){
 await getClasses(token);
+    }else{
+      getClinicalCourses(token);
     }
     
   }
@@ -284,6 +364,12 @@ await getClasses(token);
     selectedClass = null;
     selectedBatch = null;
     newData.clear();
+    notifyListeners();
+  }
+
+  // select core or elective rotation
+  void selectRotationType(bool isNew) {
+    _isCore = isNew;
     notifyListeners();
   }
 

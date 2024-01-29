@@ -1188,6 +1188,7 @@ class _AddFacultyViewState extends State<UpdateStudentDetails> {
                                                       studentId: widget
                                                           .studentDetails.iD);
                                               if (result != null) {
+                                           
                                                 if (context.mounted) {
                                                   Navigator.pop(context);
                                                 }
