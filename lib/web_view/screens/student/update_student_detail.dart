@@ -67,7 +67,7 @@ class _AddFacultyViewState extends State<UpdateStudentDetails> {
         Provider.of<StudentProvider>(context, listen: false);
     
     final prgProvider = Provider.of<ProgramProvider>(context);
-
+ final commonProvider = Provider.of<CommonProvider>(context);
     var size = MediaQuery.of(context).size;
     return Scaffold(
       body: Container(
@@ -797,7 +797,7 @@ class _AddFacultyViewState extends State<UpdateStudentDetails> {
                           buttonColor: AppColors.colorc7e,
                           textColor: AppColors.colorWhite,
                           height: 50.h,
-                          width: 120.w,
+                          width: 150.w,
                           onPressed: (context) {},
                         )
                       ],
@@ -940,7 +940,7 @@ class _AddFacultyViewState extends State<UpdateStudentDetails> {
                               ),
                             ),
                           )
-                        : const Padding(
+                        :prgProvider.selectedDept == "300"? Container():   const Padding(
                             padding: EdgeInsets.only(left: 18),
                             child: ClassDropdown(),
                           ),
@@ -948,44 +948,8 @@ class _AddFacultyViewState extends State<UpdateStudentDetails> {
                       height: 15.h,
                     ),
                     studentConsumer.selectedCourseIndex == false
-                        ? Padding(
-                            padding: const EdgeInsets.only(left: 18),
-                            child: Container(
-                              color: AppColors.colorc7e,
-                              height: 70.h,
-                              width: size.width * 0.2,
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    AppRichTextView(
-                                        title: "Batch",
-                                        textColor: AppColors.colorWhite,
-                                        fontSize: 14.sp,
-                                        fontWeight: FontWeight.w500),
-                                    Expanded(
-                                        child: AppTextFormFieldWidget(
-                                      enable: false,
-                                      initialValue: widget.studentDetails.batch,
-                                      textStyle: GoogleFonts.roboto(
-                                          color: AppColors.colorWhite,
-                                          fontSize: 15.sp),
-                                      onSaved: (p0) {
-                                        // facultyProvider.setLastName(p0!);
-                                      },
-                                      inputDecoration: const InputDecoration(
-                                          border: InputBorder.none,
-                                          hintStyle: TextStyle(
-                                              color: AppColors.colorGrey)),
-                                      obscureText: false,
-                                    )),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          )
-                        : Padding(
+                        ? Container()
+                        : prgProvider.selectedDept == "300"? Container():Padding(
                             padding: const EdgeInsets.only(left: 18),
                             child: Column(
                               children: [
@@ -1061,12 +1025,12 @@ class _AddFacultyViewState extends State<UpdateStudentDetails> {
                                         textColor: AppColors.colorc7e,
                                       ))
                         : Container(),
-                    prgProvider.newData.isEmpty
+                  prgProvider.selectedDept=="300"? Text("Data"):  prgProvider.newData.isEmpty
                         ? Container()
                         : Expanded(
                             child: Consumer<ProgramProvider>(
                                 builder: (context, departmentProvider, child) {
-                              return ListView.builder(
+                                return   ListView.builder(
                                 shrinkWrap: true,
                                 itemCount: departmentProvider
                                     .coursesModel.courses!.length,
@@ -1186,7 +1150,9 @@ class _AddFacultyViewState extends State<UpdateStudentDetails> {
                                                           prgProvider
                                                               .selectedClass!),
                                                       studentId: widget
-                                                          .studentDetails.iD);
+                                                          .studentDetails.iD,
+                                                          currentClass: commonProvider.isChecked
+                                                          );
                                               if (result != null) {
                                            
                                                 if (context.mounted) {

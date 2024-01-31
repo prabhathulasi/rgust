@@ -250,6 +250,7 @@ class StudentProvider extends ChangeNotifier {
       {int? programId,
       int? classId,
       int? studentId,
+      bool? currentClass,
       required List<int> selectedCourseList}) async {
     setLoading(true);
     try {
@@ -258,7 +259,7 @@ class StudentProvider extends ChangeNotifier {
         "ClassId": classId,
         "StudentId": studentId,
         "SelectedCourse": selectedCourseList,
-        "CurrentClass": true //TODO Remove Later and parse the checkbox value
+        "CurrentClass": currentClass 
       };
       var result = await ApiHelper.post("UpdateStudentCourses", data, token);
 

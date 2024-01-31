@@ -35,11 +35,11 @@ class Result {
   String? courseName;
   String? courseCode;
   int? courseCredits;
-  int? cw1;
-  int? cw2;
-  int? cw3;
-  int? cw4;
-  int? finalMark;
+  String? cw1;
+  String? cw2;
+  String? cw3;
+  String? cw4;
+  String? finalMark;
   String? createdBy;
   String? updatedBy;
   bool? publish;

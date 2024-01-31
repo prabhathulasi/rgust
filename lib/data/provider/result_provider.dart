@@ -23,11 +23,11 @@ class ResultProvider extends ChangeNotifier {
     setLoading(true);
     try {
       Map<String, dynamic> body = {
-        "Cw1": int.parse(data["CW1"]),
-        "Cw2": int.parse(data["CW2"]),
-        "CW3": int.parse(data["CW3"]),
-        "CW4": int.parse(data["CW4"]),
-        "FinalMark": int.parse(data["FinalExam"]),
+        "Cw1": data["CW1"],
+        "Cw2": data["CW2"],
+        "CW3": data["CW3"],
+        "CW4": data["CW4"],
+        "FinalMark": data["FinalExam"],
         "Grade": data["Grade"]
       };
       print(body);

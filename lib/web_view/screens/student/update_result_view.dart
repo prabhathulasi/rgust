@@ -80,7 +80,7 @@ class _UpdateResultViewState extends State<UpdateResultView> {
                 } else {
                   var index = value["row"];
 
-                  print(value);
+               
                   var result = await resultProvider.updateExamresult(
                       token, studentProvider.editResult[index]["id"], {
                     "CW1": value["cw1"] ??
@@ -100,9 +100,7 @@ class _UpdateResultViewState extends State<UpdateResultView> {
                   if (result == 200) {
                     await studentProvider.getStudentResult(
                         token, widget.studenId!);
-                    if (mounted) {
-                      Navigator.pop(context);
-                    }
+                  
                   }
                 }
               },
