@@ -85,11 +85,11 @@ class Result {
     courseName = json['CourseName'];
     courseCode = json['CourseCode'];
     courseCredits = json['CourseCredits'];
-    cw1 = json['Cw1'];
-    cw2 = json['Cw2'];
-    cw3 = json['Cw3'];
-    cw4 = json['Cw4'];
-    finalMark = json['FinalMark'];
+    cw1 = json['Cw1'].toString();
+    cw2 = json['Cw2'].toString();
+    cw3 = json['Cw3'].toString();
+    cw4 = json['Cw4'].toString();
+    finalMark = json['FinalMark'].toString();
     createdBy = json['CreatedBy'];
     updatedBy = json['UpdatedBy'];
     publish = json['Publish'];

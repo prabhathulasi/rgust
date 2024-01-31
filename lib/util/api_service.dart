@@ -43,7 +43,7 @@ class ApiHelper {
     return _handleResponse(response);
   }
 
-  static Future<dynamic> put(String endpoint, Map<String, dynamic> data, String token) async {
+  static Future<http.Response> put(String endpoint, Map<String, dynamic> data, String token) async {
          String flavorUrl = FlavorConfig.instance.variables["baseUrl"];
  String flavorName =FlavorConfig.instance.variables["flavorName"];
     final response = await http.put(

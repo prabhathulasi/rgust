@@ -280,35 +280,35 @@ class _ExamResultState extends State<ExamResult> {
                                                     fontSize: 12.sp),
                                               )),
                                               DataCell(Text(
-                                                item.cw1.toString(),
+                                                item.cw1!,
                                                 style: TextStyle(
                                                     fontWeight: FontWeight.w500,
                                                     color: AppColors.colorBlack,
                                                     fontSize: 12.sp),
                                               )),
                                               DataCell(Text(
-                                                item.cw2.toString(),
+                                                item.cw2!,
                                                 style: TextStyle(
                                                     fontWeight: FontWeight.w500,
                                                     color: AppColors.colorBlack,
                                                     fontSize: 12.sp),
                                               )),
                                               DataCell(Text(
-                                                item.cw3.toString(),
+                                                item.cw3!,
                                                 style: TextStyle(
                                                     fontWeight: FontWeight.w500,
                                                     color: AppColors.colorBlack,
                                                     fontSize: 12.sp),
                                               )),
                                               DataCell(Text(
-                                                item.cw4.toString(),
+                                                item.cw4!,
                                                 style: TextStyle(
                                                     fontWeight: FontWeight.w500,
                                                     color: AppColors.colorBlack,
                                                     fontSize: 12.sp),
                                               )),
                                               DataCell(Text(
-                                                item.finalMark.toString(),
+                                                item.finalMark!,
                                                 style: TextStyle(
                                                     fontWeight: FontWeight.w500,
                                                     color: AppColors.colorBlack,

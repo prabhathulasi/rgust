@@ -22,12 +22,12 @@ class ResultProvider extends ChangeNotifier {
   updateExamresult(String token, int id, dynamic data) async {
     setLoading(true);
     try {
-      Map<String, dynamic> body = {
-        "Cw1": data["CW1"],
-        "Cw2": data["CW2"],
-        "CW3": data["CW3"],
-        "CW4": data["CW4"],
-        "FinalMark": data["FinalExam"],
+      Map<String, String> body = {
+        "Cw1": data["CW1"].toString(),
+        "Cw2": data["CW2"].toString(),
+        "CW3": data["CW3"].toString(),
+        "CW4": data["CW4"].toString(),
+        "FinalMark": data["FinalExam"].toString(),
         "Grade": data["Grade"]
       };
       print(body);
@@ -47,7 +47,15 @@ class ResultProvider extends ChangeNotifier {
         notifyListeners();
 
         return "Invalid Token";
-      } else {
+      }else if (result.statusCode == 400) {
+        var data = json.decode(result.body);
+        
+        notifyListeners();
+ ToastHelper().errorToast(data["Message"]);
+        // return "Invalid Token";
+      }
+      
+       else {
         notifyListeners();
         ToastHelper().errorToast("Internal Server Error");
         return null;
