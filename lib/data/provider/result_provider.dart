@@ -22,7 +22,7 @@ class ResultProvider extends ChangeNotifier {
   updateExamresult(String token, int id, dynamic data) async {
     setLoading(true);
     try {
-      Map<String, String> body = {
+      Map<String, dynamic> body = {
         "Cw1": data["CW1"].toString(),
         "Cw2": data["CW2"].toString(),
         "CW3": data["CW3"].toString(),
@@ -30,7 +30,7 @@ class ResultProvider extends ChangeNotifier {
         "FinalMark": data["FinalExam"].toString(),
         "Grade": data["Grade"]
       };
-      print(body);
+     
       var result = await ApiHelper.put("UpdateResult/id=$id", body, token);
 
       setLoading(false);
@@ -49,7 +49,7 @@ class ResultProvider extends ChangeNotifier {
         return "Invalid Token";
       }else if (result.statusCode == 400) {
         var data = json.decode(result.body);
-        
+
         notifyListeners();
  ToastHelper().errorToast(data["Message"]);
         // return "Invalid Token";

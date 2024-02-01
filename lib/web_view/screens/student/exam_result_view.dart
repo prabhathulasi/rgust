@@ -194,6 +194,7 @@ class _ExamResultState extends State<ExamResult> {
                                           label: Text(
                                         'Name',
                                         style: TextStyle(
+                                          fontFamily: "Arial-Black",
                                             fontWeight: FontWeight.bold,
                                             fontSize: 15.sp),
                                       )),
@@ -201,6 +202,7 @@ class _ExamResultState extends State<ExamResult> {
                                           label: Text(
                                         'Code',
                                         style: TextStyle(
+                                          fontFamily: "Arial-Black",
                                             fontWeight: FontWeight.bold,
                                             fontSize: 15.sp),
                                       )),
@@ -208,6 +210,7 @@ class _ExamResultState extends State<ExamResult> {
                                           label: Text(
                                         'Batch',
                                         style: TextStyle(
+                                          fontFamily: "Arial-Black",
                                             fontWeight: FontWeight.bold,
                                             fontSize: 15.sp),
                                       )),
@@ -215,6 +218,7 @@ class _ExamResultState extends State<ExamResult> {
                                           label: Text(
                                         'CW-1',
                                         style: TextStyle(
+                                          fontFamily: "Arial-Black",
                                             fontWeight: FontWeight.bold,
                                             fontSize: 15.sp),
                                       )),
@@ -222,6 +226,7 @@ class _ExamResultState extends State<ExamResult> {
                                           label: Text(
                                         'CW-2',
                                         style: TextStyle(
+                                          fontFamily: "Arial-Black",
                                             fontWeight: FontWeight.bold,
                                             fontSize: 15.sp),
                                       )),
@@ -229,6 +234,7 @@ class _ExamResultState extends State<ExamResult> {
                                           label: Text(
                                         'CW-3',
                                         style: TextStyle(
+                                          fontFamily: "Arial-Black",
                                             fontWeight: FontWeight.bold,
                                             fontSize: 15.sp),
                                       )),
@@ -236,6 +242,7 @@ class _ExamResultState extends State<ExamResult> {
                                           label: Text(
                                         'CW-4',
                                         style: TextStyle(
+                                          fontFamily: "Arial-Black",
                                             fontWeight: FontWeight.bold,
                                             fontSize: 15.sp),
                                       )),
@@ -243,6 +250,7 @@ class _ExamResultState extends State<ExamResult> {
                                           label: Text(
                                         'Final',
                                         style: TextStyle(
+                                          fontFamily: "Arial-Black",
                                             fontWeight: FontWeight.bold,
                                             fontSize: 15.sp),
                                       )),
@@ -250,6 +258,7 @@ class _ExamResultState extends State<ExamResult> {
                                           label: Text(
                                         'Grade',
                                         style: TextStyle(
+                                          fontFamily: "Arial-Black",
                                             fontWeight: FontWeight.bold,
                                             fontSize: 15.sp),
                                       )),
@@ -261,6 +270,7 @@ class _ExamResultState extends State<ExamResult> {
                                               DataCell(Text(
                                                 item.courseName!.trim(),
                                                 style: TextStyle(
+                                                  fontFamily: "Arial-Black",
                                                     fontWeight: FontWeight.w500,
                                                     color: AppColors.colorBlack,
                                                     fontSize: 12.sp),
@@ -268,6 +278,7 @@ class _ExamResultState extends State<ExamResult> {
                                               DataCell(Text(
                                                 item.courseCode!,
                                                 style: TextStyle(
+                                                  fontFamily: "Arial-Black",
                                                     fontWeight: FontWeight.w500,
                                                     color: AppColors.colorBlack,
                                                     fontSize: 12.sp),
@@ -275,6 +286,7 @@ class _ExamResultState extends State<ExamResult> {
                                               DataCell(Text(
                                                 item.batch!,
                                                 style: TextStyle(
+                                                  fontFamily: "Arial-Black",
                                                     fontWeight: FontWeight.w500,
                                                     color: AppColors.colorBlack,
                                                     fontSize: 12.sp),
@@ -282,6 +294,7 @@ class _ExamResultState extends State<ExamResult> {
                                               DataCell(Text(
                                                 item.cw1!,
                                                 style: TextStyle(
+                                                  fontFamily: "Arial-Black",
                                                     fontWeight: FontWeight.w500,
                                                     color: AppColors.colorBlack,
                                                     fontSize: 12.sp),
@@ -289,6 +302,7 @@ class _ExamResultState extends State<ExamResult> {
                                               DataCell(Text(
                                                 item.cw2!,
                                                 style: TextStyle(
+                                                  fontFamily: "Arial-Black",
                                                     fontWeight: FontWeight.w500,
                                                     color: AppColors.colorBlack,
                                                     fontSize: 12.sp),
@@ -296,6 +310,7 @@ class _ExamResultState extends State<ExamResult> {
                                               DataCell(Text(
                                                 item.cw3!,
                                                 style: TextStyle(
+                                                  fontFamily: "Arial-Black",
                                                     fontWeight: FontWeight.w500,
                                                     color: AppColors.colorBlack,
                                                     fontSize: 12.sp),
@@ -303,6 +318,7 @@ class _ExamResultState extends State<ExamResult> {
                                               DataCell(Text(
                                                 item.cw4!,
                                                 style: TextStyle(
+                                                  fontFamily: "Arial-Black",
                                                     fontWeight: FontWeight.w500,
                                                     color: AppColors.colorBlack,
                                                     fontSize: 12.sp),
@@ -310,6 +326,7 @@ class _ExamResultState extends State<ExamResult> {
                                               DataCell(Text(
                                                 item.finalMark!,
                                                 style: TextStyle(
+                                                  fontFamily: "Arial-Black",
                                                     fontWeight: FontWeight.w500,
                                                     color: AppColors.colorBlack,
                                                     fontSize: 12.sp),
@@ -317,6 +334,7 @@ class _ExamResultState extends State<ExamResult> {
                                               DataCell(Text(
                                                 item.grade!,
                                                 style: TextStyle(
+                                                  fontFamily: "Arial-Black",
                                                     fontWeight: FontWeight.w500,
                                                     color: AppColors.colorBlack,
                                                     fontSize: 12.sp),
