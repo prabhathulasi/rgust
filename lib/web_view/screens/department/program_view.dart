@@ -186,16 +186,18 @@ class _ProgramViewState extends State<ProgramView> {
                                     stripeColor1: Colors.blue[50]!,
                                     stripeColor2: Colors.grey[200]!,
                                     onRowSaved: (value) async {
-                                      
                                       if (value == null) {
-                                      ToastHelper().errorToast(
-                                                "Please Fill the Required Field");
+                                        ToastHelper().errorToast(
+                                            "Please Fill the Required Field");
                                       } else if (value["rotations"] == null) {
-                                      ToastHelper().errorToast("Rotation Name is Required ");
+                                        ToastHelper().errorToast(
+                                            "Rotation Name is Required ");
                                       } else if (value["duration"] == null) {
-                                       ToastHelper().errorToast( "Duration is Required ");
+                                        ToastHelper().errorToast(
+                                            "Duration is Required ");
                                       } else if (value["credits"] == null) {
-                                         ToastHelper().errorToast("credits is Required ");
+                                        ToastHelper()
+                                            .errorToast("credits is Required ");
                                       } else {
                                         var token = await getTokenAndUseIt();
                                         if (token == null) {
@@ -355,137 +357,182 @@ class _ProgramViewState extends State<ProgramView> {
                 ),
               ),
               const VerticalDivider(),
-            programProvider.selectedDept == "300"? Expanded(child: Consumer<ProgramProvider>(
-              builder: (context, clinicalConsumer, child) {
-                var data = clinicalConsumer.clinicalCoursesModel.clinicals;
-                
-                return data == null ?const Text("No Clinical Records Found"):  ListView.builder(
-                  itemCount: _getCategories(data).length,
-itemBuilder: (context, index) {
-     final category = _getCategories(data)[index];
-                 final categoryItems = _getItemsForCategory(category,data);
-  return Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: AppRichTextView(title: "$category Rotation", fontSize: 15.sp, fontWeight: FontWeight.bold),
-      ),
-      SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: DataTable(
-                           columnSpacing: 40, // Adjust column spacing as needed
-                            // Adjust row height as needed
-                          border: TableBorder.all(),
-                          columns:  const [
-                            DataColumn(label: Text('Rotation',style: TextStyle(fontWeight: FontWeight.bold),softWrap: true,)),
-                            DataColumn(label: Text('Credits',style: TextStyle(fontWeight: FontWeight.bold),)),
-                             DataColumn(label: Text('Duration',style: TextStyle(fontWeight: FontWeight.bold),)),
-                            
-                          ],
-                          rows: categoryItems
-                              .map(
-                                (item) => DataRow(
-                                  cells: [
-                                    DataCell(Text(item.rotationName!.trim(),style: const TextStyle(fontWeight: FontWeight.w500, color: AppColors.colorBlack),)),
-                                    DataCell(Text(item.rotationCredits.toString(),style: const TextStyle(fontWeight: FontWeight.w500, color: AppColors.colorBlack),)),
-                                    DataCell(Text(item.rotationDuration.toString(),style: const TextStyle(fontWeight: FontWeight.w500, color: AppColors.colorBlack),)),
-                      
-                                  ],
-                                ),
-                              )
-                              .toList(),
-                        ),
-                      ),
-    ],
-  );
-  
-},
-                );
-                
-              },
-            )):  Expanded(
-                child: programProvider.newData.isEmpty
-                    ? Container()
-                    : Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          AppRichTextView(
-                              title: "Registered Course",
-                              fontSize: 25.sp,
-                              fontWeight: FontWeight.w500),
-                          SizedBox(
-                            height: 10.w,
-                          ),
-                          Builder(builder: (context) {
-                            return Expanded(
-                              flex: 1,
-                              child: Consumer<ProgramProvider>(builder:
-                                  (context, departmentProvider, child) {
-                                return Editable(
-                                  enabled: false,
-                                  key: _noneditableKey,
-                                  showRemoveIcon: false,
-                                  columns: filterdcols,
-                                  rows: departmentProvider.newData,
-                                  zebraStripe: true,
-                                  stripeColor1: AppColors.colorc7e,
-                                  stripeColor2: AppColors.colorc7e,
-                                  onRowSaved: (value) async {
-                                    log(value);
-                                    //   await departmentProvider.patchCoursesList(context,
-                                    //  courseName: value["coursename"],
-                                    // courseid: value["coursecode"],
-                                    // credits: int.parse(value["credits"]));
-                                  },
-                                  onSubmitted: (value) {
-                                    print(value);
-                                  },
+              programProvider.selectedDept == "300"
+                  ? Expanded(child: Consumer<ProgramProvider>(
+                      builder: (context, clinicalConsumer, child) {
+                        var data =
+                            clinicalConsumer.clinicalCoursesModel.clinicals;
 
-                                  borderColor: Colors.blueGrey,
-                                  tdStyle: TextStyle(
-                                      fontSize: 15.sp,
-                                      fontWeight: FontWeight.bold,
-                                      color: AppColors.colorWhite),
-                                  trHeight: 100.h,
-                                  thStyle: TextStyle(
-                                      fontSize: 18.sp,
-                                      fontWeight: FontWeight.bold,
-                                      color: AppColors.colorWhite),
-                                  thAlignment: TextAlign.center,
-                                  thVertAlignment: CrossAxisAlignment.end,
-                                  thPaddingBottom: 3,
-                                  showSaveIcon: false,
-                                  saveIconColor: Colors.black,
-                                  showCreateButton: false,
-                                  tdAlignment: TextAlign.left,
-                                  tdEditableMaxLines:
-                                      100, // don't limit and allow data to wrap
-                                  tdPaddingTop: 10.h,
-                                  tdPaddingBottom: 14.h,
-                                  tdPaddingLeft: 10.w,
-                                  tdPaddingRight: 8.w,
-                                  focusedBorder: const OutlineInputBorder(
-                                      borderSide:
-                                          BorderSide(color: Colors.blue),
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(0))),
-                                );
-                              }),
-                            );
-                          }),
-                        ],
-                      ),
-              ),
+                        return data == null
+                            ? const Text("No Clinical Records Found")
+                            : ListView.builder(
+                                itemCount: _getCategories(data).length,
+                                itemBuilder: (context, index) {
+                                  final category = _getCategories(data)[index];
+                                  final categoryItems =
+                                      _getItemsForCategory(category, data);
+                                  return Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: AppRichTextView(
+                                            title: "$category Rotation",
+                                            fontSize: 15.sp,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      SingleChildScrollView(
+                                        scrollDirection: Axis.horizontal,
+                                        child: DataTable(
+                                          columnSpacing:
+                                              40, // Adjust column spacing as needed
+                                          // Adjust row height as needed
+                                          border: TableBorder.all(),
+                                          columns: const [
+                                            DataColumn(
+                                                label: Text(
+                                              'Rotation',
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold),
+                                              softWrap: true,
+                                            )),
+                                            DataColumn(
+                                                label: Text(
+                                              'Credits',
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold),
+                                            )),
+                                            DataColumn(
+                                                label: Text(
+                                              'Duration',
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold),
+                                            )),
+                                          ],
+                                          rows: categoryItems
+                                              .map(
+                                                (item) => DataRow(
+                                                  cells: [
+                                                    DataCell(Text(
+                                                      item.rotationName!.trim(),
+                                                      style: const TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                          color: AppColors
+                                                              .colorBlack),
+                                                    )),
+                                                    DataCell(Text(
+                                                      item.rotationCredits
+                                                          .toString(),
+                                                      style: const TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                          color: AppColors
+                                                              .colorBlack),
+                                                    )),
+                                                    DataCell(Text(
+                                                      item.rotationDuration
+                                                          .toString(),
+                                                      style: const TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                          color: AppColors
+                                                              .colorBlack),
+                                                    )),
+                                                  ],
+                                                ),
+                                              )
+                                              .toList(),
+                                        ),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+                      },
+                    ))
+                  : Expanded(
+                      child: programProvider.newData.isEmpty
+                          ? Container()
+                          : Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                AppRichTextView(
+                                    title: "Registered Course",
+                                    fontSize: 25.sp,
+                                    fontWeight: FontWeight.w500),
+                                SizedBox(
+                                  height: 10.w,
+                                ),
+                                Builder(builder: (context) {
+                                  return Expanded(
+                                    flex: 1,
+                                    child: Consumer<ProgramProvider>(builder:
+                                        (context, departmentProvider, child) {
+                                      return Editable(
+                                        enabled: false,
+                                        key: _noneditableKey,
+                                        showRemoveIcon: false,
+                                        columns: filterdcols,
+                                        rows: departmentProvider.newData,
+                                        zebraStripe: true,
+                                        stripeColor1: AppColors.colorc7e,
+                                        stripeColor2: AppColors.colorc7e,
+                                        onRowSaved: (value) async {
+                                          log(value);
+                                          //   await departmentProvider.patchCoursesList(context,
+                                          //  courseName: value["coursename"],
+                                          // courseid: value["coursecode"],
+                                          // credits: int.parse(value["credits"]));
+                                        },
+                                        onSubmitted: (value) {
+                                          print(value);
+                                        },
+
+                                        borderColor: Colors.blueGrey,
+                                        tdStyle: TextStyle(
+                                            fontSize: 15.sp,
+                                            fontWeight: FontWeight.bold,
+                                            color: AppColors.colorWhite),
+                                        trHeight: 100.h,
+                                        thStyle: TextStyle(
+                                            fontSize: 18.sp,
+                                            fontWeight: FontWeight.bold,
+                                            color: AppColors.colorWhite),
+                                        thAlignment: TextAlign.center,
+                                        thVertAlignment: CrossAxisAlignment.end,
+                                        thPaddingBottom: 3,
+                                        showSaveIcon: false,
+                                        saveIconColor: Colors.black,
+                                        showCreateButton: false,
+                                        tdAlignment: TextAlign.left,
+                                        tdEditableMaxLines:
+                                            100, // don't limit and allow data to wrap
+                                        tdPaddingTop: 10.h,
+                                        tdPaddingBottom: 14.h,
+                                        tdPaddingLeft: 10.w,
+                                        tdPaddingRight: 8.w,
+                                        focusedBorder: const OutlineInputBorder(
+                                            borderSide:
+                                                BorderSide(color: Colors.blue),
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(0))),
+                                      );
+                                    }),
+                                  );
+                                }),
+                              ],
+                            ),
+                    ),
             ])));
   }
 
-    List<String> _getCategories(List<Clinicals>? clinicals) {
+  List<String> _getCategories(List<Clinicals>? clinicals) {
     return clinicals!.map((item) => item.rotationType!).toSet().toList();
   }
 
- List<Clinicals> _getItemsForCategory(String category,List<Clinicals>? data) {
+  List<Clinicals> _getItemsForCategory(String category, List<Clinicals>? data) {
     return data!.where((item) => item.rotationType! == category).toList();
   }
-
 }

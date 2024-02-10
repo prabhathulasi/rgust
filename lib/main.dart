@@ -1,5 +1,6 @@
 
 import 'package:calendar_view/calendar_view.dart';
+import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_flavor/flutter_flavor.dart';
@@ -21,13 +22,16 @@ import 'package:rugst_alliance_academia/data/provider/timesheet_provider.dart';
 
 import 'package:rugst_alliance_academia/mobile_view/screens/splash_screen.dart';
 import 'package:rugst_alliance_academia/routes/named_routes.dart';
+  
 import 'package:rugst_alliance_academia/web_view/screens/dashboard/vertical_tab_view.dart';
 import 'package:rugst_alliance_academia/web_view/screens/login_view.dart';
 
 import 'package:flutter/foundation.dart';
+
 import 'package:url_strategy/url_strategy.dart';
 
 void main() async {
+
    setPathUrlStrategy();
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([
@@ -43,7 +47,9 @@ void main() async {
   runApp(const MyApp());
 }
 
+
 class MyApp extends StatelessWidget {
+  
   const MyApp({super.key});
 
   // This widget is the root of your application.
@@ -103,6 +109,7 @@ class MyApp extends StatelessWidget {
                         
                           debugShowCheckedModeBanner: false,
                           initialRoute: RouteNames.login,
+                        
                           onGenerateRoute: (settings) {
                             if(settings.name == '/'){
                               return MaterialPageRoute(builder: (context)=> const WebLoginView());
@@ -113,10 +120,7 @@ class MyApp extends StatelessWidget {
           );
                             }
                           },
-                          // routes: {
-                          //   RouteNames.welcome: (context) =>
-                          //       const VerticalTabView(),
-                          //    },
+                       
                           title: 'Academia',
                           theme: ThemeData(
                             primarySwatch: Colors.grey,

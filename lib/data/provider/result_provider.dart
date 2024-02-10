@@ -1,7 +1,5 @@
 import 'dart:convert';
-import 'dart:developer';
 
-import 'package:calendar_view/calendar_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
@@ -30,7 +28,7 @@ class ResultProvider extends ChangeNotifier {
         "FinalMark": data["FinalExam"].toString(),
         "Grade": data["Grade"]
       };
-     
+
       var result = await ApiHelper.put("UpdateResult/id=$id", body, token);
 
       setLoading(false);
@@ -47,15 +45,13 @@ class ResultProvider extends ChangeNotifier {
         notifyListeners();
 
         return "Invalid Token";
-      }else if (result.statusCode == 400) {
+      } else if (result.statusCode == 400) {
         var data = json.decode(result.body);
 
         notifyListeners();
- ToastHelper().errorToast(data["Message"]);
+        ToastHelper().errorToast(data["Message"]);
         // return "Invalid Token";
-      }
-      
-       else {
+      } else {
         notifyListeners();
         ToastHelper().errorToast("Internal Server Error");
         return null;
@@ -108,7 +104,7 @@ class ResultProvider extends ChangeNotifier {
 
       setLoading(false);
       var data = json.decode(result.body);
-      
+
       if (result.statusCode == 200) {
         resultPublishModel = PublishResultModel.fromJson(data);
 
@@ -139,7 +135,7 @@ class ResultProvider extends ChangeNotifier {
 
   getApprovalData(String token,
       {String? programId, String? classId, String? batch}) async {
-        approvalModel.approvalData?.clear();
+    approvalModel.approvalData?.clear();
     setLoading(true);
     resultPublishModel.results?.clear();
     Map<String, dynamic> body = {
@@ -147,12 +143,13 @@ class ResultProvider extends ChangeNotifier {
       "ClassId": int.parse(classId!),
       "Batch": batch
     };
+
     try {
       var result = await ApiHelper.post("GetApprovals", body, token);
 
       setLoading(false);
-      if(result.body.isNotEmpty){
-     var data = json.decode(result.body);
+
+      var data = json.decode(result.body);
 
       if (result.statusCode == 200) {
         approvalModel = ApprovalModel.fromJson(data);
@@ -160,10 +157,13 @@ class ResultProvider extends ChangeNotifier {
           return TimelineItem(
               title: e.status!,
               subtitle: e.userType!,
-              description: e.status == "Uploaded" ?
-                   DateFormat('E,d MMM yyyy HH:mm')
-                      .format(DateTime.parse(e.createdAt!)):e.status =="Approved"? DateFormat('E,d MMM yyyy HH:mm')
-                      .format(DateTime.parse(e.updatedAt!)):"",
+              description: e.status == "Uploaded"
+                  ? DateFormat('E,d MMM yyyy HH:mm')
+                      .format(DateTime.parse(e.createdAt!))
+                  : e.status == "Approved"
+                      ? DateFormat('E,d MMM yyyy HH:mm')
+                          .format(DateTime.parse(e.updatedAt!))
+                      : "",
               child: Icon(
                 Icons.person,
                 color: AppColors.colorWhite,
@@ -193,8 +193,6 @@ class ResultProvider extends ChangeNotifier {
         ToastHelper().errorToast(data["Message"]);
         return null;
       }
-      }
-     
     } catch (e) {
       approvalModel.approvalData?.clear();
       setLoading(false);
@@ -238,12 +236,16 @@ class ResultProvider extends ChangeNotifier {
     }
   }
 
-
-approveResult(String token,{required String resultId, required int userLevel, required String batch, required String programId, required String classId}) async{
+  approveResult(String token,
+      {required String resultId,
+      required int userLevel,
+      required String batch,
+      required String programId,
+      required String classId}) async {
     Map<String, dynamic> body = {
-   "ResultId":  resultId,
-		"UserLevel": userLevel,
-		"Status":    "Approved",
+      "ResultId": resultId,
+      "UserLevel": userLevel,
+      "Status": "Approved",
     };
     setLoading(true);
     try {
@@ -252,8 +254,9 @@ approveResult(String token,{required String resultId, required int userLevel, re
       setLoading(false);
       var data = json.decode(result.body);
       if (result.statusCode == 200) {
-      await getApprovalData(token,batch:batch, classId: classId,programId: programId);
-  ToastHelper().sucessToast("Approved");
+        await getApprovalData(token,
+            batch: batch, classId: classId, programId: programId);
+        ToastHelper().sucessToast("Approved");
         notifyListeners();
 
         return 200;
@@ -271,7 +274,47 @@ approveResult(String token,{required String resultId, required int userLevel, re
       ToastHelper().errorToast(e.toString());
       return null;
     }
-}
+  }
+
+  releaseResult(String token,
+      {required String resultId,
+      required List<int> studentId,
+      required String batch,
+      required String programId,
+      required String classId}) async {
+       Map<String, dynamic> jsonbody = {"ResultId": resultId};
+
+    Map<String, dynamic> body = {"ResultId": resultId, "studentId":  studentId};
+
+    setLoading(true);
+    try {
+      var result = await ApiHelper.post("ReleaseResult", studentId.isEmpty? jsonbody:body, token);
+
+      setLoading(false);
+      var data = json.decode(result.body);
+      if (result.statusCode == 200) {
+         await getApprovalData(token,batch:batch, classId: classId,programId: programId);
+        ToastHelper().sucessToast(data["Message"]);
+        notifyListeners();
+
+        return "200";
+      } else if (result.statusCode == 401) {
+        notifyListeners();
+
+        return "Invalid Token";
+      } else {
+        notifyListeners();
+        ToastHelper().errorToast(data["Message"]);
+        return null;
+      }
+    } catch (e) {
+      setLoading(false);
+      print(e.toString());
+      ToastHelper().errorToast(e.toString());
+      return null;
+    }
+  }
+
   // set loading value
   void setLoading(bool value) async {
     _isLoading = value;

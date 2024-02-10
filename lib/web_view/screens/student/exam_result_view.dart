@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -21,22 +23,18 @@ class ExamResult extends StatefulWidget {
 }
 
 class _ExamResultState extends State<ExamResult> {
-
-
   updateResultAlert(BuildContext context) {
     // set up the AlertDialog
     Dialog alert = Dialog(
-                                                  child: Card(
-                                                    elevation: 5.0,
-                                                    child: SizedBox(
-                                                      height: 700.h,
-                                                      width: 1200.w,
-                                                      child: UpdateResultView(
-                                                          studenId: widget
-                                                              .studentData!.iD),
-                                                    ),
-                                                  ),
-                                                );
+      child: Card(
+        elevation: 5.0,
+        child: SizedBox(
+          height: 700.h,
+          width: 1200.w,
+          child: UpdateResultView(studenId: widget.studentData!.iD),
+        ),
+      ),
+    );
 
     // show the dialog
     showDialog(
@@ -46,6 +44,7 @@ class _ExamResultState extends State<ExamResult> {
       },
     );
   }
+
   @override
   Widget build(BuildContext context) {
     final studentProvider =
@@ -75,7 +74,6 @@ class _ExamResultState extends State<ExamResult> {
       }
     }
 
-  
     return Scaffold(
       body: FutureBuilder(
         future: getStudentResult(),
@@ -140,226 +138,258 @@ class _ExamResultState extends State<ExamResult> {
                           ))),
                 ),
                 Consumer<StudentProvider>(
-                  builder: (context, studentConsumer, child) {
-                      var examData = studentConsumer.examResultModel.result;
-                    return Expanded(
-                      child: ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: _getCategories(examData!).length,
-                        itemBuilder: (context, index) {
-                          final category = _getCategories(examData)[index];
-                          final categoryItems =
-                              _getItemsForCategory(category, examData);
+                    builder: (context, studentConsumer, child) {
+                  var examData = studentConsumer.examResultModel.result;
+                  return Expanded(
+                    child: ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: _getCategories(examData!).length,
+                      itemBuilder: (context, index) {
+                        final category = _getCategories(examData)[index];
+                        final categoryItems =
+                            _getItemsForCategory(category, examData);
+                            print(categoryItems[1].isRepeat);
 
-                          return Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Row(
-                                  children: [
-                                    Text(
-                                      category,
-                                      style: const TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    SizedBox(
-                                      width: 5.w,
-                                    ),
-                                    InkWell(
-                                        onTap: () async {
-                                          await studentConsumer
-                                              .updateStudentResult(categoryItems);
-                                              if(context.mounted){
-
-                                        updateResultAlert(context);
-                                              }
-                                        },
-                                        child: Icon(
-                                          Icons.edit,
-                                          color: AppColors.colorc7e,
-                                          size: 25.sp,
-                                        ))
-                                  ],
-                                ),
-                              ),
-                              SingleChildScrollView(
-                                child: FractionallySizedBox(
-                                  widthFactor: 0.99,
-                                  child: DataTable(
-                                    border: TableBorder.all(),
-                                    columns: [
-                                      DataColumn(
-                                          label: Text(
-                                        'Name',
-                                        style: TextStyle(
-                                          fontFamily: "Arial-Black",
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 15.sp),
-                                      )),
-                                      DataColumn(
-                                          label: Text(
-                                        'Code',
-                                        style: TextStyle(
-                                          fontFamily: "Arial-Black",
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 15.sp),
-                                      )),
-                                      DataColumn(
-                                          label: Text(
-                                        'Batch',
-                                        style: TextStyle(
-                                          fontFamily: "Arial-Black",
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 15.sp),
-                                      )),
-                                      DataColumn(
-                                          label: Text(
-                                        'CW-1',
-                                        style: TextStyle(
-                                          fontFamily: "Arial-Black",
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 15.sp),
-                                      )),
-                                      DataColumn(
-                                          label: Text(
-                                        'CW-2',
-                                        style: TextStyle(
-                                          fontFamily: "Arial-Black",
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 15.sp),
-                                      )),
-                                      DataColumn(
-                                          label: Text(
-                                        'CW-3',
-                                        style: TextStyle(
-                                          fontFamily: "Arial-Black",
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 15.sp),
-                                      )),
-                                      DataColumn(
-                                          label: Text(
-                                        'CW-4',
-                                        style: TextStyle(
-                                          fontFamily: "Arial-Black",
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 15.sp),
-                                      )),
-                                      DataColumn(
-                                          label: Text(
-                                        'Final',
-                                        style: TextStyle(
-                                          fontFamily: "Arial-Black",
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 15.sp),
-                                      )),
-                                      DataColumn(
-                                          label: Text(
-                                        'Grade',
-                                        style: TextStyle(
-                                          fontFamily: "Arial-Black",
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 15.sp),
-                                      )),
-                                    ],
-                                    rows: categoryItems
-                                        .map(
-                                          (item) => DataRow(
-                                            cells: [
-                                              DataCell(Text(
-                                                item.courseName!.trim(),
-                                                style: TextStyle(
-                                                  fontFamily: "Arial-Black",
-                                                    fontWeight: FontWeight.w500,
-                                                    color: AppColors.colorBlack,
-                                                    fontSize: 12.sp),
-                                              )),
-                                              DataCell(Text(
-                                                item.courseCode!,
-                                                style: TextStyle(
-                                                  fontFamily: "Arial-Black",
-                                                    fontWeight: FontWeight.w500,
-                                                    color: AppColors.colorBlack,
-                                                    fontSize: 12.sp),
-                                              )),
-                                              DataCell(Text(
-                                                item.batch!,
-                                                style: TextStyle(
-                                                  fontFamily: "Arial-Black",
-                                                    fontWeight: FontWeight.w500,
-                                                    color: AppColors.colorBlack,
-                                                    fontSize: 12.sp),
-                                              )),
-                                              DataCell(Text(
-                                                item.cw1!,
-                                                style: TextStyle(
-                                                  fontFamily: "Arial-Black",
-                                                    fontWeight: FontWeight.w500,
-                                                    color: AppColors.colorBlack,
-                                                    fontSize: 12.sp),
-                                              )),
-                                              DataCell(Text(
-                                                item.cw2!,
-                                                style: TextStyle(
-                                                  fontFamily: "Arial-Black",
-                                                    fontWeight: FontWeight.w500,
-                                                    color: AppColors.colorBlack,
-                                                    fontSize: 12.sp),
-                                              )),
-                                              DataCell(Text(
-                                                item.cw3!,
-                                                style: TextStyle(
-                                                  fontFamily: "Arial-Black",
-                                                    fontWeight: FontWeight.w500,
-                                                    color: AppColors.colorBlack,
-                                                    fontSize: 12.sp),
-                                              )),
-                                              DataCell(Text(
-                                                item.cw4!,
-                                                style: TextStyle(
-                                                  fontFamily: "Arial-Black",
-                                                    fontWeight: FontWeight.w500,
-                                                    color: AppColors.colorBlack,
-                                                    fontSize: 12.sp),
-                                              )),
-                                              DataCell(Text(
-                                                item.finalMark!,
-                                                style: TextStyle(
-                                                  fontFamily: "Arial-Black",
-                                                    fontWeight: FontWeight.w500,
-                                                    color: AppColors.colorBlack,
-                                                    fontSize: 12.sp),
-                                              )),
-                                              DataCell(Text(
-                                                item.grade!,
-                                                style: TextStyle(
-                                                  fontFamily: "Arial-Black",
-                                                    fontWeight: FontWeight.w500,
-                                                    color: AppColors.colorBlack,
-                                                    fontSize: 12.sp),
-                                              )),
-                                            ],
-                                          ),
-                                        )
-                                        .toList(),
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                children: [
+                                  Text(
+                                    category,
+                                    style: const TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold),
                                   ),
+                                  SizedBox(
+                                    width: 5.w,
+                                  ),
+                                  studentConsumer.examResultModel.userType ==
+                                          "COE"
+                                      ? InkWell(
+                                          onTap: () async {
+                                            await studentConsumer
+                                                .updateStudentResult(
+                                                    categoryItems);
+                                            if (context.mounted) {
+                                              updateResultAlert(context);
+                                            }
+                                          },
+                                          child: Icon(
+                                            Icons.edit,
+                                            color: AppColors.colorc7e,
+                                            size: 25.sp,
+                                          ))
+                                      : Container()
+                                ],
+                              ),
+                            ),
+                            SingleChildScrollView(
+                              child: FractionallySizedBox(
+                                widthFactor: 0.99,
+                                child: DataTable(
+                                  border: TableBorder.all(),
+                                  columns: [
+                                    DataColumn(
+                                        label: Text(
+                                      'Name',
+                                      style: TextStyle(
+                                          fontFamily: "Arial-Black",
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 15.sp),
+                                    )),
+                                    DataColumn(
+                                        label: Text(
+                                      'Code',
+                                      style: TextStyle(
+                                          fontFamily: "Arial-Black",
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 15.sp),
+                                    )),
+                                    DataColumn(
+                                        label: Text(
+                                      'Batch',
+                                      style: TextStyle(
+                                          fontFamily: "Arial-Black",
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 15.sp),
+                                    )),
+                                    DataColumn(
+                                        label: Text(
+                                      'CW-1',
+                                      style: TextStyle(
+                                          fontFamily: "Arial-Black",
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 15.sp),
+                                    )),
+                                    DataColumn(
+                                        label: Text(
+                                      'CW-2',
+                                      style: TextStyle(
+                                          fontFamily: "Arial-Black",
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 15.sp),
+                                    )),
+                                    DataColumn(
+                                        label: Text(
+                                      'CW-3',
+                                      style: TextStyle(
+                                          fontFamily: "Arial-Black",
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 15.sp),
+                                    )),
+                                    DataColumn(
+                                        label: Text(
+                                      'CW-4',
+                                      style: TextStyle(
+                                          fontFamily: "Arial-Black",
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 15.sp),
+                                    )),
+                                    DataColumn(
+                                        label: Text(
+                                      'Final',
+                                      style: TextStyle(
+                                          fontFamily: "Arial-Black",
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 15.sp),
+                                    )),
+                                    DataColumn(
+                                        label: Text(
+                                      'Grade',
+                                      style: TextStyle(
+                                          fontFamily: "Arial-Black",
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 15.sp),
+                                    )),
+                                  ],
+                                  rows: categoryItems
+                                      .map(
+                                        (item) => DataRow(
+                                          cells: [
+                                            DataCell(item.isRepeat == true
+                                                ? RichText(
+                                                    text:  TextSpan(
+                                                      children: [
+                                                        TextSpan(
+                                                            text: item.courseName!.trim(),
+                                                    style: TextStyle(
+                                                        fontFamily:
+                                                            "Arial-Black",
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                        color: AppColors
+                                                            .colorBlack,
+                                                        fontSize: 12.sp)),
+                                                       WidgetSpan(
+        child: Transform.translate(
+          offset: const Offset(0, -8),
+          child: const Text(
+            '(R)',
+            style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold,color: AppColors.colorRed),
+          ),
+        ),
+      ),
+                                                       
+                                                      ],
+                                                    ),
+                                                  )
+                                                : Text(
+                                                    item.courseName!.trim(),
+                                                    style: TextStyle(
+                                                        fontFamily:
+                                                            "Arial-Black",
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                        color: AppColors
+                                                            .colorBlack,
+                                                        fontSize: 12.sp),
+                                                  )),
+                                            DataCell(Text(
+                                              item.courseCode!,
+                                              style: TextStyle(
+                                                  fontFamily: "Arial-Black",
+                                                  fontWeight: FontWeight.w500,
+                                                  color: AppColors.colorBlack,
+                                                  fontSize: 12.sp),
+                                            )),
+                                            DataCell(Text(
+                                              item.batch!,
+                                              style: TextStyle(
+                                                  fontFamily: "Arial-Black",
+                                                  fontWeight: FontWeight.w500,
+                                                  color: AppColors.colorBlack,
+                                                  fontSize: 12.sp),
+                                            )),
+                                            DataCell(Text(
+                                              item.cw1!,
+                                              style: TextStyle(
+                                                  fontFamily: "Arial-Black",
+                                                  fontWeight: FontWeight.w500,
+                                                  color: AppColors.colorBlack,
+                                                  fontSize: 12.sp),
+                                            )),
+                                            DataCell(Text(
+                                              item.cw2!,
+                                              style: TextStyle(
+                                                  fontFamily: "Arial-Black",
+                                                  fontWeight: FontWeight.w500,
+                                                  color: AppColors.colorBlack,
+                                                  fontSize: 12.sp),
+                                            )),
+                                            DataCell(Text(
+                                              item.cw3!,
+                                              style: TextStyle(
+                                                  fontFamily: "Arial-Black",
+                                                  fontWeight: FontWeight.w500,
+                                                  color: AppColors.colorBlack,
+                                                  fontSize: 12.sp),
+                                            )),
+                                            DataCell(Text(
+                                              item.cw4!,
+                                              style: TextStyle(
+                                                  fontFamily: "Arial-Black",
+                                                  fontWeight: FontWeight.w500,
+                                                  color: AppColors.colorBlack,
+                                                  fontSize: 12.sp),
+                                            )),
+                                            DataCell(Text(
+                                              item.finalMark!,
+                                              style: TextStyle(
+                                                  fontFamily: "Arial-Black",
+                                                  fontWeight: FontWeight.w500,
+                                                  color: AppColors.colorBlack,
+                                                  fontSize: 12.sp),
+                                            )),
+                                            DataCell(Text(
+                                              item.grade!,
+                                              style: TextStyle(
+                                                  fontFamily: "Arial-Black",
+                                                  fontWeight: FontWeight.w500,
+                                                  color: AppColors.colorBlack,
+                                                  fontSize: 12.sp),
+                                            )),
+                                          ],
+                                        ),
+                                      )
+                                      .toList(),
                                 ),
                               ),
-                              const Divider(),
-                            ],
-                          );
-                        },
-                      ),
-                    );
-                  }
-                ),
+                            ),
+                            const Divider(),
+                          ],
+                        );
+                      },
+                    ),
+                  );
+                }),
               ],
             );
           }
         },
       ),
-    
     );
   }
 

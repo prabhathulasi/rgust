@@ -1,24 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:rugst_alliance_academia/data/middleware/check_auth_middleware.dart';
 import 'package:rugst_alliance_academia/data/model/publish_result_model.dart';
 import 'package:rugst_alliance_academia/data/provider/common_provider.dart';
+import 'package:rugst_alliance_academia/data/provider/program_provider.dart';
 import 'package:rugst_alliance_academia/data/provider/result_provider.dart';
+import 'package:rugst_alliance_academia/routes/named_routes.dart';
 import 'package:rugst_alliance_academia/theme/app_colors.dart';
+import 'package:rugst_alliance_academia/util/toast_helper.dart';
 import 'package:rugst_alliance_academia/widgets/app_elevatedbutton.dart';
 import 'package:rugst_alliance_academia/widgets/app_richtext.dart';
 
 class PublishResultView extends StatefulWidget {
-  const PublishResultView({super.key});
+ final String? resultId;
+   const PublishResultView({super.key, this.resultId});
 
   @override
   State<PublishResultView> createState() => _PublishResultViewState();
 }
 
 class _PublishResultViewState extends State<PublishResultView> {
+  
   List<int> selectedIDs = [];
   @override
   Widget build(BuildContext context) {
+    final programProvider = Provider.of<ProgramProvider>(context);
+
     return Consumer<CommonProvider>(builder: (context, commonConsumer, child) {
       return Column(
         children: [
@@ -109,12 +117,45 @@ class _PublishResultViewState extends State<PublishResultView> {
                             Row(
                               children: [
                                 AppElevatedButon(
+                                  loading: resultProvider.isLoading,
                                   title: "Publish",
                                   borderColor: AppColors.colorWhite,
                                   buttonColor: AppColors.colorc7e,
                                   height: 50.h,
                                   width: 150.w,
-                                  onPressed: (context) {},
+                                  onPressed: (context) async{
+                         var token = await getTokenAndUseIt();
+      if (token == null) {
+        if (context.mounted) {
+          Navigator.pushNamed(context, RouteNames.login);
+        }
+      } else if (token == "Token Expired") {
+        ToastHelper().errorToast("Session Expired Please Login Again");
+
+        if (context.mounted) {
+          Navigator.pushNamed(context, RouteNames.login);
+        }
+      } else {
+        var result = await resultProvider.releaseResult(token,
+          resultId:  widget.resultId!,
+           studentId:  selectedIDs,
+          batch: programProvider.selectedBatch!,
+          classId: programProvider.selectedClass!,
+          programId: programProvider.selectedDept!
+
+            );
+        if (result == "Invalid Token") {
+          ToastHelper().errorToast("Session Expired Please Login Again");
+          if (context.mounted) {
+            Navigator.pushNamed(context, RouteNames.login);
+          }
+        }else if(result == "200"){
+       if (context.mounted) {
+            Navigator.pop(context);
+          }
+        }
+      }
+                                  },
                                   textColor: AppColors.colorWhite,
                                 ),
                                 AppElevatedButon(
@@ -207,8 +248,39 @@ class _PublishResultViewState extends State<PublishResultView> {
                                     buttonColor: AppColors.colorc7e,
                                     height: 50.h,
                                     width: 150.w,
-                                    onPressed: (context) {
+                                    onPressed: (context) async{
                                       _getStudentId(data);
+                                           var token = await getTokenAndUseIt();
+      if (token == null) {
+        if (context.mounted) {
+          Navigator.pushNamed(context, RouteNames.login);
+        }
+      } else if (token == "Token Expired") {
+        ToastHelper().errorToast("Session Expired Please Login Again");
+
+        if (context.mounted) {
+          Navigator.pushNamed(context, RouteNames.login);
+        }
+      } else {
+        var result = await resultProvider.releaseResult(token,
+          resultId:  widget.resultId!,
+           studentId:  selectedIDs,
+          batch: programProvider.selectedBatch!,
+          classId: programProvider.selectedClass!,
+          programId: programProvider.selectedDept!
+
+            );
+        if (result == "Invalid Token") {
+          ToastHelper().errorToast("Session Expired Please Login Again");
+          if (context.mounted) {
+            Navigator.pushNamed(context, RouteNames.login);
+          }
+        }else if(result == "200"){
+       if (context.mounted) {
+            Navigator.pop(context);
+          }
+        }
+      }
                                     },
                                     textColor: AppColors.colorWhite,
                                   ),

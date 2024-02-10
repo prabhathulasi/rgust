@@ -23,13 +23,13 @@ class _PublishButtonState extends State<PublishButton> {
   @override
   Widget build(BuildContext context) {
 
-     showPublishDialgue(BuildContext context) {
+     showPublishDialgue(BuildContext context, String resultId) {
     // set up the AlertDialog
     Dialog alert = Dialog(
       child: SizedBox(
           width: MediaQuery.sizeOf(context).width / 2,
           height: MediaQuery.sizeOf(context).height / 1.5,
-          child: const PublishResultView()),
+          child:  PublishResultView(resultId: resultId,)),
     );
 
     // show the dialog
@@ -125,18 +125,28 @@ class _PublishButtonState extends State<PublishButton> {
                   title: "Result Already Published",
                   textColor: AppColors.colorRed,
                 );
-              } else if (resultConsumer.approvalModel.approvalData![1].status ==
+              }else if (resultConsumer.approvalModel.approvalData![3].status ==
+                  "Partially Published") {
+                return AppRichTextView(
+                  fontSize: 20.sp,
+                  fontWeight: FontWeight.bold,
+                  title: "Result Partially Published",
+                  textColor: AppColors.colorRed,
+                );
+              }  
+              else if (resultConsumer.approvalModel.approvalData![1].status ==
                       "Approved" &&
                   resultConsumer.approvalModel.approvalData![2].status ==
                       "Approved") {
-                return AppElevatedButon(
+                return 
+                AppElevatedButon(
                   title: "Publish",
                   borderColor: AppColors.colorWhite,
                   buttonColor: AppColors.colorc7e,
                   height: 50.h,
                   width: 150.w,
                   onPressed: (context) {
-                  showPublishDialgue(context);
+                  showPublishDialgue(context,resultConsumer.approvalModel.approvalData![2].resultId!);
                   },
                   textColor: AppColors.colorWhite,
                 );
@@ -244,6 +254,7 @@ class _PublishButtonState extends State<PublishButton> {
                 );
               }else {
                 return AppElevatedButon(
+                  loading: resultProvider.isLoading,
                   title: "Approve",
                   borderColor: AppColors.colorWhite,
                   buttonColor: AppColors.colorc7e,

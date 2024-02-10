@@ -37,11 +37,11 @@ class Results {
   int? studentId;
   int? courseId;
   int? classId;
-  int? cw1;
-  int? cw2;
-  int? cw3;
-  int? cw4;
-  int? finalMark;
+  String? cw1;
+  String? cw2;
+  String? cw3;
+  String? cw4;
+  String? finalMark;
   String? grade;
   int? gpa;
   String? programName;
@@ -97,14 +97,14 @@ class Results {
     finalMark = json['FinalMark'];
     grade = json['Grade'];
     gpa = json['Gpa'];
-    programName = json['ProgramName'];
-    className = json['ClassName'];
+    programName = json['program_name'];
+    className = json['class_name'];
     batch = json['Batch'];
-    courseName = json['CourseName'];
-    courseCode = json['CourseCode'];
-    courseCredits = json['CourseCredits'];
-    studentName = json['StudentName'];
-    studentReg = json['StudentRegId'];
+    courseName = json['course_name'];
+    courseCode = json['course_code'];
+    courseCredits = json['course_credits'];
+    studentName = json['student_name'];
+    studentReg = json['student_reg'];
   }
 
   Map<String, dynamic> toJson() {
@@ -125,14 +125,14 @@ class Results {
     data['FinalMark'] = finalMark;
     data['Grade'] = grade;
     data['Gpa'] = gpa;
-    data['ProgramName'] = programName;
-    data['ClassName'] = className;
+    data['program_name'] = programName;
+    data['class_name'] = className;
     data['Batch'] = batch;
-    data['CourseName'] = courseName;
-    data['CourseCode'] = courseCode;
-    data['CourseCredits'] = courseCredits;
-     data['StudentName'] = studentName;
-      data['StudentRegId'] = studentReg;
+    data['course_name'] = courseName;
+    data['course_code'] = courseCode;
+    data['course_credits'] = courseCredits;
+     data['student_name'] = studentName;
+      data['student_reg'] = studentReg;
     return data;
   }
 }

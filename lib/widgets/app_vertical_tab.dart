@@ -3,7 +3,7 @@ import 'dart:html';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:rugst_alliance_academia/theme/app_colors.dart';
-import 'package:url_strategy/url_strategy.dart';
+// import 'package:url_strategy/url_strategy.dart';
 
 enum IndicatorSide { start, end }
 
@@ -244,40 +244,43 @@ class VerticalTabsState extends State<VerticalTabs>
   }
 
   void _selectTab(index) {
-     String newUrl = '/home/$index'; // Define your URL pattern here based on the selected tab
-      switch (index) {
+    String newUrl =
+        '/home/$index'; // Define your URL pattern here based on the selected tab
+    switch (index) {
       case 0:
         newUrl = '/Dashboard'; // Update with your URL pattern
         break;
       case 1:
         newUrl = '/Student'; // Update with your URL pattern
         break;
-        case 2:
+      case 2:
         newUrl = '/Staff'; // Update with your URL pattern
         break;
-        case 3:
+      case 3:
         newUrl = '/Faculty'; // Update with your URL pattern
         break;
-        case 4:
+      case 4:
         newUrl = '/Department'; // Update with your URL pattern
         break;
-        case 5:
+      case 5:
         newUrl = '/Admission'; // Update with your URL pattern
         break;
-        case 6:
+      case 6:
         newUrl = '/LeaveRequest'; // Update with your URL pattern
         break;
-        case 7:
+      case 7:
         newUrl = '/E-library'; // Update with your URL pattern
         break;
-        case 8:
+      case 8:
         newUrl = '/Notification'; // Update with your URL pattern
         break;
-        case 9:
+      case 9:
         newUrl = '/CreateAccount'; // Update with your URL pattern
         break;
-        case 10:
+      case 10:
         newUrl = '/Fees'; // Update with your URL pattern
+      case 11:
+        newUrl = '/Results'; // Update with your URL pattern
         break;
       // Add cases for other tabs
     }

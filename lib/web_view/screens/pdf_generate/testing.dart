@@ -23,7 +23,8 @@ import 'package:intl/intl.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
-import 'package:rugst_alliance_academia/data/model/exam_result_model.dart'as prefix;
+import 'package:rugst_alliance_academia/data/model/exam_result_model.dart'
+    as prefix;
 import 'package:rugst_alliance_academia/data/model/student_detail_model.dart';
 
 class CustomData {
@@ -34,13 +35,7 @@ class CustomData {
 
 Future<Uint8List> generateInvoice(PdfPageFormat pageFormat, CustomData data,
     StudentDetail studentData, List<prefix.Result> resultData) async {
-
-
   final invoice = Invoice(
-
-
-   
-
     baseColor: PdfColors.teal,
     accentColor: PdfColors.blueGrey900,
   );
@@ -50,11 +45,9 @@ Future<Uint8List> generateInvoice(PdfPageFormat pageFormat, CustomData data,
 
 class Invoice {
   Invoice({
-
     required this.baseColor,
     required this.accentColor,
   });
-
 
   final PdfColor baseColor;
   final PdfColor accentColor;
@@ -65,8 +58,6 @@ class Invoice {
   PdfColor get _baseTextColor => baseColor.isLight ? _lightColor : _darkColor;
 
   PdfColor get _accentTextColor => baseColor.isLight ? _lightColor : _darkColor;
-
-  
 
   pw.Image? image1;
   pw.MemoryImage? image;
@@ -94,8 +85,8 @@ class Invoice {
       pw.MultiPage(
         pageTheme: _buildTheme(
           PdfPageFormat.a4.copyWith(
-          width: PdfPageFormat.a4.height,
-          height: PdfPageFormat.a4.width,
+            width: PdfPageFormat.a4.height,
+            height: PdfPageFormat.a4.width,
           ),
           await PdfGoogleFonts.robotoRegular(),
           await PdfGoogleFonts.robotoBold(),
@@ -109,7 +100,7 @@ class Invoice {
           ),
           pw.SizedBox(height: 10),
           _contentTable(context, data),
-         
+
           // _contentFooter(context),
           // _termsAndConditions(context),
         ],
@@ -148,30 +139,25 @@ class Invoice {
   }
 
   pw.Widget _buildFooter(pw.Context context) {
-    return pw.Column(
-      children: [
-             pw.Divider(),
-              pw.Text(
-                  "Third Street, Cummingslodge, Greater Georgetown, Guyana South America.",
-                  style: pw.TextStyle(
-                      
-                      color: PdfColor.fromHex("#4169e1"),
-                      fontSize: 10,
-                      fontWeight: pw.FontWeight.bold)),
-              pw.Text("Telephone#: +(592) 222-6080",
-                  style: pw.TextStyle(
-                     
-                      color: PdfColor.fromHex("#4169e1"),
-                      fontSize: 10,
-                      fontWeight: pw.FontWeight.bold)),
-              pw.Text("Website: www.rgust.edu.gy",
-                  style: pw.TextStyle(
-                 
-                      color: PdfColor.fromHex("#4169e1"),
-                      fontSize: 10,
-                      fontWeight: pw.FontWeight.bold)),
-      ]
-    );
+    return pw.Column(children: [
+      pw.Divider(),
+      pw.Text(
+          "Third Street, Cummingslodge, Greater Georgetown, Guyana South America.",
+          style: pw.TextStyle(
+              color: PdfColor.fromHex("#4169e1"),
+              fontSize: 10,
+              fontWeight: pw.FontWeight.bold)),
+      pw.Text("Telephone#: +(592) 222-6080",
+          style: pw.TextStyle(
+              color: PdfColor.fromHex("#4169e1"),
+              fontSize: 10,
+              fontWeight: pw.FontWeight.bold)),
+      pw.Text("Website: www.rgust.edu.gy",
+          style: pw.TextStyle(
+              color: PdfColor.fromHex("#4169e1"),
+              fontSize: 10,
+              fontWeight: pw.FontWeight.bold)),
+    ]);
   }
 
   pw.PageTheme _buildTheme(
@@ -324,16 +310,15 @@ class Invoice {
     ]);
   }
 
-
-
-
-
   List<String> _getCategories(List<prefix.Result>? data) {
     return data!.map((item) => item.className!).toSet().toList();
   }
 
-  List<prefix.Result> _getItemsForCategory(String category, List<prefix.Result>? data) {
-    return data!.where((item) => item.className! == category).toList();
+  List<prefix.Result> _getItemsForCategory(
+      String category, List<prefix.Result>? data) {
+    return data!
+        .where((item) => item.className! == category && item.isRepeat != true)
+        .toList();
   }
 
   pw.Widget _contentTable(pw.Context context, List<prefix.Result> data) {
@@ -364,70 +349,59 @@ class Invoice {
               ),
             ),
           ),
-         pw.TableHelper.fromTextArray(
-          border: pw.TableBorder.all(),
-          cellAlignment: pw.Alignment.centerLeft,
-          headerDecoration: pw.BoxDecoration(
-             borderRadius: const pw.BorderRadius.all(pw.Radius.circular(2)),
-        color: baseColor,
+          pw.TableHelper.fromTextArray(
+            border: pw.TableBorder.all(),
+            cellAlignment: pw.Alignment.centerLeft,
+            headerDecoration: pw.BoxDecoration(
+              borderRadius: const pw.BorderRadius.all(pw.Radius.circular(2)),
+              color: baseColor,
+            ),
+            headerHeight: 25,
+            cellHeight: 40,
+            cellAlignments: {
+              0: pw.Alignment.centerLeft,
+              1: pw.Alignment.centerLeft,
+              2: pw.Alignment.centerLeft,
+              3: pw.Alignment.centerLeft,
+              4: pw.Alignment.centerLeft,
+            },
+            headerStyle: pw.TextStyle(
+              color: _baseTextColor,
+              fontSize: 10,
+              fontWeight: pw.FontWeight.bold,
+            ),
+            cellStyle: const pw.TextStyle(
+              color: _darkColor,
+              fontSize: 10,
+            ),
+            rowDecoration: pw.BoxDecoration(
+              border: pw.Border(
+                bottom: pw.BorderSide(
+                  color: accentColor,
+                  width: .5,
+                ),
+              ),
+            ),
+            headers: List<String>.generate(
+              tableHeaders.length,
+              (col) => tableHeaders[col],
+            ),
+            data: List<List<dynamic>>.generate(
+                categoryItems.length,
+                (row) => [
+                      pw.Text(categoryItems[row].courseName!),
+                      pw.Text(categoryItems[row].courseCode!),
+                      pw.Text(categoryItems[row].batch!),
+                      pw.Text(categoryItems[row].cw1.toString()),
+                      pw.Text(categoryItems[row].cw2.toString()),
+                      pw.Text(categoryItems[row].cw3.toString()),
+                      pw.Text(categoryItems[row].cw4.toString()),
+                      pw.Text(categoryItems[row].finalMark.toString()),
+                      pw.Text(categoryItems[row].grade!),
+                    ]),
           ),
-           headerHeight: 25,
-      cellHeight: 40,
-      cellAlignments: {
-        0: pw.Alignment.centerLeft,
-        1: pw.Alignment.centerLeft,
-        2: pw.Alignment.centerLeft,
-        3: pw.Alignment.centerLeft,
-        4: pw.Alignment.centerLeft,
-      },
-       headerStyle: pw.TextStyle(
-        color: _baseTextColor,
-        fontSize: 10,
-        fontWeight: pw.FontWeight.bold,
-      ),
-      cellStyle: const pw.TextStyle(
-        color: _darkColor,
-        fontSize: 10,
-      ),
-      rowDecoration: pw.BoxDecoration(
-        border: pw.Border(
-          bottom: pw.BorderSide(
-            color: accentColor,
-            width: .5,
-          ),
-        ),
-      ),
-
-
-       headers: List<String>.generate(
-        tableHeaders.length,
-        (col) => tableHeaders[col],
-      ),
-data: List<List<dynamic>>.generate(
-        categoryItems.length,
-        (row)=> [
-          pw.Text(categoryItems[row].courseName!),
-           pw.Text(categoryItems[row].courseCode!),
-            pw.Text(categoryItems[row].batch!),
-             pw.Text(categoryItems[row].cw1.toString()),
-              pw.Text(categoryItems[row].cw2.toString()),
-               pw.Text(categoryItems[row].cw3.toString()),
-                pw.Text(categoryItems[row].cw4.toString()),
-                 pw.Text(categoryItems[row].finalMark.toString()),
-                  pw.Text(categoryItems[row].grade!),
-        ]
-
-        
-      ),
-
-
-         ),
-         
         ]);
       },
     );
   }
 }
-
-
-
