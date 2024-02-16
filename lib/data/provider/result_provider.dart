@@ -149,9 +149,10 @@ class ResultProvider extends ChangeNotifier {
 
       setLoading(false);
 
-      var data = json.decode(result.body);
+     
 
       if (result.statusCode == 200) {
+         var data = json.decode(result.body);
         approvalModel = ApprovalModel.fromJson(data);
         timeline = approvalModel.approvalData!.map((e) {
           return TimelineItem(
@@ -188,6 +189,7 @@ class ResultProvider extends ChangeNotifier {
         ToastHelper().errorToast("No Records Found");
         return null;
       } else {
+         var data = json.decode(result.body);
         approvalModel.approvalData?.clear();
         notifyListeners();
         ToastHelper().errorToast(data["Message"]);
@@ -241,12 +243,16 @@ class ResultProvider extends ChangeNotifier {
       required int userLevel,
       required String batch,
       required String programId,
+      required String className,
       required String classId}) async {
     Map<String, dynamic> body = {
       "ResultId": resultId,
       "UserLevel": userLevel,
       "Status": "Approved",
+      "ClassName":className,
+      "Batch":batch
     };
+
     setLoading(true);
     try {
       var result = await ApiHelper.post("ApproveResult", body, token);
@@ -278,13 +284,14 @@ class ResultProvider extends ChangeNotifier {
 
   releaseResult(String token,
       {required String resultId,
+      required String className,
       required List<int> studentId,
       required String batch,
       required String programId,
       required String classId}) async {
        Map<String, dynamic> jsonbody = {"ResultId": resultId};
 
-    Map<String, dynamic> body = {"ResultId": resultId, "studentId":  studentId};
+    Map<String, dynamic> body = {"ResultId": resultId, "studentId":  studentId,"ClassName":className};
 
     setLoading(true);
     try {

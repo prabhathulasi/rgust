@@ -247,39 +247,39 @@ class VerticalTabsState extends State<VerticalTabs>
     String newUrl =
         '/home/$index'; // Define your URL pattern here based on the selected tab
     switch (index) {
+      // case 0:
+      //   newUrl = '/Dashboard'; // Update with your URL pattern
+      //   break;
       case 0:
-        newUrl = '/Dashboard'; // Update with your URL pattern
-        break;
-      case 1:
         newUrl = '/Student'; // Update with your URL pattern
         break;
-      case 2:
+      case 1:
         newUrl = '/Staff'; // Update with your URL pattern
         break;
-      case 3:
+      case 2:
         newUrl = '/Faculty'; // Update with your URL pattern
         break;
-      case 4:
+      case 3:
         newUrl = '/Department'; // Update with your URL pattern
         break;
-      case 5:
-        newUrl = '/Admission'; // Update with your URL pattern
-        break;
-      case 6:
-        newUrl = '/LeaveRequest'; // Update with your URL pattern
-        break;
-      case 7:
-        newUrl = '/E-library'; // Update with your URL pattern
-        break;
-      case 8:
-        newUrl = '/Notification'; // Update with your URL pattern
-        break;
-      case 9:
-        newUrl = '/CreateAccount'; // Update with your URL pattern
-        break;
-      case 10:
+      // case 5:
+      //   newUrl = '/Admission'; // Update with your URL pattern
+      //   break;
+      // case 6:
+      //   newUrl = '/LeaveRequest'; // Update with your URL pattern
+      //   break;
+      // case 7:
+      //   newUrl = '/E-library'; // Update with your URL pattern
+      //   break;
+      // case 8:
+      //   newUrl = '/Notification'; // Update with your URL pattern
+      //   break;
+      // case 9:
+      //   newUrl = '/CreateAccount'; // Update with your URL pattern
+      //   break;
+      case 4:
         newUrl = '/Fees'; // Update with your URL pattern
-      case 11:
+      case 5:
         newUrl = '/Results'; // Update with your URL pattern
         break;
       // Add cases for other tabs

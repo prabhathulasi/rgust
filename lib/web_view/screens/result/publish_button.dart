@@ -117,6 +117,13 @@ class _PublishButtonState extends State<PublishButton> {
                   },
                   textColor: AppColors.colorWhite,
                 );
+              }else if(resultConsumer.resultPublishModel.results == null){
+                 return AppRichTextView(
+                  fontSize: 20.sp,
+                  fontWeight: FontWeight.bold,
+                  title: "No Students Record Found in the Selected Batch",
+                  textColor: AppColors.colorRed,
+                );
               } else if (resultConsumer.approvalModel.approvalData![3].status ==
                   "Published") {
                 return AppRichTextView(
@@ -191,9 +198,18 @@ class _PublishButtonState extends State<PublishButton> {
                         Navigator.pushNamed(context, RouteNames.login);
                       }
                     } else {
-                     
+                      String? className;
+            var selectedClass = programProvider.programClassModel.programClass!.firstWhere(
+  (element) => element.classId.toString() == programProvider.selectedClass,
+
+);
+
+className = selectedClass.className;
+
+                
                       var result = await resultProvider.approveResult(token,
                       resultId: resultConsumer.approvalModel.approvalData![1].resultId!,
+                      className: className!,
                       userLevel: 2,
                       batch: programProvider.selectedBatch!,
                       classId: programProvider.selectedClass!,
@@ -274,8 +290,16 @@ class _PublishButtonState extends State<PublishButton> {
                         Navigator.pushNamed(context, RouteNames.login);
                       }
                     } else {
-                     
+                                          String? className;
+            var selectedClass =programProvider.programClassModel.programClass!.firstWhere(
+  (element) => element.classId.toString() == programProvider.selectedClass,
+
+);
+
+className = selectedClass.className;
+
                       var result = await resultProvider.approveResult(token,
+                      className: className!,
                       resultId: resultConsumer.approvalModel.approvalData![2].resultId!,
                       userLevel: 3,
                       batch: programProvider.selectedBatch!,

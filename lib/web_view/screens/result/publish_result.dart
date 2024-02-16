@@ -13,15 +13,14 @@ import 'package:rugst_alliance_academia/widgets/app_elevatedbutton.dart';
 import 'package:rugst_alliance_academia/widgets/app_richtext.dart';
 
 class PublishResultView extends StatefulWidget {
- final String? resultId;
-   const PublishResultView({super.key, this.resultId});
+  final String? resultId;
+  const PublishResultView({super.key, this.resultId});
 
   @override
   State<PublishResultView> createState() => _PublishResultViewState();
 }
 
 class _PublishResultViewState extends State<PublishResultView> {
-  
   List<int> selectedIDs = [];
   @override
   Widget build(BuildContext context) {
@@ -123,38 +122,56 @@ class _PublishResultViewState extends State<PublishResultView> {
                                   buttonColor: AppColors.colorc7e,
                                   height: 50.h,
                                   width: 150.w,
-                                  onPressed: (context) async{
-                         var token = await getTokenAndUseIt();
-      if (token == null) {
-        if (context.mounted) {
-          Navigator.pushNamed(context, RouteNames.login);
-        }
-      } else if (token == "Token Expired") {
-        ToastHelper().errorToast("Session Expired Please Login Again");
+                                  onPressed: (context) async {
+                                    var token = await getTokenAndUseIt();
+                                    if (token == null) {
+                                      if (context.mounted) {
+                                        Navigator.pushNamed(
+                                            context, RouteNames.login);
+                                      }
+                                    } else if (token == "Token Expired") {
+                                      ToastHelper().errorToast(
+                                          "Session Expired Please Login Again");
 
-        if (context.mounted) {
-          Navigator.pushNamed(context, RouteNames.login);
-        }
-      } else {
-        var result = await resultProvider.releaseResult(token,
-          resultId:  widget.resultId!,
-           studentId:  selectedIDs,
-          batch: programProvider.selectedBatch!,
-          classId: programProvider.selectedClass!,
-          programId: programProvider.selectedDept!
+                                      if (context.mounted) {
+                                        Navigator.pushNamed(
+                                            context, RouteNames.login);
+                                      }
+                                    } else {
+                                      String? className;
+                                      var selectedClass = programProvider
+                                          .programClassModel.programClass!
+                                          .firstWhere(
+                                        (element) =>
+                                            element.classId.toString() ==
+                                            programProvider.selectedClass,
+                                      );
 
-            );
-        if (result == "Invalid Token") {
-          ToastHelper().errorToast("Session Expired Please Login Again");
-          if (context.mounted) {
-            Navigator.pushNamed(context, RouteNames.login);
-          }
-        }else if(result == "200"){
-       if (context.mounted) {
-            Navigator.pop(context);
-          }
-        }
-      }
+                                      className = selectedClass.className;
+                                      var result = await resultProvider
+                                          .releaseResult(token,
+                                              className: className!,
+                                              resultId: widget.resultId!,
+                                              studentId: selectedIDs,
+                                              batch: programProvider
+                                                  .selectedBatch!,
+                                              classId: programProvider
+                                                  .selectedClass!,
+                                              programId: programProvider
+                                                  .selectedDept!);
+                                      if (result == "Invalid Token") {
+                                        ToastHelper().errorToast(
+                                            "Session Expired Please Login Again");
+                                        if (context.mounted) {
+                                          Navigator.pushNamed(
+                                              context, RouteNames.login);
+                                        }
+                                      } else if (result == "200") {
+                                        if (context.mounted) {
+                                          Navigator.pop(context);
+                                        }
+                                      }
+                                    }
                                   },
                                   textColor: AppColors.colorWhite,
                                 ),
@@ -248,39 +265,56 @@ class _PublishResultViewState extends State<PublishResultView> {
                                     buttonColor: AppColors.colorc7e,
                                     height: 50.h,
                                     width: 150.w,
-                                    onPressed: (context) async{
+                                    onPressed: (context) async {
                                       _getStudentId(data);
-                                           var token = await getTokenAndUseIt();
-      if (token == null) {
-        if (context.mounted) {
-          Navigator.pushNamed(context, RouteNames.login);
-        }
-      } else if (token == "Token Expired") {
-        ToastHelper().errorToast("Session Expired Please Login Again");
+                                      var token = await getTokenAndUseIt();
+                                      if (token == null) {
+                                        if (context.mounted) {
+                                          Navigator.pushNamed(
+                                              context, RouteNames.login);
+                                        }
+                                      } else if (token == "Token Expired") {
+                                        ToastHelper().errorToast(
+                                            "Session Expired Please Login Again");
 
-        if (context.mounted) {
-          Navigator.pushNamed(context, RouteNames.login);
-        }
-      } else {
-        var result = await resultProvider.releaseResult(token,
-          resultId:  widget.resultId!,
-           studentId:  selectedIDs,
-          batch: programProvider.selectedBatch!,
-          classId: programProvider.selectedClass!,
-          programId: programProvider.selectedDept!
-
-            );
-        if (result == "Invalid Token") {
-          ToastHelper().errorToast("Session Expired Please Login Again");
-          if (context.mounted) {
-            Navigator.pushNamed(context, RouteNames.login);
-          }
-        }else if(result == "200"){
-       if (context.mounted) {
-            Navigator.pop(context);
-          }
-        }
-      }
+                                        if (context.mounted) {
+                                          Navigator.pushNamed(
+                                              context, RouteNames.login);
+                                        }
+                                      } else {
+                                        String? className;
+                                        var selectedClass = programProvider
+                                            .programClassModel.programClass!
+                                            .firstWhere(
+                                          (element) =>
+                                              element.classId.toString() ==
+                                              programProvider.selectedClass,
+                                        );
+                                        className = selectedClass.className;
+                                        var result = await resultProvider
+                                            .releaseResult(token,
+                                                className: className!,
+                                                resultId: widget.resultId!,
+                                                studentId: selectedIDs,
+                                                batch: programProvider
+                                                    .selectedBatch!,
+                                                classId: programProvider
+                                                    .selectedClass!,
+                                                programId: programProvider
+                                                    .selectedDept!);
+                                        if (result == "Invalid Token") {
+                                          ToastHelper().errorToast(
+                                              "Session Expired Please Login Again");
+                                          if (context.mounted) {
+                                            Navigator.pushNamed(
+                                                context, RouteNames.login);
+                                          }
+                                        } else if (result == "200") {
+                                          if (context.mounted) {
+                                            Navigator.pop(context);
+                                          }
+                                        }
+                                      }
                                     },
                                     textColor: AppColors.colorWhite,
                                   ),

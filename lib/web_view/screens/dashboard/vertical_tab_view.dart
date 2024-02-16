@@ -12,197 +12,190 @@ import 'package:rugst_alliance_academia/web_view/screens/fees/fees_view.dart';
 import 'package:rugst_alliance_academia/web_view/screens/result/result_settings_view.dart';
 import 'package:rugst_alliance_academia/web_view/screens/staffs/staff_list_view.dart';
 import 'package:rugst_alliance_academia/web_view/screens/student/student_list_view.dart';
-import 'package:rugst_alliance_academia/web_view/screens/student/testing.dart';
 import 'package:rugst_alliance_academia/widgets/app_richtext.dart';
 import 'package:rugst_alliance_academia/widgets/app_vertical_tab.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-
-
-
 class VerticalTabView extends StatefulWidget {
-
-  const VerticalTabView({super.key, });
+  const VerticalTabView({
+    super.key,
+  });
 
   @override
   VerticalTabViewState createState() => VerticalTabViewState();
-  
 }
 
 class VerticalTabViewState extends State<VerticalTabView> {
-String ?userName;
-getUserName() async{
-SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-setState(() {
-  
-userName= sharedPreferences.getString("username");
-});
+  String? userName;
+  getUserName() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    setState(() {
+      userName = sharedPreferences.getString("username");
+    });
+  }
 
-
-}
-@override
+  @override
   void initState() {
-    getUserName(); 
-    
+    getUserName();
+
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: VerticalTabs(
-          
-        selectedTabTextStyle: TextStyle(color: AppColors.colorc7e,fontWeight: FontWeight.bold,fontSize: 20.sp),
-        tabTextStyle: const TextStyle(color: AppColors.color0ec,fontWeight: FontWeight.bold,),
-          tabBackgroundColor: AppColors.colorc7e,
-          selectedTabBackgroundColor: AppColors.color0ec,
-          
-          tabsWidth: 250.w,
-          direction: TextDirection.ltr,
-          contentScrollAxis: Axis.vertical,
-          changePageDuration: const Duration(milliseconds: 500),
-          header: ListTile(
-            leading: CircleAvatar(
-              child: Center(
-                child: AppRichTextView(
-                  fontSize: 20.sp,
-                  fontWeight: FontWeight.bold,
-                  title: userName?[0] ?? "A",
-                ),
+      body: VerticalTabs(
+        selectedTabTextStyle: TextStyle(
+            color: AppColors.colorc7e,
+            fontWeight: FontWeight.bold,
+            fontSize: 20.sp),
+        tabTextStyle: const TextStyle(
+          color: AppColors.color0ec,
+          fontWeight: FontWeight.bold,
+        ),
+        tabBackgroundColor: AppColors.colorc7e,
+        selectedTabBackgroundColor: AppColors.color0ec,
+        tabsWidth: 250.w,
+        direction: TextDirection.ltr,
+        contentScrollAxis: Axis.vertical,
+        changePageDuration: const Duration(milliseconds: 500),
+        header: ListTile(
+          leading: CircleAvatar(
+            child: Center(
+              child: AppRichTextView(
+                fontSize: 20.sp,
+                fontWeight: FontWeight.bold,
+                title: userName?[0] ?? "A",
               ),
             ),
-            title: AppRichTextView(
-              fontSize: 20.sp,
-              fontWeight: FontWeight.bold,
-              title: userName??"Admin",
-              textColor: AppColors.color0ec,
-            ),
           ),
-          tabs:  <Tab>[
- 
-            Tab(
-            text: "Dashboard",
+          title: AppRichTextView(
+            fontSize: 20.sp,
+            fontWeight: FontWeight.bold,
+            title: userName ?? "Admin",
+            textColor: AppColors.color0ec,
+          ),
+        ),
+        tabs: <Tab>[
+          // Tab(
+          //   text: "Dashboard",
+          //   icon: CircleAvatar(
+          //       backgroundColor: Colors.transparent,
+          //       child: OverflowBox(
+          //           maxHeight: 80.h,
+          //           maxWidth: 80.w,
+          //           child: Lottie.asset(LottiePath.dashboardLottie))),
+          // ),
+          Tab(
+            text: "Student",
             icon: CircleAvatar(
               backgroundColor: Colors.transparent,
               child: OverflowBox(
-              maxHeight: 80.h,
-              maxWidth: 80.w,
-              child: Lottie.asset(LottiePath.dashboardLottie))),
+                  maxHeight: 80.h,
+                  maxWidth: 80.w,
+                  child: Lottie.asset(LottiePath.dstudentLottie)),
             ),
-             Tab(
-            text: "Student",
-            icon: CircleAvatar(
-                backgroundColor: Colors.transparent,
-             child: OverflowBox(
-                    maxHeight: 80.h,
-              maxWidth: 80.w,
-              child: Lottie.asset(LottiePath.dstudentLottie)),
-        ),
-            
-            ),
-             Tab(
+          ),
+          Tab(
             text: "Staff",
             icon: CircleAvatar(
-                backgroundColor: Colors.transparent,
-             child: OverflowBox(
-                    maxHeight: 60.h,
-              maxWidth: 60.w,
-              child: Lottie.asset(LottiePath.dstaffLottie)),
-        ),
+              backgroundColor: Colors.transparent,
+              child: OverflowBox(
+                  maxHeight: 60.h,
+                  maxWidth: 60.w,
+                  child: Lottie.asset(LottiePath.dstaffLottie)),
             ),
-             Tab(
+          ),
+          Tab(
             text: "Faculty",
             icon: CircleAvatar(
-                backgroundColor: Colors.transparent,
-             child: OverflowBox(
-                    maxHeight: 60.h,
-              maxWidth: 60.w,
-              child: Lottie.asset(LottiePath.dfacultyLottie)),
-        ),
+              backgroundColor: Colors.transparent,
+              child: OverflowBox(
+                  maxHeight: 60.h,
+                  maxWidth: 60.w,
+                  child: Lottie.asset(LottiePath.dfacultyLottie)),
             ),
-              Tab(
+          ),
+          Tab(
             text: "Department",
             icon: CircleAvatar(
-                backgroundColor: Colors.transparent,
+              backgroundColor: Colors.transparent,
               child: Lottie.asset(LottiePath.deptLottie),
             ),
-            ),
-              Tab(
-            text: "Admission",
-            icon: CircleAvatar(
-                backgroundColor: Colors.transparent,
-            child: OverflowBox(
-                    maxHeight: 100.h,
-              maxWidth: 100.w,
-              child: Lottie.asset(LottiePath.admissionLottie)),
-            ),
-            ),
-             Tab(
-            text: "Leave Request",
-            icon: CircleAvatar(
-                 backgroundColor: Colors.transparent,
-            child: Lottie.asset(LottiePath.leaveReqLottie),
-            ),
-            ),
-             const Tab(
-            text: "E-library",
-            icon: CircleAvatar(
-              backgroundImage: AssetImage(
-          ImagePath.webelibfLogo,
-        ),
-            ),
-            ),
-             Tab(
-            text: "Notification",
-            icon: CircleAvatar(
-           backgroundColor: Colors.transparent,
-            child: OverflowBox(
-                    maxHeight: 100.h,
-              maxWidth: 100.w,
-              child: Lottie.asset(LottiePath.notificationLottie)),
-            ),
-            ),
-             Tab(
-            text: "Create Account",
-            icon: CircleAvatar(       backgroundColor: Colors.transparent,
-            child: OverflowBox(
-                    maxHeight: 100.h,
-              maxWidth: 100.w,
-              child: Lottie.asset(LottiePath.createAccountLottie)),)
-            ),
-             const Tab(
+          ),
+          // Tab(
+          //   text: "Admission",
+          //   icon: CircleAvatar(
+          //     backgroundColor: Colors.transparent,
+          //     child: OverflowBox(
+          //         maxHeight: 100.h,
+          //         maxWidth: 100.w,
+          //         child: Lottie.asset(LottiePath.admissionLottie)),
+          //   ),
+          // ),
+          // Tab(
+          //   text: "Leave Request",
+          //   icon: CircleAvatar(
+          //     backgroundColor: Colors.transparent,
+          //     child: Lottie.asset(LottiePath.leaveReqLottie),
+          //   ),
+          // ),
+          // const Tab(
+          //   text: "E-library",
+          //   icon: CircleAvatar(
+          //     backgroundImage: AssetImage(
+          //       ImagePath.webelibfLogo,
+          //     ),
+          //   ),
+          // ),
+          // Tab(
+          //   text: "Notification",
+          //   icon: CircleAvatar(
+          //     backgroundColor: Colors.transparent,
+          //     child: OverflowBox(
+          //         maxHeight: 100.h,
+          //         maxWidth: 100.w,
+          //         child: Lottie.asset(LottiePath.notificationLottie)),
+          //   ),
+          // ),
+          // Tab(
+          //     text: "Create Account",
+          //     icon: CircleAvatar(
+          //       backgroundColor: Colors.transparent,
+          //       child: OverflowBox(
+          //           maxHeight: 100.h,
+          //           maxWidth: 100.w,
+          //           child: Lottie.asset(LottiePath.createAccountLottie)),
+          //     )),
+          const Tab(
             text: "Fees Structure",
-            icon:   CircleAvatar(
-              child: Icon(Icons.attach_money_outlined,color: AppColors.colorc7e,),
+            icon: CircleAvatar(
+              child: Icon(
+                Icons.attach_money_outlined,
+                color: AppColors.colorc7e,
+              ),
             ),
-            ),
-              const Tab(
+          ),
+          const Tab(
             text: "Results",
-            icon:   CircleAvatar(
-              child: Icon(Icons.checklist_sharp)),
-            ),
-            
-          
-          ],
-          contents: <Widget>[
-            const OverviewView(),
-           const StudentListView(),
-         const StaffListView(),
-            const FacultyListView(),
-            const ProgramView(),
-           const CompleteForm(),
-           tabsContent('Dart'),
-            
-                  tabsContent('Dart'),
-                   tabsContent('Dart'),
-                
-
-            const AccountCreationView(),
-          const FeesView(),
-          const ResultSettingsView()
-          ],
-        ),
-      
+            icon: CircleAvatar(child: Icon(Icons.checklist_sharp)),
+          ),
+        ],
+        contents: const <Widget>[
+          // const OverviewView(),
+          StudentListView(),
+          StaffListView(),
+          FacultyListView(),
+          ProgramView(),
+          // const CompleteForm(),
+          // tabsContent('Dart'),
+          // tabsContent('Dart'),
+          // tabsContent('Dart'),
+          // const AccountCreationView(),
+          FeesView(),
+          ResultSettingsView(),
+        ],
+      ),
     );
   }
 

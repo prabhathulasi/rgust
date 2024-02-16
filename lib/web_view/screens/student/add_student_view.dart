@@ -1310,7 +1310,9 @@ class _AddStudentViewState extends State<AddStudentView> {
                             textColor: AppColors.colorWhite,
                             height: 50.h,
                             width: 140.w,
-                            onPressed: (context) {},
+                            onPressed: (context) {
+                              Navigator.pop(context);
+                            },
                           )
                         ],
                       ),

@@ -60,7 +60,6 @@ dependencies:
   flutter_form_builder: ^9.1.1
   form_builder_validators: ^9.1.0
   url_strategy: ^0.2.0
-  fluro: ^2.0.5
   flutter_glow: ^0.3.0
   pdf: ^3.10.7
   printing: ^5.11.1
