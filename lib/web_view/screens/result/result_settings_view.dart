@@ -16,8 +16,7 @@ import 'package:rugst_alliance_academia/web_view/screens/department/program_drop
 import 'package:rugst_alliance_academia/web_view/screens/department/year_dropdown_view.dart';
 import 'package:rugst_alliance_academia/web_view/screens/result/approval_timeline.dart';
 import 'package:rugst_alliance_academia/web_view/screens/result/publish_button.dart';
-import 'package:rugst_alliance_academia/web_view/screens/result/publish_result.dart';
-import 'package:rugst_alliance_academia/widgets/app_elevatedbutton.dart';
+
 import 'package:rugst_alliance_academia/widgets/app_richtext.dart';
 import 'package:rugst_alliance_academia/widgets/app_spining.dart';
 
@@ -74,6 +73,7 @@ class _ResultSettingsViewState extends State<ResultSettingsView> {
                   fontWeight: FontWeight.bold),
             ),
             Expanded(
+              flex: 1,
               child: Row(
                 children: [
                   Column(
@@ -132,6 +132,7 @@ class _ResultSettingsViewState extends State<ResultSettingsView> {
                   programProvider.selectedBatch == null
                       ? Container()
                       : Expanded(
+                        flex: 2,
                         child: FutureBuilder(
                             future: getOverallResult(),
                             builder: (context, snapshot) {
@@ -144,7 +145,7 @@ class _ResultSettingsViewState extends State<ResultSettingsView> {
                               } else {
                                 var examData =
                                     resultProvider.resultPublishModel.results;
-                      
+                                              
                                 return examData == null
                                     ? Column(
                                         crossAxisAlignment:
@@ -173,7 +174,7 @@ class _ResultSettingsViewState extends State<ResultSettingsView> {
                                               final categoryItems =
                                                   _getItemsForCategory(
                                                       category, examData);
-                      
+                                              
                                               return Column(
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.start,
@@ -183,15 +184,15 @@ class _ResultSettingsViewState extends State<ResultSettingsView> {
                                                         const EdgeInsets.all(8.0),
                                                     child: Text(
                                                       "Student Registration No $category",
-                                                      style: const TextStyle(
-                                                          fontSize: 18,
+                                                      style:  TextStyle(
+                                                          fontSize: 18.sp,
                                                           fontWeight:
                                                               FontWeight.bold),
                                                     ),
                                                   ),
                                                   SingleChildScrollView(
                                                     child: FractionallySizedBox(
-                                                      widthFactor: 0.99,
+                                                      widthFactor: 1.0,
                                                       child: DataTable(
                                                         border: TableBorder.all(),
                                                         columns: [
@@ -199,6 +200,7 @@ class _ResultSettingsViewState extends State<ResultSettingsView> {
                                                               label: Text(
                                                             'Name',
                                                             style: TextStyle(
+                                                              fontFamily: "Arial-Black",
                                                                 fontWeight:
                                                                     FontWeight
                                                                         .bold,
@@ -208,6 +210,7 @@ class _ResultSettingsViewState extends State<ResultSettingsView> {
                                                               label: Text(
                                                             'Code',
                                                             style: TextStyle(
+                                                               fontFamily: "Arial-Black",
                                                                 fontWeight:
                                                                     FontWeight
                                                                         .bold,
@@ -217,6 +220,7 @@ class _ResultSettingsViewState extends State<ResultSettingsView> {
                                                               label: Text(
                                                             'Batch',
                                                             style: TextStyle(
+                                                               fontFamily: "Arial-Black",
                                                                 fontWeight:
                                                                     FontWeight
                                                                         .bold,
@@ -224,8 +228,10 @@ class _ResultSettingsViewState extends State<ResultSettingsView> {
                                                           )),
                                                           DataColumn(
                                                               label: Text(
+                                                                
                                                             'CW-1',
                                                             style: TextStyle(
+                                                               fontFamily: "Arial-Black",
                                                                 fontWeight:
                                                                     FontWeight
                                                                         .bold,
@@ -235,6 +241,7 @@ class _ResultSettingsViewState extends State<ResultSettingsView> {
                                                               label: Text(
                                                             'CW-2',
                                                             style: TextStyle(
+                                                               fontFamily: "Arial-Black",
                                                                 fontWeight:
                                                                     FontWeight
                                                                         .bold,
@@ -244,6 +251,7 @@ class _ResultSettingsViewState extends State<ResultSettingsView> {
                                                               label: Text(
                                                             'CW-3',
                                                             style: TextStyle(
+                                                               fontFamily: "Arial-Black",
                                                                 fontWeight:
                                                                     FontWeight
                                                                         .bold,
@@ -253,6 +261,7 @@ class _ResultSettingsViewState extends State<ResultSettingsView> {
                                                               label: Text(
                                                             'CW-4',
                                                             style: TextStyle(
+                                                               fontFamily: "Arial-Black",
                                                                 fontWeight:
                                                                     FontWeight
                                                                         .bold,
@@ -262,6 +271,7 @@ class _ResultSettingsViewState extends State<ResultSettingsView> {
                                                               label: Text(
                                                             'Final',
                                                             style: TextStyle(
+                                                               fontFamily: "Arial-Black",
                                                                 fontWeight:
                                                                     FontWeight
                                                                         .bold,
@@ -271,6 +281,7 @@ class _ResultSettingsViewState extends State<ResultSettingsView> {
                                                               label: Text(
                                                             'Grade',
                                                             style: TextStyle(
+                                                               fontFamily: "Arial-Black",
                                                                 fontWeight:
                                                                     FontWeight
                                                                         .bold,

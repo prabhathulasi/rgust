@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -289,10 +290,10 @@ class ResultProvider extends ChangeNotifier {
       required String batch,
       required String programId,
       required String classId}) async {
-       Map<String, dynamic> jsonbody = {"ResultId": resultId};
+       Map<String, dynamic> jsonbody = {"ResultId": resultId,"ClassName":className, "Batch":batch};
 
-    Map<String, dynamic> body = {"ResultId": resultId, "studentId":  studentId,"ClassName":className};
-
+    Map<String, dynamic> body = {"ResultId": resultId, "studentId":  studentId,"ClassName":className, "Batch":batch};
+print(body.toString());
     setLoading(true);
     try {
       var result = await ApiHelper.post("ReleaseResult", studentId.isEmpty? jsonbody:body, token);
