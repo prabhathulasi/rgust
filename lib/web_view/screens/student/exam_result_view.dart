@@ -148,7 +148,6 @@ class _ExamResultState extends State<ExamResult> {
                         final category = _getCategories(examData)[index];
                         final categoryItems =
                             _getItemsForCategory(category, examData);
-                            print(categoryItems[1].isRepeat);
 
                         return Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -271,28 +270,40 @@ class _ExamResultState extends State<ExamResult> {
                                           cells: [
                                             DataCell(item.isRepeat == true
                                                 ? RichText(
-                                                    text:  TextSpan(
+                                                    text: TextSpan(
                                                       children: [
                                                         TextSpan(
-                                                            text: item.courseName!.trim(),
-                                                    style: TextStyle(
-                                                        fontFamily:
-                                                            "Arial-Black",
-                                                        fontWeight:
-                                                            FontWeight.w500,
-                                                        color: AppColors
-                                                            .colorBlack,
-                                                        fontSize: 12.sp)),
-                                                       WidgetSpan(
-        child: Transform.translate(
-          offset: const Offset(0, -8),
-          child: const Text(
-            '(R)',
-            style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold,color: AppColors.colorRed),
-          ),
-        ),
-      ),
-                                                       
+                                                            text: item
+                                                                .courseName!
+                                                                .trim(),
+                                                            style: TextStyle(
+                                                                fontFamily:
+                                                                    "Arial-Black",
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500,
+                                                                color: AppColors
+                                                                    .colorBlack,
+                                                                fontSize:
+                                                                    12.sp)),
+                                                        WidgetSpan(
+                                                          child: Transform
+                                                              .translate(
+                                                            offset:
+                                                                const Offset(
+                                                                    0, -8),
+                                                            child: const Text(
+                                                              '(R)',
+                                                              style: TextStyle(
+                                                                  fontSize: 12,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                  color: AppColors
+                                                                      .colorRed),
+                                                            ),
+                                                          ),
+                                                        ),
                                                       ],
                                                     ),
                                                   )
