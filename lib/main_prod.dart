@@ -28,8 +28,8 @@ import 'package:flutter/foundation.dart';
 import 'package:url_strategy/url_strategy.dart';
 
 void main() async {
-   setPathUrlStrategy();
   WidgetsFlutterBinding.ensureInitialized();
+   setPathUrlStrategy();
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
   ]);
@@ -50,10 +50,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
+var size = MediaQuery.sizeOf(context);
     return kIsWeb
         ? ScreenUtilInit(
-            designSize:  const Size(1728,1117),
+            designSize:   Size(size.width,size.height),
             builder: (context, child) {
             
               return CalendarControllerProvider(

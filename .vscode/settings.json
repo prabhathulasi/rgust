@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/0c22ca37-fd66-4f90-90fc-f4bb8ce5cdb2/resourceGroups/RgustGroup/providers/Microsoft.Web/sites/RgustAdminPanel",
+    "appService.deploySubpath": "build/web"
+}

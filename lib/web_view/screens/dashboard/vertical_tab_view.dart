@@ -76,6 +76,7 @@ class VerticalTabViewState extends State<VerticalTabView> {
             textColor: AppColors.color0ec,
           ),
         ),
+        
         tabs: <Tab>[
           // Tab(
           //   text: "Dashboard",

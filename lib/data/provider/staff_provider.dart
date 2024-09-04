@@ -5,11 +5,10 @@ import 'package:rugst_alliance_academia/data/model/staff_model.dart';
 import 'package:rugst_alliance_academia/util/api_service.dart';
 import 'package:rugst_alliance_academia/util/toast_helper.dart';
 
-
-class StaffProvider extends ChangeNotifier{
+class StaffProvider extends ChangeNotifier {
   bool _isLoading = false;
   bool get isLoading => _isLoading;
-   String? firstNamecontroller;
+  String? firstNamecontroller;
   String get firstname => firstNamecontroller!;
   String? lastNamecontroller;
   String get lastname => lastNamecontroller!;
@@ -29,7 +28,7 @@ class StaffProvider extends ChangeNotifier{
   String get cizizen => citizenshipcontroller!;
   String? desiginationController;
   String get designation => desiginationController!;
-StaffModel staffModel = StaffModel();
+  StaffModel staffModel = StaffModel();
 
   void setLoading(bool value) async {
     _isLoading = value;
@@ -41,7 +40,7 @@ StaffModel staffModel = StaffModel();
     setLoading(true);
     try {
       var result = await ApiHelper.get("GetStaff", token);
-      setLoading(false);
+
       if (result.statusCode == 200) {
         var data = json.decode(result.body);
 
@@ -51,41 +50,35 @@ StaffModel staffModel = StaffModel();
 
         return staffModel;
       } else if (result.statusCode == 204) {
-        notifyListeners();
         ToastHelper().errorToast("No Staff Added Yet");
         return null;
       } else if (result.statusCode == 401) {
-        notifyListeners();
-
         return "Invalid Token";
       } else {
-        notifyListeners();
         ToastHelper().errorToast("Internal Server Error");
         return null;
       }
     } catch (e) {
-      setLoading(false);
       ToastHelper().errorToast(e.toString());
       return e.toString();
+    } finally {
+      setLoading(false);
     }
   }
 
-
-  createStaff(String token, {required String staffId,
-  required String gender,
-  required String dob,
-  required String joiningDate,
-  required String jobType,
-  required String userImage
-  
-  })async{
+  createStaff(String token,
+      {required String staffId,
+      required String gender,
+      required String dob,
+      required String joiningDate,
+      required String jobType,
+      required String userImage}) async {
     setLoading(true);
 
     try {
       var result = await ApiHelper.post(
           "CreateStaff",
           {
-          
             "staffId": staffId,
             "firstName": firstname,
             "lastName": lastname,
@@ -101,33 +94,30 @@ StaffModel staffModel = StaffModel();
             "passportNumber": passport,
             "citizenship": cizizen,
             "userImage": userImage,
-            "designation":designation
+            "designation": designation
           },
           token);
       var data = json.decode(result.body);
-      print(data);
 
       if (result.statusCode == 200) {
         var data = json.decode(result.body);
         await getStaffList(token);
-        setLoading(false);
 
-        notifyListeners();
         ToastHelper().sucessToast("Staff Added Sucessfully");
 
         return data;
       } else {
-        setLoading(false);
-        notifyListeners();
         ToastHelper().errorToast(data["Message"]);
         return null;
       }
     } catch (e) {
-      setLoading(false);
       ToastHelper().errorToast(e.toString());
       return null;
+    } finally {
+      setLoading(false);
     }
   }
+
   // set FIRSTNAME value
   void setfirstName(String value) async {
     firstNamecontroller = value;
@@ -176,12 +166,9 @@ StaffModel staffModel = StaffModel();
     notifyListeners();
   }
 
- // set designation value
+  // set designation value
   void setDesignation(String value) async {
     desiginationController = value;
     notifyListeners();
   }
 }
-
-
-

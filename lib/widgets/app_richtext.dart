@@ -27,10 +27,13 @@ class AppRichTextView extends StatelessWidget {
   Widget build(BuildContext context) {
     return RichText(
         textAlign: textAlign ?? TextAlign.left,
+        
         maxLines: maxLines,
+       
         text: TextSpan(
             text: title,
             style: GoogleFonts.roboto(
+              
                 fontSize: fontSize,
                 fontWeight: fontWeight,
                 color: textColor,

@@ -53,7 +53,7 @@ class _WebLoginViewState extends State<WebLoginView> {
     var size = MediaQuery.sizeOf(context);
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: 200.h,
+        toolbarHeight: 150.h,
         leadingWidth: 100,
         backgroundColor: AppColors.colorWhite,
         leading:  Image.asset(ImagePath.rgustLogo,width: 60.w,),
@@ -69,7 +69,7 @@ class _WebLoginViewState extends State<WebLoginView> {
         child: Row(
           children: [
             Container(
-              margin: EdgeInsets.only(top: 20.h),
+              margin: EdgeInsets.only(top: 10.h),
               height: size.height,
               width: size.width / 1.8,
               decoration: BoxDecoration(
@@ -79,180 +79,179 @@ class _WebLoginViewState extends State<WebLoginView> {
               ),
               child: Padding(
                 padding: EdgeInsets.all(20.0.sp),
-                child: Lottie.asset(LottiePath.overViewLottie)
+                child: Lottie.asset(LottiePath.overViewLottie,repeat: false)
               ),
             ),
             Expanded(
                 child: Container(
-              margin: EdgeInsets.only(left: 40.w, right: 40.w, top: 30.h),
+                  height: size.height,
+              margin: EdgeInsets.only(left: 40.w, right: 40.w, top: 10.h),
               child: Form(
                 key: _formKey,
-                child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      AppRichTextView(
-                          title: "Login",
-                          textColor: AppColors.colorc7e,
-                          fontSize: 45.sp,
-                          fontWeight: FontWeight.w400),
-                      AnimatedTextKit(totalRepeatCount: 100, animatedTexts: [
-                        ColorizeAnimatedText(
-                          'Welcome to Our Web Portal',
-                          textStyle: colorizeTextStyle,
-                          colors: colorizeColors,
-                        ),
-                      ]),
-                      DefaultTextStyle(
-                        style: GoogleFonts.oswald(
-                          fontSize: 30.sp,
-                          fontWeight: FontWeight.w400,
-                          color: AppColors.colorPurple,
-                        ),
-                        child: AnimatedTextKit(
-                          isRepeatingAnimation: false,
-                          pause: const Duration(seconds: 10),
-                          animatedTexts: [
-                            TypewriterAnimatedText(
-                                'Thank you for get back to Univeristy Management System,\nlets access your account'),
-                          ],
-                        ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    AppRichTextView(
+                        title: "Login",
+                        textColor: AppColors.colorc7e,
+                        fontSize: 45.sp,
+                        fontWeight: FontWeight.w400),
+                    AnimatedTextKit(totalRepeatCount: 100, animatedTexts: [
+                      ColorizeAnimatedText(
+                        'Welcome to Our University Portal',
+                        textStyle: colorizeTextStyle,
+                        colors: colorizeColors,
                       ),
-                      SizedBox(
-                        height: 30.h,
+                    ]),
+                    DefaultTextStyle(
+                      style: GoogleFonts.oswald(
+                        fontSize: 30.sp,
+                        fontWeight: FontWeight.w400,
+                        color: AppColors.colorPurple,
                       ),
-                      Container(
-                        decoration: BoxDecoration(
-                            color: AppColors.colorc7e,
-                            borderRadius: BorderRadius.circular(18.sp)),
-                        child: AppTextFormFieldWidget(
-                          textStyle: GoogleFonts.oswald(
-                            color: AppColors.colorWhite,
-                          ),
-                          validator: (value) {
-                            return EmailFormFieldValidator.validate(value!);
-                          },
-                          onSaved: (p0) => userName = p0,
-                          obscureText: false,
-                          inputDecoration: InputDecoration(
+                      child: AnimatedTextKit(
+                        isRepeatingAnimation: false,
+                        pause: const Duration(seconds: 10),
+                        animatedTexts: [
+                          TypewriterAnimatedText(
+                              'Thank you for get back to Univeristy Management System,\nlets access your account'),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: 30.h,
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                          color: AppColors.colorc7e,
+                          borderRadius: BorderRadius.circular(18.sp)),
+                      child: AppTextFormFieldWidget(
+                        textStyle: GoogleFonts.oswald(
+                          color: AppColors.colorWhite,
+                        ),
+                        validator: (value) {
+                          return EmailFormFieldValidator.validate(value!);
+                        },
+                        onSaved: (p0) => userName = p0,
+                        obscureText: false,
+                        inputDecoration: InputDecoration(
+                            errorStyle: GoogleFonts.oswald(
+                                color: AppColors.colorRed,
+                                fontWeight: FontWeight.bold),
+                            floatingLabelBehavior: FloatingLabelBehavior.always,
+                            hintText: "Enter Username",
+                            hintStyle:
+                                GoogleFonts.oswald(color: AppColors.colorWhite),
+                            contentPadding: EdgeInsets.symmetric(
+                                vertical: 25.0.h, horizontal: 10.0.w),
+                            border: InputBorder.none),
+                            onFieldSubmitted: (p0) {
+                               FocusScope.of(context).requestFocus(passwordFocus);
+                            },
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20.h,
+                    ),
+                    Consumer<LoginProvider>(
+                      builder: (context, authProvider, child) {
+                        return Container(
+                          decoration: BoxDecoration(
+                              color: AppColors.colorc7e,
+                              borderRadius: BorderRadius.circular(18.sp)),
+                          child: AppTextFormFieldWidget(
+                            focusNode: passwordFocus,
+                            textStyle: GoogleFonts.oswald(
+                              color: AppColors.colorWhite,
+                            ),
+                            onSaved: (p0) => password = p0,
+                            validator: (value) {
+                              return PasswordFormFieldValidator.validate(value!);
+                            },
+                            obscureText: true,
+                            inputDecoration: InputDecoration(
                               errorStyle: GoogleFonts.oswald(
                                   color: AppColors.colorRed,
                                   fontWeight: FontWeight.bold),
                               floatingLabelBehavior: FloatingLabelBehavior.always,
-                              hintText: "Enter Username",
+                              hintText: "Enter Password",
                               hintStyle:
                                   GoogleFonts.oswald(color: AppColors.colorWhite),
                               contentPadding: EdgeInsets.symmetric(
                                   vertical: 25.0.h, horizontal: 10.0.w),
-                              border: InputBorder.none),
-                              onFieldSubmitted: (p0) {
-                                 FocusScope.of(context).requestFocus(passwordFocus);
-                              },
-                        ),
-                      ),
-                      SizedBox(
-                        height: 20.h,
-                      ),
-                      Consumer<LoginProvider>(
-                        builder: (context, authProvider, child) {
-                          return Container(
-                            decoration: BoxDecoration(
-                                color: AppColors.colorc7e,
-                                borderRadius: BorderRadius.circular(18.sp)),
-                            child: AppTextFormFieldWidget(
-                              focusNode: passwordFocus,
-                              textStyle: GoogleFonts.oswald(
-                                color: AppColors.colorWhite,
-                              ),
-                              onSaved: (p0) => password = p0,
-                              validator: (value) {
-                                return PasswordFormFieldValidator.validate(value!);
-                              },
-                              obscureText: true,
-                              inputDecoration: InputDecoration(
-                                errorStyle: GoogleFonts.oswald(
-                                    color: AppColors.colorRed,
-                                    fontWeight: FontWeight.bold),
-                                floatingLabelBehavior: FloatingLabelBehavior.always,
-                                hintText: "Enter Password",
-                                hintStyle:
-                                    GoogleFonts.oswald(color: AppColors.colorWhite),
-                                contentPadding: EdgeInsets.symmetric(
-                                    vertical: 25.0.h, horizontal: 10.0.w),
-                                border: InputBorder.none,
-                              ),
-                              onFieldSubmitted: (p0) async{
-                                if (_formKey.currentState!.validate()) {
-                                    _formKey.currentState!.save();
-                                    final SharedPreferences prefs =
-                                        await SharedPreferences.getInstance();
-                                   var result = await authProvider.login(userName!, password!);
-                                    var decodedData = json.decode(result.body);
-                                    if (result.statusCode == 200) {
-                                      await prefs.setString(
-                                          'Token', decodedData["token"]);
-                                          
-                                      // await prefs.setString(
-                                      //     "Email", decodedData["user"]);
-                                      // await prefs.setInt("userId", decodedData["user"]);
-                                      if (context.mounted) {
-                                        Navigator.pushNamed(
-                                            context, RouteNames.welcome);
-                                        ToastHelper().sucessToast("Login Success");
-                                      }
-                                    } else {
-                                      ToastHelper()
-                                          .errorToast(decodedData["Message"]);
-                                    }
-                                  }
-                              },
+                              border: InputBorder.none,
                             ),
-                          );
-                        }
-                      ),
-                      SizedBox(
-                        height: 15.h,
-                      ),
-                      Center(
-                        child: Consumer<LoginProvider>(
-                            builder: (context, authProvider, child) {
-                          return AppElevatedButon(
-                            loading: authProvider.isLoading,
-                            title: "Login",
-                            buttonColor: AppColors.colorc7e,
-                            height: 70.h,
-                            width: size.width / 6,
-                            onPressed: (context) async {
+                            onFieldSubmitted: (p0) async{
                               if (_formKey.currentState!.validate()) {
-                                _formKey.currentState!.save();
-                                final SharedPreferences prefs =
-                                    await SharedPreferences.getInstance();
-                               var result = await authProvider.login(userName!, password!);
-                                var decodedData = json.decode(result.body);
-                                if (result.statusCode == 200) {
-                                  await prefs.setString(
-                                      'Token', decodedData["token"]);
-                                  await prefs.setString(
-                                      "username", decodedData["userName"]);
-                                  // await prefs.setInt("userId", decodedData["user"]);
-                                  if (context.mounted) {
-                                    Navigator.pushNamed(
-                                        context, RouteNames.welcome);
-                                    ToastHelper().sucessToast("Login Success");
+                                  _formKey.currentState!.save();
+                                  final SharedPreferences prefs =
+                                      await SharedPreferences.getInstance();
+                                 var result = await authProvider.login(userName!, password!);
+                                  var decodedData = json.decode(result.body);
+                                  if (result.statusCode == 200) {
+                                    await prefs.setString(
+                                        'Token', decodedData["token"]);
+                                        
+                                    // await prefs.setString(
+                                    //     "Email", decodedData["user"]);
+                                    // await prefs.setInt("userId", decodedData["user"]);
+                                    if (context.mounted) {
+                                      Navigator.pushNamed(
+                                          context, RouteNames.welcome);
+                                      ToastHelper().sucessToast("Login Success");
+                                    }
+                                  } else {
+                                    ToastHelper()
+                                        .errorToast(decodedData["Message"]);
                                   }
-                                } else {
-                                  ToastHelper()
-                                      .errorToast(decodedData["Message"]);
                                 }
-                              }
                             },
-                            textColor: AppColors.colorWhite,
-                          );
-                        }),
-                      ),
-                    ],
-                  ),
+                          ),
+                        );
+                      }
+                    ),
+                    SizedBox(
+                      height: 15.h,
+                    ),
+                    Center(
+                      child: Consumer<LoginProvider>(
+                          builder: (context, authProvider, child) {
+                        return AppElevatedButon(
+                          loading: authProvider.isLoading,
+                          title: "Login",
+                          buttonColor: AppColors.colorc7e,
+                          height: 70.h,
+                          width: size.width / 6,
+                          onPressed: (context) async {
+                            if (_formKey.currentState!.validate()) {
+                              _formKey.currentState!.save();
+                              final SharedPreferences prefs =
+                                  await SharedPreferences.getInstance();
+                             var result = await authProvider.login(userName!, password!);
+                              var decodedData = json.decode(result.body);
+                              if (result.statusCode == 200) {
+                                await prefs.setString(
+                                    'Token', decodedData["token"]);
+                                await prefs.setString(
+                                    "username", decodedData["userName"]);
+                                // await prefs.setInt("userId", decodedData["user"]);
+                                if (context.mounted) {
+                                  Navigator.pushNamed(
+                                      context, RouteNames.welcome);
+                                  ToastHelper().sucessToast("Login Success");
+                                }
+                              } else {
+                                ToastHelper()
+                                    .errorToast(decodedData["Message"]);
+                              }
+                            }
+                          },
+                          textColor: AppColors.colorWhite,
+                        );
+                      }),
+                    ),
+                  ],
                 ),
               ),
             ))

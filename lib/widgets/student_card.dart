@@ -85,9 +85,13 @@ class StudentCardWidget extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  AppRichTextView(title: studentName,   fontSize: 14.sp,
-                fontWeight: FontWeight.bold,
-                textColor: AppColors.colorWhite,),
+                  Flexible(
+                    child: AppRichTextView(
+                     maxLines: 2,
+                      title: studentName,   fontSize: 14.sp,
+                                    fontWeight: FontWeight.bold,
+                                    textColor: AppColors.colorWhite,),
+                  ),
                   const Icon(Icons.male,color: AppColors.colorWhite,)
                 ],
               ),

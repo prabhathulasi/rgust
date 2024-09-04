@@ -324,42 +324,21 @@ String abbreviatedText1 = abbreviateString(studentData.currentClassName!);
                       color: AppColors.colorc7e,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(18.sp)),
-                      child: Container(
-                        foregroundDecoration: RotatedCornerDecoration.withColor(
-    color: Colors.red,
-    spanBaselineShift: 4,
-    badgeSize: const Size(64, 64),
-    badgeCornerRadius: const Radius.circular(8),
-    badgePosition: BadgePosition.topStart,
-    textSpan: TextSpan(
-      text: abbreviatedText1,
-      style: const TextStyle(
-        color: Colors.white,
-        fontSize: 12,
-        letterSpacing: 1,
-        fontWeight: FontWeight.bold,
-        shadows: [
-          BoxShadow(color: Colors.yellowAccent, blurRadius: 8),
-        ],
-      ),
-    ),
-  ),
-                        child: StudentCardWidget(
-                          userImage: memoryImagedata,
-                          address: studentData.address!,
-                          citizenship: studentData.citizenship!,
-                          currentClass: studentData.currentClassName!,
-                          dob: studentData.dOB!,
-                          email: studentData.email!,
-                          mobileNumber: studentData.mobileNumber!.toString(),
-                          studentRegNo: studentData.studentRegiterNumber!,
-                          studentName: studentData.firstName!+studentData.lastName!,
-                          studentType: studentData.studentType!,
-                         
-                          program: studentData.currentProgramName!,
-                      
-                      
-                        ),
+                      child: StudentCardWidget(
+                        userImage: memoryImagedata,
+                        address: studentData.address!,
+                        citizenship: studentData.citizenship!,
+                        currentClass: studentData.currentClassName!,
+                        dob: studentData.dOB!,
+                        email: studentData.email!,
+                        mobileNumber: studentData.mobileNumber!.toString(),
+                        studentRegNo: studentData.studentRegiterNumber!,
+                        studentName: studentData.firstName!+studentData.lastName!,
+                        studentType: studentData.studentType!,
+                       
+                        program: studentData.currentProgramName!,
+                                            
+                                            
                       )
                     ),
                   );

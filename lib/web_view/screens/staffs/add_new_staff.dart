@@ -123,7 +123,7 @@ class _AddFacultyViewState extends State<AddStaffView> {
                     onTap: () async {
                       bytesFromPicker = await ImagePickerWeb.getImageAsBytes();
                       imageEncoded = base64.encode(bytesFromPicker!);
-
+              
                       setState(() {});
                     },
                     child: AppRichTextView(
@@ -434,9 +434,8 @@ class _AddFacultyViewState extends State<AddStaffView> {
                                                 await showDatePicker(
                                                     context: context,
                                                     initialDate: DateTime.now(),
-                                                    firstDate: DateTime
-                                                        .now(), //- not to allow to choose before today.
-                                                    lastDate: DateTime(2101));
+                                                    firstDate: DateTime(2010), //- not to allow to choose before today.
+                                                    lastDate: DateTime.now() );
                                                         
                                             if (pickedDate != null) {
                                               //pickedDate output format => 2021-03-10 00:00:00.000
