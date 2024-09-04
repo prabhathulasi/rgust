@@ -46,8 +46,8 @@ class AppElevatedButon extends StatelessWidget {
             children: <Widget>[
               AppRichTextView(
                 title: title!,
-                fontSize: 20.sp,
-                fontWeight: FontWeight.bold,
+                fontSize: 15.sp,
+                fontWeight: FontWeight.w500,
                 textColor: textColor!,
               ),
               const SizedBox(

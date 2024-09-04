@@ -3,7 +3,7 @@ import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+
 
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker_web/image_picker_web.dart';
@@ -141,329 +141,369 @@ class _AddFacultyViewState extends State<AddStaffView> {
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Column(
-                            children: [
-                              Container(
-                                color: AppColors.colorc7e,
-                                height: 70.h,
-                                width: size.width * 0.2,
-                                child: Padding(
-                                  padding: EdgeInsets.all(8.0.sp),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      AppRichTextView(
-                                          title: "Staff Id",
-                                          textColor: AppColors.colorWhite,
-                                          fontSize: 14.sp,
-                                          fontWeight: FontWeight.w500),
-                                      Expanded(
-                                        child: AppTextFormFieldWidget(
-                                          
-                                          enable: false,
-                                          textStyle:  TextStyle(
-                                              color: AppColors.colorWhite,fontSize: 15.sp),
-                                          onSaved: (p0) {},
-                                          inputDecoration: InputDecoration(
+                          SingleChildScrollView(
+                            child: Column(
+                              children: [
+                                Container(
+                                  height: 55.h,
+                                  width: size.width * 0.2,
+                                  decoration: BoxDecoration(
+                                  color: AppColors.colorc7e,
+                                  borderRadius: BorderRadius.circular(8.sp)
+
+
+                                  ),
+                                  child: Padding(
+                                    padding: EdgeInsets.all(8.0.sp),
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        AppRichTextView(
+                                            title: "Staff Id",
+                                            textColor: AppColors.colorWhite,
+                                            fontSize: 12.sp,
+                                            fontWeight: FontWeight.w500),
+                                        Expanded(
+                                          child: AppTextFormFieldWidget(
+                                            
+                                            enable: false,
+                                            textStyle:  TextStyle(
+                                                color: AppColors.colorWhite,fontSize: 13.sp),
+                                            onSaved: (p0) {},
+                                            inputDecoration: InputDecoration(
+                                                border: InputBorder.none,
+                                                hintText: "Rgust-028-$randomString",
+                                                hintStyle: const TextStyle(
+                                                    color: AppColors.colorGrey)),
+                                            obscureText: false,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 10.h,
+                                ),
+                                Container(
+                            decoration: BoxDecoration(
+                                  color: AppColors.colorc7e,
+                                  borderRadius: BorderRadius.circular(8.sp)
+
+
+                                  ),
+                                  height: 55.h,
+                                  width: size.width * 0.2,
+                                  child: Padding(
+                                    padding: EdgeInsets.all(8.0.sp),
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        AppRichTextView(
+                                            title: "First Name",
+                                            textColor: AppColors.colorWhite,
+                                            fontSize: 12.sp,
+                                            fontWeight: FontWeight.w500),
+                                        Expanded(
+                                            child: AppTextFormFieldWidget(
+                                          textStyle: GoogleFonts.roboto(
+                                              color: AppColors.colorWhite,fontSize: 13.sp),
+                                          validator: (value) {
+                                            if (value == null || value.isEmpty) {
+                                              return "This FirstName is Required";
+                                            } else {
+                                              return null;
+                                            }
+                                          },
+                                          onSaved: (p0) {
+                                            staffProvider.setfirstName(p0!);
+                                          },
+                                          inputDecoration: const InputDecoration(
                                               border: InputBorder.none,
-                                              hintText: "Rgust-028-$randomString",
-                                              hintStyle: const TextStyle(
+                                              hintStyle: TextStyle(
                                                   color: AppColors.colorGrey)),
                                           obscureText: false,
-                                        ),
-                                      ),
-                                    ],
+                                        )),
+                                      ],
+                                    ),
                                   ),
                                 ),
-                              ),
-                              SizedBox(
-                                height: 10.h,
-                              ),
-                              Container(
-                                color: AppColors.colorc7e,
-                                height: 70.h,
-                                width: size.width * 0.2,
-                                child: Padding(
-                                  padding: EdgeInsets.all(8.0.sp),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      AppRichTextView(
-                                          title: "First Name",
-                                          textColor: AppColors.colorWhite,
-                                          fontSize: 14.sp,
-                                          fontWeight: FontWeight.w500),
-                                      Expanded(
-                                          child: AppTextFormFieldWidget(
-                                        textStyle: GoogleFonts.roboto(
-                                            color: AppColors.colorWhite,fontSize: 15.sp),
-                                        validator: (value) {
-                                          if (value == null || value.isEmpty) {
-                                            return "This FirstName is Required";
-                                          } else {
-                                            return null;
-                                          }
-                                        },
-                                        onSaved: (p0) {
-                                          staffProvider.setfirstName(p0!);
-                                        },
-                                        inputDecoration: const InputDecoration(
-                                            border: InputBorder.none,
-                                            hintStyle: TextStyle(
-                                                color: AppColors.colorGrey)),
-                                        obscureText: false,
-                                      )),
-                                    ],
-                                  ),
+                                SizedBox(
+                                  height: 10.h,
                                 ),
-                              ),
-                              SizedBox(
-                                height: 10.h,
-                              ),
-                              Container(
-                                color: AppColors.colorc7e,
-                                height: 70.h,
-                                width: size.width * 0.2,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      AppRichTextView(
-                                          title: "Last Name",
-                                          textColor: AppColors.colorWhite,
-                                          fontSize: 14.sp,
-                                          fontWeight: FontWeight.w500),
-                                      Expanded(
-                                          child: AppTextFormFieldWidget(
-                                        textStyle: GoogleFonts.roboto(
-                                            color: AppColors.colorWhite, fontSize: 15.sp),
-                                        validator: (value) {
-                                          if (value == null || value.isEmpty) {
-                                            return "This LastName is Required";
-                                          } else {
-                                            return null;
-                                          }
-                                        },
-                                        onSaved: (p0) {
-                                          staffProvider.setLastName(p0!);
-                                        },
-                                        inputDecoration: const InputDecoration(
-                                            border: InputBorder.none,
-                                            hintStyle: TextStyle(
-                                                color: AppColors.colorGrey)),
-                                        obscureText: false,
-                                      )),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              Container(
-                                color: AppColors.colorc7e,
-                                height: 70.h,
-                                width: size.width * 0.2,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      AppRichTextView(
-                                          title: "Email Address",
-                                          textColor: AppColors.colorWhite,
-                                          fontSize: 14.sp,
-                                          fontWeight: FontWeight.w500),
-                                      Expanded(
-                                          child: AppTextFormFieldWidget(
-                                        textStyle: GoogleFonts.roboto(
-                                            color: AppColors.colorWhite, fontSize: 15.sp),
-                                        validator: (value) {
-                                          return EmailFormFieldValidator.validate(
-                                              value);
-                                        },
-                                        onSaved: (p0) {
-                                          staffProvider.setemail(p0!);
-                                        },
-                                        inputDecoration: const InputDecoration(
-                                            border: InputBorder.none,
-                                            hintStyle: TextStyle(
-                                                color: AppColors.colorGrey)),
-                                        obscureText: false,
-                                      )),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              Container(
-                                color: AppColors.colorc7e,
-                                height: 70.h,
-                                width: size.width * 0.2,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      AppRichTextView(
-                                          title: "Mobile Number",
-                                          textColor: AppColors.colorWhite,
-                                          fontSize: 14.sp,
-                                          fontWeight: FontWeight.w500),
-                                      Expanded(
-                                          child: AppTextFormFieldWidget(
-                                        textStyle: GoogleFonts.roboto(
-                                            color: AppColors.colorWhite, fontSize: 15.sp),
-                                        validator: (value) {
-                                          if (value == null || value.isEmpty) {
-                                            return "This MobileNumber is Required";
-                                          } else {
-                                            return null;
-                                          }
-                                        },
-                                        onSaved: (p0) {
-                                          staffProvider.setMobile(p0!);
-                                        },
-                                        inputDecoration: const InputDecoration(
-                                            border: InputBorder.none,
-                                            hintStyle: TextStyle(
-                                                color: AppColors.colorGrey)),
-                                        obscureText: false,
-                                      )),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(height: 10),
-                              Container(
-                                color: AppColors.colorc7e,
-                                height: 70.h,
-                                width: size.width * 0.2,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      AppRichTextView(
-                                          title: "DOB",
-                                          textColor: AppColors.colorWhite,
-                                          fontSize: 14.sp,
-                                          fontWeight: FontWeight.w500),
-                                      Expanded(
-                                        child: TextFormField(
-                                          validator: (value) {
-                                            if (value == null || value.isEmpty) {
-                                              return "This DOB is Required";
-                                            } else {
-                                              return null;
-                                            }
-                                          },
-                                          style: GoogleFonts.roboto(
-                                              color: AppColors.colorWhite,fontSize: 15.sp),
-                                          controller: dobinput,
-                                          decoration: InputDecoration(
-                                              hintStyle: GoogleFonts.roboto(
-                                                  color: AppColors.colorWhite),
-                                              border: InputBorder.none),
-                                          onTap: () async {
-                                            DateTime? pickedDate =
-                                                await showDatePicker(
-                                                    context: context,
-                                                    initialDate: DateTime.now(),
-                                                    firstDate: DateTime(
-                                                        1900), //- not to allow to choose before today.
-                                                    lastDate: DateTime(2101));
-                  
-                                            if (pickedDate != null) {
-                                              //pickedDate output format => 2021-03-10 00:00:00.000
-                                              String formattedDate =
-                                                  DateFormat('yyyy-MM-dd')
-                                                      .format(pickedDate);
-                                              //formatted date output using intl package =>  2021-03-16
-                  
-                                              setState(() {
-                                                dobinput.text =
-                                                    formattedDate; //set output date to TextField value.
-                                              });
-                                            } else {
-                                              print("Date is not selected");
-                                            }
-                                          },
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(height: 10),
-                              Container(
-                                color: AppColors.colorc7e,
-                                height: 70.h,
-                                width: size.width * 0.2,
-                                child: Padding(
-                                  padding: EdgeInsets.all(8.0.sp),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      AppRichTextView(
-                                          title: "Starts On",
-                                          textColor: AppColors.colorWhite,
-                                          fontSize: 14.sp,
-                                          fontWeight: FontWeight.w500),
-                                      Expanded(
-                                        child: TextFormField(
-                                          validator: (value) {
-                                            if (value == null || value.isEmpty) {
-                                              return "This StartOn is Required";
-                                            } else {
-                                              return null;
-                                            }
-                                          },
-                                          style: GoogleFonts.roboto(
-                                              color: AppColors.colorWhite,fontSize: 15.sp),
-                                          controller: dateinput,
-                                          decoration: InputDecoration(
-                                              hintStyle: GoogleFonts.roboto(
-                                                  color: AppColors.colorWhite),
-                                              border: InputBorder.none),
-                                          onTap: () async {
-                                            DateTime? pickedDate =
-                                                await showDatePicker(
-                                                    context: context,
-                                                    initialDate: DateTime.now(),
-                                                    firstDate: DateTime(2010), //- not to allow to choose before today.
-                                                    lastDate: DateTime.now() );
-                                                        
-                                            if (pickedDate != null) {
-                                              //pickedDate output format => 2021-03-10 00:00:00.000
-                                              String formattedDate =
-                                                  DateFormat('yyyy-MM-dd')
-                                                      .format(pickedDate);
-                                              //formatted date output using intl package =>  2021-03-16
-                                                        
-                                              setState(() {
-                                                dateinput.text =
-                                                    formattedDate; //set output date to TextField value.
-                                              });
-                                            } else {
-                                              print("Date is not selected");
-                                            }
-                                          },
-                                        ),
-                                      ),
-                                      
-                                    ],
-                                  ),
-                                ),
-                              ),
-                               const SizedBox(height: 10),
-                              Expanded(
-                                child: Container(
+                                Container(
+                                  decoration: BoxDecoration(
                                   color: AppColors.colorc7e,
-                                  height: 70.h,
+                                  borderRadius: BorderRadius.circular(8.sp)
+
+
+                                  ),
+                                  height: 55.h,
+                                  width: size.width * 0.2,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        AppRichTextView(
+                                            title: "Last Name",
+                                            textColor: AppColors.colorWhite,
+                                            fontSize: 12.sp,
+                                            fontWeight: FontWeight.w500),
+                                        Expanded(
+                                            child: AppTextFormFieldWidget(
+                                          textStyle: GoogleFonts.roboto(
+                                              color: AppColors.colorWhite, fontSize: 13.sp),
+                                          validator: (value) {
+                                            if (value == null || value.isEmpty) {
+                                              return "This LastName is Required";
+                                            } else {
+                                              return null;
+                                            }
+                                          },
+                                          onSaved: (p0) {
+                                            staffProvider.setLastName(p0!);
+                                          },
+                                          inputDecoration: const InputDecoration(
+                                              border: InputBorder.none,
+                                              hintStyle: TextStyle(
+                                                  color: AppColors.colorGrey)),
+                                          obscureText: false,
+                                        )),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                Container(
+                                  decoration: BoxDecoration(
+                                  color: AppColors.colorc7e,
+                                  borderRadius: BorderRadius.circular(8.sp)
+
+
+                                  ),
+                                  height: 55.h,
+                                  width: size.width * 0.2,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        AppRichTextView(
+                                            title: "Email Address",
+                                            textColor: AppColors.colorWhite,
+                                            fontSize: 12.sp,
+                                            fontWeight: FontWeight.w500),
+                                        Expanded(
+                                            child: AppTextFormFieldWidget(
+                                          textStyle: GoogleFonts.roboto(
+                                              color: AppColors.colorWhite, fontSize: 13.sp),
+                                          validator: (value) {
+                                            return EmailFormFieldValidator.validate(
+                                                value);
+                                          },
+                                          onSaved: (p0) {
+                                            staffProvider.setemail(p0!);
+                                          },
+                                          inputDecoration: const InputDecoration(
+                                              border: InputBorder.none,
+                                              hintStyle: TextStyle(
+                                                  color: AppColors.colorGrey)),
+                                          obscureText: false,
+                                        )),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                Container(
+                                   decoration: BoxDecoration(
+                                  color: AppColors.colorc7e,
+                                  borderRadius: BorderRadius.circular(8.sp)
+
+
+                                  ),
+                                  height: 55.h,
+                                  width: size.width * 0.2,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        AppRichTextView(
+                                            title: "Mobile Number",
+                                            textColor: AppColors.colorWhite,
+                                            fontSize: 12.sp,
+                                            fontWeight: FontWeight.w500),
+                                        Expanded(
+                                            child: AppTextFormFieldWidget(
+                                          textStyle: GoogleFonts.roboto(
+                                              color: AppColors.colorWhite, fontSize: 13.sp),
+                                          validator: (value) {
+                                            if (value == null || value.isEmpty) {
+                                              return "This MobileNumber is Required";
+                                            } else {
+                                              return null;
+                                            }
+                                          },
+                                          onSaved: (p0) {
+                                            staffProvider.setMobile(p0!);
+                                          },
+                                          inputDecoration: const InputDecoration(
+                                              border: InputBorder.none,
+                                              hintStyle: TextStyle(
+                                                  color: AppColors.colorGrey)),
+                                          obscureText: false,
+                                        )),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(height: 10),
+                                Container(
+                                 decoration: BoxDecoration(
+                                  color: AppColors.colorc7e,
+                                  borderRadius: BorderRadius.circular(8.sp)
+
+
+                                  ),
+                                  height: 55.h,
+                                  width: size.width * 0.2,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        AppRichTextView(
+                                            title: "DOB",
+                                            textColor: AppColors.colorWhite,
+                                            fontSize: 12.sp,
+                                            fontWeight: FontWeight.w500),
+                                        Expanded(
+                                          child: TextFormField(
+                                            validator: (value) {
+                                              if (value == null || value.isEmpty) {
+                                                return "This DOB is Required";
+                                              } else {
+                                                return null;
+                                              }
+                                            },
+                                            style: GoogleFonts.roboto(
+                                                color: AppColors.colorWhite,fontSize: 13.sp),
+                                            controller: dobinput,
+                                            decoration: InputDecoration(
+                                                hintStyle: GoogleFonts.roboto(
+                                                    color: AppColors.colorWhite),
+                                                border: InputBorder.none),
+                                            onTap: () async {
+                                              DateTime? pickedDate =
+                                                  await showDatePicker(
+                                                      context: context,
+                                                      initialDate: DateTime.now(),
+                                                      firstDate: DateTime(
+                                                          1900), //- not to allow to choose before today.
+                                                      lastDate: DateTime(2101));
+                                              
+                                              if (pickedDate != null) {
+                                                //pickedDate output format => 2021-03-10 00:00:00.000
+                                                String formattedDate =
+                                                    DateFormat('yyyy-MM-dd')
+                                                        .format(pickedDate);
+                                                //formatted date output using intl package =>  2021-03-16
+                                              
+                                                setState(() {
+                                                  dobinput.text =
+                                                      formattedDate; //set output date to TextField value.
+                                                });
+                                              } else {
+                                                print("Date is not selected");
+                                              }
+                                            },
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(height: 10),
+                                Container(
+                                  decoration: BoxDecoration(
+                                  color: AppColors.colorc7e,
+                                  borderRadius: BorderRadius.circular(8.sp)
+
+
+                                  ),
+                                  height: 55.h,
+                                  width: size.width * 0.2,
+                                  child: Padding(
+                                    padding: EdgeInsets.all(8.0.sp),
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        AppRichTextView(
+                                            title: "Starts On",
+                                            textColor: AppColors.colorWhite,
+                                            fontSize: 12.sp,
+                                            fontWeight: FontWeight.w500),
+                                        Expanded(
+                                          child: TextFormField(
+                                            validator: (value) {
+                                              if (value == null || value.isEmpty) {
+                                                return "This StartOn is Required";
+                                              } else {
+                                                return null;
+                                              }
+                                            },
+                                            style: GoogleFonts.roboto(
+                                                color: AppColors.colorWhite,fontSize: 13.sp),
+                                            controller: dateinput,
+                                            decoration: InputDecoration(
+                                                hintStyle: GoogleFonts.roboto(
+                                                    color: AppColors.colorWhite),
+                                                border: InputBorder.none),
+                                            onTap: () async {
+                                              DateTime? pickedDate =
+                                                  await showDatePicker(
+                                                      context: context,
+                                                      initialDate: DateTime.now(),
+                                                      firstDate: DateTime(2010), //- not to allow to choose before today.
+                                                      lastDate: DateTime.now() );
+                                                          
+                                              if (pickedDate != null) {
+                                                //pickedDate output format => 2021-03-10 00:00:00.000
+                                                String formattedDate =
+                                                    DateFormat('yyyy-MM-dd')
+                                                        .format(pickedDate);
+                                                //formatted date output using intl package =>  2021-03-16
+                                                          
+                                                setState(() {
+                                                  dateinput.text =
+                                                      formattedDate; //set output date to TextField value.
+                                                });
+                                              } else {
+                                                print("Date is not selected");
+                                              }
+                                            },
+                                          ),
+                                        ),
+                                        
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                 const SizedBox(height: 10),
+                                Container(
+                                   decoration: BoxDecoration(
+                                  color: AppColors.colorc7e,
+                                  borderRadius: BorderRadius.circular(8.sp)
+
+
+                                  ),
+                                  height: 55.h,
                                   width: size.width * 0.2,
                                   child: Padding(
                                     padding: const EdgeInsets.all(8.0),
@@ -473,12 +513,12 @@ class _AddFacultyViewState extends State<AddStaffView> {
                                         AppRichTextView(
                                             title: "Desigination",
                                             textColor: AppColors.colorWhite,
-                                            fontSize: 14.sp,
+                                            fontSize: 12.sp,
                                             fontWeight: FontWeight.w500),
                                         Expanded(
                                             child: AppTextFormFieldWidget(
                                           textStyle: GoogleFonts.roboto(
-                                              color: AppColors.colorWhite,fontSize: 15.sp),
+                                              color: AppColors.colorWhite,fontSize: 13.sp),
                                           validator: (value) {
                                             if (value == null || value.isEmpty) {
                                               return "This Desigination is Required";
@@ -499,265 +539,297 @@ class _AddFacultyViewState extends State<AddStaffView> {
                                     ),
                                   ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                           SizedBox(
                             width: 20.w,
                           ),
-                          Column(
-                            children: [
-                              Container(
-                                color: AppColors.colorc7e,
-                                height: 95.h,
-                                width: size.width * 0.2,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      AppRichTextView(
-                                          title: "Gender",
-                                          textColor: AppColors.colorWhite,
-                                          fontSize: 14.sp,
-                                          fontWeight: FontWeight.w500),
-                                      Expanded(
-                                          child: ListView.builder(
-                                        scrollDirection: Axis.horizontal,
-                                        shrinkWrap: true,
-                                        itemCount: genders.length,
-                                        itemBuilder: (context, index) {
-                                          return Padding(
-                                            padding:
-                                                const EdgeInsets.only(left: 8.0),
-                                            child: InkWell(
-                                              onTap: () {
-                                                setState(() {
-                                                  for (var gender in genders) {
-                                                    gender.isSelected = false;
-                                                  }
-                                                  genders[index].isSelected =
-                                                      true;
-                                                  genderValue =
-                                                      genders[index].name;
-                                                });
-                                              },
-                                              child: AppRadioButton(
-                                                gender: genders[index],
+                          SingleChildScrollView(
+                            child: Column(
+                              children: [
+                                Container(
+                                  decoration: BoxDecoration(
+                                  color: AppColors.colorc7e,
+                                  borderRadius: BorderRadius.circular(8.sp)
+
+
+                                  ),
+                                  height: 80.h,
+                                  width: size.width * 0.2,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        AppRichTextView(
+                                            title: "Gender",
+                                            textColor: AppColors.colorWhite,
+                                            fontSize: 12.sp,
+                                            fontWeight: FontWeight.w500),
+                                        Expanded(
+                                            child: ListView.builder(
+                                          scrollDirection: Axis.horizontal,
+                                          shrinkWrap: true,
+                                          itemCount: genders.length,
+                                          itemBuilder: (context, index) {
+                                            return Padding(
+                                              padding:
+                                                  const EdgeInsets.only(left: 8.0),
+                                              child: InkWell(
+                                                onTap: () {
+                                                  setState(() {
+                                                    for (var gender in genders) {
+                                                      gender.isSelected = false;
+                                                    }
+                                                    genders[index].isSelected =
+                                                        true;
+                                                    genderValue =
+                                                        genders[index].name;
+                                                  });
+                                                },
+                                                child: AppRadioButton(
+                                                  gender: genders[index],
+                                                ),
                                               ),
-                                            ),
-                                          );
-                                        },
-                                      ))
-                                    ],
+                                            );
+                                          },
+                                        ))
+                                      ],
+                                    ),
                                   ),
                                 ),
-                              ),
-                              const SizedBox(height: 10),
-                              Container(
-                                color: AppColors.colorc7e,
-                                height: 70.h,
-                                width: size.width * 0.2,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      AppRichTextView(
-                                          title: "Address",
-                                          textColor: AppColors.colorWhite,
-                                          fontSize: 14.sp,
-                                          fontWeight: FontWeight.w500),
-                                      Expanded(
-                                          child: AppTextFormFieldWidget(
-                                        textStyle: GoogleFonts.roboto(
-                                            color: AppColors.colorWhite, fontSize: 15.sp),
-                                        validator: (value) {
-                                          if (value == null || value.isEmpty) {
-                                            return "This Address is Required";
-                                          } else {
-                                            return null;
-                                          }
-                                        },
-                                        onSaved: (p0) {
-                                          staffProvider.setaddrss(p0!);
-                                        },
-                                        inputDecoration: const InputDecoration(
-                                            border: InputBorder.none,
-                                            hintStyle: TextStyle(
-                                                color: AppColors.colorGrey)),
-                                        obscureText: false,
-                                      )),
-                                    ],
+                                const SizedBox(height: 10),
+                                Container(
+                                  decoration: BoxDecoration(
+                                  color: AppColors.colorc7e,
+                                  borderRadius: BorderRadius.circular(8.sp)
+
+
+                                  ),
+                                  height: 70.h,
+                                  width: size.width * 0.2,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        AppRichTextView(
+                                            title: "Address",
+                                            textColor: AppColors.colorWhite,
+                                            fontSize: 12.sp,
+                                            fontWeight: FontWeight.w500),
+                                        Expanded(
+                                            child: AppTextFormFieldWidget(
+                                          textStyle: GoogleFonts.roboto(
+                                              color: AppColors.colorWhite, fontSize: 13.sp),
+                                          validator: (value) {
+                                            if (value == null || value.isEmpty) {
+                                              return "This Address is Required";
+                                            } else {
+                                              return null;
+                                            }
+                                          },
+                                          onSaved: (p0) {
+                                            staffProvider.setaddrss(p0!);
+                                          },
+                                          inputDecoration: const InputDecoration(
+                                              border: InputBorder.none,
+                                              hintStyle: TextStyle(
+                                                  color: AppColors.colorGrey)),
+                                          obscureText: false,
+                                        )),
+                                      ],
+                                    ),
                                   ),
                                 ),
-                              ),
-                              const SizedBox(height: 10),
-                              Container(
-                                color: AppColors.colorc7e,
-                                height: 70.h,
-                                width: size.width * 0.2,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      AppRichTextView(
-                                          title: "Education qualification",
-                                          textColor: AppColors.colorWhite,
-                                          fontSize: 14.sp,
-                                          fontWeight: FontWeight.w500),
-                                      Expanded(
-                                          child: AppTextFormFieldWidget(
-                                        textStyle: GoogleFonts.roboto(
-                                            color: AppColors.colorWhite, fontSize: 15.sp),
-                                        validator: (value) {
-                                          if (value == null || value.isEmpty) {
-                                            return "This Qualification is Required";
-                                          } else {
-                                            return null;
-                                          }
-                                        },
-                                        onSaved: (p0) {
-                                          staffProvider.setqualification(p0!);
-                                        },
-                                        inputDecoration: const InputDecoration(
-                                            border: InputBorder.none,
-                                            hintStyle: TextStyle(
-                                                color: AppColors.colorGrey)),
-                                        obscureText: false,
-                                      )),
-                                    ],
+                                const SizedBox(height: 10),
+                                Container(
+                                   decoration: BoxDecoration(
+                                  color: AppColors.colorc7e,
+                                  borderRadius: BorderRadius.circular(8.sp)
+
+
+                                  ),
+                                  height: 55.h,
+                                  width: size.width * 0.2,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        AppRichTextView(
+                                            title: "Education qualification",
+                                            textColor: AppColors.colorWhite,
+                                            fontSize: 12.sp,
+                                            fontWeight: FontWeight.w500),
+                                        Expanded(
+                                            child: AppTextFormFieldWidget(
+                                          textStyle: GoogleFonts.roboto(
+                                              color: AppColors.colorWhite, fontSize: 13.sp),
+                                          validator: (value) {
+                                            if (value == null || value.isEmpty) {
+                                              return "This Qualification is Required";
+                                            } else {
+                                              return null;
+                                            }
+                                          },
+                                          onSaved: (p0) {
+                                            staffProvider.setqualification(p0!);
+                                          },
+                                          inputDecoration: const InputDecoration(
+                                              border: InputBorder.none,
+                                              hintStyle: TextStyle(
+                                                  color: AppColors.colorGrey)),
+                                          obscureText: false,
+                                        )),
+                                      ],
+                                    ),
                                   ),
                                 ),
-                              ),
-                              const SizedBox(height: 10),
-                              Container(
-                                color: AppColors.colorc7e,
-                                height: 70.h,
-                                width: size.width * 0.2,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      AppRichTextView(
-                                          title: "Passport Number",
-                                          textColor: AppColors.colorWhite,
-                                          fontSize: 14.sp,
-                                          fontWeight: FontWeight.w500),
-                                      Expanded(
-                                          child: AppTextFormFieldWidget(
-                                        textStyle: GoogleFonts.roboto(
-                                            color: AppColors.colorWhite, fontSize: 15.sp),
-                                        validator: (value) {
-                                          if (value == null || value.isEmpty) {
-                                            return "This PassportNumber is Required";
-                                          } else {
-                                            return null;
-                                          }
-                                        },
-                                        onSaved: (p0) {
-                                          staffProvider.setpassport(p0!);
-                                        },
-                                        inputDecoration: const InputDecoration(
-                                            border: InputBorder.none,
-                                            hintStyle: TextStyle(
-                                                color: AppColors.colorGrey)),
-                                        obscureText: false,
-                                      )),
-                                    ],
+                                const SizedBox(height: 10),
+                                Container(
+                                   decoration: BoxDecoration(
+                                  color: AppColors.colorc7e,
+                                  borderRadius: BorderRadius.circular(8.sp)
+
+
+                                  ),
+                                  height: 55.h,
+                                  width: size.width * 0.2,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        AppRichTextView(
+                                            title: "Passport Number",
+                                            textColor: AppColors.colorWhite,
+                                            fontSize: 12.sp,
+                                            fontWeight: FontWeight.w500),
+                                        Expanded(
+                                            child: AppTextFormFieldWidget(
+                                          textStyle: GoogleFonts.roboto(
+                                              color: AppColors.colorWhite, fontSize: 13.sp),
+                                          validator: (value) {
+                                            if (value == null || value.isEmpty) {
+                                              return "This PassportNumber is Required";
+                                            } else {
+                                              return null;
+                                            }
+                                          },
+                                          onSaved: (p0) {
+                                            staffProvider.setpassport(p0!);
+                                          },
+                                          inputDecoration: const InputDecoration(
+                                              border: InputBorder.none,
+                                              hintStyle: TextStyle(
+                                                  color: AppColors.colorGrey)),
+                                          obscureText: false,
+                                        )),
+                                      ],
+                                    ),
                                   ),
                                 ),
-                              ),
-                              const SizedBox(height: 10),
-                              Container(
-                                color: AppColors.colorc7e,
-                                height: 95.h,
-                                width: size.width * 0.2,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      AppRichTextView(
-                                          title: "Job-Type",
-                                          textColor: AppColors.colorWhite,
-                                          fontSize: 14.sp,
-                                          fontWeight: FontWeight.w500),
-                                      Expanded(
-                                          child: ListView.builder(
-                                        scrollDirection: Axis.horizontal,
-                                        shrinkWrap: true,
-                                        itemCount: jobType.length,
-                                        itemBuilder: (context, index) {
-                                          return Padding(
-                                            padding:
-                                                const EdgeInsets.only(left: 8.0),
-                                            child: InkWell(
-                                              onTap: () {
-                                                setState(() {
-                                                  for (var data in jobType) {
-                                                    data.isSelected = false;
-                                                  }
-                                                  jobType[index].isSelected =
-                                                      true;
-                                                  jobTypeValue =
-                                                      jobType[index].name;
-                                                });
-                                              },
-                                              child: AppRadioButton(
-                                                jobType: jobType[index],
+                                const SizedBox(height: 10),
+                                Container(
+                                   decoration: BoxDecoration(
+                                  color: AppColors.colorc7e,
+                                  borderRadius: BorderRadius.circular(8.sp)
+
+
+                                  ),
+                                  height: 70.h,
+                                  width: size.width * 0.2,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        AppRichTextView(
+                                            title: "Job-Type",
+                                            textColor: AppColors.colorWhite,
+                                            fontSize: 12.sp,
+                                            fontWeight: FontWeight.w500),
+                                        Expanded(
+                                            child: ListView.builder(
+                                          scrollDirection: Axis.horizontal,
+                                          shrinkWrap: true,
+                                          itemCount: jobType.length,
+                                          itemBuilder: (context, index) {
+                                            return Padding(
+                                              padding:
+                                                  const EdgeInsets.only(left: 8.0),
+                                              child: InkWell(
+                                                onTap: () {
+                                                  setState(() {
+                                                    for (var data in jobType) {
+                                                      data.isSelected = false;
+                                                    }
+                                                    jobType[index].isSelected =
+                                                        true;
+                                                    jobTypeValue =
+                                                        jobType[index].name;
+                                                  });
+                                                },
+                                                child: AppRadioButton(
+                                                  jobType: jobType[index],
+                                                ),
                                               ),
-                                            ),
-                                          );
-                                        },
-                                      ))
-                                    ],
+                                            );
+                                          },
+                                        ))
+                                      ],
+                                    ),
                                   ),
                                 ),
-                              ),
-                              const SizedBox(height: 10),
-                              Container(
-                                color: AppColors.colorc7e,
-                                height: 70.h,
-                                width: size.width * 0.2,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      AppRichTextView(
-                                          title: "Citizenship",
-                                          textColor: AppColors.colorWhite,
-                                          fontSize: 14.sp,
-                                          fontWeight: FontWeight.w500),
-                                      Expanded(
-                                          child: AppTextFormFieldWidget(
-                                        textStyle: GoogleFonts.roboto(
-                                            color: AppColors.colorWhite, fontSize: 15.sp),
-                                        validator: (value) {
-                                          if (value == null || value.isEmpty) {
-                                            return "This Citizenship is Required";
-                                          } else {
-                                            return null;
-                                          }
-                                        },
-                                        onSaved: (p0) {
-                                          staffProvider.setcitizen(p0!);
-                                        },
-                                        inputDecoration: const InputDecoration(
-                                            border: InputBorder.none,
-                                            hintStyle: TextStyle(
-                                                color: AppColors.colorGrey)),
-                                        obscureText: false,
-                                      )),
-                                    ],
+                                const SizedBox(height: 10),
+                                Container(
+                                   decoration: BoxDecoration(
+                                  color: AppColors.colorc7e,
+                                  borderRadius: BorderRadius.circular(8.sp)
+
+
+                                  ),
+                                  height: 55.h,
+                                  width: size.width * 0.2,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        AppRichTextView(
+                                            title: "Citizenship",
+                                            textColor: AppColors.colorWhite,
+                                            fontSize: 12.sp,
+                                            fontWeight: FontWeight.w500),
+                                        Expanded(
+                                            child: AppTextFormFieldWidget(
+                                          textStyle: GoogleFonts.roboto(
+                                              color: AppColors.colorWhite, fontSize: 13.sp),
+                                          validator: (value) {
+                                            if (value == null || value.isEmpty) {
+                                              return "This Citizenship is Required";
+                                            } else {
+                                              return null;
+                                            }
+                                          },
+                                          onSaved: (p0) {
+                                            staffProvider.setcitizen(p0!);
+                                          },
+                                          inputDecoration: const InputDecoration(
+                                              border: InputBorder.none,
+                                              hintStyle: TextStyle(
+                                                  color: AppColors.colorGrey)),
+                                          obscureText: false,
+                                        )),
+                                      ],
+                                    ),
                                   ),
                                 ),
-                              ),
-                             
-                            ],
+                               
+                              ],
+                            ),
                           )
                         ],
                       ),
@@ -771,7 +843,7 @@ class _AddFacultyViewState extends State<AddStaffView> {
             const VerticalDivider(),
             Expanded(child: Column(
               children: [
-                Lottie.asset(LottiePath.uploadLottie,width: 600.w),
+                Lottie.asset(LottiePath.uploadLottie,width: size.width *0.4,repeat: false),
                  Expanded(
                    child: Row(
                       children: [
@@ -780,7 +852,7 @@ class _AddFacultyViewState extends State<AddStaffView> {
                             title: "Hand in",
                             buttonColor: AppColors.colorc7e,
                             textColor: AppColors.colorWhite,
-                            height: 50.h,
+                            height: 40.h,
                             width: 160.w,
                             loading: staffProvider.isLoading,
                             onPressed: (context) async {
@@ -839,7 +911,7 @@ class _AddFacultyViewState extends State<AddStaffView> {
                           title: "Cancel",
                           buttonColor: AppColors.colorc7e,
                           textColor: AppColors.colorWhite,
-                          height: 50.h,
+                          height: 40.h,
                           width: 150.w,
                           onPressed: (context) {},
                         )

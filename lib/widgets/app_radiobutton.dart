@@ -28,7 +28,7 @@ class _AppRadioButtonState extends State<AppRadioButton> {
         Text(
           widget.gender!.name,
           style: TextStyle(
-            fontSize: 15.sp,
+            fontSize: 13.sp,
               color: widget.gender!.isSelected
                   ? AppColors.color582
                   : AppColors.colorWhite),
@@ -47,7 +47,7 @@ class _AppRadioButtonState extends State<AppRadioButton> {
         Text(
           widget.jobType!.name,
           style: TextStyle(
-            fontSize: 15.sp,
+            fontSize: 13.sp,
               color: widget.jobType!.isSelected
                   ? AppColors.color582
                   : AppColors.colorWhite),

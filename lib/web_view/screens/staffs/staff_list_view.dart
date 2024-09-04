@@ -38,7 +38,7 @@ class StaffListView extends StatelessWidget {
                   child: CircleAvatar(
                     radius: 14.0,
                     backgroundColor: AppColors.colorc7e,
-                    child: Icon(Icons.close, color: AppColors.color582),
+                    child: Icon(Icons.close, color: AppColors.colorRed),
                   ),
                 )),
           )

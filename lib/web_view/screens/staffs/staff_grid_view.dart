@@ -39,7 +39,7 @@ class _StaffGridViewState extends State<StaffGridView> {
                   child: CircleAvatar(
                     radius: 14.0,
                     backgroundColor: AppColors.colorc7e,
-                    child: Icon(Icons.close, color: AppColors.color582),
+                    child: Icon(Icons.close, color: AppColors.colorRed),
                   ),
                 )),
           )
@@ -145,7 +145,7 @@ class _StaffGridViewState extends State<StaffGridView> {
               children: [
                 Container(
                   width: 300.w,
-                  height: 54.h,
+                  height: 48.h,
                   decoration: BoxDecoration(
                       color: AppColors.colorc7e,
                       borderRadius: BorderRadius.circular(10.sp)),
@@ -165,8 +165,8 @@ class _StaffGridViewState extends State<StaffGridView> {
                           border: InputBorder.none,
                           
                           hintText: "Search by Name",
-                          hintStyle:
-                              GoogleFonts.oswald(color: AppColors.colorWhite,fontSize: 22.sp)),
+                      hintStyle:
+                              GoogleFonts.oswald(color: AppColors.colorWhite,fontSize: 15.sp)),
                     ),
                   ),
                 ),
@@ -285,7 +285,7 @@ class _StaffGridViewState extends State<StaffGridView> {
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: size.width <= 1400 ? 4 : 6,
                     //  childAspectRatio:
-                    childAspectRatio: size.width <= 1400 ?1/ 1 : 1 / 1.3),
+                    childAspectRatio: size.width <= 1400 ?1/ 1.3 : 1 / 1.2),
                 itemBuilder: (context, index) {
                   var staffData =
                       staffProvider.staffModel.staffList![index];

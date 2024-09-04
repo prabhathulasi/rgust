@@ -112,7 +112,7 @@ class _StudentGridViewState extends State<StudentGridView> {
               children: [
                 Container(
                   width: 300.w,
-                  height: 54.h,
+                  height: 48.h,
                   decoration: BoxDecoration(
                       color: AppColors.colorc7e,
                       borderRadius: BorderRadius.circular(10.sp)),
@@ -305,7 +305,7 @@ class _StudentGridViewState extends State<StudentGridView> {
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: size.width <= 1400 ? 4 : 6,
                     //  childAspectRatio:
-                    childAspectRatio: size.width <= 1400 ? 1 / 1 : 1 / 1.3),
+                    childAspectRatio: size.width <= 1400 ? 1 / 1.3 : 1 / 1.15),
                 itemBuilder: (context, index) {
 
 
@@ -313,7 +313,6 @@ class _StudentGridViewState extends State<StudentGridView> {
                   var studentData =
                       studentProvider.studentModel.studentList![index];
                        var memoryImagedata = base64Decode(studentData.userImage!);
-String abbreviatedText1 = abbreviateString(studentData.currentClassName!);
 
 
                   return InkWell(
