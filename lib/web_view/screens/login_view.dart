@@ -71,7 +71,7 @@ class _WebLoginViewState extends State<WebLoginView> {
             Container(
              
               height: size.height,
-              width: size.width * 0.5,
+              width: size.width * 0.53,
               decoration: BoxDecoration(
                 borderRadius:
                     BorderRadius.only(topRight: Radius.circular(30.sp)),
@@ -223,7 +223,7 @@ class _WebLoginViewState extends State<WebLoginView> {
                             title: "Login",
                             buttonColor: AppColors.colorc7e,
                             height: 50.h,
-                            width: size.width * 0.2,
+                            width: size.width * 0.15,
                             onPressed: (context) async {
                               if (_formKey.currentState!.validate()) {
                                 _formKey.currentState!.save();

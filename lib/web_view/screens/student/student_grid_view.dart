@@ -62,7 +62,7 @@ class _StudentGridViewState extends State<StudentGridView> {
     Dialog alert = Dialog(
       child: Container(
         height: MediaQuery.sizeOf(context).height,
-        width: MediaQuery.sizeOf(context).width * 0.68,
+        width: MediaQuery.sizeOf(context).width,
         color: AppColors.color0ec,
         child: Stack(
           children: [
@@ -264,7 +264,7 @@ class _StudentGridViewState extends State<StudentGridView> {
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: size.width <= 1400 ? 4 : 6,
                     //  childAspectRatio:
-                    childAspectRatio: size.width <= 1400 ? 1 / 1 : 1 / 1.3),
+                    childAspectRatio: size.width <= 1400 ? 1 / 1.1 : 1 / 1.3),
                 itemBuilder: (context, index) {
                   var studentData =
                      studentProvider.filteredList[index];

@@ -94,7 +94,7 @@ class VerticalTabViewState extends State<VerticalTabView> {
               child: OverflowBox(
                   maxHeight: 80.h,
                   maxWidth: 80.w,
-                  child: Lottie.asset(LottiePath.dstudentLottie)),
+                  child: Lottie.asset(LottiePath.dstudentLottie, repeat: false)),
             ),
           ),
           Tab(
@@ -104,7 +104,7 @@ class VerticalTabViewState extends State<VerticalTabView> {
               child: OverflowBox(
                   maxHeight: 60.h,
                   maxWidth: 60.w,
-                  child: Lottie.asset(LottiePath.dstaffLottie)),
+                  child: Lottie.asset(LottiePath.dstaffLottie,repeat: false)),
             ),
           ),
           Tab(
@@ -114,14 +114,14 @@ class VerticalTabViewState extends State<VerticalTabView> {
               child: OverflowBox(
                   maxHeight: 60.h,
                   maxWidth: 60.w,
-                  child: Lottie.asset(LottiePath.dfacultyLottie)),
+                  child: Lottie.asset(LottiePath.dfacultyLottie,repeat: false)),
             ),
           ),
           Tab(
             text: "Department",
             icon: CircleAvatar(
               backgroundColor: Colors.transparent,
-              child: Lottie.asset(LottiePath.deptLottie),
+              child: Lottie.asset(LottiePath.deptLottie ),
             ),
           ),
           // Tab(
