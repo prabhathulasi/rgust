@@ -78,15 +78,15 @@ class VerticalTabViewState extends State<VerticalTabView> {
         ),
         
         tabs: <Tab>[
-          // Tab(
-          //   text: "Dashboard",
-          //   icon: CircleAvatar(
-          //       backgroundColor: Colors.transparent,
-          //       child: OverflowBox(
-          //           maxHeight: 80.h,
-          //           maxWidth: 80.w,
-          //           child: Lottie.asset(LottiePath.dashboardLottie))),
-          // ),
+          Tab(
+            text: "Dashboard",
+            icon: CircleAvatar(
+                backgroundColor: Colors.transparent,
+                child: OverflowBox(
+                    maxHeight: 80.h,
+                    maxWidth: 80.w,
+                    child: Lottie.asset(LottiePath.dashboardLottie, repeat: false))),
+          ),
           Tab(
             text: "Student",
             icon: CircleAvatar(
@@ -183,7 +183,7 @@ class VerticalTabViewState extends State<VerticalTabView> {
           ),
         ],
         contents: const <Widget>[
-          // const OverviewView(),
+           OverviewView(),
           StudentListView(),
           StaffListView(),
           FacultyListView(),

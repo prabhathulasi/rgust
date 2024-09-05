@@ -247,19 +247,19 @@ class VerticalTabsState extends State<VerticalTabs>
     String newUrl =
         '/home/$index'; // Define your URL pattern here based on the selected tab
     switch (index) {
-      // case 0:
-      //   newUrl = '/Dashboard'; // Update with your URL pattern
-      //   break;
       case 0:
-        newUrl = '/Student'; // Update with your URL pattern
+        newUrl = '/Dashboard'; // Update with your URL pattern
         break;
       case 1:
-        newUrl = '/Staff'; // Update with your URL pattern
+        newUrl = '/Student'; // Update with your URL pattern
         break;
       case 2:
-        newUrl = '/Faculty'; // Update with your URL pattern
+        newUrl = '/Staff'; // Update with your URL pattern
         break;
       case 3:
+        newUrl = '/Faculty'; // Update with your URL pattern
+        break;
+      case 4:
         newUrl = '/Department'; // Update with your URL pattern
         break;
       // case 5:
@@ -277,9 +277,9 @@ class VerticalTabsState extends State<VerticalTabs>
       // case 9:
       //   newUrl = '/CreateAccount'; // Update with your URL pattern
       //   break;
-      case 4:
-        newUrl = '/Fees'; // Update with your URL pattern
       case 5:
+        newUrl = '/Fees'; // Update with your URL pattern
+      case 6:
         newUrl = '/Results'; // Update with your URL pattern
         break;
       // Add cases for other tabs

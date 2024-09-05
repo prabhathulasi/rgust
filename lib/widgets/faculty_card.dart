@@ -1,4 +1,3 @@
-
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
@@ -8,7 +7,6 @@ import 'package:rugst_alliance_academia/data/model/faculty_model.dart';
 
 import 'package:rugst_alliance_academia/theme/app_colors.dart';
 import 'package:rugst_alliance_academia/util/index.dart';
-
 
 import 'package:rugst_alliance_academia/widgets/app_richtext.dart';
 
@@ -23,7 +21,7 @@ class FacultyCardWidget extends StatelessWidget {
   final String citizenship;
   final String dob;
   final String gender;
-final void Function() onTap;
+  final void Function() onTap;
   final bool isMultipleCourse;
 
   final String address;
@@ -46,12 +44,8 @@ final void Function() onTap;
       required this.onTap,
       required this.isMultipleCourse});
 
-    
-
   @override
   Widget build(BuildContext context) {
-
-  
     return Padding(
       padding: EdgeInsets.all(8.0.sp),
       child: Column(
@@ -92,62 +86,20 @@ final void Function() onTap;
               ),
             ],
           ),
-          Stack(
-            children: [
-              Center(
-                child: CircleAvatar(
-                  radius: 42.sp,
-                  backgroundColor: facultyType == "Part-Time"
-                                                  ? AppColors.contentColorOrange
-                                                  : facultyType == "Full-Time"
-                                                      ? AppColors.color582
-                                                      : AppColors.colorRed,
-                  child: CircleAvatar(
-                    key: UniqueKey(),
-                    radius: 40.sp,
-                    backgroundImage: MemoryImage(userImage),
-                  ),
-                ),
+          Center(
+            child: CircleAvatar(
+              radius: 42.sp,
+              backgroundColor: facultyType == "Part-Time"
+                  ? AppColors.contentColorOrange
+                  : facultyType == "Full-Time"
+                      ? AppColors.color582
+                      : AppColors.colorRed,
+              child: CircleAvatar(
+                key: UniqueKey(),
+                radius: 40.sp,
+                backgroundImage: MemoryImage(userImage),
               ),
-              Transform.translate(
-                                    offset: Offset(130.w, 80.h),
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(25.sp),
-                                          boxShadow: [
-                                            BoxShadow(
-                                                color:
-                                                   facultyType == "Part-Time"
-                                                        ? AppColors.contentColorOrange
-                                                        : facultyType ==
-                                                                "Full-Time"
-                                                            ? AppColors.color582
-                                                            : AppColors.colorRed,
-                                                blurRadius: 10,
-                                                spreadRadius: 5)
-                                          ]),
-                                      child: InkWell(
-                                        onTap: onTap,
-                                        child: CircleAvatar(
-                                          radius: 10.sp,
-                                          backgroundColor:
-                                             facultyType == "Part-Time"
-                                                  ? AppColors.contentColorOrange
-                                                  : facultyType == "Full-Time"
-                                                      ? AppColors.color582
-                                                      : AppColors.colorRed,
-                                          child: Center(
-                                            child: Icon(
-                                              Icons.edit,
-                                              size: 10.sp,
-                                              color: AppColors.color0ec,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  )
-            ],
+            ),
           ),
           SizedBox(
             height: 10.h,
@@ -167,26 +119,24 @@ final void Function() onTap;
               )
             ],
           ),
-       
           SizedBox(
             height: 10.h,
           ),
           Expanded(
-             flex: 2,
+              flex: 2,
               child: ListView.builder(
                 shrinkWrap: true,
                 itemCount: registeredCourse!.length,
                 itemBuilder: (context, index) {
                   return AppRichTextView(
-            title: "${registeredCourse![index].courseName!} (${registeredCourse![index].batch})" ,
-            fontSize: 12.sp,
-            fontWeight: FontWeight.w800,
-            textColor:AppColors.color0ec,
-          );
+                    title:
+                        "${registeredCourse![index].courseName!} (${registeredCourse![index].batch})",
+                    fontSize: 12.sp,
+                    fontWeight: FontWeight.w800,
+                    textColor: AppColors.color0ec,
+                  );
                 },
-              )
-          ),
-          
+              )),
           Row(
             children: [
               Expanded(

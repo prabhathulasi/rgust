@@ -28,10 +28,12 @@ class OverviewView extends StatefulWidget {
 }
 
 class _OverviewViewState extends State<OverviewView> {
+
   String classValue = "All Classes";
   Uint8List? decodedImage;
   @override
   Widget build(BuildContext context) {
+      var size = MediaQuery.sizeOf(context);
     final dashboardProvider =
         Provider.of<DashboardProvider>(context, listen: false);
     Future getClockInDeatils() async {
@@ -66,160 +68,149 @@ class _OverviewViewState extends State<OverviewView> {
             children: [
               Row(
                 children: [
-                  Card(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(25.sp)),
-                    elevation: 5.0,
-                    child: Container(
-                      decoration: BoxDecoration(
-                          gradient: const LinearGradient(
-                              begin: Alignment.bottomLeft,
-                              end: Alignment.topRight,
-                              colors: [AppColors.color6d5, AppColors.color4ff]),
+                  Expanded(
+                    flex: 1,
+                    child: Card(
+                      shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(25.sp)),
-                      height: 200.h,
-                      width: 350.w,
-                      child: Padding(
-                        padding: const EdgeInsets.all(18.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                AppRichTextView(
-                                  title: "37",
-                                  fontSize: 50.sp,
-                                  fontWeight: FontWeight.bold,
-                                  textColor: AppColors.colorWhite,
+                      elevation: 5.0,
+                      child: Container(
+                        decoration: BoxDecoration(
+                            gradient: const LinearGradient(
+                                begin: Alignment.bottomLeft,
+                                end: Alignment.topRight,
+                                colors: [AppColors.color6d5, AppColors.color4ff]),
+                            borderRadius: BorderRadius.circular(25.sp)),
+                        height: 200.h,
+                        width: 350.w,
+                        child: Padding(
+                          padding: const EdgeInsets.all(18.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                flex: 2,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    AppRichTextView(
+                                      title: "37",
+                                      fontSize: 50.sp,
+                                      fontWeight: FontWeight.bold,
+                                      textColor: AppColors.colorWhite,
+                                    ),
+                                    AppRichTextView(
+                                      title: "Total Students",
+                                      fontSize: 30.sp,
+                                      fontWeight: FontWeight.bold,
+                                      textColor: AppColors.colorWhite,
+                                    )
+                                  ],
                                 ),
-                                AppRichTextView(
-                                  title: "Total Students",
-                                  fontSize: 30.sp,
-                                  fontWeight: FontWeight.bold,
-                                  textColor: AppColors.colorWhite,
-                                )
-                              ],
-                            ),
-                            Lottie.asset(LottiePath.studentLottie, width: 100.w)
-                          ],
+                              ),
+                              Expanded(
+                                flex: 1,
+                                child: Lottie.asset(LottiePath.studentLottie ,repeat: false))
+                            ],
+                          ),
                         ),
                       ),
                     ),
                   ),
-                  Card(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(25.sp)),
-                    elevation: 5.0,
-                    child: Container(
-                      decoration: BoxDecoration(
-                          gradient: const LinearGradient(
-                              begin: Alignment.bottomLeft,
-                              end: Alignment.topRight,
-                              colors: [AppColors.color3ee, AppColors.colorcfe]),
+                  Expanded(
+                    flex: 1,
+                    child: Card(
+                      shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(25.sp)),
-                      height: 200.h,
-                      width: 350.w,
-                      child: Padding(
-                        padding: const EdgeInsets.all(18.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                AppRichTextView(
-                                  title: "25",
-                                  fontSize: 50.sp,
-                                  fontWeight: FontWeight.bold,
-                                  textColor: AppColors.colorWhite,
+                      elevation: 5.0,
+                      child: Container(
+                        decoration: BoxDecoration(
+                            gradient: const LinearGradient(
+                                begin: Alignment.bottomLeft,
+                                end: Alignment.topRight,
+                                colors: [AppColors.color3ee, AppColors.colorcfe]),
+                            borderRadius: BorderRadius.circular(25.sp)),
+                        height: 200.h,
+                        width: 350.w,
+                        child: Padding(
+                          padding: const EdgeInsets.all(18.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                flex: 2,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    AppRichTextView(
+                                      title: "25",
+                                      fontSize: 50.sp,
+                                      fontWeight: FontWeight.bold,
+                                      textColor: AppColors.colorWhite,
+                                    ),
+                                    AppRichTextView(
+                                      title: "Total Faculties",
+                                      fontSize: 30.sp,
+                                      fontWeight: FontWeight.bold,
+                                      textColor: AppColors.colorWhite,
+                                    )
+                                  ],
                                 ),
-                                AppRichTextView(
-                                  title: "Total Faculties",
-                                  fontSize: 30.sp,
-                                  fontWeight: FontWeight.bold,
-                                  textColor: AppColors.colorWhite,
-                                )
-                              ],
-                            ),
-                            Lottie.asset(LottiePath.facultyLottie, width: 100.w)
-                          ],
+                              ),
+                              Expanded(
+                                flex: 1,
+                                child: Lottie.asset(LottiePath.facultyLottie, repeat: false))
+                            ],
+                          ),
                         ),
                       ),
                     ),
                   ),
-                  //   Card(
-                  //   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25.sp)),
-                  //   elevation: 5.0,
-                  //   child: Container(
-                  //     decoration: BoxDecoration(
-                  //       gradient: const LinearGradient(
-                  //         begin: Alignment.bottomLeft,
-                  //         end: Alignment.topRight,
-                  //         colors: [
-                  //           AppColors.coloreac,
-                  //           AppColors.color0e7
-                  //         ]
-                  //       ),
-                  //       borderRadius: BorderRadius.circular(25.sp)
-                  //     ),
-                  //     height: 200.h,
-                  //     width: 350.w,
-                  //     child: Padding(
-                  //       padding: const EdgeInsets.all(18.0),
-                  //       child: Row(
-                  //          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  //         children: [
-                  //           Column(
-                  //             crossAxisAlignment: CrossAxisAlignment.start,
-                  //             children: [
-
-                  //               AppRichTextView(title: "25", fontSize: 50.sp, fontWeight: FontWeight.bold, textColor: AppColors.colorWhite,),
-                  //               AppRichTextView(title: "Total Staffs", fontSize: 30.sp, fontWeight: FontWeight.bold, textColor: AppColors.colorWhite,)
-                  //             ],
-                  //           ),
-                  //            Lottie.asset(LottiePath.staffLottie,width: 100.w)
-                  //         ],
-                  //       ),
-                  //     ),
-                  //   ),
-                  // ),
-                  // Card(
-                  //   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25.sp)),
-                  //   elevation: 5.0,
-                  //   child: Container(
-                  //     decoration: BoxDecoration(
-                  //       gradient: const LinearGradient(
-                  //         begin: Alignment.bottomLeft,
-                  //         end: Alignment.topRight,
-                  //         colors: [
-                  //           AppColors.color78a,
-                  //           AppColors.colordb8
-                  //         ]
-                  //       ),
-                  //       borderRadius: BorderRadius.circular(25.sp)
-                  //     ),
-                  //     height: 200.h,
-                  //     width: 350.w,
-                  //     child: Padding(
-                  //       padding: const EdgeInsets.all(18.0),
-                  //       child: Row(
-                  //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  //         children: [
-                  //           Column(
-                  //             crossAxisAlignment: CrossAxisAlignment.start,
-                  //             children: [
-
-                  //               AppRichTextView(title: "15", fontSize: 50.sp, fontWeight: FontWeight.bold, textColor: AppColors.colorWhite,),
-                  //               AppRichTextView(title: "Others", fontSize: 30.sp, fontWeight: FontWeight.bold, textColor: AppColors.colorWhite,)
-                  //             ],
-                  //           ),
-                  //           Lottie.asset(LottiePath.otherLottie,width: 100.w)
-                  //         ],
-                  //       ),
-                  //     ),
-                  //   ),
-                  // ),
+                    Expanded(
+                      flex: 1,
+                      child: Card(
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25.sp)),
+                      elevation: 5.0,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          gradient: const LinearGradient(
+                            begin: Alignment.bottomLeft,
+                            end: Alignment.topRight,
+                            colors: [
+                              AppColors.coloreac,
+                              AppColors.color0e7
+                            ]
+                          ),
+                          borderRadius: BorderRadius.circular(25.sp)
+                        ),
+                        height: 200.h,
+                        width: 350.w,
+                        child: Padding(
+                          padding: const EdgeInsets.all(18.0),
+                          child: Row(
+                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                flex: 2,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                                      
+                                    AppRichTextView(title: "25", fontSize: 50.sp, fontWeight: FontWeight.bold, textColor: AppColors.colorWhite,),
+                                    AppRichTextView(title: "Total Staffs", fontSize: 30.sp, fontWeight: FontWeight.bold, textColor: AppColors.colorWhite,)
+                                  ],
+                                ),
+                              ),
+                               Expanded(
+                                flex: 1,
+                                child: Lottie.asset(LottiePath.staffLottie,repeat: false))
+                            ],
+                          ),
+                        ),
+                      ),
+                                        ),
+                    ),
+              
                 ],
               ),
               SizedBox(
@@ -228,7 +219,7 @@ class _OverviewViewState extends State<OverviewView> {
               Row(
                 children: [
                   Container(
-                      width: 300.w,
+                      width: size.width * 0.15,
                       decoration: BoxDecoration(
                           border:
                               Border.all(width: 2, color: AppColors.colorc7e),
@@ -242,7 +233,7 @@ class _OverviewViewState extends State<OverviewView> {
                     width: 10.w,
                   ),
                   Container(
-                      width: 300.w,
+                    width: size.width * 0.15,
                       decoration: BoxDecoration(
                           border:
                               Border.all(width: 2, color: AppColors.colorc7e),
@@ -252,40 +243,23 @@ class _OverviewViewState extends State<OverviewView> {
                         donutColor1: AppColors.color3ee,
                         donutColor2: AppColors.colorcfe,
                       )),
-                  //      SizedBox(width: 10.w,),
-                  //       Expanded(
-                  //         child: Container(
-                  //           decoration: BoxDecoration(
-                  //             border: Border.all(
-                  //               width: 2,
-                  //               color: AppColors.colorc7e
-                  //             ),
-                  //             borderRadius: BorderRadius.circular(22.sp)
-                  //           ),
-                  //           height: 300.h,
-
-                  //           child: const PieChartScreen(
-                  //             donutColor1:        AppColors.coloreac,
-                  //             donutColor2:AppColors.color0e7,
-                  //           )),
-                  //       ),
-                  //        SizedBox(width: 10.w,),
-                  // Expanded(
-                  //   child: Container(
-                  //     decoration: BoxDecoration(
-                  //       border: Border.all(
-                  //         width: 2,
-                  //         color: AppColors.colorc7e
-                  //       ),
-                  //       borderRadius: BorderRadius.circular(22.sp)
-                  //     ),
-                  //     height: 300.h,
-
-                  //     child: const PieChartScreen(
-                  //       donutColor1:     AppColors.color78a,
-                  //         donutColor2:    AppColors.colordb8,
-                  //     )),
-                  // )
+                       SizedBox(width: 10.w,),
+                        Container(
+                          width: size.width * 0.15,
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              width: 2,
+                              color: AppColors.colorc7e
+                            ),
+                            borderRadius: BorderRadius.circular(22.sp)
+                          ),
+                          height: 300.h,
+                        
+                          child: const PieChartScreen(
+                            donutColor1:        AppColors.coloreac,
+                            donutColor2:AppColors.color0e7,
+                          )),
+                
                 ],
               ),
               SizedBox(
@@ -304,7 +278,7 @@ class _OverviewViewState extends State<OverviewView> {
                       Row(
                         children: [
                           AppRichTextView(
-                            title: " Students ClockIn and ClockOut",
+                            title: "ClockIn and ClockOut",
                             fontSize: 20.sp,
                             fontWeight: FontWeight.bold,
                             textColor: AppColors.colorBlack,
@@ -314,11 +288,7 @@ class _OverviewViewState extends State<OverviewView> {
                                 getClockInDeatils();
                               },
                               child: const Icon(Icons.refresh)),
-                          const Spacer(),
-                          const Icon(
-                            Icons.summarize_outlined,
-                            color: AppColors.colorc7e,
-                          )
+                         
                         ],
                       ),
                       Expanded(
@@ -343,7 +313,7 @@ class _OverviewViewState extends State<OverviewView> {
                                 } else {
                                   return GroupedListView<Data, String>(
                                     elements: data,
-                                    groupBy: (element) => element.createdAt!,
+                                    groupBy: (element) => element.createdAt!, 
                                     groupComparator: (value1, value2) =>
                                         value2.compareTo(value1),
                                     itemComparator: (item1, item2) => item1
@@ -360,7 +330,7 @@ class _OverviewViewState extends State<OverviewView> {
                                         padding: const EdgeInsets.all(8.0),
                                         child: Text(
                                           formatedDate,
-                                          textAlign: TextAlign.left,
+                                          textAlign: TextAlign.center,
                                           style: TextStyle(
                                               fontSize: 18.sp,
                                               fontWeight: FontWeight.bold),

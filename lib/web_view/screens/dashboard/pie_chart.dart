@@ -95,7 +95,7 @@ return PieChart(
     return List.generate(2, (i) {
       final isTouched = i == touchedIndex;
       final fontSize = isTouched ? 20.0.sp : 16.0.sp;
-      final radius = isTouched ? 110.0.sp : 100.0.sp;
+      final radius = isTouched ? 90.0.sp : 80.0.sp;
       final widgetSize = isTouched ? 30.sp : 25.0.sp;
       const shadows = [Shadow(color: Colors.black, blurRadius: 2)];
 

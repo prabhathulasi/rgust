@@ -95,12 +95,13 @@ class _FacultyGridViewState extends State<FacultyGridView> {
       },
     );
   }
-   showUpdateAlertDialog(BuildContext context, FacultyList details) {
+
+  showUpdateAlertDialog(BuildContext context, FacultyList details) {
     // set up the AlertDialog
     Dialog alert = Dialog(
       child: Stack(
         children: [
-           UpdateFacultyView(facultyDetail: details),
+          UpdateFacultyView(facultyDetail: details),
           Transform.translate(
             offset: Offset(10.w, -13.h),
             child: GestureDetector(
@@ -130,6 +131,7 @@ class _FacultyGridViewState extends State<FacultyGridView> {
       setState(() {});
     });
   }
+
   final GlobalKey<FormFieldState<String>> textFieldKey = GlobalKey();
   @override
   Widget build(BuildContext context) {
@@ -154,22 +156,23 @@ class _FacultyGridViewState extends State<FacultyGridView> {
                     child: Padding(
                       padding: EdgeInsets.only(left: 18.0.w, right: 18.w),
                       child: AppTextFormFieldWidget(
-                        
                         key: textFieldKey,
-                     
                         onChanged: (p0) {
                           facultyProvider.setEnableFilter(true);
                           facultyProvider.filterFaculty(p0);
                         },
-                        
-                        textStyle: GoogleFonts.oswald(color: AppColors.colorWhite,fontSize: 15.sp),
+                        textStyle: GoogleFonts.oswald(
+                            color: AppColors.colorWhite, fontSize: 15.sp),
                         inputDecoration: InputDecoration(
-                          suffixIcon : Icon(Icons.search, color: AppColors.colorWhite,size: 25.sp,),
+                            suffixIcon: Icon(
+                              Icons.search,
+                              color: AppColors.colorWhite,
+                              size: 25.sp,
+                            ),
                             border: InputBorder.none,
-                            
                             hintText: "Search by Name",
-                            hintStyle:
-                                GoogleFonts.oswald(color: AppColors.colorWhite,fontSize: 20.sp)),
+                            hintStyle: GoogleFonts.oswald(
+                                color: AppColors.colorWhite, fontSize: 20.sp)),
                       ),
                     ),
                   ),
@@ -236,98 +239,107 @@ class _FacultyGridViewState extends State<FacultyGridView> {
             SizedBox(
               height: 10.h,
             ),
-            facultyProvider.filteredEnable == true? 
-            Expanded(child: GridView.builder(
-                shrinkWrap: true,
-                itemCount: facultyProvider.filteredList.length,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: size.width <= 1400 ? 4 : 6,
-                    //  childAspectRatio:
-                    childAspectRatio: size.width <= 1400 ? 1 / 1 : 1 / 1.3),
-                itemBuilder: (context, index) {
-                  var facultydata =
-                     facultyProvider.filteredList[index];
-                     var memoryImagedata = base64Decode(facultydata.userImage!);
-                  return InkWell(
-                    onTap: () {
-                      showDetailAlertDialog(context, facultydata);
-                    },
-                    child: Card(
-                      color: AppColors.colorc7e,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(18.sp)),
-                      child: FacultyCardWidget(
-                        onTap: () {
-                      
-                                        facultyProvider.updateJobType(false);
-                                         facultyProvider.updateGender(false);
-                                         showUpdateAlertDialog(context, facultydata);
-                        },
-                        index: index,
-                        isMultipleCourse: facultydata.registeredCourse!.length > 1 ? true : false,
-                          userImage: memoryImagedata,
-                          facultyName:
-                              facultydata.firstName! + facultydata.lastName!,
-                     
-                          facultyType: facultydata.jobType!,
-                          gender: facultydata.gender!,
-                          mobileNumber: facultydata.mobile!,
-                          email: facultydata.email!,
-                          citizenship: facultydata.citizenship!,
-                          dob: facultydata.dob!,
-                        registeredCourse: facultydata.registeredCourse,
-                          address: facultydata.address!,
-                          pasportNumber: facultydata.passportNumber!),
+            facultyProvider.filteredEnable == true
+                ? Expanded(
+                    child: GridView.builder(
+                      shrinkWrap: true,
+                      itemCount: facultyProvider.filteredList.length,
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: size.width <= 1400 ? 4 : 6,
+                          //  childAspectRatio:
+                          childAspectRatio:
+                              size.width <= 1400 ? 1 / 1.1 : 1 / 1.3),
+                      itemBuilder: (context, index) {
+                        var facultydata = facultyProvider.filteredList[index];
+                        var memoryImagedata =
+                            base64Decode(facultydata.userImage!);
+                        return InkWell(
+                          onTap: () {
+                            showDetailAlertDialog(context, facultydata);
+                          },
+                          child: Card(
+                            color: AppColors.colorc7e,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(18.sp)),
+                            child: FacultyCardWidget(
+                                onTap: () {
+                                  facultyProvider.updateJobType(false);
+                                  facultyProvider.updateGender(false);
+                                  showUpdateAlertDialog(context, facultydata);
+                                },
+                                index: index,
+                                isMultipleCourse:
+                                    facultydata.registeredCourse!.length > 1
+                                        ? true
+                                        : false,
+                                userImage: memoryImagedata,
+                                facultyName: facultydata.firstName! +
+                                    facultydata.lastName!,
+                                facultyType: facultydata.jobType!,
+                                gender: facultydata.gender!,
+                                mobileNumber: facultydata.mobile!,
+                                email: facultydata.email!,
+                                citizenship: facultydata.citizenship!,
+                                dob: facultydata.dob!,
+                                registeredCourse: facultydata.registeredCourse,
+                                address: facultydata.address!,
+                                pasportNumber: facultydata.passportNumber!),
+                          ),
+                        );
+                      },
                     ),
-                  );
-                },
-              ),):
-            Expanded(
-              child: GridView.builder(
-                shrinkWrap: true,
-                itemCount: facultyProvider.facultyModel.facultyList!.length,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: size.width <= 1400 ? 4 : 6,
-                    //  childAspectRatio:
-                    childAspectRatio: size.width <= 1400 ? 1 / 1 : 1 / 1.3),
-                itemBuilder: (context, index) {
-                  var facultydata =
-                      facultyProvider.facultyModel.facultyList![index];
-                       var memoryImagedata = base64Decode(facultydata.userImage!);
-                  return InkWell(
-                    onTap: () {
-                      showDetailAlertDialog(context, facultydata);
-                    },
-                    child: Card(
-                      color: AppColors.colorc7e,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(18.sp)),
-                      child: FacultyCardWidget(
-                        onTap: () {
-                                        facultyProvider.updateJobType(false);
-                                         facultyProvider.updateGender(false);
-                                         showUpdateAlertDialog(context, facultydata);
-                        },
-                        index: index,
-                        isMultipleCourse: facultydata.registeredCourse!.length > 1 ? true : false,
-                          userImage:memoryImagedata,
-                          facultyName:
-                              facultydata.firstName! + facultydata.lastName!,
-                     
-                          facultyType: facultydata.jobType!,
-                          gender: facultydata.gender!,
-                          mobileNumber: facultydata.mobile!,
-                          email: facultydata.email!,
-                          citizenship: facultydata.citizenship!,
-                          dob: facultydata.dob!,
-                        registeredCourse: facultydata.registeredCourse,
-                          address: facultydata.address!,
-                          pasportNumber: facultydata.passportNumber!),
+                  )
+                : Expanded(
+                    child: GridView.builder(
+                      shrinkWrap: true,
+                      itemCount:
+                          facultyProvider.facultyModel.facultyList!.length,
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: size.width <= 1400 ? 4 : 6,
+                          //  childAspectRatio:
+                          childAspectRatio:
+                              size.width <= 1400 ? 1 / 1.25 : 1 / 1.3),
+                      itemBuilder: (context, index) {
+                        var facultydata =
+                            facultyProvider.facultyModel.facultyList![index];
+                        var memoryImagedata =
+                            base64Decode(facultydata.userImage!);
+                        return InkWell(
+                          onTap: () {
+                            showDetailAlertDialog(context, facultydata);
+                          },
+                          child: Card(
+                            color: AppColors.colorc7e,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(18.sp)),
+                            child: FacultyCardWidget(
+                                onTap: () {
+                                  facultyProvider.updateJobType(false);
+                                  facultyProvider.updateGender(false);
+                                  showUpdateAlertDialog(context, facultydata);
+                                },
+                                index: index,
+                                isMultipleCourse:
+                                    facultydata.registeredCourse!.length > 1
+                                        ? true
+                                        : false,
+                                userImage: memoryImagedata,
+                                facultyName: facultydata.firstName! +
+                                    facultydata.lastName!,
+                                facultyType: facultydata.jobType!,
+                                gender: facultydata.gender!,
+                                mobileNumber: facultydata.mobile!,
+                                email: facultydata.email!,
+                                citizenship: facultydata.citizenship!,
+                                dob: facultydata.dob!,
+                                registeredCourse: facultydata.registeredCourse,
+                                address: facultydata.address!,
+                                pasportNumber: facultydata.passportNumber!),
+                          ),
+                        );
+                      },
                     ),
-                  );
-                },
-              ),
-            ),
+                  ),
           ],
         ),
       ),
