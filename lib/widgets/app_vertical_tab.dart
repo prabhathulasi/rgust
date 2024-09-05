@@ -30,6 +30,7 @@ class VerticalTabs extends StatefulWidget {
   final Function(int tabIndex)? onSelect;
   final Color? backgroundColor;
   final Widget? header;
+  final Widget? footer;
 
   const VerticalTabs(
       {Key? key,
@@ -53,6 +54,7 @@ class VerticalTabs extends StatefulWidget {
       this.tabsElevation = 2.0,
       this.onSelect,
       this.header,
+      this.footer,
       this.backgroundColor})
       : assert(tabs.length == contents.length),
         super(key: key);
@@ -205,6 +207,8 @@ class VerticalTabsState extends State<VerticalTabs>
                             },
                           ),
                         ),
+                        //Footer
+                        widget.footer!
                       ],
                     ),
                   ),

@@ -191,6 +191,7 @@ class _WebLoginViewState extends State<WebLoginView> {
                                    var result = await authProvider.login(userName!, password!);
                                     var decodedData = json.decode(result.body);
                                     if (result.statusCode == 200) {
+                                      _formKey.currentState!.reset();
                                       await prefs.setString(
                                           'Token', decodedData["token"]);
                                           
