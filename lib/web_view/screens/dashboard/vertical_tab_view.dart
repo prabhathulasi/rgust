@@ -16,6 +16,7 @@ import 'package:rugst_alliance_academia/widgets/app_richtext.dart';
 import 'package:rugst_alliance_academia/widgets/app_vertical_tab.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:html';
+
 class VerticalTabView extends StatefulWidget {
   const VerticalTabView({
     super.key,
@@ -46,29 +47,34 @@ class VerticalTabViewState extends State<VerticalTabView> {
     return Scaffold(
       body: VerticalTabs(
         footer: Padding(
-          padding:  EdgeInsets.only(bottom:18.0.h),
+          padding: EdgeInsets.only(bottom: 18.0.h),
           child: InkWell(
-            onTap: () async{
-              SharedPreferences preferences = await SharedPreferences.getInstance();
+            onTap: () async {
+              SharedPreferences preferences =
+                  await SharedPreferences.getInstance();
               preferences.clear();
-              if(context.mounted){
-window.history.pushState(null, '', "");
-              Navigator.of(context).popUntil((route) => route.settings.name == '/');
+              if (context.mounted) {
+                window.history.pushState(null, '', "/");
+                Navigator.of(context)
+                    .popUntil((route) => route.settings.name == '/');
               }
             },
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                 AppRichTextView(
-              fontSize: 20.sp,
-              fontWeight: FontWeight.bold,
-              title: "Logout",
-              textColor: AppColors.color0ec,
-            ),
-            SizedBox(
-              width: 20.w,
-            ),
-            const Icon(Icons.logout,color: AppColors.colorWhite,)
+                AppRichTextView(
+                  fontSize: 20.sp,
+                  fontWeight: FontWeight.bold,
+                  title: "Logout",
+                  textColor: AppColors.color0ec,
+                ),
+                SizedBox(
+                  width: 20.w,
+                ),
+                const Icon(
+                  Icons.logout,
+                  color: AppColors.colorWhite,
+                )
               ],
             ),
           ),
@@ -104,7 +110,6 @@ window.history.pushState(null, '', "");
             textColor: AppColors.color0ec,
           ),
         ),
-        
         tabs: <Tab>[
           Tab(
             text: "Dashboard",
@@ -113,7 +118,8 @@ window.history.pushState(null, '', "");
                 child: OverflowBox(
                     maxHeight: 80.h,
                     maxWidth: 80.w,
-                    child: Lottie.asset(LottiePath.dashboardLottie, repeat: false))),
+                    child: Lottie.asset(LottiePath.dashboardLottie,
+                        repeat: false))),
           ),
           Tab(
             text: "Student",
@@ -122,7 +128,8 @@ window.history.pushState(null, '', "");
               child: OverflowBox(
                   maxHeight: 80.h,
                   maxWidth: 80.w,
-                  child: Lottie.asset(LottiePath.dstudentLottie, repeat: false)),
+                  child:
+                      Lottie.asset(LottiePath.dstudentLottie, repeat: false)),
             ),
           ),
           Tab(
@@ -132,7 +139,7 @@ window.history.pushState(null, '', "");
               child: OverflowBox(
                   maxHeight: 60.h,
                   maxWidth: 60.w,
-                  child: Lottie.asset(LottiePath.dstaffLottie,repeat: false)),
+                  child: Lottie.asset(LottiePath.dstaffLottie, repeat: false)),
             ),
           ),
           Tab(
@@ -142,14 +149,15 @@ window.history.pushState(null, '', "");
               child: OverflowBox(
                   maxHeight: 60.h,
                   maxWidth: 60.w,
-                  child: Lottie.asset(LottiePath.dfacultyLottie,repeat: false)),
+                  child:
+                      Lottie.asset(LottiePath.dfacultyLottie, repeat: false)),
             ),
           ),
           Tab(
             text: "Department",
             icon: CircleAvatar(
               backgroundColor: Colors.transparent,
-              child: Lottie.asset(LottiePath.deptLottie ),
+              child: Lottie.asset(LottiePath.deptLottie),
             ),
           ),
           // Tab(
@@ -211,7 +219,7 @@ window.history.pushState(null, '', "");
           ),
         ],
         contents: const <Widget>[
-           OverviewView(),
+          OverviewView(),
           StudentListView(),
           StaffListView(),
           FacultyListView(),

@@ -3,11 +3,9 @@ import 'dart:html';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:rugst_alliance_academia/theme/app_colors.dart';
-// import 'package:url_strategy/url_strategy.dart';
 
 enum IndicatorSide { start, end }
 
-/// A vertical tab widget for flutter
 class VerticalTabs extends StatefulWidget {
   final int initialIndex;
   final double tabsWidth;
@@ -32,39 +30,38 @@ class VerticalTabs extends StatefulWidget {
   final Widget? header;
   final Widget? footer;
 
-  const VerticalTabs(
-      {Key? key,
-      required this.tabs,
-      required this.contents,
-      this.tabsWidth = 200,
-      this.indicatorWidth = 3,
-      this.indicatorSide = IndicatorSide.end,
-      this.initialIndex = 0,
-      this.direction = TextDirection.ltr,
-      this.indicatorColor = Colors.green,
-      this.disabledChangePageFromContentView = false,
-      this.contentScrollAxis = Axis.horizontal,
-      this.selectedTabBackgroundColor = const Color(0x1100ff00),
-      this.tabBackgroundColor = const Color(0xfff8f8f8),
-      this.selectedTabTextStyle = const TextStyle(color: Colors.black),
-      this.tabTextStyle = const TextStyle(color: Colors.black38),
-      this.changePageCurve = Curves.easeInOut,
-      this.changePageDuration = const Duration(milliseconds: 300),
-      this.tabsShadowColor = Colors.black54,
-      this.tabsElevation = 2.0,
-      this.onSelect,
-      this.header,
-      this.footer,
-      this.backgroundColor})
-      : assert(tabs.length == contents.length),
+  const VerticalTabs({
+    Key? key,
+    required this.tabs,
+    required this.contents,
+    this.tabsWidth = 200,
+    this.indicatorWidth = 3,
+    this.indicatorSide = IndicatorSide.end,
+    this.initialIndex = 0,
+    this.direction = TextDirection.ltr,
+    this.indicatorColor = Colors.green,
+    this.disabledChangePageFromContentView = false,
+    this.contentScrollAxis = Axis.horizontal,
+    this.selectedTabBackgroundColor = const Color(0x1100ff00),
+    this.tabBackgroundColor = const Color(0xfff8f8f8),
+    this.selectedTabTextStyle = const TextStyle(color: Colors.black),
+    this.tabTextStyle = const TextStyle(color: Colors.black38),
+    this.changePageCurve = Curves.easeInOut,
+    this.changePageDuration = const Duration(milliseconds: 300),
+    this.tabsShadowColor = Colors.black54,
+    this.tabsElevation = 2.0,
+    this.onSelect,
+    this.header,
+    this.footer,
+    this.backgroundColor,
+  })  : assert(tabs.length == contents.length),
         super(key: key);
 
   @override
   VerticalTabsState createState() => VerticalTabsState();
 }
 
-class VerticalTabsState extends State<VerticalTabs>
-    with TickerProviderStateMixin {
+class VerticalTabsState extends State<VerticalTabs> with TickerProviderStateMixin {
   late int _selectedIndex;
   bool? _changePageByTapView;
 
@@ -80,6 +77,7 @@ class VerticalTabsState extends State<VerticalTabs>
 
   @override
   void initState() {
+    super.initState();
     _selectedIndex = widget.initialIndex;
     for (int i = 0; i < widget.tabs.length; i++) {
       animationControllers.add(AnimationController(
@@ -87,26 +85,31 @@ class VerticalTabsState extends State<VerticalTabs>
         vsync: this,
       ));
     }
-    _selectTab(widget.initialIndex);
+    
+    // Handle initial URL and set the correct tab
+    _handleInitialUrl();
+    
+    // Listen for URL changes
+    window.onPopState.listen((event) {
+      final path = window.location.pathname;
+      final index = _getIndexFromPath(path!);
+      if (index != null && index != _selectedIndex) {
+        _selectTab(index);
+      }
+    });
+  }
 
-    super.initState();
+  void _handleInitialUrl() {
+    final path = window.location.pathname;
+    final index = _getIndexFromPath(path!) ?? widget.initialIndex;
+    _selectTab(index);
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      pageController.jumpToPage(widget.initialIndex);
-      setState(() {});
+      pageController.jumpToPage(index);
     });
   }
 
   @override
   Widget build(BuildContext context) {
-//    Border border = Border(
-//        right: BorderSide(
-//            width: 0.5, color: widget.dividerColor));
-//    if (widget.direction == TextDirection.rtl) {
-//      border = Border(
-//          left: BorderSide(
-//              width: 0.5, color: widget.dividerColor));
-//    }
-
     return Container(
       color: widget.backgroundColor ?? Theme.of(context).canvasColor,
       child: Column(
@@ -124,10 +127,10 @@ class VerticalTabsState extends State<VerticalTabs>
                     width: widget.tabsWidth,
                     child: Column(
                       children: [
-                        // header
                         Padding(
-                            padding: EdgeInsets.all(8.0.sp),
-                            child: widget.header),
+                          padding: EdgeInsets.all(8.0.sp),
+                          child: widget.header,
+                        ),
                         Expanded(
                           child: ListView.builder(
                             shrinkWrap: true,
@@ -145,33 +148,25 @@ class VerticalTabsState extends State<VerticalTabs>
                                 child = tab.child!;
                               } else {
                                 child = Container(
-                                    padding: const EdgeInsets.all(10),
-                                    child: Row(
-                                      children: <Widget>[
-                                        (tab.icon != null)
-                                            ? Row(
-                                                children: <Widget>[
-                                                  tab.icon!,
-                                                  const SizedBox(
-                                                    width: 5,
-                                                  )
-                                                ],
-                                              )
-                                            : Container(),
-                                        (tab.text != null)
-                                            ? Expanded(
-                                                child: Text(
-                                                  tab.text!,
-                                                  softWrap: true,
-                                                  style: _selectedIndex == index
-                                                      ? widget
-                                                          .selectedTabTextStyle
-                                                      : widget.tabTextStyle,
-                                                ),
-                                              )
-                                            : Container(),
+                                  padding: const EdgeInsets.all(10),
+                                  child: Row(
+                                    children: <Widget>[
+                                      if (tab.icon != null) ...[
+                                        tab.icon!,
+                                        const SizedBox(width: 5),
                                       ],
-                                    ));
+                                      if (tab.text != null) Expanded(
+                                        child: Text(
+                                          tab.text!,
+                                          softWrap: true,
+                                          style: _selectedIndex == index
+                                              ? widget.selectedTabTextStyle
+                                              : widget.tabTextStyle,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                );
                               }
 
                               Color itemBGColor = widget.tabBackgroundColor;
@@ -185,19 +180,16 @@ class VerticalTabsState extends State<VerticalTabs>
                                   setState(() {
                                     _selectTab(index);
                                   });
-
-                                  pageController.jumpToPage(
-                                    index,
-                                  );
+                                  pageController.jumpToPage(index);
                                 },
                                 child: Padding(
                                   padding: EdgeInsets.only(right: 10.w),
                                   child: Container(
                                     height: 60,
                                     decoration: BoxDecoration(
-                                        color: itemBGColor,
-                                        borderRadius:
-                                            BorderRadius.circular(15.sp)),
+                                      color: itemBGColor,
+                                      borderRadius: BorderRadius.circular(15.sp),
+                                    ),
                                     alignment: alignment,
                                     padding: const EdgeInsets.all(5),
                                     child: child,
@@ -207,8 +199,7 @@ class VerticalTabsState extends State<VerticalTabs>
                             },
                           ),
                         ),
-                        //Footer
-                        widget.footer!
+                        widget.footer ?? Container(),
                       ],
                     ),
                   ),
@@ -216,11 +207,9 @@ class VerticalTabsState extends State<VerticalTabs>
                 Expanded(
                   child: PageView.builder(
                     pageSnapping: false,
-                    // scrollDirection: widget.contentScrollAxis,
                     physics: pageScrollPhysics,
                     onPageChanged: (index) {
-                      if (_changePageByTapView == false ||
-                          _changePageByTapView == null) {
+                      if (_changePageByTapView == false || _changePageByTapView == null) {
                         _selectTab(index);
                       }
                       if (_selectedIndex == index) {
@@ -229,11 +218,7 @@ class VerticalTabsState extends State<VerticalTabs>
                       setState(() {});
                     },
                     controller: pageController,
-
-                    // the number of pages
                     itemCount: widget.contents.length,
-
-                    // building pages
                     itemBuilder: (BuildContext context, int index) {
                       return widget.contents[index];
                     },
@@ -247,57 +232,64 @@ class VerticalTabsState extends State<VerticalTabs>
     );
   }
 
-  void _selectTab(index) {
-    String newUrl =
-        '/home/$index'; // Define your URL pattern here based on the selected tab
+  void _selectTab(int index) {
+    String newUrl;
     switch (index) {
       case 0:
-        newUrl = '/Dashboard'; // Update with your URL pattern
+        newUrl = '/Dashboard';
         break;
       case 1:
-        newUrl = '/Student'; // Update with your URL pattern
+        newUrl = '/Student';
         break;
       case 2:
-        newUrl = '/Staff'; // Update with your URL pattern
+        newUrl = '/Staff';
         break;
       case 3:
-        newUrl = '/Faculty'; // Update with your URL pattern
+        newUrl = '/Faculty';
         break;
       case 4:
-        newUrl = '/Department'; // Update with your URL pattern
+        newUrl = '/Department';
         break;
-      // case 5:
-      //   newUrl = '/Admission'; // Update with your URL pattern
-      //   break;
-      // case 6:
-      //   newUrl = '/LeaveRequest'; // Update with your URL pattern
-      //   break;
-      // case 7:
-      //   newUrl = '/E-library'; // Update with your URL pattern
-      //   break;
-      // case 8:
-      //   newUrl = '/Notification'; // Update with your URL pattern
-      //   break;
-      // case 9:
-      //   newUrl = '/CreateAccount'; // Update with your URL pattern
-      //   break;
       case 5:
-        newUrl = '/Fees'; // Update with your URL pattern
-      case 6:
-        newUrl = '/Results'; // Update with your URL pattern
+        newUrl = '/Fees';
         break;
-      // Add cases for other tabs
+      case 6:
+        newUrl = '/Results';
+        break;
+      default:
+        newUrl = '/Dashboard';
+        break;
     }
     _selectedIndex = index;
     for (AnimationController animationController in animationControllers) {
       animationController.reset();
     }
-    animationControllers[index].animateTo(index);
+    animationControllers[index].animateTo(double.parse("$index"));
 
     if (widget.onSelect != null) {
       widget.onSelect!(_selectedIndex);
     }
-    //  setPathUrlStrategy(); // Ensure the URL strategy is set
     window.history.pushState(null, '', newUrl);
+  }
+
+  int? _getIndexFromPath(String path) {
+    switch (path) {
+      case '/Dashboard':
+        return 0;
+      case '/Student':
+        return 1;
+      case '/Staff':
+        return 2;
+      case '/Faculty':
+        return 3;
+      case '/Department':
+        return 4;
+      case '/Fees':
+        return 5;
+      case '/Results':
+        return 6;
+      default:
+        return null;
+    }
   }
 }
