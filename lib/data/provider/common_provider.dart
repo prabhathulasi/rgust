@@ -8,6 +8,10 @@ class CommonProvider extends ChangeNotifier{
  String _selectedOption = '';
  String get selectedOption => _selectedOption;
   String get doaController => doaTextController.text;
+
+
+
+  
    void selectdoa(String data) {
     doaTextController.text = data;
     notifyListeners();

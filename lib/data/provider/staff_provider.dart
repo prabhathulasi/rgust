@@ -44,10 +44,8 @@ class StaffProvider extends ChangeNotifier {
 
       if (result.statusCode == 200) {
         var data = json.decode(result.body);
-      
 
         staffModel = StaffModel.fromJson(data);
-      
 
         notifyListeners();
 
@@ -65,6 +63,44 @@ class StaffProvider extends ChangeNotifier {
       ToastHelper().errorToast(e.toString());
       return e.toString();
     } finally {
+      setLoading(false);
+    }
+  }
+
+  Future createAccount(String token, String email, String password,
+      String userName, int studentId) async {
+    setLoading(true);
+
+    // Make your login API call here using the http package
+
+    try {
+      var result = await ApiHelper.post(
+          "CreateAccount",
+          {
+            "email": email,
+            "password": password,
+            "usertype": "Staff",
+            "username": userName
+          },
+          token);
+
+      var data = json.decode(result.body);
+      if (result.statusCode == 200) {
+        ToastHelper().sucessToast("Account Created Sucessfully");
+        // await getStudentDetailById(studentId, token);
+
+        return data;
+      } else if (result.statusCode == 403) {
+        ToastHelper().errorToast(data["Message"]);
+      } else {
+        ToastHelper().errorToast("Internal Server Error");
+        return null;
+      }
+    } catch (e) {
+      ToastHelper().errorToast(e.toString());
+      return null;
+    } finally {
+      notifyListeners();
       setLoading(false);
     }
   }

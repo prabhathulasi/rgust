@@ -305,6 +305,7 @@ class _StaffGridViewState extends State<StaffGridView> {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(18.sp)),
                       child: StaffCardWidget(
+                        lastDate: staffData.lastDate ?? "",
                           empStatus: staffData.empStatus!,
                           staffType: staffData.jobType!,
                           designation: staffData.designation!,

@@ -21,6 +21,7 @@ final String gender;
   final String pasportNumber;
   final Uint8List userImage;
   final String empStatus;
+  final String ? lastDate;
 
   const StaffCardWidget({super.key,
   required this.staffName,
@@ -35,7 +36,8 @@ required this.joiningDate,
   required this.address,
   required this.pasportNumber,
   required this.userImage,
-  required this.empStatus
+  required this.empStatus,
+  this.lastDate,
   });
 
 
@@ -157,6 +159,18 @@ Row(
                     textColor: AppColors.colorWhite,)),
           ],
         ),
+        empStatus== "InActive"? Row(
+          children: [
+             Expanded(
+              flex: 2,child: AppRichTextView(title: "Last Date: ",   fontSize: 12.sp,
+                    fontWeight: FontWeight.w800,
+                    textColor:empStatus== "Active"? AppColors.colorGrey: AppColors.colorc7e,)),
+             Expanded(
+              flex: 2,child: AppRichTextView(title: lastDate!,  fontSize: 12.sp,
+                    fontWeight: FontWeight.w800,
+                    textColor: AppColors.colorWhite,)),
+          ],
+        ): Container(),
         Row(
           children: [
              Expanded(

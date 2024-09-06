@@ -29,176 +29,178 @@ class _SettingsTabViewState extends State<SettingsTabView> {
   showCreateAccountDialogue(BuildContext context) {
     // set up the AlertDialog
     Dialog alert = Dialog(
-      child: SizedBox(
-        width: MediaQuery.sizeOf(context).width / 4,
-        height: MediaQuery.sizeOf(context).height / 2.5,
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Form(
-            key: formKey,
-            child: Column(
-              children: [
-                AppRichTextView(
-                    title: "Create Account",
-                    fontSize: 25.sp,
-                    fontWeight: FontWeight.bold),
-                SizedBox(
-                  height: 10.h,
-                ),
-                Container(
-                  decoration: BoxDecoration(
-                      color: AppColors.colorc7e,
-                      borderRadius: BorderRadius.circular(18.sp)),
-                  child: AppTextFormFieldWidget(
-                    textStyle: GoogleFonts.roboto(
-                      color: AppColors.colorWhite,
+      child: IntrinsicHeight(
+        child: SizedBox(
+          width: MediaQuery.sizeOf(context).width / 3,
+            
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Form(
+              key: formKey,
+              child: Column(
+                children: [
+                  AppRichTextView(
+                      title: "Create Account",
+                      fontSize: 25.sp,
+                      fontWeight: FontWeight.bold),
+                  SizedBox(
+                    height: 10.h,
+                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                        color: AppColors.colorc7e,
+                        borderRadius: BorderRadius.circular(18.sp)),
+                    child: AppTextFormFieldWidget(
+                      textStyle: GoogleFonts.roboto(
+                        color: AppColors.colorWhite,
+                      ),
+                      validator: (value) {
+                        if (value == null) {
+                          return "UserName is Required";
+                        } else {
+                          return null;
+                        }
+                      },
+                      onSaved: (p0) => userName = p0,
+                      obscureText: false,
+                      inputDecoration: InputDecoration(
+                          errorStyle: GoogleFonts.oswald(
+                              color: AppColors.colorRed,
+                              fontWeight: FontWeight.bold),
+                          floatingLabelBehavior: FloatingLabelBehavior.always,
+                          hintText: "Enter UserName",
+                          hintStyle:
+                              GoogleFonts.oswald(color: AppColors.colorWhite),
+                          contentPadding: EdgeInsets.symmetric(
+                              vertical: 25.0.h, horizontal: 10.0.w),
+                          border: InputBorder.none),
                     ),
-                    validator: (value) {
-                      if (value == null) {
-                        return "UserName is Required";
-                      } else {
-                        return null;
-                      }
-                    },
-                    onSaved: (p0) => userName = p0,
-                    obscureText: false,
-                    inputDecoration: InputDecoration(
+                  ),
+                  SizedBox(
+                    height: 10.h,
+                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                        color: AppColors.colorc7e,
+                        borderRadius: BorderRadius.circular(18.sp)),
+                    child: AppTextFormFieldWidget(
+                      enable: false,
+                      textStyle: GoogleFonts.roboto(
+                        color: AppColors.colorWhite,
+                      ),
+                      // validator: (value) {
+                      //   return EmailFormFieldValidator.validate(value!);
+                      // },
+                      // onSaved: (p0) => userName = p0,
+                      obscureText: false,
+                      inputDecoration: InputDecoration(
+                          errorStyle: GoogleFonts.oswald(
+                              color: AppColors.colorRed,
+                              fontWeight: FontWeight.bold),
+                          floatingLabelBehavior: FloatingLabelBehavior.always,
+                          hintText: widget.studentDetail!.email!,
+                          hintStyle:
+                              GoogleFonts.oswald(color: AppColors.colorWhite),
+                          contentPadding: EdgeInsets.symmetric(
+                              vertical: 25.0.h, horizontal: 10.0.w),
+                          border: InputBorder.none),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20.h,
+                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                        color: AppColors.colorc7e,
+                        borderRadius: BorderRadius.circular(18.sp)),
+                    child: AppTextFormFieldWidget(
+                      textStyle: GoogleFonts.oswald(
+                        color: AppColors.colorWhite,
+                      ),
+                      onSaved: (p0) => password = p0,
+                      validator: (value) {
+                        return PasswordFormFieldValidator.validate(value!);
+                      },
+                      obscureText: true,
+                      inputDecoration: InputDecoration(
                         errorStyle: GoogleFonts.oswald(
                             color: AppColors.colorRed,
                             fontWeight: FontWeight.bold),
                         floatingLabelBehavior: FloatingLabelBehavior.always,
-                        hintText: "Enter UserName",
+                        hintText: "Enter Password",
                         hintStyle:
                             GoogleFonts.oswald(color: AppColors.colorWhite),
                         contentPadding: EdgeInsets.symmetric(
                             vertical: 25.0.h, horizontal: 10.0.w),
-                        border: InputBorder.none),
-                  ),
-                ),
-                SizedBox(
-                  height: 10.h,
-                ),
-                Container(
-                  decoration: BoxDecoration(
-                      color: AppColors.colorc7e,
-                      borderRadius: BorderRadius.circular(18.sp)),
-                  child: AppTextFormFieldWidget(
-                    enable: false,
-                    textStyle: GoogleFonts.roboto(
-                      color: AppColors.colorWhite,
-                    ),
-                    // validator: (value) {
-                    //   return EmailFormFieldValidator.validate(value!);
-                    // },
-                    // onSaved: (p0) => userName = p0,
-                    obscureText: false,
-                    inputDecoration: InputDecoration(
-                        errorStyle: GoogleFonts.oswald(
-                            color: AppColors.colorRed,
-                            fontWeight: FontWeight.bold),
-                        floatingLabelBehavior: FloatingLabelBehavior.always,
-                        hintText: widget.studentDetail!.email!,
-                        hintStyle:
-                            GoogleFonts.oswald(color: AppColors.colorWhite),
-                        contentPadding: EdgeInsets.symmetric(
-                            vertical: 25.0.h, horizontal: 10.0.w),
-                        border: InputBorder.none),
-                  ),
-                ),
-                SizedBox(
-                  height: 20.h,
-                ),
-                Container(
-                  decoration: BoxDecoration(
-                      color: AppColors.colorc7e,
-                      borderRadius: BorderRadius.circular(18.sp)),
-                  child: AppTextFormFieldWidget(
-                    textStyle: GoogleFonts.oswald(
-                      color: AppColors.colorWhite,
-                    ),
-                    onSaved: (p0) => password = p0,
-                    validator: (value) {
-                      return PasswordFormFieldValidator.validate(value!);
-                    },
-                    obscureText: true,
-                    inputDecoration: InputDecoration(
-                      errorStyle: GoogleFonts.oswald(
-                          color: AppColors.colorRed,
-                          fontWeight: FontWeight.bold),
-                      floatingLabelBehavior: FloatingLabelBehavior.always,
-                      hintText: "Enter Password",
-                      hintStyle:
-                          GoogleFonts.oswald(color: AppColors.colorWhite),
-                      contentPadding: EdgeInsets.symmetric(
-                          vertical: 25.0.h, horizontal: 10.0.w),
-                      border: InputBorder.none,
+                        border: InputBorder.none,
+                      ),
                     ),
                   ),
-                ),
-                SizedBox(
-                  height: 20.h,
-                ),
-                Row(
-                  children: [
-                    Consumer<StudentProvider>(
-                        builder: (context, studentPRovider, child) {
-                      return AppElevatedButon(
-                              title: "Create",
-                              buttonColor: AppColors.colorc7e,
-                              height: 50.h,
-                              width: 140.w,
-                              textColor: AppColors.colorWhite,
-                              onPressed: (context) async {
-                                if (formKey.currentState!.validate()) {
-                                  formKey.currentState!.save();
-                                  var token = await getTokenAndUseIt();
-                                  if (token == null) {
-                                    if (context.mounted) {
-                                      Navigator.pushNamed(
-                                          context, RouteNames.login);
-                                    }
-                                  } else if (token == "Token Expired") {
-                                    ToastHelper().errorToast(
-                                        "Session Expired Please Login Again");
-
-                                    if (context.mounted) {
-                                      Navigator.pushNamed(
-                                          context, RouteNames.login);
-                                    }
-                                  } else {
-                                    var result =
-                                        await studentPRovider.createAccount(
-                                            token,
-                                            widget.studentDetail!.email!,
-                                            password!,
-                                            userName!,
-                                            widget.studentDetail!.iD!);
-                                    if (result != null) {
+                  SizedBox(
+                    height: 20.h,
+                  ),
+                  Row(
+                    children: [
+                      Consumer<StudentProvider>(
+                          builder: (context, studentPRovider, child) {
+                        return AppElevatedButon(
+                                title: "Create",
+                                buttonColor: AppColors.colorc7e,
+                                height: 50.h,
+                                width: 140.w,
+                                textColor: AppColors.colorWhite,
+                                onPressed: (context) async {
+                                  if (formKey.currentState!.validate()) {
+                                    formKey.currentState!.save();
+                                    var token = await getTokenAndUseIt();
+                                    if (token == null) {
                                       if (context.mounted) {
-                                        Navigator.pop(context);
+                                        Navigator.pushNamed(
+                                            context, RouteNames.login);
+                                      }
+                                    } else if (token == "Token Expired") {
+                                      ToastHelper().errorToast(
+                                          "Session Expired Please Login Again");
+              
+                                      if (context.mounted) {
+                                        Navigator.pushNamed(
+                                            context, RouteNames.login);
+                                      }
+                                    } else {
+                                      var result =
+                                          await studentPRovider.createAccount(
+                                              token,
+                                              widget.studentDetail!.email!,
+                                              password!,
+                                              userName!,
+                                              widget.studentDetail!.iD!);
+                                      if (result != null) {
+                                        if (context.mounted) {
+                                          Navigator.pop(context);
+                                        }
                                       }
                                     }
                                   }
-                                }
-                              },
-                            );
-                    }),
-                    SizedBox(
-                      width: 10.w,
-                    ),
-                    AppElevatedButon(
-                      title: "cancel",
-                      buttonColor: AppColors.colorc7e,
-                      height: 50.h,
-                      width: 140.w,
-                      textColor: AppColors.colorWhite,
-                      onPressed: (context) {
-                        Navigator.pop(context);
-                      },
-                    )
-                  ],
-                )
-              ],
+                                },
+                              );
+                      }),
+                      SizedBox(
+                        width: 10.w,
+                      ),
+                      AppElevatedButon(
+                        title: "cancel",
+                        buttonColor: AppColors.colorc7e,
+                        height: 50.h,
+                        width: 140.w,
+                        textColor: AppColors.colorWhite,
+                        onPressed: (context) {
+                          Navigator.pop(context);
+                        },
+                      )
+                    ],
+                  )
+                ],
+              ),
             ),
           ),
         ),

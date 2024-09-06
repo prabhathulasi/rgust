@@ -20,9 +20,9 @@ class FacultyDetailView extends StatefulWidget {
 }
 
 class _FacultyDetailViewState extends State<FacultyDetailView> {
-  String? password;
 
-  showAddAlertDialog(BuildContext context, FacultyList details) {
+
+  showUpdateAlertDialog(BuildContext context, FacultyList details) {
     // set up the AlertDialog
     Dialog alert = Dialog(
       child: Stack(
@@ -117,7 +117,7 @@ class _FacultyDetailViewState extends State<FacultyDetailView> {
                                         onTap: () {
                                           facultyProvider.updateJobType(false);
                                           facultyProvider.updateGender(false);
-                                          showAddAlertDialog(
+                                          showUpdateAlertDialog(
                                               context, facultyData);
                                         },
                                         child: CircleAvatar(
