@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:rugst_alliance_academia/data/model/staff_model.dart';
@@ -43,8 +44,10 @@ class StaffProvider extends ChangeNotifier {
 
       if (result.statusCode == 200) {
         var data = json.decode(result.body);
+      
 
         staffModel = StaffModel.fromJson(data);
+      
 
         notifyListeners();
 

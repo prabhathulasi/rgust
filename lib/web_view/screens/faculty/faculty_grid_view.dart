@@ -62,7 +62,7 @@ class _FacultyGridViewState extends State<FacultyGridView> {
     Dialog alert = Dialog(
       child: Container(
         height: MediaQuery.sizeOf(context).height,
-        width: MediaQuery.sizeOf(context).width * 0.68,
+        width: MediaQuery.sizeOf(context).width,
         color: AppColors.color0ec,
         child: Stack(
           children: [
@@ -248,7 +248,7 @@ class _FacultyGridViewState extends State<FacultyGridView> {
                           crossAxisCount: size.width <= 1400 ? 4 : 6,
                           //  childAspectRatio:
                           childAspectRatio:
-                              size.width <= 1400 ? 1 / 1.1 : 1 / 1.3),
+                              size.width <= 1400 ? 1 / 1.3 : 1 / 1.2),
                       itemBuilder: (context, index) {
                         var facultydata = facultyProvider.filteredList[index];
                         var memoryImagedata =
@@ -298,7 +298,7 @@ class _FacultyGridViewState extends State<FacultyGridView> {
                           crossAxisCount: size.width <= 1400 ? 4 : 6,
                           //  childAspectRatio:
                           childAspectRatio:
-                              size.width <= 1400 ? 1 / 1.25 : 1 / 1.3),
+                              size.width <= 1400 ? 1 / 1.3 : 1 / 1.2),
                       itemBuilder: (context, index) {
                         var facultydata =
                             facultyProvider.facultyModel.facultyList![index];

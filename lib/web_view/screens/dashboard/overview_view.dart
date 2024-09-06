@@ -338,14 +338,14 @@ class _OverviewViewState extends State<OverviewView> {
                                       );
                                     },
                                     itemBuilder: (c, element) {
-                                      var checkinTime = DateFormat.jm().format(
-                                          DateTime.parse(element.checkInTime!));
+                                      var checkinTime = DateFormat('kk:mm:a').format(
+                                          DateTime.parse(element.checkInTime!).toLocal());
                                       String? checkoutTime;
 
                                       if (element.checkOutTime != "") {
-                                        checkoutTime = DateFormat.jm().format(
+                                        checkoutTime = DateFormat('kk:mm:a').format(
                                             DateTime.parse(
-                                                element.checkOutTime!));
+                                                element.checkOutTime!).toLocal());
                                       }
                                       if (element.userImage != "") {
                                         decodedImage =

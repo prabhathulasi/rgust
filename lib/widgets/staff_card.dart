@@ -20,6 +20,7 @@ final String gender;
   final String address;
   final String pasportNumber;
   final Uint8List userImage;
+  final String empStatus;
 
   const StaffCardWidget({super.key,
   required this.staffName,
@@ -33,7 +34,8 @@ required this.joiningDate,
   required this.designation,
   required this.address,
   required this.pasportNumber,
-  required this.userImage
+  required this.userImage,
+  required this.empStatus
   });
 
 
@@ -57,9 +59,9 @@ required this.joiningDate,
                           height: 10,
                           decoration:  BoxDecoration(
                             shape: BoxShape.circle,
-                            color: staffType == "Regular"?AppColors.color582:AppColors.colorPurple,
+                            color:empStatus=="Active"? staffType == "Full-Time"?AppColors.color582:AppColors.contentColorOrange: AppColors.colorRed,
                             boxShadow: [BoxShadow(
-                color:staffType == "Regular"?AppColors.color582:AppColors.colorPurple,
+                color:empStatus=="Active"? staffType == "Full-Time"?AppColors.color582:AppColors.contentColorOrange: AppColors.colorRed,
                 blurRadius: 10,
                 spreadRadius: 5
                             )]
@@ -100,7 +102,7 @@ required this.joiningDate,
               flex: 2,
               child: AppRichTextView(title: "Mobile Number: ",   fontSize: 12.sp,
                     fontWeight: FontWeight.w800,
-                    textColor: AppColors.colorGrey,)),
+                    textColor:empStatus== "Active"? AppColors.colorGrey: AppColors.colorc7e,)),
              Expanded(
               flex: 2,child: AppRichTextView(title: mobileNumber,  fontSize: 12.sp,
                     fontWeight: FontWeight.w800,
@@ -112,7 +114,7 @@ required this.joiningDate,
             Expanded(
               flex: 2,child: AppRichTextView(title: "Email Address: ",   fontSize: 12.sp,
                     fontWeight: FontWeight.w800,
-                    textColor: AppColors.colorGrey,)),
+                    textColor:empStatus== "Active"? AppColors.colorGrey: AppColors.colorc7e,)),
              Expanded(
               flex: 2,  child: AppRichTextView(title: email,  fontSize: 12.sp,
                     fontWeight: FontWeight.w800,
@@ -124,7 +126,7 @@ Row(
              Expanded(
               flex: 2,child: AppRichTextView(title: "Citizenship: ",   fontSize: 12.sp,
                     fontWeight: FontWeight.w800,
-                    textColor: AppColors.colorGrey,)),
+                    textColor:empStatus== "Active"? AppColors.colorGrey: AppColors.colorc7e,)),
              Expanded(
               flex: 2,child: AppRichTextView(title: citizenship,  fontSize: 12.sp,
                     fontWeight: FontWeight.w800,
@@ -136,7 +138,7 @@ Row(
              Expanded(
               flex: 2,child: AppRichTextView(title: "DOB: ",   fontSize: 12.sp,
                     fontWeight: FontWeight.w800,
-                    textColor: AppColors.colorGrey,)),
+                    textColor:empStatus== "Active"? AppColors.colorGrey: AppColors.colorc7e,)),
              Expanded(
               flex: 2,child: AppRichTextView(title: dob,  fontSize: 12.sp,
                     fontWeight: FontWeight.w800,
@@ -148,7 +150,7 @@ Row(
              Expanded(
               flex: 2,child: AppRichTextView(title: "Joining Date: ",   fontSize: 12.sp,
                     fontWeight: FontWeight.w800,
-                    textColor: AppColors.colorGrey,)),
+                    textColor:empStatus== "Active"? AppColors.colorGrey: AppColors.colorc7e,)),
              Expanded(
               flex: 2,child: AppRichTextView(title: joiningDate,  fontSize: 12.sp,
                     fontWeight: FontWeight.w800,
@@ -160,7 +162,7 @@ Row(
              Expanded(
               flex: 2,child: AppRichTextView(title: "Class: ",   fontSize: 12.sp,
                     fontWeight: FontWeight.w800,
-                    textColor: AppColors.colorGrey,)),
+                    textColor:empStatus== "Active"? AppColors.colorGrey: AppColors.colorc7e,)),
              Expanded(
               flex: 2,child: AppRichTextView(title: designation,  fontSize: 12.sp,
                     fontWeight: FontWeight.w800,
@@ -176,7 +178,7 @@ Row(
           children: [
             AppRichTextView(title: "Passport Number: ",   fontSize: 12.sp,
                     fontWeight: FontWeight.w800,
-                    textColor: AppColors.colorGrey,),
+                    textColor:empStatus== "Active"? AppColors.colorGrey: AppColors.colorc7e,),
             
             AppRichTextView(title: pasportNumber,   fontSize: 12.sp,
                     fontWeight: FontWeight.w800,

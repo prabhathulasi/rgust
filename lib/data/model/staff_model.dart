@@ -47,6 +47,8 @@ class StaffList {
   String? userImage;
   String? designation;
   bool? accountCreated;
+  String? empStatus;
+  String? lastDate;
 
   StaffList(
       {this.iD,
@@ -70,7 +72,9 @@ class StaffList {
       this.citizenship,
       this.userImage,
       this.designation,
-      this.accountCreated});
+      this.accountCreated,
+      this.empStatus,
+      this.lastDate});
 
   StaffList.fromJson(Map<String, dynamic> json) {
     iD = json['ID'];
@@ -95,6 +99,8 @@ class StaffList {
     userImage = json['UserImage'];
     designation = json['Designation'];
     accountCreated = json['AccountCreated'];
+    empStatus = json['EmpStatus'];
+    lastDate = json['LastDate'];
   }
 
   Map<String, dynamic> toJson() {
@@ -121,6 +127,8 @@ class StaffList {
     data['UserImage'] = userImage;
     data['Designation'] = designation;
     data['AccountCreated'] = accountCreated;
+    data['EmpStatus'] = empStatus;
+    data['LastDate'] = lastDate;
     return data;
   }
 }

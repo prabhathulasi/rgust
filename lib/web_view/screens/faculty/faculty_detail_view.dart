@@ -21,14 +21,13 @@ class FacultyDetailView extends StatefulWidget {
 
 class _FacultyDetailViewState extends State<FacultyDetailView> {
   String? password;
-  
 
   showAddAlertDialog(BuildContext context, FacultyList details) {
     // set up the AlertDialog
     Dialog alert = Dialog(
       child: Stack(
         children: [
-           UpdateFacultyView(facultyDetail: details),
+          UpdateFacultyView(facultyDetail: details),
           Transform.translate(
             offset: Offset(10.w, -13.h),
             child: GestureDetector(
@@ -55,27 +54,25 @@ class _FacultyDetailViewState extends State<FacultyDetailView> {
         return alert;
       },
     ).then((value) {
-Navigator.pop(context);
+      Navigator.pop(context);
     });
   }
-
-
 
   @override
   Widget build(BuildContext context) {
     final facultyData = widget.facultyDetail;
-final facultyProvider = Provider.of<FacultyProvider>(context);
-    return Container(
-      color: AppColors.color0ec,
-      child: Padding(
-        padding: EdgeInsets.all(8.0.sp),
-        child: Column(
-          children: [
-            Row(
-              children: [
-                Container(
-                  height: 339.h,
-                  width: 734.w,
+    final facultyProvider = Provider.of<FacultyProvider>(context);
+    var size = MediaQuery.sizeOf(context);
+    return Padding(
+      padding: EdgeInsets.all(8.0.sp),
+      child: Column(
+        children: [
+          Row(
+            children: [
+              Expanded(
+                flex: 2,
+                child: Container(
+                  height: size.height * 0.4,
                   decoration: BoxDecoration(
                       color: AppColors.colorc7e,
                       borderRadius: BorderRadius.circular(18.sp)),
@@ -96,35 +93,40 @@ final facultyProvider = Provider.of<FacultyProvider>(context);
                                     backgroundImage: MemoryImage(
                                         base64Decode(facultyData.userImage!)),
                                   ),
-                                  Transform.translate(
-                                    offset: Offset(130.w, 150.h),
+                                  Positioned(
+                                    right: 0,
+                                    bottom: 15,
                                     child: Container(
                                       decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(25.sp),
+                                          borderRadius:
+                                              BorderRadius.circular(25.sp),
                                           boxShadow: [
                                             BoxShadow(
-                                                color:
-                                                    facultyData.jobType == "Part-Time"
-                                                        ? AppColors.contentColorOrange
-                                                        : facultyData.jobType ==
-                                                                "Full-Time"
-                                                            ? AppColors.color582
-                                                            : AppColors.colorRed,
+                                                color: facultyData.jobType ==
+                                                        "Part-Time"
+                                                    ? AppColors
+                                                        .contentColorOrange
+                                                    : facultyData.jobType ==
+                                                            "Full-Time"
+                                                        ? AppColors.color582
+                                                        : AppColors.colorRed,
                                                 blurRadius: 10,
                                                 spreadRadius: 5)
                                           ]),
                                       child: InkWell(
                                         onTap: () {
-                                         facultyProvider.updateJobType(false);
-                                         facultyProvider.updateGender(false);
-                                         showAddAlertDialog(context, facultyData);
+                                          facultyProvider.updateJobType(false);
+                                          facultyProvider.updateGender(false);
+                                          showAddAlertDialog(
+                                              context, facultyData);
                                         },
                                         child: CircleAvatar(
                                           radius: 15.sp,
                                           backgroundColor:
                                               facultyData.jobType == "Part-Time"
                                                   ? AppColors.contentColorOrange
-                                                  : facultyData.jobType == "Full-Time"
+                                                  : facultyData.jobType ==
+                                                          "Full-Time"
                                                       ? AppColors.color582
                                                       : AppColors.colorRed,
                                           child: Center(
@@ -141,22 +143,35 @@ final facultyProvider = Provider.of<FacultyProvider>(context);
                                 ],
                               ),
                             ),
-                            SizedBox(height: 10.h,),
+                            SizedBox(
+                              height: 10.h,
+                            ),
                             Row(
                               children: [
                                 Tooltip(
-                                 
-                                
-                                  message:facultyData.mobile ,
-                                  child: const Icon(Icons.phone,color: AppColors.colorWhite,)),
-                                SizedBox(width: 5.w,),
+                                    message: facultyData.mobile,
+                                    child: const Icon(
+                                      Icons.phone,
+                                      color: AppColors.colorWhite,
+                                    )),
+                                SizedBox(
+                                  width: 5.w,
+                                ),
                                 Tooltip(
-                                  message: facultyData.email,
-                                  child: const Icon(Icons.mail,color: AppColors.colorWhite,)),
-                                SizedBox(width: 5.w,),
+                                    message: facultyData.email,
+                                    child: const Icon(
+                                      Icons.mail,
+                                      color: AppColors.colorWhite,
+                                    )),
+                                SizedBox(
+                                  width: 5.w,
+                                ),
                                 Tooltip(
-                                  message: facultyData.dob,
-                                  child: const Icon(Icons.cake,color: AppColors.colorWhite,))
+                                    message: facultyData.dob,
+                                    child: const Icon(
+                                      Icons.cake,
+                                      color: AppColors.colorWhite,
+                                    ))
                               ],
                             ),
                           ],
@@ -176,116 +191,116 @@ final facultyProvider = Provider.of<FacultyProvider>(context);
                                       fontWeight: FontWeight.bold,
                                       textColor: AppColors.colorWhite,
                                     ),
-                                     Icon(
-                 facultyData.gender == "Male" ? Icons.male : Icons.female,
-                  color: AppColors.colorWhite,
-                )
+                                    Icon(
+                                      facultyData.gender == "Male"
+                                          ? Icons.male
+                                          : Icons.female,
+                                      color: AppColors.colorWhite,
+                                    )
                                   ],
                                 ),
                                 SizedBox(
                                   height: 20.h,
                                 ),
-                              
-                               
-                              
-                              
-                                
-                               ListView.builder(
-                                             shrinkWrap: true,
-                                             itemCount: facultyData.registeredCourse!.length,
-                                             itemBuilder: (context, index) {
-                                               return AppRichTextView(
-                                         title: "${facultyData.registeredCourse![index].courseName!} (${facultyData.registeredCourse![index].batch})" ,
-                                         fontSize: 12.sp,
-                                         fontWeight: FontWeight.w800,
-                                         textColor: AppColors.colorWhite,
-                                       );
-                                             },
-                                           ),
-                                             SizedBox(
+                                ListView.builder(
+                                  shrinkWrap: true,
+                                  itemCount:
+                                      facultyData.registeredCourse!.length,
+                                  itemBuilder: (context, index) {
+                                    return AppRichTextView(
+                                      title:
+                                          "${facultyData.registeredCourse![index].courseName!} (${facultyData.registeredCourse![index].batch})",
+                                      fontSize: 12.sp,
+                                      fontWeight: FontWeight.w800,
+                                      textColor: AppColors.colorWhite,
+                                    );
+                                  },
+                                ),
+                                SizedBox(
                                   height: 10.h,
                                 ),
-                                            Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              AppRichTextView(
-                                title: "Joining Date: ",
-                                fontSize: 12.sp,
-                                fontWeight: FontWeight.w800,
-                                textColor: AppColors.colorGrey,
-                              ),
-                              AppRichTextView(
-                                title: facultyData.joiningDate!,
-                                fontSize: 12.sp,
-                                fontWeight: FontWeight.w800,
-                                textColor: AppColors.colorWhite,
-                              ),
-                            ],
-                          ),
-                           SizedBox(
-                            height: 10.h,
-                          ),
-                          Row(
-                            children: [
-                              AppRichTextView(
-                                title: "FacultyID: ",
-                                fontSize: 12.sp,
-                                fontWeight: FontWeight.w800,
-                                textColor: AppColors.colorGrey,
-                              ),
-                              AppRichTextView(
-                                title: facultyData.facultyId!,
-                                fontSize: 12.sp,
-                                fontWeight: FontWeight.w800,
-                                textColor: AppColors.colorWhite,
-                              ),
-                            ],
-                          ),
-                           SizedBox(
-                            height: 10.h,
-                          ),
-                          Row(
-                            children: [
-                              AppRichTextView(
-                                title: "Qualification: ",
-                                fontSize: 12.sp,
-                                fontWeight: FontWeight.w800,
-                                textColor: AppColors.colorGrey,
-                              ),
-                              AppRichTextView(
-                                title: facultyData.qualifiation!,
-                                fontSize: 12.sp,
-                                fontWeight: FontWeight.w800,
-                                textColor: AppColors.colorWhite,
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 10.h,
-                          ),
-                          Row(
-                            children: [
-                              AppRichTextView(
-                                title: "Passport Number: ",
-                                fontSize: 12.sp,
-                                fontWeight: FontWeight.w800,
-                                textColor: AppColors.colorGrey,
-                              ),
-                              AppRichTextView(
-                                title: facultyData.passportNumber!,
-                                fontSize: 12.sp,
-                                fontWeight: FontWeight.w800,
-                                textColor: AppColors.colorWhite,
-                              ),
-                            ],
-                          ),
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    AppRichTextView(
+                                      title: "Joining Date: ",
+                                      fontSize: 12.sp,
+                                      fontWeight: FontWeight.w800,
+                                      textColor: AppColors.colorGrey,
+                                    ),
+                                    AppRichTextView(
+                                      title: facultyData.joiningDate!,
+                                      fontSize: 12.sp,
+                                      fontWeight: FontWeight.w800,
+                                      textColor: AppColors.colorWhite,
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 10.h,
+                                ),
+                                Row(
+                                  children: [
+                                    AppRichTextView(
+                                      title: "FacultyID: ",
+                                      fontSize: 12.sp,
+                                      fontWeight: FontWeight.w800,
+                                      textColor: AppColors.colorGrey,
+                                    ),
+                                    AppRichTextView(
+                                      title: facultyData.facultyId!,
+                                      fontSize: 12.sp,
+                                      fontWeight: FontWeight.w800,
+                                      textColor: AppColors.colorWhite,
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 10.h,
+                                ),
+                                Row(
+                                  children: [
+                                    AppRichTextView(
+                                      title: "Qualification: ",
+                                      fontSize: 12.sp,
+                                      fontWeight: FontWeight.w800,
+                                      textColor: AppColors.colorGrey,
+                                    ),
+                                    AppRichTextView(
+                                      title: facultyData.qualifiation!,
+                                      fontSize: 12.sp,
+                                      fontWeight: FontWeight.w800,
+                                      textColor: AppColors.colorWhite,
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 10.h,
+                                ),
+                                Row(
+                                  children: [
+                                    AppRichTextView(
+                                      title: "Passport Number: ",
+                                      fontSize: 12.sp,
+                                      fontWeight: FontWeight.w800,
+                                      textColor: AppColors.colorGrey,
+                                    ),
+                                    AppRichTextView(
+                                      title: facultyData.passportNumber!,
+                                      fontSize: 12.sp,
+                                      fontWeight: FontWeight.w800,
+                                      textColor: AppColors.colorWhite,
+                                    ),
+                                  ],
+                                ),
                               ],
                             ),
                           ),
                         ),
-                        Expanded(child:  Padding(
-                          padding:  EdgeInsets.only(top:18.0.h),
-                          child: Row(
+                        Expanded(
+                          child: Padding(
+                            padding: EdgeInsets.only(top: 18.0.h),
+                            child: Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 AppRichTextView(
@@ -305,40 +320,39 @@ final facultyProvider = Provider.of<FacultyProvider>(context);
                                 ),
                               ],
                             ),
-                        ),)
-    
-                       
-                     
+                          ),
+                        )
                       ],
                     ),
                   ),
                 ),
-                SizedBox(
-                  width: 8.w,
-                ),
-                Expanded(
-                  child: Container(
-                    height: 339.h,
-                    decoration: BoxDecoration(
-                        color: AppColors.colorc7e,
-                        borderRadius: BorderRadius.circular(18.sp)),
-                        child:  FacultyAttendanceView(facultyDetail: widget.facultyDetail),
-                 
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 8.h,
-            ),
-            Expanded(
+              ),
+              SizedBox(
+                width: 8.w,
+              ),
+              Expanded(
+                flex: 1,
                 child: Container(
-              decoration:
-                  BoxDecoration(borderRadius: BorderRadius.circular(18.sp)),
-              child: const FacultyTabView(),
-            ))
-          ],
-        ),
+                  height: size.height * 0.4,
+                  decoration: BoxDecoration(
+                      color: AppColors.colorc7e,
+                      borderRadius: BorderRadius.circular(18.sp)),
+                  child: FacultyAttendanceView(
+                      facultyDetail: widget.facultyDetail),
+                ),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 8.h,
+          ),
+          Expanded(
+              child: Container(
+            decoration:
+                BoxDecoration(borderRadius: BorderRadius.circular(18.sp)),
+            child: const FacultyTabView(),
+          ))
+        ],
       ),
     );
   }

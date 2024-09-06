@@ -264,7 +264,7 @@ class _StudentGridViewState extends State<StudentGridView> {
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: size.width <= 1400 ? 4 : 6,
                     //  childAspectRatio:
-                    childAspectRatio: size.width <= 1400 ? 1 / 1.1 : 1 / 1.3),
+                    childAspectRatio: size.width <= 1400 ? 1 / 1.3 : 1 / 1.2),
                 itemBuilder: (context, index) {
                   var studentData =
                      studentProvider.filteredList[index];
@@ -305,7 +305,7 @@ class _StudentGridViewState extends State<StudentGridView> {
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: size.width <= 1400 ? 4 : 6,
                     //  childAspectRatio:
-                    childAspectRatio: size.width <= 1400 ? 1 / 1.3 : 1 / 1.15),
+                    childAspectRatio: size.width <= 1400 ? 1 / 1.3 : 1 / 1.2),
                 itemBuilder: (context, index) {
 
 

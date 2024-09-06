@@ -5,11 +5,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:rugst_alliance_academia/data/model/faculty_model.dart';
+import 'package:rugst_alliance_academia/data/model/staff_model.dart';
 import 'package:rugst_alliance_academia/data/provider/staff_provider.dart';
 import 'package:rugst_alliance_academia/theme/app_colors.dart';
 import 'package:rugst_alliance_academia/web_view/screens/faculty/faculty_detail_view.dart';
 import 'package:rugst_alliance_academia/web_view/screens/faculty/update_faculty_view.dart';
 import 'package:rugst_alliance_academia/web_view/screens/staffs/add_new_staff.dart';
+import 'package:rugst_alliance_academia/web_view/screens/staffs/staff_detail_view.dart';
 import 'package:rugst_alliance_academia/widgets/app_formfield.dart';
 import 'package:rugst_alliance_academia/widgets/app_richtext.dart';
 import 'package:rugst_alliance_academia/widgets/staff_card.dart';
@@ -56,16 +58,16 @@ class _StaffGridViewState extends State<StaffGridView> {
     );
   }
 
-  showDetailAlertDialog(BuildContext context, FacultyList details) {
+  showDetailAlertDialog(BuildContext context, StaffList details) {
     // set up the AlertDialog
     Dialog alert = Dialog(
       child: Container(
         height: MediaQuery.sizeOf(context).height,
-        width: MediaQuery.sizeOf(context).width * 0.68,
+        width: MediaQuery.sizeOf(context).width,
         color: AppColors.color0ec,
         child: Stack(
           children: [
-            FacultyDetailView(facultyDetail: details),
+            StaffDetailView(staffDetails: details),
             Transform.translate(
               offset: Offset(10.w, -13.h),
               child: GestureDetector(
@@ -94,12 +96,13 @@ class _StaffGridViewState extends State<StaffGridView> {
       },
     );
   }
-   showUpdateAlertDialog(BuildContext context, FacultyList details) {
+
+  showUpdateAlertDialog(BuildContext context, FacultyList details) {
     // set up the AlertDialog
     Dialog alert = Dialog(
       child: Stack(
         children: [
-           UpdateFacultyView(facultyDetail: details),
+          UpdateFacultyView(facultyDetail: details),
           Transform.translate(
             offset: Offset(10.w, -13.h),
             child: GestureDetector(
@@ -129,12 +132,12 @@ class _StaffGridViewState extends State<StaffGridView> {
       setState(() {});
     });
   }
+
   final GlobalKey<FormFieldState<String>> textFieldKey = GlobalKey();
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.sizeOf(context);
     final staffProvider = Provider.of<StaffProvider>(context);
-
 
     return Scaffold(
       body: Container(
@@ -153,20 +156,21 @@ class _StaffGridViewState extends State<StaffGridView> {
                     padding: EdgeInsets.only(left: 18.0.w, right: 18.w),
                     child: AppTextFormFieldWidget(
                       key: textFieldKey,
-                   
                       onChanged: (p0) {
                         // facultyProvider.setEnableFilter(true);
                         // facultyProvider.filterFaculty(p0);
                       },
-                      
-                      textStyle: GoogleFonts.oswald(color: AppColors.colorWhite),
+                      textStyle:
+                          GoogleFonts.oswald(color: AppColors.colorWhite),
                       inputDecoration: InputDecoration(
-                        suffixIcon :const Icon(Icons.search, color: AppColors.colorWhite,),
+                          suffixIcon: const Icon(
+                            Icons.search,
+                            color: AppColors.colorWhite,
+                          ),
                           border: InputBorder.none,
-                          
                           hintText: "Search by Name",
-                      hintStyle:
-                              GoogleFonts.oswald(color: AppColors.colorWhite,fontSize: 15.sp)),
+                          hintStyle: GoogleFonts.oswald(
+                              color: AppColors.colorWhite, fontSize: 15.sp)),
                     ),
                   ),
                 ),
@@ -232,7 +236,7 @@ class _StaffGridViewState extends State<StaffGridView> {
             SizedBox(
               height: 10.h,
             ),
-            // facultyProvider.filteredEnable == true? 
+            // facultyProvider.filteredEnable == true?
             // Expanded(child: GridView.builder(
             //     shrinkWrap: true,
             //     itemCount: facultyProvider.filteredList.length,
@@ -254,7 +258,7 @@ class _StaffGridViewState extends State<StaffGridView> {
             //               borderRadius: BorderRadius.circular(18.sp)),
             //           child: FacultyCardWidget(
             //             onTap: () {
-                      
+
             //                             facultyProvider.updateJobType(false);
             //                              facultyProvider.updateGender(false);
             //                              showUpdateAlertDialog(context, facultydata);
@@ -264,7 +268,7 @@ class _StaffGridViewState extends State<StaffGridView> {
             //               userImage: memoryImagedata,
             //               facultyName:
             //                   facultydata.firstName! + facultydata.lastName!,
-                     
+
             //               facultyType: facultydata.jobType!,
             //               gender: facultydata.gender!,
             //               mobileNumber: facultydata.mobile!,
@@ -285,35 +289,33 @@ class _StaffGridViewState extends State<StaffGridView> {
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: size.width <= 1400 ? 4 : 6,
                     //  childAspectRatio:
-                    childAspectRatio: size.width <= 1400 ?1/ 1.3 : 1 / 1.2),
+                    childAspectRatio: size.width <= 1400 ? 1 / 1.3 : 1 / 1.2),
                 itemBuilder: (context, index) {
-                  var staffData =
-                      staffProvider.staffModel.staffList![index];
-                       var memoryImagedata = base64Decode(staffData.userImage!);
+                  var staffData = staffProvider.staffModel.staffList![index];
+                  var memoryImagedata = base64Decode(staffData.userImage!);
+                  
                   return InkWell(
                     onTap: () {
-                      // showDetailAlertDialog(context, facultydata);
+                      showDetailAlertDialog(context, staffData);
                     },
                     child: Card(
-                      color: AppColors.colorc7e,
+                      color: staffData.empStatus == "Active"
+                          ? AppColors.colorc7e
+                          : AppColors.colorGrey,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(18.sp)),
                       child: StaffCardWidget(
-                      staffType: staffData.jobType!,
-                      designation: staffData.designation!,
-                      joiningDate: staffData.joiningDate!,
-                          userImage:memoryImagedata,
-                          staffName:
-                              staffData.firstName! + staffData.lastName!,
-                            
-                     
-                         
+                          empStatus: staffData.empStatus!,
+                          staffType: staffData.jobType!,
+                          designation: staffData.designation!,
+                          joiningDate: staffData.joiningDate!,
+                          userImage: memoryImagedata,
+                          staffName: staffData.firstName! + staffData.lastName!,
                           gender: staffData.gender!,
                           mobileNumber: staffData.mobile!,
                           email: staffData.email!,
                           citizenship: staffData.citizenship!,
                           dob: staffData.dob!,
-                       
                           address: staffData.address!,
                           pasportNumber: staffData.passportNumber!),
                     ),
@@ -327,7 +329,6 @@ class _StaffGridViewState extends State<StaffGridView> {
       floatingActionButton: FloatingActionButton(
           backgroundColor: AppColors.colorc7e,
           onPressed: () async {
-        
             showAddAlertDialog(context);
           },
           child: const Icon(
