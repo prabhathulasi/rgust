@@ -2,7 +2,8 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:rugst_alliance_academia/data/model/staff_model.dart';
+import 'package:rugst_alliance_academia/data/model/staff/staff_detail_model.dart';
+import 'package:rugst_alliance_academia/data/model/staff/staff_model.dart';
 import 'package:rugst_alliance_academia/util/api_service.dart';
 import 'package:rugst_alliance_academia/util/toast_helper.dart';
 
@@ -30,6 +31,7 @@ class StaffProvider extends ChangeNotifier {
   String? desiginationController;
   String get designation => desiginationController!;
   StaffModel staffModel = StaffModel();
+  StaffDetailModel staffDetailModel =StaffDetailModel();
 
   void setLoading(bool value) async {
     _isLoading = value;
@@ -47,7 +49,7 @@ class StaffProvider extends ChangeNotifier {
 
         staffModel = StaffModel.fromJson(data);
 
-        notifyListeners();
+        
 
         return staffModel;
       } else if (result.statusCode == 204) {
@@ -63,6 +65,7 @@ class StaffProvider extends ChangeNotifier {
       ToastHelper().errorToast(e.toString());
       return e.toString();
     } finally {
+      notifyListeners();
       setLoading(false);
     }
   }
@@ -156,6 +159,36 @@ class StaffProvider extends ChangeNotifier {
       setLoading(false);
     }
   }
+    Future getStaffDetailById(int staffId, String token) async {
+    setLoading(true);
+    try {
+      var result = await ApiHelper.get("GetStaffById/id=$staffId", token);
+
+      if (result.statusCode == 200) {
+        var data = json.decode(result.body);
+
+        staffDetailModel = StaffDetailModel.fromJson(data);
+
+        return staffDetailModel;
+      } else if (result.statusCode == 404) {
+        ToastHelper().errorToast("Staff Not found in our Record");
+
+        return null;
+      } else if (result.statusCode == 401) {
+        return "Invalid Token";
+      } else {
+        ToastHelper().errorToast("Internal Server Error");
+        return null;
+      }
+    } catch (e) {
+      ToastHelper().errorToast(e.toString());
+      return e.toString();
+    } finally {
+      notifyListeners();
+      setLoading(false);
+    }
+  }
+
 
   // set FIRSTNAME value
   void setfirstName(String value) async {

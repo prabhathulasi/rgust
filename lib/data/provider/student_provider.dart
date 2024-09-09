@@ -216,33 +216,28 @@ class StudentProvider extends ChangeNotifier {
     try {
       var result = await ApiHelper.get("GetStudentById/id=$studentId", token);
 
-      setLoading(false);
       if (result.statusCode == 200) {
         var data = json.decode(result.body);
 
         studentDetailModel = StudentDetailModel.fromJson(data);
 
-        notifyListeners();
-
         return studentDetailModel;
       } else if (result.statusCode == 204) {
-        notifyListeners();
         ToastHelper().errorToast("No Courses Registered Yet");
 
         return null;
       } else if (result.statusCode == 401) {
-        notifyListeners();
-
         return "Invalid Token";
       } else {
-        notifyListeners();
         ToastHelper().errorToast("Internal Server Error");
         return null;
       }
     } catch (e) {
-      setLoading(false);
       ToastHelper().errorToast(e.toString());
       return e.toString();
+    } finally {
+      notifyListeners();
+      setLoading(false);
     }
   }
 
@@ -259,7 +254,7 @@ class StudentProvider extends ChangeNotifier {
         "ClassId": classId,
         "StudentId": studentId,
         "SelectedCourse": selectedCourseList,
-        "CurrentClass": currentClass 
+        "CurrentClass": currentClass
       };
       var result = await ApiHelper.post("UpdateStudentCourses", data, token);
 
@@ -307,8 +302,8 @@ class StudentProvider extends ChangeNotifier {
   }
 
   updateStudentDetails(
-    String token,String id, {
- 
+    String token,
+    String id, {
     required String admissionDate,
     required String gender,
     required String dob,
@@ -321,7 +316,6 @@ class StudentProvider extends ChangeNotifier {
       var result = await ApiHelper.put(
           "UpdateStudentDetails/id=$id ",
           {
-          
             "AdmissionDate": admissionDate,
             "FirstName": firstname,
             "LastName": lastname,
@@ -335,8 +329,6 @@ class StudentProvider extends ChangeNotifier {
             "PassportNumber": passport,
             "citizenship": cizizen,
             "UserImage": userImage,
-  
-
           },
           token);
       var data = json.decode(result.body);
@@ -364,8 +356,8 @@ class StudentProvider extends ChangeNotifier {
     }
   }
 
-  Future createAccount(
-      String token, String email, String password, String userName, int studentId) async {
+  Future createAccount(String token, String email, String password,
+      String userName, int studentId) async {
     setLoading(true);
 
     // Make your login API call here using the http package
@@ -400,6 +392,7 @@ class StudentProvider extends ChangeNotifier {
       return null;
     }
   }
+
 // set FIRSTNAME value
   void setfirstName(String value) async {
     firstNamecontroller = value;
@@ -429,12 +422,14 @@ class StudentProvider extends ChangeNotifier {
     addresscontroller = value;
     notifyListeners();
   }
+
   // set address value
   void setmailaddrss(String value) async {
     mailingaddresscontroller = value;
     notifyListeners();
   }
-   // set passport value
+
+  // set passport value
   void setpassport(String value) async {
     passportcontroller = value;
     notifyListeners();

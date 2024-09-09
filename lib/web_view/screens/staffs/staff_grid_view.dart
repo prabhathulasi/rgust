@@ -5,7 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:rugst_alliance_academia/data/model/faculty_model.dart';
-import 'package:rugst_alliance_academia/data/model/staff_model.dart';
+import 'package:rugst_alliance_academia/data/model/staff/staff_model.dart';
 import 'package:rugst_alliance_academia/data/provider/staff_provider.dart';
 import 'package:rugst_alliance_academia/theme/app_colors.dart';
 import 'package:rugst_alliance_academia/web_view/screens/faculty/faculty_detail_view.dart';
@@ -58,7 +58,7 @@ class _StaffGridViewState extends State<StaffGridView> {
     );
   }
 
-  showDetailAlertDialog(BuildContext context, StaffList details) {
+  showDetailAlertDialog(BuildContext context, int staffId) {
     // set up the AlertDialog
     Dialog alert = Dialog(
       child: Container(
@@ -67,7 +67,7 @@ class _StaffGridViewState extends State<StaffGridView> {
         color: AppColors.color0ec,
         child: Stack(
           children: [
-            StaffDetailView(staffDetails: details),
+            StaffDetailView(staffId: staffId),
             Transform.translate(
               offset: Offset(10.w, -13.h),
               child: GestureDetector(
@@ -296,7 +296,7 @@ class _StaffGridViewState extends State<StaffGridView> {
                   
                   return InkWell(
                     onTap: () {
-                      showDetailAlertDialog(context, staffData);
+                      showDetailAlertDialog(context, staffData.iD!);
                     },
                     child: Card(
                       color: staffData.empStatus == "Active"

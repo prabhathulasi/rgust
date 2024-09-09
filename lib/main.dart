@@ -33,9 +33,7 @@ void main() async {
 
    setPathUrlStrategy();
   WidgetsFlutterBinding.ensureInitialized();
-  SystemChrome.setPreferredOrientations([
-    DeviceOrientation.portraitUp,
-  ]);
+
  FlavorConfig(
   name: "dev",
     variables: {

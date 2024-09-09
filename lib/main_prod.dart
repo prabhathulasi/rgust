@@ -30,16 +30,14 @@ import 'package:url_strategy/url_strategy.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
    setPathUrlStrategy();
-  SystemChrome.setPreferredOrientations([
-    DeviceOrientation.portraitUp,
-  ]);
- FlavorConfig(
-  name: "prod",
-    variables: {
-     "flavorName":"prod",
-      "baseUrl": "rgustpanel.azurewebsites.net",
-    },
-  );
+
+  FlavorConfig(
+    name: "prod",
+      variables: {
+      "flavorName":"prod",
+        "baseUrl": "rgustpanel.azurewebsites.net",
+      },
+    );
   runApp(const MyApp());
 }
 
