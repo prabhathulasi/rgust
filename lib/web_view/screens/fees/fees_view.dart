@@ -263,7 +263,7 @@ class _FeesViewState extends State<FeesView> {
                                     padding: const EdgeInsets.all(18.0),
                                     child: AppRichTextView(
                                       title:
-                                          "National Students: Miscellaneous Fees (Per Semester US\$)",
+                                          "International Students: Miscellaneous Fees (Per Semester US\$)",
                                       fontSize: 30.sp,
                                       fontWeight: FontWeight.bold,
                                       textColor: AppColors.colorc7e,

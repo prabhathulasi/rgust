@@ -10,7 +10,8 @@ class AddNewFees extends StatefulWidget {
   @override
   State<AddNewFees> createState() => _AddNewFeesState();
 }
-String ? feesName;
+
+String? feesName;
 int? semCount1;
 int? tutionFee1;
 int? semCount2;
@@ -18,52 +19,52 @@ int? tutionFee2;
 int? semCount3;
 int? tutionFee3;
 
-int ? premedNstudentfee;
+int? premedNstudentfee;
 int? premedNonetimeFee;
 int? premedNappFee;
 int? premedNmatFee;
-int ? premedNseatFee;
+int? premedNseatFee;
 int? premedNinsuranceFee;
-int ? premedNexamFee;
-int ? preClinicalNstudentfee;
+int? premedNexamFee;
+int? preClinicalNstudentfee;
 int? preClinicalNonetimeFee;
 int? preClinicalNappFee;
 int? preClinicalNmatFee;
-int ? preClinicalNseatFee;
+int? preClinicalNseatFee;
 int? preClinicalNinsuranceFee;
-int ? preClinicalNexamFee;
-int ? clinicalNstudentfee;
+int? preClinicalNexamFee;
+int? clinicalNstudentfee;
 int? clinicalNonetimeFee;
 int? clinicalNappFee;
 int? clinicalNmatFee;
-int ? clinicalNseatFee;
+int? clinicalNseatFee;
 int? clinicalNinsuranceFee;
-int ? clinicalNexamFee;
+int? clinicalNexamFee;
 
-
-int ? premedInstudentfee;
+int? premedInstudentfee;
 int? premedInonetimeFee;
 int? premedInappFee;
 int? premedInmatFee;
-int ? premedInseatFee;
+int? premedInseatFee;
 int? premedIninsuranceFee;
-int ? premedInexamFee;
-int ? preClinicalInstudentfee;
+int? premedInexamFee;
+int? preClinicalInstudentfee;
 int? preClinicalInonetimeFee;
 int? preClinicalInappFee;
 int? preClinicalInmatFee;
-int ? preClinicalInseatFee;
+int? preClinicalInseatFee;
 int? preClinicalIninsuranceFee;
-int ? preClinicalInexamFee;
-int ? clinicalInstudentfee;
+int? preClinicalInexamFee;
+int? clinicalInstudentfee;
 int? clinicalInonetimeFee;
 int? clinicalInappFee;
 int? clinicalInmatFee;
-int ? clinicalInseatFee;
+int? clinicalInseatFee;
 int? clinicalIninsuranceFee;
-int ? clinicalInexamFee;
-int ? visaFee;
- final _formKey = GlobalKey<FormState>();
+int? clinicalInexamFee;
+int? visaFee;
+final _formKey = GlobalKey<FormState>();
+
 class _AddNewFeesState extends State<AddNewFees> {
   @override
   Widget build(BuildContext context) {
@@ -102,7 +103,7 @@ class _AddNewFeesState extends State<AddNewFees> {
                   Row(
                     children: [
                       AppRichTextView(
-                        title: "Fees Type",
+                        title: "Fees Type:",
                         fontSize: 20.sp,
                         fontWeight: FontWeight.bold,
                         textColor: AppColors.colorBlack,
@@ -115,10 +116,10 @@ class _AddNewFeesState extends State<AddNewFees> {
                           width: size.width * 0.1,
                           child: TextFormField(
                             validator: (value) {
-                              if(value == null || value.isEmpty){
+                              if (value == null || value.isEmpty) {
                                 return "This Field is Required";
-                              }else{
-                                 return null;
+                              } else {
+                                return null;
                               }
                             },
                             onSaved: (newValue) => feesName = newValue,
@@ -150,13 +151,14 @@ class _AddNewFeesState extends State<AddNewFees> {
                           width: size.width * 0.1,
                           child: TextFormField(
                             validator: (value) {
-                              if(value == null || value.isEmpty){
+                              if (value == null || value.isEmpty) {
                                 return "This Field is Required";
-                              }else{
-                                 return null;
+                              } else {
+                                return null;
                               }
                             },
-                            onSaved: (newValue) => semCount1 = int.parse(newValue!),
+                            onSaved: (newValue) =>
+                                semCount1 = int.parse(newValue!),
                             decoration: InputDecoration(
                                 hintText: "No of Semester",
                                 hintStyle: TextStyle(fontSize: 15.sp)),
@@ -169,13 +171,14 @@ class _AddNewFeesState extends State<AddNewFees> {
                           width: size.width * 0.15,
                           child: TextFormField(
                             validator: (value) {
-                              if(value == null || value.isEmpty){
+                              if (value == null || value.isEmpty) {
                                 return "This Field is Required";
-                              }else{
-                                 return null;
+                              } else {
+                                return null;
                               }
                             },
-                            onSaved: (newValue) => tutionFee1 = int.parse(newValue!),
+                            onSaved: (newValue) =>
+                                tutionFee1 = int.parse(newValue!),
                             decoration: InputDecoration(
                                 hintText: "Tuition cost per Semester( US\$)",
                                 hintStyle: TextStyle(fontSize: 15.sp)),
@@ -201,13 +204,14 @@ class _AddNewFeesState extends State<AddNewFees> {
                           width: size.width * 0.1,
                           child: TextFormField(
                             validator: (value) {
-                              if(value == null || value.isEmpty){
+                              if (value == null || value.isEmpty) {
                                 return "This Field is Required";
-                              }else{
-                                 return null;
+                              } else {
+                                return null;
                               }
                             },
-                            onSaved: (newValue) => semCount2 = int.parse(newValue!),
+                            onSaved: (newValue) =>
+                                semCount2 = int.parse(newValue!),
                             decoration: InputDecoration(
                                 hintText: "No of Semester",
                                 hintStyle: TextStyle(fontSize: 15.sp)),
@@ -220,13 +224,14 @@ class _AddNewFeesState extends State<AddNewFees> {
                           width: size.width * 0.15,
                           child: TextFormField(
                             validator: (value) {
-                              if(value == null || value.isEmpty){
+                              if (value == null || value.isEmpty) {
                                 return "This Field is Required";
-                              }else{
-                                 return null;
+                              } else {
+                                return null;
                               }
                             },
-                            onSaved: (newValue) => tutionFee2 = int.parse(newValue!),
+                            onSaved: (newValue) =>
+                                tutionFee2 = int.parse(newValue!),
                             decoration: InputDecoration(
                                 hintText: "Tuition cost per Semester( US\$)",
                                 hintStyle: TextStyle(fontSize: 15.sp)),
@@ -252,13 +257,14 @@ class _AddNewFeesState extends State<AddNewFees> {
                           width: size.width * 0.1,
                           child: TextFormField(
                             validator: (value) {
-                              if(value == null || value.isEmpty){
+                              if (value == null || value.isEmpty) {
                                 return "This Field is Required";
-                              }else{
-                                 return null;
+                              } else {
+                                return null;
                               }
                             },
-                            onSaved: (newValue) => semCount3 = int.parse(newValue!),
+                            onSaved: (newValue) =>
+                                semCount3 = int.parse(newValue!),
                             decoration: InputDecoration(
                                 hintText: "No of Semester",
                                 hintStyle: TextStyle(fontSize: 15.sp)),
@@ -271,13 +277,14 @@ class _AddNewFeesState extends State<AddNewFees> {
                           width: size.width * 0.15,
                           child: TextFormField(
                             validator: (value) {
-                              if(value == null || value.isEmpty){
+                              if (value == null || value.isEmpty) {
                                 return "This Field is Required";
-                              }else{
-                                 return null;
+                              } else {
+                                return null;
                               }
                             },
-                            onSaved: (newValue) => tutionFee3 = int.parse(newValue!),
+                            onSaved: (newValue) =>
+                                tutionFee3 = int.parse(newValue!),
                             decoration: InputDecoration(
                                 hintText: "Tuition cost per Semester( US\$)",
                                 hintStyle: TextStyle(fontSize: 15.sp)),
@@ -314,13 +321,14 @@ class _AddNewFeesState extends State<AddNewFees> {
                           width: size.width * 0.1,
                           child: TextFormField(
                             validator: (value) {
-                              if(value == null || value.isEmpty){
+                              if (value == null || value.isEmpty) {
                                 return "This Field is Required";
-                              }else{
-                                 return null;
+                              } else {
+                                return null;
                               }
                             },
-                            onSaved: (newValue) => premedNstudentfee = int.parse(newValue!),
+                            onSaved: (newValue) =>
+                                premedNstudentfee = int.parse(newValue!),
                             decoration: InputDecoration(
                                 hintText: "Pre- Medicine",
                                 hintStyle: TextStyle(fontSize: 15.sp)),
@@ -333,13 +341,14 @@ class _AddNewFeesState extends State<AddNewFees> {
                           width: size.width * 0.15,
                           child: TextFormField(
                             validator: (value) {
-                              if(value == null || value.isEmpty){
+                              if (value == null || value.isEmpty) {
                                 return "This Field is Required";
-                              }else{
-                                 return null;
+                              } else {
+                                return null;
                               }
                             },
-                            onSaved: (newValue) => preClinicalNstudentfee = int.parse(newValue!),
+                            onSaved: (newValue) =>
+                                preClinicalNstudentfee = int.parse(newValue!),
                             decoration: InputDecoration(
                                 hintText: "Pre-Clinicals",
                                 hintStyle: TextStyle(fontSize: 15.sp)),
@@ -352,13 +361,14 @@ class _AddNewFeesState extends State<AddNewFees> {
                           width: size.width * 0.15,
                           child: TextFormField(
                             validator: (value) {
-                              if(value == null || value.isEmpty){
+                              if (value == null || value.isEmpty) {
                                 return "This Field is Required";
-                              }else{
-                                 return null;
+                              } else {
+                                return null;
                               }
                             },
-                            onSaved: (newValue) => clinicalNstudentfee = int.parse(newValue!),
+                            onSaved: (newValue) =>
+                                clinicalNstudentfee = int.parse(newValue!),
                             decoration: InputDecoration(
                                 hintText: "Clinicals",
                                 hintStyle: TextStyle(fontSize: 15.sp)),
@@ -384,13 +394,14 @@ class _AddNewFeesState extends State<AddNewFees> {
                           width: size.width * 0.1,
                           child: TextFormField(
                             validator: (value) {
-                              if(value == null || value.isEmpty){
+                              if (value == null || value.isEmpty) {
                                 return "This Field is Required";
-                              }else{
-                                 return null;
+                              } else {
+                                return null;
                               }
                             },
-                            onSaved: (newValue) => premedNonetimeFee = int.parse(newValue!),
+                            onSaved: (newValue) =>
+                                premedNonetimeFee = int.parse(newValue!),
                             decoration: InputDecoration(
                                 hintText: "Pre- Medicine",
                                 hintStyle: TextStyle(fontSize: 15.sp)),
@@ -403,13 +414,14 @@ class _AddNewFeesState extends State<AddNewFees> {
                           width: size.width * 0.15,
                           child: TextFormField(
                             validator: (value) {
-                              if(value == null || value.isEmpty){
+                              if (value == null || value.isEmpty) {
                                 return "This Field is Required";
-                              }else{
-                                 return null;
+                              } else {
+                                return null;
                               }
                             },
-                            onSaved: (newValue) => preClinicalNonetimeFee = int.parse(newValue!),
+                            onSaved: (newValue) =>
+                                preClinicalNonetimeFee = int.parse(newValue!),
                             decoration: InputDecoration(
                                 hintText: "Pre-Clinicals",
                                 hintStyle: TextStyle(fontSize: 15.sp)),
@@ -422,20 +434,21 @@ class _AddNewFeesState extends State<AddNewFees> {
                           width: size.width * 0.15,
                           child: TextFormField(
                             validator: (value) {
-                              if(value == null || value.isEmpty){
+                              if (value == null || value.isEmpty) {
                                 return "This Field is Required";
-                              }else{
-                                 return null;
+                              } else {
+                                return null;
                               }
                             },
-                            onSaved: (newValue) => clinicalNonetimeFee = int.parse(newValue!),
+                            onSaved: (newValue) =>
+                                clinicalNonetimeFee = int.parse(newValue!),
                             decoration: InputDecoration(
                                 hintText: "Clinicals",
                                 hintStyle: TextStyle(fontSize: 15.sp)),
                           ))
                     ],
                   ),
-                   SizedBox(
+                  SizedBox(
                     height: 10.h,
                   ),
                   Row(
@@ -454,13 +467,14 @@ class _AddNewFeesState extends State<AddNewFees> {
                           width: size.width * 0.1,
                           child: TextFormField(
                             validator: (value) {
-                              if(value == null || value.isEmpty){
+                              if (value == null || value.isEmpty) {
                                 return "This Field is Required";
-                              }else{
-                                 return null;
+                              } else {
+                                return null;
                               }
                             },
-                            onSaved: (newValue) => premedNappFee = int.parse(newValue!),
+                            onSaved: (newValue) =>
+                                premedNappFee = int.parse(newValue!),
                             decoration: InputDecoration(
                                 hintText: "Pre- Medicine",
                                 hintStyle: TextStyle(fontSize: 15.sp)),
@@ -473,13 +487,14 @@ class _AddNewFeesState extends State<AddNewFees> {
                           width: size.width * 0.15,
                           child: TextFormField(
                             validator: (value) {
-                              if(value == null || value.isEmpty){
+                              if (value == null || value.isEmpty) {
                                 return "This Field is Required";
-                              }else{
-                                 return null;
+                              } else {
+                                return null;
                               }
                             },
-                            onSaved: (newValue) => preClinicalNappFee = int.parse(newValue!),
+                            onSaved: (newValue) =>
+                                preClinicalNappFee = int.parse(newValue!),
                             decoration: InputDecoration(
                                 hintText: "Pre-Clinicals",
                                 hintStyle: TextStyle(fontSize: 15.sp)),
@@ -492,20 +507,21 @@ class _AddNewFeesState extends State<AddNewFees> {
                           width: size.width * 0.15,
                           child: TextFormField(
                             validator: (value) {
-                              if(value == null || value.isEmpty){
+                              if (value == null || value.isEmpty) {
                                 return "This Field is Required";
-                              }else{
-                                 return null;
+                              } else {
+                                return null;
                               }
                             },
-                            onSaved: (newValue) => clinicalNappFee = int.parse(newValue!),
+                            onSaved: (newValue) =>
+                                clinicalNappFee = int.parse(newValue!),
                             decoration: InputDecoration(
                                 hintText: "Clinicals",
                                 hintStyle: TextStyle(fontSize: 15.sp)),
                           ))
                     ],
                   ),
-                   SizedBox(
+                  SizedBox(
                     height: 10.h,
                   ),
                   Row(
@@ -524,13 +540,14 @@ class _AddNewFeesState extends State<AddNewFees> {
                           width: size.width * 0.1,
                           child: TextFormField(
                             validator: (value) {
-                              if(value == null || value.isEmpty){
+                              if (value == null || value.isEmpty) {
                                 return "This Field is Required";
-                              }else{
-                                 return null;
+                              } else {
+                                return null;
                               }
                             },
-                            onSaved: (newValue) => premedNmatFee = int.parse(newValue!),
+                            onSaved: (newValue) =>
+                                premedNmatFee = int.parse(newValue!),
                             decoration: InputDecoration(
                                 hintText: "Pre- Medicine",
                                 hintStyle: TextStyle(fontSize: 15.sp)),
@@ -543,13 +560,14 @@ class _AddNewFeesState extends State<AddNewFees> {
                           width: size.width * 0.15,
                           child: TextFormField(
                             validator: (value) {
-                              if(value == null || value.isEmpty){
+                              if (value == null || value.isEmpty) {
                                 return "This Field is Required";
-                              }else{
-                                 return null;
+                              } else {
+                                return null;
                               }
                             },
-                            onSaved: (newValue) => preClinicalNmatFee = int.parse(newValue!),
+                            onSaved: (newValue) =>
+                                preClinicalNmatFee = int.parse(newValue!),
                             decoration: InputDecoration(
                                 hintText: "Pre-Clinicals",
                                 hintStyle: TextStyle(fontSize: 15.sp)),
@@ -562,20 +580,21 @@ class _AddNewFeesState extends State<AddNewFees> {
                           width: size.width * 0.15,
                           child: TextFormField(
                             validator: (value) {
-                              if(value == null || value.isEmpty){
+                              if (value == null || value.isEmpty) {
                                 return "This Field is Required";
-                              }else{
-                                 return null;
+                              } else {
+                                return null;
                               }
                             },
-                            onSaved: (newValue) => clinicalNmatFee = int.parse(newValue!),
+                            onSaved: (newValue) =>
+                                clinicalNmatFee = int.parse(newValue!),
                             decoration: InputDecoration(
                                 hintText: "Clinicals",
                                 hintStyle: TextStyle(fontSize: 15.sp)),
                           ))
                     ],
                   ),
-                   SizedBox(
+                  SizedBox(
                     height: 10.h,
                   ),
                   Row(
@@ -594,13 +613,14 @@ class _AddNewFeesState extends State<AddNewFees> {
                           width: size.width * 0.1,
                           child: TextFormField(
                             validator: (value) {
-                              if(value == null || value.isEmpty){
+                              if (value == null || value.isEmpty) {
                                 return "This Field is Required";
-                              }else{
-                                 return null;
+                              } else {
+                                return null;
                               }
                             },
-                            onSaved: (newValue) => premedNseatFee = int.parse(newValue!),
+                            onSaved: (newValue) =>
+                                premedNseatFee = int.parse(newValue!),
                             decoration: InputDecoration(
                                 hintText: "Pre- Medicine",
                                 hintStyle: TextStyle(fontSize: 15.sp)),
@@ -613,13 +633,14 @@ class _AddNewFeesState extends State<AddNewFees> {
                           width: size.width * 0.15,
                           child: TextFormField(
                             validator: (value) {
-                              if(value == null || value.isEmpty){
+                              if (value == null || value.isEmpty) {
                                 return "This Field is Required";
-                              }else{
-                                 return null;
+                              } else {
+                                return null;
                               }
                             },
-                            onSaved: (newValue) => preClinicalNseatFee = int.parse(newValue!),
+                            onSaved: (newValue) =>
+                                preClinicalNseatFee = int.parse(newValue!),
                             decoration: InputDecoration(
                                 hintText: "Pre-Clinicals",
                                 hintStyle: TextStyle(fontSize: 15.sp)),
@@ -632,20 +653,21 @@ class _AddNewFeesState extends State<AddNewFees> {
                           width: size.width * 0.15,
                           child: TextFormField(
                             validator: (value) {
-                              if(value == null || value.isEmpty){
+                              if (value == null || value.isEmpty) {
                                 return "This Field is Required";
-                              }else{
-                                 return null;
+                              } else {
+                                return null;
                               }
                             },
-                            onSaved: (newValue) => clinicalNseatFee = int.parse(newValue!),
+                            onSaved: (newValue) =>
+                                clinicalNseatFee = int.parse(newValue!),
                             decoration: InputDecoration(
                                 hintText: "Clinicals",
                                 hintStyle: TextStyle(fontSize: 15.sp)),
                           ))
                     ],
                   ),
-                   SizedBox(
+                  SizedBox(
                     height: 10.h,
                   ),
                   Row(
@@ -664,13 +686,14 @@ class _AddNewFeesState extends State<AddNewFees> {
                           width: size.width * 0.1,
                           child: TextFormField(
                             validator: (value) {
-                              if(value == null || value.isEmpty){
+                              if (value == null || value.isEmpty) {
                                 return "This Field is Required";
-                              }else{
-                                 return null;
+                              } else {
+                                return null;
                               }
                             },
-                            onSaved: (newValue) => premedNinsuranceFee = int.parse(newValue!),
+                            onSaved: (newValue) =>
+                                premedNinsuranceFee = int.parse(newValue!),
                             decoration: InputDecoration(
                                 hintText: "Pre- Medicine",
                                 hintStyle: TextStyle(fontSize: 15.sp)),
@@ -683,13 +706,14 @@ class _AddNewFeesState extends State<AddNewFees> {
                           width: size.width * 0.15,
                           child: TextFormField(
                             validator: (value) {
-                              if(value == null || value.isEmpty){
+                              if (value == null || value.isEmpty) {
                                 return "This Field is Required";
-                              }else{
-                                 return null;
+                              } else {
+                                return null;
                               }
                             },
-                            onSaved: (newValue) => preClinicalNinsuranceFee = int.parse(newValue!),
+                            onSaved: (newValue) =>
+                                preClinicalNinsuranceFee = int.parse(newValue!),
                             decoration: InputDecoration(
                                 hintText: "Pre-Clinicals",
                                 hintStyle: TextStyle(fontSize: 15.sp)),
@@ -702,13 +726,14 @@ class _AddNewFeesState extends State<AddNewFees> {
                           width: size.width * 0.15,
                           child: TextFormField(
                             validator: (value) {
-                              if(value == null || value.isEmpty){
+                              if (value == null || value.isEmpty) {
                                 return "This Field is Required";
-                              }else{
-                                 return null;
+                              } else {
+                                return null;
                               }
                             },
-                            onSaved: (newValue) =>clinicalNinsuranceFee = int.parse(newValue!),
+                            onSaved: (newValue) =>
+                                clinicalNinsuranceFee = int.parse(newValue!),
                             decoration: InputDecoration(
                                 hintText: "Clinicals",
                                 hintStyle: TextStyle(fontSize: 15.sp)),
@@ -734,13 +759,14 @@ class _AddNewFeesState extends State<AddNewFees> {
                           width: size.width * 0.1,
                           child: TextFormField(
                             validator: (value) {
-                              if(value == null || value.isEmpty){
+                              if (value == null || value.isEmpty) {
                                 return "This Field is Required";
-                              }else{
-                                 return null;
+                              } else {
+                                return null;
                               }
                             },
-                            onSaved: (newValue) => premedNexamFee = int.parse(newValue!),
+                            onSaved: (newValue) =>
+                                premedNexamFee = int.parse(newValue!),
                             decoration: InputDecoration(
                                 hintText: "Pre- Medicine",
                                 hintStyle: TextStyle(fontSize: 15.sp)),
@@ -753,13 +779,14 @@ class _AddNewFeesState extends State<AddNewFees> {
                           width: size.width * 0.15,
                           child: TextFormField(
                             validator: (value) {
-                              if(value == null || value.isEmpty){
+                              if (value == null || value.isEmpty) {
                                 return "This Field is Required";
-                              }else{
-                                 return null;
+                              } else {
+                                return null;
                               }
                             },
-                            onSaved: (newValue) => preClinicalNexamFee = int.parse(newValue!),
+                            onSaved: (newValue) =>
+                                preClinicalNexamFee = int.parse(newValue!),
                             decoration: InputDecoration(
                                 hintText: "Pre-Clinicals",
                                 hintStyle: TextStyle(fontSize: 15.sp)),
@@ -772,21 +799,20 @@ class _AddNewFeesState extends State<AddNewFees> {
                           width: size.width * 0.15,
                           child: TextFormField(
                             validator: (value) {
-                              if(value == null || value.isEmpty){
+                              if (value == null || value.isEmpty) {
                                 return "This Field is Required";
-                              }else{
-                                 return null;
+                              } else {
+                                return null;
                               }
                             },
-                            onSaved: (newValue) => clinicalNexamFee = int.parse(newValue!),
+                            onSaved: (newValue) =>
+                                clinicalNexamFee = int.parse(newValue!),
                             decoration: InputDecoration(
                                 hintText: "Clinicals",
                                 hintStyle: TextStyle(fontSize: 15.sp)),
                           ))
                     ],
                   ),
-      
-      
                   SizedBox(
                     height: 20.h,
                   ),
@@ -817,13 +843,14 @@ class _AddNewFeesState extends State<AddNewFees> {
                           width: size.width * 0.1,
                           child: TextFormField(
                             validator: (value) {
-                              if(value == null || value.isEmpty){
+                              if (value == null || value.isEmpty) {
                                 return "This Field is Required";
-                              }else{
-                                 return null;
+                              } else {
+                                return null;
                               }
                             },
-                            onSaved: (newValue) => premedInstudentfee = int.parse(newValue!),
+                            onSaved: (newValue) =>
+                                premedInstudentfee = int.parse(newValue!),
                             decoration: InputDecoration(
                                 hintText: "Pre- Medicine",
                                 hintStyle: TextStyle(fontSize: 15.sp)),
@@ -836,13 +863,14 @@ class _AddNewFeesState extends State<AddNewFees> {
                           width: size.width * 0.15,
                           child: TextFormField(
                             validator: (value) {
-                              if(value == null || value.isEmpty){
+                              if (value == null || value.isEmpty) {
                                 return "This Field is Required";
-                              }else{
-                                 return null;
+                              } else {
+                                return null;
                               }
                             },
-                            onSaved: (newValue) => preClinicalInstudentfee = int.parse(newValue!),
+                            onSaved: (newValue) =>
+                                preClinicalInstudentfee = int.parse(newValue!),
                             decoration: InputDecoration(
                                 hintText: "Pre-Clinicals",
                                 hintStyle: TextStyle(fontSize: 15.sp)),
@@ -855,13 +883,14 @@ class _AddNewFeesState extends State<AddNewFees> {
                           width: size.width * 0.15,
                           child: TextFormField(
                             validator: (value) {
-                              if(value == null || value.isEmpty){
+                              if (value == null || value.isEmpty) {
                                 return "This Field is Required";
-                              }else{
-                                 return null;
+                              } else {
+                                return null;
                               }
                             },
-                            onSaved: (newValue) => clinicalInstudentfee = int.parse(newValue!),
+                            onSaved: (newValue) =>
+                                clinicalInstudentfee = int.parse(newValue!),
                             decoration: InputDecoration(
                                 hintText: "Clinicals",
                                 hintStyle: TextStyle(fontSize: 15.sp)),
@@ -887,13 +916,14 @@ class _AddNewFeesState extends State<AddNewFees> {
                           width: size.width * 0.1,
                           child: TextFormField(
                             validator: (value) {
-                              if(value == null || value.isEmpty){
+                              if (value == null || value.isEmpty) {
                                 return "This Field is Required";
-                              }else{
-                                 return null;
+                              } else {
+                                return null;
                               }
                             },
-                            onSaved: (newValue) => premedInonetimeFee = int.parse(newValue!),
+                            onSaved: (newValue) =>
+                                premedInonetimeFee = int.parse(newValue!),
                             decoration: InputDecoration(
                                 hintText: "Pre- Medicine",
                                 hintStyle: TextStyle(fontSize: 15.sp)),
@@ -906,13 +936,14 @@ class _AddNewFeesState extends State<AddNewFees> {
                           width: size.width * 0.15,
                           child: TextFormField(
                             validator: (value) {
-                              if(value == null || value.isEmpty){
+                              if (value == null || value.isEmpty) {
                                 return "This Field is Required";
-                              }else{
-                                 return null;
+                              } else {
+                                return null;
                               }
                             },
-                            onSaved: (newValue) => preClinicalInonetimeFee = int.parse(newValue!),
+                            onSaved: (newValue) =>
+                                preClinicalInonetimeFee = int.parse(newValue!),
                             decoration: InputDecoration(
                                 hintText: "Pre-Clinicals",
                                 hintStyle: TextStyle(fontSize: 15.sp)),
@@ -925,20 +956,21 @@ class _AddNewFeesState extends State<AddNewFees> {
                           width: size.width * 0.15,
                           child: TextFormField(
                             validator: (value) {
-                              if(value == null || value.isEmpty){
+                              if (value == null || value.isEmpty) {
                                 return "This Field is Required";
-                              }else{
-                                 return null;
+                              } else {
+                                return null;
                               }
                             },
-                            onSaved: (newValue) => clinicalInonetimeFee = int.parse(newValue!),
+                            onSaved: (newValue) =>
+                                clinicalInonetimeFee = int.parse(newValue!),
                             decoration: InputDecoration(
                                 hintText: "Clinicals",
                                 hintStyle: TextStyle(fontSize: 15.sp)),
                           ))
                     ],
                   ),
-                   SizedBox(
+                  SizedBox(
                     height: 10.h,
                   ),
                   Row(
@@ -957,13 +989,14 @@ class _AddNewFeesState extends State<AddNewFees> {
                           width: size.width * 0.1,
                           child: TextFormField(
                             validator: (value) {
-                              if(value == null || value.isEmpty){
+                              if (value == null || value.isEmpty) {
                                 return "This Field is Required";
-                              }else{
-                                 return null;
+                              } else {
+                                return null;
                               }
                             },
-                            onSaved: (newValue) => premedInappFee = int.parse(newValue!),
+                            onSaved: (newValue) =>
+                                premedInappFee = int.parse(newValue!),
                             decoration: InputDecoration(
                                 hintText: "Pre- Medicine",
                                 hintStyle: TextStyle(fontSize: 15.sp)),
@@ -976,13 +1009,14 @@ class _AddNewFeesState extends State<AddNewFees> {
                           width: size.width * 0.15,
                           child: TextFormField(
                             validator: (value) {
-                              if(value == null || value.isEmpty){
+                              if (value == null || value.isEmpty) {
                                 return "This Field is Required";
-                              }else{
-                                 return null;
+                              } else {
+                                return null;
                               }
                             },
-                            onSaved: (newValue) => preClinicalInappFee = int.parse(newValue!),
+                            onSaved: (newValue) =>
+                                preClinicalInappFee = int.parse(newValue!),
                             decoration: InputDecoration(
                                 hintText: "Pre-Clinicals",
                                 hintStyle: TextStyle(fontSize: 15.sp)),
@@ -995,20 +1029,21 @@ class _AddNewFeesState extends State<AddNewFees> {
                           width: size.width * 0.15,
                           child: TextFormField(
                             validator: (value) {
-                              if(value == null || value.isEmpty){
+                              if (value == null || value.isEmpty) {
                                 return "This Field is Required";
-                              }else{
-                                 return null;
+                              } else {
+                                return null;
                               }
                             },
-                            onSaved: (newValue) => clinicalInappFee = int.parse(newValue!),
+                            onSaved: (newValue) =>
+                                clinicalInappFee = int.parse(newValue!),
                             decoration: InputDecoration(
                                 hintText: "Clinicals",
                                 hintStyle: TextStyle(fontSize: 15.sp)),
                           ))
                     ],
                   ),
-                   SizedBox(
+                  SizedBox(
                     height: 10.h,
                   ),
                   Row(
@@ -1027,13 +1062,14 @@ class _AddNewFeesState extends State<AddNewFees> {
                           width: size.width * 0.1,
                           child: TextFormField(
                             validator: (value) {
-                              if(value == null || value.isEmpty){
+                              if (value == null || value.isEmpty) {
                                 return "This Field is Required";
-                              }else{
-                                 return null;
+                              } else {
+                                return null;
                               }
                             },
-                            onSaved: (newValue) => premedInmatFee = int.parse(newValue!),
+                            onSaved: (newValue) =>
+                                premedInmatFee = int.parse(newValue!),
                             decoration: InputDecoration(
                                 hintText: "Pre- Medicine",
                                 hintStyle: TextStyle(fontSize: 15.sp)),
@@ -1046,13 +1082,14 @@ class _AddNewFeesState extends State<AddNewFees> {
                           width: size.width * 0.15,
                           child: TextFormField(
                             validator: (value) {
-                              if(value == null || value.isEmpty){
+                              if (value == null || value.isEmpty) {
                                 return "This Field is Required";
-                              }else{
-                                 return null;
+                              } else {
+                                return null;
                               }
                             },
-                            onSaved: (newValue) => preClinicalInmatFee = int.parse(newValue!),
+                            onSaved: (newValue) =>
+                                preClinicalInmatFee = int.parse(newValue!),
                             decoration: InputDecoration(
                                 hintText: "Pre-Clinicals",
                                 hintStyle: TextStyle(fontSize: 15.sp)),
@@ -1065,20 +1102,21 @@ class _AddNewFeesState extends State<AddNewFees> {
                           width: size.width * 0.15,
                           child: TextFormField(
                             validator: (value) {
-                              if(value == null || value.isEmpty){
+                              if (value == null || value.isEmpty) {
                                 return "This Field is Required";
-                              }else{
-                                 return null;
+                              } else {
+                                return null;
                               }
                             },
-                            onSaved: (newValue) => clinicalInmatFee = int.parse(newValue!),
+                            onSaved: (newValue) =>
+                                clinicalInmatFee = int.parse(newValue!),
                             decoration: InputDecoration(
                                 hintText: "Clinicals",
                                 hintStyle: TextStyle(fontSize: 15.sp)),
                           ))
                     ],
                   ),
-                   SizedBox(
+                  SizedBox(
                     height: 10.h,
                   ),
                   Row(
@@ -1097,13 +1135,14 @@ class _AddNewFeesState extends State<AddNewFees> {
                           width: size.width * 0.1,
                           child: TextFormField(
                             validator: (value) {
-                              if(value == null || value.isEmpty){
+                              if (value == null || value.isEmpty) {
                                 return "This Field is Required";
-                              }else{
-                                 return null;
+                              } else {
+                                return null;
                               }
                             },
-                            onSaved: (newValue) => premedInseatFee = int.parse(newValue!),
+                            onSaved: (newValue) =>
+                                premedInseatFee = int.parse(newValue!),
                             decoration: InputDecoration(
                                 hintText: "Pre- Medicine",
                                 hintStyle: TextStyle(fontSize: 15.sp)),
@@ -1116,13 +1155,14 @@ class _AddNewFeesState extends State<AddNewFees> {
                           width: size.width * 0.15,
                           child: TextFormField(
                             validator: (value) {
-                              if(value == null || value.isEmpty){
+                              if (value == null || value.isEmpty) {
                                 return "This Field is Required";
-                              }else{
-                                 return null;
+                              } else {
+                                return null;
                               }
                             },
-                            onSaved: (newValue) => preClinicalInseatFee = int.parse(newValue!),
+                            onSaved: (newValue) =>
+                                preClinicalInseatFee = int.parse(newValue!),
                             decoration: InputDecoration(
                                 hintText: "Pre-Clinicals",
                                 hintStyle: TextStyle(fontSize: 15.sp)),
@@ -1135,20 +1175,21 @@ class _AddNewFeesState extends State<AddNewFees> {
                           width: size.width * 0.15,
                           child: TextFormField(
                             validator: (value) {
-                              if(value == null || value.isEmpty){
+                              if (value == null || value.isEmpty) {
                                 return "This Field is Required";
-                              }else{
-                                 return null;
+                              } else {
+                                return null;
                               }
                             },
-                            onSaved: (newValue) => clinicalInseatFee = int.parse(newValue!),
+                            onSaved: (newValue) =>
+                                clinicalInseatFee = int.parse(newValue!),
                             decoration: InputDecoration(
                                 hintText: "Clinicals",
                                 hintStyle: TextStyle(fontSize: 15.sp)),
                           ))
                     ],
                   ),
-                   SizedBox(
+                  SizedBox(
                     height: 10.h,
                   ),
                   Row(
@@ -1167,13 +1208,14 @@ class _AddNewFeesState extends State<AddNewFees> {
                           width: size.width * 0.1,
                           child: TextFormField(
                             validator: (value) {
-                              if(value == null || value.isEmpty){
+                              if (value == null || value.isEmpty) {
                                 return "This Field is Required";
-                              }else{
-                                 return null;
+                              } else {
+                                return null;
                               }
                             },
-                            onSaved: (newValue) => premedIninsuranceFee = int.parse(newValue!),
+                            onSaved: (newValue) =>
+                                premedIninsuranceFee = int.parse(newValue!),
                             decoration: InputDecoration(
                                 hintText: "Pre- Medicine",
                                 hintStyle: TextStyle(fontSize: 15.sp)),
@@ -1186,13 +1228,14 @@ class _AddNewFeesState extends State<AddNewFees> {
                           width: size.width * 0.15,
                           child: TextFormField(
                             validator: (value) {
-                              if(value == null || value.isEmpty){
+                              if (value == null || value.isEmpty) {
                                 return "This Field is Required";
-                              }else{
-                                 return null;
+                              } else {
+                                return null;
                               }
                             },
-                            onSaved: (newValue) => preClinicalIninsuranceFee = int.parse(newValue!),
+                            onSaved: (newValue) => preClinicalIninsuranceFee =
+                                int.parse(newValue!),
                             decoration: InputDecoration(
                                 hintText: "Pre-Clinicals",
                                 hintStyle: TextStyle(fontSize: 15.sp)),
@@ -1205,13 +1248,14 @@ class _AddNewFeesState extends State<AddNewFees> {
                           width: size.width * 0.15,
                           child: TextFormField(
                             validator: (value) {
-                              if(value == null || value.isEmpty){
+                              if (value == null || value.isEmpty) {
                                 return "This Field is Required";
-                              }else{
-                                 return null;
+                              } else {
+                                return null;
                               }
                             },
-                            onSaved: (newValue) => clinicalIninsuranceFee = int.parse(newValue!),
+                            onSaved: (newValue) =>
+                                clinicalIninsuranceFee = int.parse(newValue!),
                             decoration: InputDecoration(
                                 hintText: "Clinicals",
                                 hintStyle: TextStyle(fontSize: 15.sp)),
@@ -1237,13 +1281,14 @@ class _AddNewFeesState extends State<AddNewFees> {
                           width: size.width * 0.1,
                           child: TextFormField(
                             validator: (value) {
-                              if(value == null || value.isEmpty){
+                              if (value == null || value.isEmpty) {
                                 return "This Field is Required";
-                              }else{
-                                 return null;
+                              } else {
+                                return null;
                               }
                             },
-                            onSaved: (newValue) => premedInexamFee = int.parse(newValue!),
+                            onSaved: (newValue) =>
+                                premedInexamFee = int.parse(newValue!),
                             decoration: InputDecoration(
                                 hintText: "Pre- Medicine",
                                 hintStyle: TextStyle(fontSize: 15.sp)),
@@ -1256,13 +1301,14 @@ class _AddNewFeesState extends State<AddNewFees> {
                           width: size.width * 0.15,
                           child: TextFormField(
                             validator: (value) {
-                              if(value == null || value.isEmpty){
+                              if (value == null || value.isEmpty) {
                                 return "This Field is Required";
-                              }else{
-                                 return null;
+                              } else {
+                                return null;
                               }
                             },
-                            onSaved: (newValue) => preClinicalInexamFee = int.parse(newValue!),
+                            onSaved: (newValue) =>
+                                preClinicalInexamFee = int.parse(newValue!),
                             decoration: InputDecoration(
                                 hintText: "Pre-Clinicals",
                                 hintStyle: TextStyle(fontSize: 15.sp)),
@@ -1275,20 +1321,21 @@ class _AddNewFeesState extends State<AddNewFees> {
                           width: size.width * 0.15,
                           child: TextFormField(
                             validator: (value) {
-                              if(value == null || value.isEmpty){
+                              if (value == null || value.isEmpty) {
                                 return "This Field is Required";
-                              }else{
-                                 return null;
+                              } else {
+                                return null;
                               }
                             },
-                            onSaved: (newValue) => clinicalInexamFee = int.parse(newValue!),
+                            onSaved: (newValue) =>
+                                clinicalInexamFee = int.parse(newValue!),
                             decoration: InputDecoration(
                                 hintText: "Clinicals",
                                 hintStyle: TextStyle(fontSize: 15.sp)),
                           ))
                     ],
                   ),
-                   SizedBox(
+                  SizedBox(
                     height: 10.h,
                   ),
                   Row(
@@ -1307,85 +1354,80 @@ class _AddNewFeesState extends State<AddNewFees> {
                           width: size.width * 0.1,
                           child: TextFormField(
                             validator: (value) {
-                              if(value == null || value.isEmpty){
+                              if (value == null || value.isEmpty) {
                                 return "This Field is Required";
-                              }else{
-                                 return null;
+                              } else {
+                                return null;
                               }
                             },
-                            onSaved: (newValue) => visaFee  = int.parse(newValue!),
+                            onSaved: (newValue) =>
+                                visaFee = int.parse(newValue!),
                             decoration: InputDecoration(
                                 hintText: "Visa Fee",
                                 hintStyle: TextStyle(fontSize: 15.sp)),
                           )),
-                    
-                      
                     ],
                   ),
-                  SizedBox(height: 20.h,),
-
-                  AppElevatedButon(title: "Submit",
-                  borderColor: AppColors.colorWhite,
-                  buttonColor: AppColors.colorc7e,
-                  height: 50.h,
-                  width: 150.w,
-                  textColor: AppColors.colorWhite,
-                  onPressed: (context) {
-                    Map bodydata ={
-                   "FeesList":   [
-
-                      
-               {       
-"FeesType":feesName,
-"ProgramName":"Pre-Medicine",
-"SemCount":semCount1,
-"Year":DateTime.now().year,
-"TutionFee":tutionFee1,
-"ProgramId":100
-               },
-                  {       
-"FeesType":feesName,
-"ProgramName":"Basic Sciences",
-"SemCount":semCount2,
-"Year":DateTime.now().year,
-"TutionFee":tutionFee2,
-"ProgramId":200
-               },
-               {       
-"FeesType":feesName,
-"ProgramName":"Clinical Sciences",
-"SemCount":semCount3,
-"Year":DateTime.now().year,
-"TutionFee":tutionFee3,
-"ProgramId":300
-               }
-                      
-                    ],
-                     "Miscellaneous Fees":[
- {       
-"Detail":"Student Government Fee",
-"IsNational":false,
-"ProgramId":100,
-"MiscFee":premedNstudentfee
-
-               },
-                {       
-"Detail":"Student Government Fee",
-"IsNational":false,
-"ProgramId":100,
-"MiscFee":premedNonetimeFee
-
-               },
-                {       
-"Detail":"Student Government Fee",
-"IsNational":false,
-"ProgramId":100,
-"MiscFee":premedNappFee
-
-               },
-                    ]
-                    };
-                  },
+                  SizedBox(
+                    height: 20.h,
+                  ),
+                  AppElevatedButon(
+                    title: "Submit",
+                    borderColor: AppColors.colorWhite,
+                    buttonColor: AppColors.colorc7e,
+                    height: 50.h,
+                    width: 150.w,
+                    textColor: AppColors.colorWhite,
+                    onPressed: (context) {
+                      Map bodydata = {
+                        "FeesList": [
+                          {
+                            "FeesType": feesName,
+                            "ProgramName": "Pre-Medicine",
+                            "SemCount": semCount1,
+                            "Year": DateTime.now().year,
+                            "TutionFee": tutionFee1,
+                            "ProgramId": 100
+                          },
+                          {
+                            "FeesType": feesName,
+                            "ProgramName": "Basic Sciences",
+                            "SemCount": semCount2,
+                            "Year": DateTime.now().year,
+                            "TutionFee": tutionFee2,
+                            "ProgramId": 200
+                          },
+                          {
+                            "FeesType": feesName,
+                            "ProgramName": "Clinical Sciences",
+                            "SemCount": semCount3,
+                            "Year": DateTime.now().year,
+                            "TutionFee": tutionFee3,
+                            "ProgramId": 300
+                          }
+                        ],
+                        "Miscellaneous Fees": [
+                          {
+                            "Detail": "Student Government Fee",
+                            "IsNational": false,
+                            "ProgramId": 100,
+                            "MiscFee": premedNstudentfee
+                          },
+                          {
+                            "Detail": "Student Government Fee",
+                            "IsNational": false,
+                            "ProgramId": 100,
+                            "MiscFee": premedNonetimeFee
+                          },
+                          {
+                            "Detail": "Student Government Fee",
+                            "IsNational": false,
+                            "ProgramId": 100,
+                            "MiscFee": premedNappFee
+                          },
+                        ]
+                      };
+                    },
                   )
                 ],
               ),

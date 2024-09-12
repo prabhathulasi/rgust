@@ -22,6 +22,7 @@ class ImagePath {
   static const String webMDILogo = "assets/mdi.png";
   static const String webclockLogo = "assets/clock.png";
   static const String rgustLogo = "assets/rgust_logo.gif";
+  static const String uploadPdfLogo = "assets/upload_pdf.png";
 }
 
 class LottiePath {
@@ -47,4 +48,5 @@ class LottiePath {
   static const String uploadingLottie = "assets/lottie/uploading.json";
   static const String resultLottie = "assets/lottie/result.json";
   static const String noDataLottie = "assets/lottie/nodata.json";
+  static const String whiteNotificationLottie = "assets/lottie/Notification_white.json";
 }

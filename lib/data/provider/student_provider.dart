@@ -3,10 +3,10 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:rugst_alliance_academia/data/model/exam_result_model.dart'
     as prefix;
-import 'package:rugst_alliance_academia/data/model/student_course_model.dart';
-import 'package:rugst_alliance_academia/data/model/student_detail_model.dart';
+import 'package:rugst_alliance_academia/data/model/student/student_course_model.dart';
+import 'package:rugst_alliance_academia/data/model/student/student_detail_model.dart';
+import 'package:rugst_alliance_academia/data/model/student/student_model.dart';
 
-import 'package:rugst_alliance_academia/data/model/student_model.dart';
 import 'package:rugst_alliance_academia/util/api_service.dart';
 import 'package:rugst_alliance_academia/util/toast_helper.dart';
 
@@ -113,38 +113,32 @@ class StudentProvider extends ChangeNotifier {
 
   //  getStudent result
   Future getStudentResult(String token, int studentId) async {
-    setLoading(true);
+   
     try {
       var result = await ApiHelper.get("GetResult/id=$studentId", token);
-      setLoading(false);
+
       if (result.statusCode == 200) {
         var data = json.decode(result.body);
 
         examResultModel = prefix.ExamResultModel.fromJson(data);
 
-        notifyListeners();
-
         return examResultModel;
       } else if (result.statusCode == 204) {
         examResultModel.result?.clear();
-        notifyListeners();
+
         ToastHelper().errorToast("No Result Data Added Yet");
 
         return null;
       } else if (result.statusCode == 401) {
-        notifyListeners();
-
         return "Invalid Token";
       } else {
-        notifyListeners();
         ToastHelper().errorToast("Internal Server Error");
         return null;
       }
     } catch (e) {
-      setLoading(false);
       ToastHelper().errorToast(e.toString());
       return null;
-    }
+    } 
   }
 
   Future addStudent(String token,
@@ -390,6 +384,38 @@ class StudentProvider extends ChangeNotifier {
       setLoading(false);
       ToastHelper().errorToast(e.toString());
       return null;
+    }
+  }
+
+  Future updateFessByStudentId(
+      int feesAmount, int studentId, String token) async {
+    setLoading(true);
+
+    // Make your login API call here using the http package
+
+    try {
+      var result = await ApiHelper.put(
+          "UpdateStudentFeesDetails/id=$studentId",
+          {
+            "FullTutionFee": feesAmount,
+          },
+          token);
+
+      if (result.statusCode == 200) {
+        ToastHelper().sucessToast("Fees Details Updated Successfully");
+        await getStudentDetailById(studentId, token);
+
+        return "200";
+      } else {
+        ToastHelper().errorToast("Internal Server Error");
+        return null;
+      }
+    } catch (e) {
+      ToastHelper().errorToast(e.toString());
+      return null;
+    } finally {
+      notifyListeners();
+      setLoading(false);
     }
   }
 

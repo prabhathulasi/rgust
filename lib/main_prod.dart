@@ -11,6 +11,7 @@ import 'package:rugst_alliance_academia/data/provider/dashboard_provider.dart';
 import 'package:rugst_alliance_academia/data/provider/faculty_provider.dart';
 import 'package:rugst_alliance_academia/data/provider/fees_provider.dart';
 import 'package:rugst_alliance_academia/data/provider/file_upload_provider.dart';
+import 'package:rugst_alliance_academia/data/provider/invoice_provider.dart';
 import 'package:rugst_alliance_academia/data/provider/login_provider.dart';
 import 'package:rugst_alliance_academia/data/provider/program_provider.dart';
 import 'package:rugst_alliance_academia/data/provider/result_provider.dart';
@@ -93,6 +94,9 @@ var size = MediaQuery.sizeOf(context);
                       ),
                          ChangeNotifierProvider(
                         create: (context) => StudyHistoryProvider(),
+                      ),
+                       ChangeNotifierProvider(
+                        create: (context) => InvoiceProvider(),
                       ),
                     ],
                     builder: (context, child) {

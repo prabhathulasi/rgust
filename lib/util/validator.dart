@@ -59,3 +59,32 @@ class MobileNumberValidator {
     return null; // Return null if the mobile number is valid
   }
 }
+
+class BankAccountNumberValidator {
+  static String? validate(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Bank Account Number is required.';
+    } else {
+      return null;
+    }
+  }
+}
+
+class BankNameValidator {
+  static String? validate(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Bank Name is required.';
+    } else {
+      return null;
+    }
+  }
+}
+class AmountValidator {
+  static String? validate(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Amount is required.';
+    } else {
+      return null;
+    }
+  }
+}

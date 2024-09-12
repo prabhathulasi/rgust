@@ -123,6 +123,7 @@ class _AddFacultyViewState extends State<AddStaffView> {
                     onTap: () async {
                       bytesFromPicker = await ImagePickerWeb.getImageAsBytes();
                       imageEncoded = base64.encode(bytesFromPicker!);
+                      print(imageEncoded);
               
                       setState(() {});
                     },

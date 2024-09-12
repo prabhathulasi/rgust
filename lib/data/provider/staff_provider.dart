@@ -71,7 +71,7 @@ class StaffProvider extends ChangeNotifier {
   }
 
   Future createAccount(String token, String email, String password,
-      String userName, int studentId) async {
+      String userName, int staffId) async {
     setLoading(true);
 
     // Make your login API call here using the http package
@@ -90,7 +90,7 @@ class StaffProvider extends ChangeNotifier {
       var data = json.decode(result.body);
       if (result.statusCode == 200) {
         ToastHelper().sucessToast("Account Created Sucessfully");
-        // await getStudentDetailById(studentId, token);
+         await getStaffDetailById(staffId, token);
 
         return data;
       } else if (result.statusCode == 403) {

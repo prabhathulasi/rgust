@@ -12,8 +12,8 @@ import 'package:lottie/lottie.dart';
 
 import 'package:provider/provider.dart';
 import 'package:rugst_alliance_academia/data/middleware/check_auth_middleware.dart';
-import 'package:rugst_alliance_academia/data/model/student_detail_model.dart';
-import 'package:rugst_alliance_academia/data/model/student_model.dart';
+import 'package:rugst_alliance_academia/data/model/student/student_detail_model.dart';
+
 import 'package:rugst_alliance_academia/data/provider/common_provider.dart';
 import 'package:rugst_alliance_academia/data/provider/file_upload_provider.dart';
 import 'package:rugst_alliance_academia/routes/named_routes.dart';
@@ -78,8 +78,7 @@ class _StudentAdditionalInfoViewState extends State<StudentAdditionalInfoView> {
   Widget build(BuildContext context) {
     final fileUploadProvider =
         Provider.of<FileUploadProvider>(context, listen: false);
-            final commonProvider =
-        Provider.of<CommonProvider>(context , listen: false);
+    final commonProvider = Provider.of<CommonProvider>(context, listen: false);
     Future getMediaList() async {
       var token = await getTokenAndUseIt();
       if (token == null) {
@@ -123,9 +122,7 @@ class _StudentAdditionalInfoViewState extends State<StudentAdditionalInfoView> {
         final headers = <String, String>{
           'Authorization': 'Bearer $token', // Add any headers you need
         };
-        final body = {
-          "Formtype": formType
-        };
+        final body = {"Formtype": formType};
         final request = http.MultipartRequest(
             'POST',
             flavorName == "dev"
@@ -149,7 +146,7 @@ class _StudentAdditionalInfoViewState extends State<StudentAdditionalInfoView> {
           fileUploadProvider.setSelectedFileName();
           await getMediaList();
           setState(() {});
-            ToastHelper().sucessToast("${decodedData["Message"]} ");
+          ToastHelper().sucessToast("${decodedData["Message"]} ");
         } else {
           fileUploadProvider.setLoading(false);
           ToastHelper().errorToast("${decodedData["Message"]} ");
@@ -296,7 +293,6 @@ class _StudentAdditionalInfoViewState extends State<StudentAdditionalInfoView> {
                                           trailingIcon:
                                               const Icon(Icons.visibility),
                                           onPressed: () {
-                                            
                                             // Create a blob URL for the PDF
                                             final blob = html.Blob(
                                                 [pdfData], 'application/pdf');
@@ -317,37 +313,28 @@ class _StudentAdditionalInfoViewState extends State<StudentAdditionalInfoView> {
                                     ],
                                     child: Padding(
                                       padding: const EdgeInsets.all(8.0),
-                                      child: Column(
-                                        children: [
-                                          Card(
-                                            elevation: 10.0,
-                                            child: Container(
-                                                height: 200.h,
-                                                width: 130.w,
-                                                decoration: BoxDecoration(
-                                                    border: Border.all(
-                                                        color: AppColors
-                                                            .colorBlack)),
-                                                // child: Padding(
-                                                //   padding:
-                                                //       const EdgeInsets.only(
-                                                //           top: 8.0, bottom: 8),
-                                                //   child: PdfView(
-                                                //     controller: pdfController,
-                                                //   ),
-                                                // )
+                                      child: Card(
+                                        elevation: 10.0,
+                                        child: Container(
+                                            height: 200.h,
+                                            width: 130.w,
+                                            decoration: BoxDecoration(
+                                                border: Border.all(
+                                                    color: AppColors
+                                                        .colorBlack)),
+                                            child: Transform.rotate(
+                                              angle: -45,
+                                              child: Center(
+                                                child: AppRichTextView(
+                                                  title: e.name!,
+                                                  fontSize: 15.sp,
+                                                  fontWeight:
+                                                      FontWeight.w800,
+                                                  textColor:
+                                                      AppColors.colorBlack,
                                                 ),
-                                          ),
-                                          SizedBox(
-                                            height: 10.0.h,
-                                          ),
-                                          AppRichTextView(
-                                            title: e.name!,
-                                            fontSize: 15.sp,
-                                            fontWeight: FontWeight.w800,
-                                            textColor: AppColors.colorBlack,
-                                          ),
-                                        ],
+                                              ),
+                                            )),
                                       ),
                                     ),
                                   );
@@ -379,143 +366,140 @@ class _StudentAdditionalInfoViewState extends State<StudentAdditionalInfoView> {
                   children: [
                     Expanded(
                       child: Consumer<CommonProvider>(
-                        builder: (context, radioConsumer, child) {
-                          return Wrap(
-                           direction: Axis.horizontal,
-                            children: [
-                                RadioListTile<String>(
-                                  activeColor: AppColors.colorc7e,
-                                    title: const Text('Form A'),
-                                    value: 'Form A',
-                                    groupValue: radioConsumer.selectedOption,
-                                    onChanged: (value) {
-                                     radioConsumer
-                            .updateSelectedOption(value!);
-                                    },
-                                  ),
-                                       RadioListTile<String>(
-                           activeColor: AppColors.colorc7e,
-                                    title: const Text('Form B'),
-                                    value: 'Form B',
-                                    groupValue: radioConsumer.selectedOption,
-                                    onChanged: (value) {
-                                     radioConsumer
-                            .updateSelectedOption(value!);
-                                    },
-                                  ),
-                                       RadioListTile<String>(
-                           activeColor: AppColors.colorc7e,
-                                    title: const Text('Form C'),
-                                    value: 'Form C',
-                                    groupValue:radioConsumer.selectedOption,
-                                    onChanged: (value) {
-                                      radioConsumer
-                            .updateSelectedOption(value!);
-                                    },
-                                  ),
-                                       RadioListTile<String>(
-                           activeColor: AppColors.colorc7e,
-                                    title: const Text('Form D'),
-                                    value: 'Form D',
-                                    groupValue: radioConsumer.selectedOption,
-                                    onChanged: (value) {
-                                      radioConsumer
-                            .updateSelectedOption(value!);
-                                    },
-                                  ),
-                                       RadioListTile<String>(
-                           activeColor: AppColors.colorc7e,
-                                    title: const Text('Form E'),
-                                    value: 'Form E',
-                                    groupValue: radioConsumer.selectedOption,
-                                    onChanged: (value) {
-                                     radioConsumer
-                            .updateSelectedOption(value!);
-                                    },
-                                  ),
-                                  RadioListTile<String>(
-                                     activeColor: AppColors.colorc7e,
-                                    title: const Text('Form F'),
-                                    value: 'Form F',
-                                    groupValue: radioConsumer.selectedOption,
-                                    onChanged: (value) {
-                                      radioConsumer
-                            .updateSelectedOption(value!);
-                                    },
-                                  ),
-                                  RadioListTile<String>(
-                                     activeColor: AppColors.colorc7e,
-                                    title: const Text('Form G'),
-                                    value: 'Form G',
-                                    groupValue: radioConsumer.selectedOption,
-                                    onChanged: (value) {
-                                     radioConsumer
-                            .updateSelectedOption(value!);
-                                    },
-                                  ),
-                                  
-                            ],
-                          );
-                        }
-                      ),
+                          builder: (context, radioConsumer, child) {
+                        return Wrap(
+                          direction: Axis.horizontal,
+                          children: [
+                            RadioListTile<String>(
+                              activeColor: AppColors.colorc7e,
+                              title: const Text('Form A'),
+                              value: 'Form A',
+                              groupValue: radioConsumer.selectedOption,
+                              onChanged: (value) {
+                                radioConsumer.updateSelectedOption(value!);
+                              },
+                            ),
+                            RadioListTile<String>(
+                              activeColor: AppColors.colorc7e,
+                              title: const Text('Form B'),
+                              value: 'Form B',
+                              groupValue: radioConsumer.selectedOption,
+                              onChanged: (value) {
+                                radioConsumer.updateSelectedOption(value!);
+                              },
+                            ),
+                            RadioListTile<String>(
+                              activeColor: AppColors.colorc7e,
+                              title: const Text('Form C'),
+                              value: 'Form C',
+                              groupValue: radioConsumer.selectedOption,
+                              onChanged: (value) {
+                                radioConsumer.updateSelectedOption(value!);
+                              },
+                            ),
+                            RadioListTile<String>(
+                              activeColor: AppColors.colorc7e,
+                              title: const Text('Form D'),
+                              value: 'Form D',
+                              groupValue: radioConsumer.selectedOption,
+                              onChanged: (value) {
+                                radioConsumer.updateSelectedOption(value!);
+                              },
+                            ),
+                            RadioListTile<String>(
+                              activeColor: AppColors.colorc7e,
+                              title: const Text('Form E'),
+                              value: 'Form E',
+                              groupValue: radioConsumer.selectedOption,
+                              onChanged: (value) {
+                                radioConsumer.updateSelectedOption(value!);
+                              },
+                            ),
+                            RadioListTile<String>(
+                              activeColor: AppColors.colorc7e,
+                              title: const Text('Form F'),
+                              value: 'Form F',
+                              groupValue: radioConsumer.selectedOption,
+                              onChanged: (value) {
+                                radioConsumer.updateSelectedOption(value!);
+                              },
+                            ),
+                            RadioListTile<String>(
+                              activeColor: AppColors.colorc7e,
+                              title: const Text('Form G'),
+                              value: 'Form G',
+                              groupValue: radioConsumer.selectedOption,
+                              onChanged: (value) {
+                                radioConsumer.updateSelectedOption(value!);
+                              },
+                            ),
+                          ],
+                        );
+                      }),
                     ),
-                    const Expanded(child:Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      "Please ensure that your file meets the following restrictions:",
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    SizedBox(height: 10),
-                    Text("1. File size should not be more than 100KB."),
-                    Text("2. File type should be PDF only."),
-                    Text(
-                        "3. The filename should not contain special characters, spaces, or symbols"),
-                    Text("4. Ensure the document is legible and not corrupted"),
-                    Text(
-                        "5. Do not upload copyrighted or confidential materials"),
-                    Text("6. File names should be unique and descriptive"),
-                    Text(
-                        "7. Do not upload offensive or inappropriate content."),
-                    Text("8. Files should not contain viruses or malware."),
+                    const Expanded(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            "Please ensure that your file meets the following restrictions:",
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          SizedBox(height: 10),
+                          Text("1. File size should not be more than 100KB."),
+                          Text("2. File type should be PDF only."),
+                          Text(
+                              "3. The filename should not contain special characters, spaces, or symbols"),
+                          Text(
+                              "4. Ensure the document is legible and not corrupted"),
+                          Text(
+                              "5. Do not upload copyrighted or confidential materials"),
+                          Text(
+                              "6. File names should be unique and descriptive"),
+                          Text(
+                              "7. Do not upload offensive or inappropriate content."),
+                          Text(
+                              "8. Files should not contain viruses or malware."),
 
-                    // Add more restriction statements as needed
-                  ],
-                ), )
+                          // Add more restriction statements as needed
+                        ],
+                      ),
+                    )
                   ],
                 ),
-                        actions: <Widget>[
+                actions: <Widget>[
                   ElevatedButton(
-                     style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.colorc7e,
-               
-              ),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.colorc7e,
+                    ),
                     onPressed: () async {
-                      if(commonProvider.selectedOption == ''){
-ToastHelper().errorToast("Please Select the Form Type");
-                      }else{
- FilePickerResult? result =
-                          await FilePicker.platform.pickFiles(
-                        type: FileType.custom,
-                        allowedExtensions: ['pdf'],
-                        allowMultiple: false,
-                      );
-                      if (result != null) {
-                        if (result.files.first.size <= 100 * 1024) {
-                          fileUploadProvider.setFileData(result);
-                          uploadImage(commonProvider.selectedOption); // Update the selected file data and name
-                        } else {
-                          ToastHelper().errorToast(
-                              "Selected file must be less than 100KB.");
+                      if (commonProvider.selectedOption == '') {
+                        ToastHelper().errorToast("Please Select the Form Type");
+                      } else {
+                        FilePickerResult? result =
+                            await FilePicker.platform.pickFiles(
+                          type: FileType.custom,
+                          allowedExtensions: ['pdf'],
+                          allowMultiple: false,
+                        );
+                        if (result != null) {
+                          if (result.files.first.size <= 100 * 1024) {
+                            fileUploadProvider.setFileData(result);
+                            uploadImage(commonProvider
+                                .selectedOption); // Update the selected file data and name
+                          } else {
+                            ToastHelper().errorToast(
+                                "Selected file must be less than 100KB.");
+                          }
                         }
+                        Navigator.of(context).pop();
                       }
-                      Navigator.of(context).pop();
-                      }
-                       
-                 
                     },
-                    child: const Text("OK",style: TextStyle(color: AppColors.colorWhite),),
+                    child: const Text(
+                      "OK",
+                      style: TextStyle(color: AppColors.colorWhite),
+                    ),
                   ),
                   ElevatedButton(
                     onPressed: () {
@@ -524,9 +508,7 @@ ToastHelper().errorToast("Please Select the Form Type");
                     child: const Text("Cancel"),
                   ),
                 ],
-              
               );
-           
             },
           );
         },

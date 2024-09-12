@@ -8,7 +8,8 @@ import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'dart:html' as html;
 import 'package:rugst_alliance_academia/data/model/media_file_model.dart';
-import 'package:rugst_alliance_academia/data/model/student_detail_model.dart';
+import 'package:rugst_alliance_academia/data/model/student/student_detail_model.dart';
+
 import 'package:rugst_alliance_academia/theme/app_colors.dart';
 import 'package:rugst_alliance_academia/util/image_path.dart';
 import 'package:rugst_alliance_academia/widgets/app_richtext.dart';

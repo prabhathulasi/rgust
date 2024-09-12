@@ -25,7 +25,8 @@ import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
 import 'package:rugst_alliance_academia/data/model/exam_result_model.dart'
     as prefix;
-import 'package:rugst_alliance_academia/data/model/student_detail_model.dart';
+import 'package:rugst_alliance_academia/data/model/student/student_detail_model.dart';
+
 
 class CustomData {
   const CustomData({this.name = '[your name]'});

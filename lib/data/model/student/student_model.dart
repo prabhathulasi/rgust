@@ -53,6 +53,7 @@ class StudentList {
   bool? accountCreated;
   String? qualifiation;
    String? createdBy;
+   int ?fullTutionFee;
   
 
   StudentList(
@@ -83,6 +84,7 @@ class StudentList {
       this.citizenship,
       this.accountCreated,
       this.qualifiation,
+      this.fullTutionFee,
    
       this.createdBy
       });
@@ -116,6 +118,7 @@ class StudentList {
     accountCreated = json['AccountCreated'];
     createdBy =json["CreatedBy"];
         qualifiation = json['Qualification'];
+        fullTutionFee = json["FullTutionFee"];
  
   }
 
@@ -149,6 +152,7 @@ class StudentList {
     data['AccountCreated'] = accountCreated;
     data["Qualification"] = qualifiation;
     data["CreatedBy"]=createdBy;
+    data["FullTutionFee"]= fullTutionFee;
  
     return data;
   }

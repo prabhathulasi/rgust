@@ -146,6 +146,7 @@ class _SettingsTabViewState extends State<StaffSettingsTabView> {
                       Consumer<StaffProvider>(
                           builder: (context, staffConsumer, child) {
                         return AppElevatedButon(
+                          loading: staffConsumer.isLoading,
                           title: "Create",
                           buttonColor: AppColors.colorc7e,
                           height: 50.h,

@@ -53,9 +53,10 @@ class StudentDetail {
   String? citizenship;
   bool? accountCreated;
   String? createdBy;
+  int? fullTutionFee;
 
   List<RegisteredCourse>? registeredCourse;
-   List<Result>? result;
+  List<Result>? result;
 
   StudentDetail(
       {this.iD,
@@ -88,7 +89,7 @@ class StudentDetail {
       this.accountCreated,
       this.createdBy,
       this.result,
-   
+      this.fullTutionFee,
       this.registeredCourse});
 
   StudentDetail.fromJson(Map<String, dynamic> json) {
@@ -121,14 +122,15 @@ class StudentDetail {
     citizenship = json['Citizenship'];
     accountCreated = json['AccountCreated'];
     createdBy = json['CreatedBy'];
-   
+    fullTutionFee = json["FullTutionFee"];
+
     if (json['Result'] != null) {
       result = <Result>[];
       json['Result'].forEach((v) {
         result!.add(Result.fromJson(v));
       });
     }
-     if (json['RegisteredCourse'] != null) {
+    if (json['RegisteredCourse'] != null) {
       registeredCourse = <RegisteredCourse>[];
       json['RegisteredCourse'].forEach((v) {
         registeredCourse!.add(RegisteredCourse.fromJson(v));
@@ -167,12 +169,12 @@ class StudentDetail {
     data['Citizenship'] = citizenship;
     data['AccountCreated'] = accountCreated;
     data['CreatedBy'] = createdBy;
+    data["FullTutionFee"] = fullTutionFee;
 
     if (result != null) {
-      data['Result'] =
-          result!.map((v) => v.toJson()).toList();
+      data['Result'] = result!.map((v) => v.toJson()).toList();
     }
-     if (registeredCourse != null) {
+    if (registeredCourse != null) {
       data['RegisteredCourse'] =
           registeredCourse!.map((v) => v.toJson()).toList();
     }
@@ -195,6 +197,7 @@ class RegisteredCourse {
   String? className;
   String? status;
   String? approvedBy;
+  int? courseCredits;
 
   RegisteredCourse(
       {this.iD,
@@ -210,43 +213,44 @@ class RegisteredCourse {
       this.programName,
       this.className,
       this.status,
+      this.courseCredits,
       this.approvedBy});
 
   RegisteredCourse.fromJson(Map<String, dynamic> json) {
-    iD = json['ID'];
-    createdAt = json['CreatedAt'];
-    updatedAt = json['UpdatedAt'];
-    deletedAt = json['DeletedAt'];
-    programId = json['ProgramId'];
-    classId = json['ClassId'];
-    courseName = json['CourseName'];
-    courseCode = json['CourseCode'];
-    studentId = json['StudentId'];
-    batch = json['Batch'];
-    programName = json['ProgramName'];
-    className = json['ClassName'];
-    status = json['Status'];
-    approvedBy = json['ApprovedBy'];
+    iD = json['id'];
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
+    deletedAt = json['deleted_at'];
+    programId = json['program_id'];
+    classId = json['class_id'];
+    courseName = json['course_name'];
+    courseCode = json['course_code'];
+    studentId = json['student_id'];
+    batch = json['batch'];
+    programName = json['program_name'];
+    className = json['class_name'];
+    status = json['status'];
+    approvedBy = json['approved_by'];
+     courseCredits = json['course_credits'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['ID'] = iD;
-    data['CreatedAt'] = createdAt;
-    data['UpdatedAt'] = updatedAt;
-    data['DeletedAt'] = deletedAt;
-    data['ProgramId'] = programId;
-    data['ClassId'] = classId;
-    data['CourseName'] = courseName;
-    data['CourseCode'] = courseCode;
-    data['StudentId'] = studentId;
-    data['Batch'] = batch;
-    data['ProgramName'] = programName;
-    data['ClassName'] = className;
-    data['Status'] = status;
-    data['ApprovedBy'] = approvedBy;
+    data['id'] = iD;
+    data['created_at'] = createdAt;
+    data['updated_at'] = updatedAt;
+    data['deleted_at'] = deletedAt;
+    data['program_id'] = programId;
+    data['class_id'] = classId;
+    data['course_name'] = courseName;
+    data['course_code'] = courseCode;
+    data['student_id'] = studentId;
+    data['batch'] = batch;
+    data['program_name'] = programName;
+    data['class_name'] = className;
+    data['status'] = status;
+    data['approved_by'] = approvedBy;
+    data["course_credits"]= courseCredits;
     return data;
   }
 }
-
-

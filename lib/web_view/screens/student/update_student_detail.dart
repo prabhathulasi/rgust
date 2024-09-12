@@ -9,13 +9,13 @@ import 'package:image_picker_web/image_picker_web.dart';
 import 'package:intl/intl.dart';
 
 import 'package:provider/provider.dart';
-import 'package:rugst_alliance_academia/custom_plugin/commons/helper.dart';
-import 'package:rugst_alliance_academia/custom_plugin/editable.dart';
+
 import 'package:rugst_alliance_academia/data/middleware/check_auth_middleware.dart';
 import 'package:rugst_alliance_academia/data/model/gender_model.dart';
-import 'package:rugst_alliance_academia/data/model/student_detail_model.dart';
+import 'package:rugst_alliance_academia/data/model/student/student_detail_model.dart';
+
 import 'package:rugst_alliance_academia/data/provider/common_provider.dart';
-import 'package:rugst_alliance_academia/data/provider/faculty_provider.dart';
+
 import 'package:rugst_alliance_academia/data/provider/program_provider.dart';
 import 'package:rugst_alliance_academia/data/provider/student_provider.dart';
 import 'package:rugst_alliance_academia/routes/named_routes.dart';
