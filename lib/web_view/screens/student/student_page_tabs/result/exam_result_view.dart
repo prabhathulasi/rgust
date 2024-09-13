@@ -149,8 +149,7 @@ class _ExamResultState extends State<ExamResult> {
                         final category = _getCategories(examData)[index];
                         final categoryItems =
                             _getItemsForCategory(category, examData);
-                        print(categoryItems[1].isRepeat);
-
+                        
                         return Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
