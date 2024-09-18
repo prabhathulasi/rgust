@@ -1,9 +1,10 @@
 import 'dart:convert';
-
+import 'dart:math';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_flavor/flutter_flavor.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 import 'package:rugst_alliance_academia/data/model/student/student_invoice_model.dart';
 import 'package:rugst_alliance_academia/util/api_service.dart';
 import 'package:rugst_alliance_academia/util/toast_helper.dart';
@@ -12,6 +13,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 class InvoiceProvider extends ChangeNotifier {
   bool _isLoading = false;
   bool get isLoading => _isLoading;
+
+  double _usdConversion = 0;
+  double get usdConversion => _usdConversion;
+
+  double _gydConversion = 0;
+  double get gydConversion => _gydConversion;
 
   String? dropdownvalue;
   String? selectedFileName;
@@ -44,6 +51,8 @@ class InvoiceProvider extends ChangeNotifier {
     var userName = sharedPreferences.getString("username");
     String flavorUrl = FlavorConfig.instance.variables["baseUrl"];
     String flavorName = FlavorConfig.instance.variables["flavorName"];
+     Random random = Random();
+ int randomNumber = random.nextInt(9000) + 1000; // Generates a number between 1000 and 9999
     setLoading(true);
     try {
       // Define headers (if needed)
@@ -66,6 +75,7 @@ class InvoiceProvider extends ChangeNotifier {
         ..fields["AmountInUsd"] = amountInUsd.toString()
         ..fields["Status"] = "Approved"
         ..fields["UpdatedBy"] = userName!
+        ..fields["ReceiptNumber"]="RGUST/${DateFormat("yyyy/MMM-dd").format(DateTime.now())}/$randomNumber"
         ..headers.addAll(headers)
         ..files.add(
           http.MultipartFile.fromBytes(
@@ -80,7 +90,7 @@ class InvoiceProvider extends ChangeNotifier {
       var decodedData = json.decode(responseBody);
       if (response.statusCode == 200 && context.mounted) {
         Navigator.pop(context);
-        // await getMediaList();
+        await getStudentInvoiceList(token!, studentId);
 
         ToastHelper().sucessToast("${decodedData["Message"]} ");
       } else {
@@ -89,15 +99,14 @@ class InvoiceProvider extends ChangeNotifier {
         print('Error uploading file: ${decodedData["Message"]}');
       }
     } catch (e) {
-          ToastHelper().errorToast(e.toString());
+      ToastHelper().errorToast("data" + e.toString());
     } finally {
+      notifyListeners();
       setLoading(false);
-      setFileValue("");
     }
   }
 
   Future getStudentInvoiceList(String token, int id) async {
-
     try {
       var result = await ApiHelper.get("GetInvoiceByStudentId/id=$id", token);
 
@@ -107,8 +116,8 @@ class InvoiceProvider extends ChangeNotifier {
         studentInvoiceListModel = StudentInvoiceListModel.fromJson(data);
 
         return studentInvoiceListModel;
-      } else if (result.statusCode == 204) {
-        ToastHelper().errorToast("No Fees Details Found");
+      } else if (result.statusCode == 404) {
+        ToastHelper().errorToast("No Invoice Details Found");
         return null;
       } else if (result.statusCode == 401) {
         return "Invalid Token";
@@ -119,11 +128,49 @@ class InvoiceProvider extends ChangeNotifier {
     } catch (e) {
       ToastHelper().errorToast(e.toString());
       return e.toString();
-    } 
+    }
+  }
+
+  Future updateStudentInvoiceStatus(String token, int invoiceId,int studentId, String status) async {
+    var data ={"Status":status};
+    setLoading(true);
+    try {
+      var result =
+          await ApiHelper.put("UpdateStudentInvoiceById/id=$invoiceId",data, token);
+
+      if (result.statusCode == 200) {
+        await getStudentInvoiceList(token, studentId);
+        return 200;
+      } else if (result.statusCode == 204) {
+        ToastHelper().errorToast("No Invoice Details Found");
+        return 204;
+      } else if (result.statusCode == 401) {
+        return "Invalid Token";
+      } else {
+        ToastHelper().errorToast("Internal Server Error");
+        return 500;
+      }
+    } catch (e) {
+     
+      return e.toString();
+    }finally{
+      notifyListeners();
+      setLoading(false);
+    }
   }
 
   void setLoading(bool value) async {
     _isLoading = value;
+    notifyListeners();
+  }
+
+  void setUsdConversionValue(int value) async {
+    _usdConversion = value / 218;
+    notifyListeners();
+  }
+
+  void setGydConversionValue(int value) async {
+    _gydConversion = value * 218;
     notifyListeners();
   }
 

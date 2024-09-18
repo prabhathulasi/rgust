@@ -57,7 +57,7 @@ class StudentTabView extends StatelessWidget {
                const FacultyCheckInView(),
                  StudyHistoryView(studentData: studentDetail,),
                 ExamResult(studentData: studentDetail),
-                   StudentInvoiceView(studentId: studentDetail.iD!,fullTutionFee: studentDetail.fullTutionFee!),
+                   StudentInvoiceView(studentData: studentDetail,),
                     SettingsTabView(studentDetail: studentDetail,)
                 ],
               ),

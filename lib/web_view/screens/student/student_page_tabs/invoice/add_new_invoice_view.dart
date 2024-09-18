@@ -1,6 +1,9 @@
+import 'dart:developer';
+
 import 'package:dotted_border/dotted_border.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -24,9 +27,8 @@ class AddNewInvoiceView extends StatelessWidget {
   Widget build(BuildContext context) {
     String? fromAccountNumber;
     String? bankName;
-    int? amountInGyd;
     int? amountInUsd;
-   
+
     final formKey = GlobalKey<FormState>();
     var size = MediaQuery.sizeOf(context);
     return Consumer<InvoiceProvider>(
@@ -54,13 +56,23 @@ class AddNewInvoiceView extends StatelessWidget {
                                 allowMultiple: false,
                               );
                               if (result != null) {
-                                if (result.files.first.size <= 100 * 1024) {
-                                  invoiceConsumer
-                                      .setFileValue(result.files.first.name);
-                                  invoiceConsumer.setMediaFileValue(result);
-                                } else {
+                                final RegExp fileNamePattern =
+                                    RegExp(r'^Receipt_\d{4}\.pdf$');
+                                if (!fileNamePattern
+                                    .hasMatch(result.files.first.name)) {
                                   ToastHelper().errorToast(
-                                      "Selected file must be less than 100KB.");
+                                      "Invalid file name format. Expected format: Receipt_1234");
+                                } else {
+                                  if (result.files.first.size <= 100 * 1024) {
+                                    print("file bytes ${result.files}");
+                                    invoiceConsumer
+                                        .setFileValue(result.files.first.name);
+                                    invoiceConsumer.setMediaFileValue(result);
+                                    print(invoiceConsumer.selectedFileName);
+                                  } else {
+                                    ToastHelper().errorToast(
+                                        "Selected file must be less than 100KB.");
+                                  }
                                 }
                               }
                             },
@@ -143,6 +155,7 @@ class AddNewInvoiceView extends StatelessWidget {
                 }).toList(),
                 onChanged: (String? newValue) {
                   invoiceConsumer.setDropDownValue(newValue!);
+                  print(invoiceConsumer.dropdownvalue);
                 },
               ),
               AppRichTextView(
@@ -154,6 +167,7 @@ class AddNewInvoiceView extends StatelessWidget {
                 height: 5.h,
               ),
               AppTextFormFieldWidget(
+                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                 validator: (p0) => BankAccountNumberValidator.validate(p0!),
                 onSaved: (p0) => fromAccountNumber = p0,
                 obscureText: false,
@@ -178,6 +192,9 @@ class AddNewInvoiceView extends StatelessWidget {
                 height: 5.h,
               ),
               AppTextFormFieldWidget(
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(RegExp("[a-zA-Z ]")),
+                ],
                 validator: (p0) => BankNameValidator.validate(p0!),
                 onSaved: (p0) => bankName = p0,
                 obscureText: false,
@@ -202,11 +219,21 @@ class AddNewInvoiceView extends StatelessWidget {
                 height: 5.h,
               ),
               AppTextFormFieldWidget(
+                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                 validator: (p0) => AmountValidator.validate(p0!),
                 onSaved: (p0) => amountInUsd = int.parse(p0!),
+                onChanged: (p0) {
+                  if (p0.isEmpty) {
+                    invoiceConsumer.setGydConversionValue(int.parse("0"));
+                  } else {
+                    invoiceConsumer.setGydConversionValue(int.parse(p0));
+                  }
+                },
                 obscureText: false,
                 inputDecoration: InputDecoration(
-                    hintText: "Amount in USD",
+                    hintText: invoiceConsumer.usdConversion == 0
+                        ? "Amount in USD"
+                        : invoiceConsumer.usdConversion.round().toString(),
                     hintStyle: GoogleFonts.roboto(
                       fontSize: 15.sp,
                       fontWeight: FontWeight.w500,
@@ -226,11 +253,21 @@ class AddNewInvoiceView extends StatelessWidget {
                 height: 5.h,
               ),
               AppTextFormFieldWidget(
-                validator: (p0) => AmountValidator.validate(p0!),
-                onSaved: (p0) => amountInGyd = int.parse(p0!),
+                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                // validator: (p0) => AmountValidator.validate(p0!),
+                // onSaved: (p0) => amountInGyd = int.parse(p0!),
+                onChanged: (p0) {
+                  if (p0.isEmpty) {
+                    invoiceConsumer.setUsdConversionValue(int.parse("0"));
+                  } else {
+                    invoiceConsumer.setUsdConversionValue(int.parse(p0));
+                  }
+                },
                 obscureText: false,
                 inputDecoration: InputDecoration(
-                    hintText: "Amount in GYD",
+                    hintText: invoiceConsumer.gydConversion == 0
+                        ? "Amount in GYD"
+                        : invoiceConsumer.gydConversion.round().toString(),
                     hintStyle: GoogleFonts.roboto(
                       fontSize: 15.sp,
                       fontWeight: FontWeight.w500,
@@ -263,16 +300,19 @@ class AddNewInvoiceView extends StatelessWidget {
                           Navigator.pushNamed(context, RouteNames.login);
                         }
                       } else {
-                        if (formKey.currentState!.validate() && context.mounted) {
+                        if (formKey.currentState!.validate() &&
+                            context.mounted) {
                           formKey.currentState!.save();
-                          invoiceConsumer.uploadStudentInvoice(context, token: token,
-                          studentId: studentId,
-                          amountInGyd: amountInGyd,
-                          amountInUsd: amountInUsd,
-                          bankName: bankName,
-                        fromAccountNumber: fromAccountNumber,
-                        
+                          invoiceConsumer.uploadStudentInvoice(
+                            context,
+                            token: token,
+                            studentId: studentId,
+                            amountInGyd: invoiceConsumer.gydConversion.round(),
+                            amountInUsd: amountInUsd,
+                            bankName: bankName,
+                            fromAccountNumber: fromAccountNumber,
                           );
+                         
                         }
                       }
                     },

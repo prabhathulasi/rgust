@@ -17,9 +17,8 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
-import 'package:intl/intl.dart';
+
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
@@ -28,13 +27,8 @@ import 'package:rugst_alliance_academia/data/model/exam_result_model.dart'
 import 'package:rugst_alliance_academia/data/model/student/student_detail_model.dart';
 
 
-class CustomData {
-  const CustomData({this.name = '[your name]'});
 
-  final String name;
-}
-
-Future<Uint8List> generateInvoice(PdfPageFormat pageFormat, CustomData data,
+Future<Uint8List> generateInvoice(PdfPageFormat pageFormat,
     StudentDetail studentData, List<prefix.Result> resultData) async {
   final invoice = Invoice(
     baseColor: PdfColors.teal,

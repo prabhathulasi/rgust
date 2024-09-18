@@ -3,6 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:rugst_alliance_academia/data/middleware/check_auth_middleware.dart';
+import 'package:rugst_alliance_academia/data/model/student/student_detail_model.dart';
+import 'package:rugst_alliance_academia/data/model/student/student_invoice_model.dart';
 import 'package:rugst_alliance_academia/data/provider/invoice_provider.dart';
 import 'package:rugst_alliance_academia/routes/named_routes.dart';
 import 'package:rugst_alliance_academia/theme/app_colors.dart';
@@ -16,10 +18,9 @@ import 'package:rugst_alliance_academia/widgets/app_richtext.dart';
 import 'package:rugst_alliance_academia/widgets/app_spining.dart';
 
 class StudentInvoiceView extends StatelessWidget {
-  final int studentId;
-  final int fullTutionFee;
+ final StudentDetail? studentData;
   const StudentInvoiceView(
-      {super.key, required this.studentId, required this.fullTutionFee});
+      {super.key, required this.studentData});
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +41,7 @@ class StudentInvoiceView extends StatelessWidget {
         }
       } else {
         var result =
-            await invoiceProvider.getStudentInvoiceList(token, studentId);
+            await invoiceProvider.getStudentInvoiceList(token, studentData!.iD!);
         if (result == "Invalid Token") {
           ToastHelper().errorToast("Session Expired Please Login Again");
           if (context.mounted) {
@@ -51,7 +52,7 @@ class StudentInvoiceView extends StatelessWidget {
     }
 
     return Scaffold(
-      body: fullTutionFee == 0
+      body: studentData!.fullTutionFee == 0
           ? Center(
               child: AppRichTextView(
                   title:
@@ -74,8 +75,14 @@ class StudentInvoiceView extends StatelessWidget {
                   return Consumer<InvoiceProvider>(
                       builder: (context, invoiceConsumer, child) {
                     var data =
-                        invoiceConsumer.studentInvoiceListModel.invoiceList!;
-                    return Container(
+                        invoiceConsumer.studentInvoiceListModel.invoiceList;
+                    return data == null? Center(
+                      child: AppRichTextView(
+                                      title: "No Invoice Records Found",
+                                      fontSize: 30.sp,
+                                      fontWeight: FontWeight.bold,
+                                      textColor: AppColors.colorc7e),
+                    ): Container(
                       margin: EdgeInsets.all(20.sp),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -270,6 +277,9 @@ class StudentInvoiceView extends StatelessWidget {
                                                   element.status == "Pending")
                                               .length,
                                           itemBuilder: (context, index) {
+                                            List<InvoiceList> pendingData= data
+                                              .where((element) =>
+                                                  element.status == "Pending").toList();
                                             return Padding(
                                               padding:
                                                   const EdgeInsets.all(8.0),
@@ -283,7 +293,7 @@ class StudentInvoiceView extends StatelessWidget {
                                                       color: AppColors.colorc7e,
                                                     ),
                                                     title: AppRichTextView(
-                                                        title: data[index]
+                                                        title: pendingData[index]
                                                             .invoiceName!,
                                                         fontSize: 15.sp,
                                                         fontWeight:
@@ -297,7 +307,7 @@ class StudentInvoiceView extends StatelessWidget {
                                                       children: [
                                                         AppRichTextView(
                                                             title:
-                                                                "Amount: \$${data[index].amountInUsd}",
+                                                                "Amount: \$${pendingData[index].amountInUsd}",
                                                             fontSize: 15.sp,
                                                             fontWeight:
                                                                 FontWeight.bold,
@@ -307,7 +317,7 @@ class StudentInvoiceView extends StatelessWidget {
                                                             title: DateFormat(
                                                                     'dd MMMM yyyy')
                                                                 .format(DateTime
-                                                                    .parse(data[
+                                                                    .parse(pendingData[
                                                                             index]
                                                                         .createdAt!)),
                                                             fontSize: 15.sp,
@@ -328,7 +338,7 @@ class StudentInvoiceView extends StatelessWidget {
                                                                     .colorBlack),
                                                             AppRichTextView(
                                                                 title:
-                                                                    "${data[index].status}",
+                                                                    "${pendingData[index].status}",
                                                                 fontSize: 15.sp,
                                                                 fontWeight:
                                                                     FontWeight
@@ -349,7 +359,7 @@ class StudentInvoiceView extends StatelessWidget {
                                                       width: 120.w,
                                                       onPressed: (context) {
                                                         showPendingInvoiceDialog(
-                                                            context);
+                                                            context, pendingData[index], studentData);
                                                       },
                                                     ),
                                                   )),
@@ -499,7 +509,7 @@ class StudentInvoiceView extends StatelessWidget {
           color: AppColors.colorWhite,
         ),
         onPressed: () async {
-          showAddInvoiceDialog(context, studentId);
+          showAddInvoiceDialog(context, studentData!.iD);
         },
       ),
     );

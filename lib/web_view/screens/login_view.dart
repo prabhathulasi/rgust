@@ -194,11 +194,10 @@ class _WebLoginViewState extends State<WebLoginView> {
                                       _formKey.currentState!.reset();
                                       await prefs.setString(
                                           'Token', decodedData["token"]);
-                                          print(decodedData["token"]);
                                           
-                                      // await prefs.setString(
-                                      //     "Email", decodedData["user"]);
-                                      // await prefs.setInt("userId", decodedData["user"]);
+                                          await prefs.setString(
+                                      "username", decodedData["userName"]);
+                                      
                                       if (context.mounted) {
                                         Navigator.pushNamed(
                                             context, RouteNames.welcome);

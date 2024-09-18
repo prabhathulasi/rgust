@@ -38,44 +38,11 @@ String flavorName = FlavorConfig.instance.variables["flavorName"];
 
 class _StudentAdditionalInfoViewState extends State<StudentAdditionalInfoView> {
   bool isHovered = false;
-  // showPDfView(BuildContext context, PdfController pdfController) {
-  //   // set up the AlertDialog
-  //   Dialog alert = Dialog(
-  //     child: Stack(
-  //       children: [
-  //         PdfView(
-  //           controller: pdfController,
-  //         ),
-  //         Transform.translate(
-  //           offset: Offset(10.w, -13.h),
-  //           child: GestureDetector(
-  //               onTap: () {
-  //                 Navigator.of(context).pop();
-  //               },
-  //               child: const Align(
-  //                 alignment: Alignment.topRight,
-  //                 child: CircleAvatar(
-  //                   radius: 14.0,
-  //                   backgroundColor: AppColors.colorc7e,
-  //                   child: Icon(Icons.close, color: AppColors.color0ec),
-  //                 ),
-  //               )),
-  //         )
-  //       ],
-  //     ),
-  //   );
 
-  //   // show the dialog
-  //   showDialog(
-  //     context: context,
-  //     builder: (BuildContext context) {
-  //       return alert;
-  //     },
-  //   );
-  // }
 
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.sizeOf(context);
     final fileUploadProvider =
         Provider.of<FileUploadProvider>(context, listen: false);
     final commonProvider = Provider.of<CommonProvider>(context, listen: false);
@@ -201,7 +168,19 @@ class _StudentAdditionalInfoViewState extends State<StudentAdditionalInfoView> {
                     builder: (context, fileUploadConsumer, child) {
                   var data = fileUploadConsumer.mediaFileModel.files;
                   return data == null || data.isEmpty
-                      ? Center(child: Lottie.asset(LottiePath.noDocLottie))
+                      ? Column(
+                        children: [
+                          Lottie.asset(LottiePath.noDocLottie,repeat: false,width: size.width *0.3),
+                           Expanded(
+                             child: AppRichTextView(
+                                    title: "No Documents Available in the Record",
+                                    textColor: AppColors.colorc7e,
+                                    fontSize: 20.sp,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                           ),
+                        ],
+                      )
                       : SingleChildScrollView(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,

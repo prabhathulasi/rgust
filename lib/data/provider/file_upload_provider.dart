@@ -7,73 +7,58 @@ import 'package:rugst_alliance_academia/data/model/media_file_model.dart';
 import 'package:rugst_alliance_academia/util/api_service.dart';
 import 'package:rugst_alliance_academia/util/toast_helper.dart';
 
-class FileUploadProvider extends ChangeNotifier{
-    bool _isLoading = false;
+class FileUploadProvider extends ChangeNotifier {
+  bool _isLoading = false;
   bool get isLoading => _isLoading;
 
-
-    Uint8List? _bytesFromPicker;
-    String? _selectedFileName;
-      Uint8List? get bytesFromPicker => _bytesFromPicker;
+  Uint8List? _bytesFromPicker;
+  String? _selectedFileName;
+  Uint8List? get bytesFromPicker => _bytesFromPicker;
   String? get selectedFileName => _selectedFileName;
 
-
-MediaFileModel mediaFileModel =MediaFileModel();
+  MediaFileModel mediaFileModel = MediaFileModel();
   Future getMediaFileById(String token, int id) async {
     setLoading(true);
     try {
       var result = await ApiHelper.get("upload/id=$id", token);
-      setLoading(false);
-        
-      if (result.statusCode == 200) {
-     
- var data = json.decode(result.body);
-        mediaFileModel = MediaFileModel.fromJson(data);
 
-        notifyListeners();
+      if (result.statusCode == 200) {
+        var data = json.decode(result.body);
+        mediaFileModel = MediaFileModel.fromJson(data);
 
         return mediaFileModel;
       } else if (result.statusCode == 204) {
-       
-        notifyListeners();
-        ToastHelper().errorToast("No Documents Uploaded Yet");
         return null;
       } else if (result.statusCode == 401) {
-        notifyListeners();
-
         return "Invalid Token";
       } else {
-        notifyListeners();
         ToastHelper().errorToast("Internal Server Error");
         return null;
       }
     } catch (e) {
-      setLoading(false);
       ToastHelper().errorToast(e.toString());
       return e.toString();
+    } finally {
+      notifyListeners();
+      setLoading(false);
     }
   }
-uploadMediaFile(){
 
-}
+
 
   Future delteMediabyId(String token, int mediaFileId, int userId) async {
     setLoading(true);
     try {
       var result = await ApiHelper.delete("DeleteMedia/id=$mediaFileId", token);
       setLoading(false);
-        
+
       if (result.statusCode == 200) {
-     await getMediaFileById(token, userId);
+        await getMediaFileById(token, userId);
 
         notifyListeners();
-
- 
       } else if (result.statusCode == 404) {
-       
         notifyListeners();
         ToastHelper().errorToast("No Documents Found");
- 
       } else if (result.statusCode == 401) {
         notifyListeners();
 
@@ -81,7 +66,6 @@ uploadMediaFile(){
       } else {
         notifyListeners();
         ToastHelper().errorToast("Internal Server Error");
-   
       }
     } catch (e) {
       setLoading(false);
@@ -89,21 +73,20 @@ uploadMediaFile(){
       return e.toString();
     }
   }
- void setFileData(FilePickerResult result) {
+
+  void setFileData(FilePickerResult result) {
     _bytesFromPicker = result.files.first.bytes;
     _selectedFileName = result.files.first.name;
     notifyListeners();
   }
 
-    void setLoading(bool value) async {
+  void setLoading(bool value) async {
     _isLoading = value;
     notifyListeners();
   }
+
   void setSelectedFileName() async {
-  
     _selectedFileName = null;
     notifyListeners();
   }
-  
-
 }
