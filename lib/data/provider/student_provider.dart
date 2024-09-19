@@ -224,7 +224,7 @@ class StudentProvider extends ChangeNotifier {
         ToastHelper().errorToast("Internal Server Error");
         return null;
       }
-    } catch (e) {
+    } on Exception  catch  (e) {
       ToastHelper().errorToast(e.toString());
       return e.toString();
     }

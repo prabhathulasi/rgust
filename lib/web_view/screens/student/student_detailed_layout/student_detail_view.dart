@@ -187,7 +187,7 @@ class _FacultyDetailViewState extends State<StudentDetailView> {
             return Consumer<StudentProvider>(
                 builder: (context, studentConsumer, child) {
                  
-            print("object${studentConsumer.studentDetailModel.studentDetail!.paidTutionFee}");
+          
               final studentData =
                   studentConsumer.studentDetailModel.studentDetail!;
               return Padding(
@@ -630,7 +630,7 @@ class _FacultyDetailViewState extends State<StudentDetailView> {
                           ),
                           Expanded(
                             flex: 1,
-                            child: studentData.fullTutionFee == 0
+                            child: studentData.fullTutionFee == 0 || studentData.fullTutionFee == null
                                 ? InkWell(
                                     onTap: () {
                                       showUpdateFeesDialog(
