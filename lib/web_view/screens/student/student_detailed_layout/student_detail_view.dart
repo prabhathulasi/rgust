@@ -734,7 +734,7 @@ class _FacultyDetailViewState extends State<StudentDetailView> {
                                                 flex: 2,
                                                 child: AppRichTextView(
                                                   title:
-                                                      '${studentConsumer.studentDetailModel.studentDetail!.paidTutionFee} USD',
+                                                      '${studentConsumer.studentDetailModel.studentDetail!.paidTutionFee ?? "0"} USD',
                                                   fontSize: 15.sp,
                                                   fontWeight: FontWeight.bold,
                                                   textColor:
@@ -761,7 +761,7 @@ class _FacultyDetailViewState extends State<StudentDetailView> {
                                               Expanded(
                                                 flex: 2,
                                                 child: AppRichTextView(
-                                                  title:
+                                                  title:studentData.paidTutionFee == null ? '${studentData.fullTutionFee!}':
                                                       '${studentData.fullTutionFee! - studentData.paidTutionFee!} USD',
                                                   fontSize: 15.sp,
                                                   fontWeight: FontWeight.bold,

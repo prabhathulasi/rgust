@@ -74,7 +74,7 @@ showUpdateFeesDialog(BuildContext context, int studentId) {
                 Row(
                   children: [
                     AppElevatedButon(
-                      loading: studentConsumer.isLoading,
+                      loading: studentConsumer.isAlertLoading,
                       title: "Update",
                       buttonColor: AppColors.colorc7e,
                       textColor: AppColors.colorWhite,

@@ -326,171 +326,175 @@ class _StudentAdditionalInfoViewState extends State<StudentAdditionalInfoView> {
               }
             }),
       ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: AppColors.colorc7e,
-        child: fileUploadProvider.isLoading == false
-            ? const Icon(
-                Icons.add_photo_alternate,
-                color: AppColors.colorWhite,
-              )
-            : const CircularProgressIndicator(),
-        onPressed: () async {
-          commonProvider.updateSelectedOption("");
-          showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return AlertDialog(
-                title: const Text("Please Select Form Type"),
-                content: Row(
-                  children: [
-                    Expanded(
-                      child: Consumer<CommonProvider>(
-                          builder: (context, radioConsumer, child) {
-                        return Wrap(
-                          direction: Axis.horizontal,
-                          children: [
-                            RadioListTile<String>(
-                              activeColor: AppColors.colorc7e,
-                              title: const Text('Form A'),
-                              value: 'Form A',
-                              groupValue: radioConsumer.selectedOption,
-                              onChanged: (value) {
-                                radioConsumer.updateSelectedOption(value!);
-                              },
-                            ),
-                            RadioListTile<String>(
-                              activeColor: AppColors.colorc7e,
-                              title: const Text('Form B'),
-                              value: 'Form B',
-                              groupValue: radioConsumer.selectedOption,
-                              onChanged: (value) {
-                                radioConsumer.updateSelectedOption(value!);
-                              },
-                            ),
-                            RadioListTile<String>(
-                              activeColor: AppColors.colorc7e,
-                              title: const Text('Form C'),
-                              value: 'Form C',
-                              groupValue: radioConsumer.selectedOption,
-                              onChanged: (value) {
-                                radioConsumer.updateSelectedOption(value!);
-                              },
-                            ),
-                            RadioListTile<String>(
-                              activeColor: AppColors.colorc7e,
-                              title: const Text('Form D'),
-                              value: 'Form D',
-                              groupValue: radioConsumer.selectedOption,
-                              onChanged: (value) {
-                                radioConsumer.updateSelectedOption(value!);
-                              },
-                            ),
-                            RadioListTile<String>(
-                              activeColor: AppColors.colorc7e,
-                              title: const Text('Form E'),
-                              value: 'Form E',
-                              groupValue: radioConsumer.selectedOption,
-                              onChanged: (value) {
-                                radioConsumer.updateSelectedOption(value!);
-                              },
-                            ),
-                            RadioListTile<String>(
-                              activeColor: AppColors.colorc7e,
-                              title: const Text('Form F'),
-                              value: 'Form F',
-                              groupValue: radioConsumer.selectedOption,
-                              onChanged: (value) {
-                                radioConsumer.updateSelectedOption(value!);
-                              },
-                            ),
-                            RadioListTile<String>(
-                              activeColor: AppColors.colorc7e,
-                              title: const Text('Form G'),
-                              value: 'Form G',
-                              groupValue: radioConsumer.selectedOption,
-                              onChanged: (value) {
-                                radioConsumer.updateSelectedOption(value!);
-                              },
-                            ),
-                          ],
-                        );
-                      }),
-                    ),
-                    const Expanded(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text(
-                            "Please ensure that your file meets the following restrictions:",
-                            style: TextStyle(fontWeight: FontWeight.bold),
+      floatingActionButton: Consumer<FileUploadProvider>(
+        builder: (context, fileUploadConsumer, child) {
+          return FloatingActionButton(
+            backgroundColor: AppColors.colorc7e,
+            child: fileUploadConsumer.isLoading == false
+                ? const Icon(
+                    Icons.add_photo_alternate,
+                    color: AppColors.colorWhite,
+                  )
+                : const CircularProgressIndicator(),
+            onPressed: () async {
+              commonProvider.updateSelectedOption("");
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: const Text("Please Select Form Type"),
+                    content: Row(
+                      children: [
+                        Expanded(
+                          child: Consumer<CommonProvider>(
+                              builder: (context, radioConsumer, child) {
+                            return Wrap(
+                              direction: Axis.horizontal,
+                              children: [
+                                RadioListTile<String>(
+                                  activeColor: AppColors.colorc7e,
+                                  title: const Text('Form A'),
+                                  value: 'Form A',
+                                  groupValue: radioConsumer.selectedOption,
+                                  onChanged: (value) {
+                                    radioConsumer.updateSelectedOption(value!);
+                                  },
+                                ),
+                                RadioListTile<String>(
+                                  activeColor: AppColors.colorc7e,
+                                  title: const Text('Form B'),
+                                  value: 'Form B',
+                                  groupValue: radioConsumer.selectedOption,
+                                  onChanged: (value) {
+                                    radioConsumer.updateSelectedOption(value!);
+                                  },
+                                ),
+                                RadioListTile<String>(
+                                  activeColor: AppColors.colorc7e,
+                                  title: const Text('Form C'),
+                                  value: 'Form C',
+                                  groupValue: radioConsumer.selectedOption,
+                                  onChanged: (value) {
+                                    radioConsumer.updateSelectedOption(value!);
+                                  },
+                                ),
+                                RadioListTile<String>(
+                                  activeColor: AppColors.colorc7e,
+                                  title: const Text('Form D'),
+                                  value: 'Form D',
+                                  groupValue: radioConsumer.selectedOption,
+                                  onChanged: (value) {
+                                    radioConsumer.updateSelectedOption(value!);
+                                  },
+                                ),
+                                RadioListTile<String>(
+                                  activeColor: AppColors.colorc7e,
+                                  title: const Text('Form E'),
+                                  value: 'Form E',
+                                  groupValue: radioConsumer.selectedOption,
+                                  onChanged: (value) {
+                                    radioConsumer.updateSelectedOption(value!);
+                                  },
+                                ),
+                                RadioListTile<String>(
+                                  activeColor: AppColors.colorc7e,
+                                  title: const Text('Form F'),
+                                  value: 'Form F',
+                                  groupValue: radioConsumer.selectedOption,
+                                  onChanged: (value) {
+                                    radioConsumer.updateSelectedOption(value!);
+                                  },
+                                ),
+                                RadioListTile<String>(
+                                  activeColor: AppColors.colorc7e,
+                                  title: const Text('Form G'),
+                                  value: 'Form G',
+                                  groupValue: radioConsumer.selectedOption,
+                                  onChanged: (value) {
+                                    radioConsumer.updateSelectedOption(value!);
+                                  },
+                                ),
+                              ],
+                            );
+                          }),
+                        ),
+                        const Expanded(
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Text(
+                                "Please ensure that your file meets the following restrictions:",
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                              SizedBox(height: 10),
+                              Text("1. File size should not be more than 100KB."),
+                              Text("2. File type should be PDF only."),
+                              Text(
+                                  "3. The filename should not contain special characters, spaces, or symbols"),
+                              Text(
+                                  "4. Ensure the document is legible and not corrupted"),
+                              Text(
+                                  "5. Do not upload copyrighted or confidential materials"),
+                              Text(
+                                  "6. File names should be unique and descriptive"),
+                              Text(
+                                  "7. Do not upload offensive or inappropriate content."),
+                              Text(
+                                  "8. Files should not contain viruses or malware."),
+          
+                              // Add more restriction statements as needed
+                            ],
                           ),
-                          SizedBox(height: 10),
-                          Text("1. File size should not be more than 100KB."),
-                          Text("2. File type should be PDF only."),
-                          Text(
-                              "3. The filename should not contain special characters, spaces, or symbols"),
-                          Text(
-                              "4. Ensure the document is legible and not corrupted"),
-                          Text(
-                              "5. Do not upload copyrighted or confidential materials"),
-                          Text(
-                              "6. File names should be unique and descriptive"),
-                          Text(
-                              "7. Do not upload offensive or inappropriate content."),
-                          Text(
-                              "8. Files should not contain viruses or malware."),
-
-                          // Add more restriction statements as needed
-                        ],
-                      ),
-                    )
-                  ],
-                ),
-                actions: <Widget>[
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.colorc7e,
+                        )
+                      ],
                     ),
-                    onPressed: () async {
-                      if (commonProvider.selectedOption == '') {
-                        ToastHelper().errorToast("Please Select the Form Type");
-                      } else {
-                        FilePickerResult? result =
-                            await FilePicker.platform.pickFiles(
-                          type: FileType.custom,
-                          allowedExtensions: ['pdf'],
-                          allowMultiple: false,
-                        );
-                        if (result != null) {
-                          if (result.files.first.size <= 100 * 1024) {
-                            fileUploadProvider.setFileData(result);
-                            uploadImage(commonProvider
-                                .selectedOption); // Update the selected file data and name
+                    actions: <Widget>[
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: AppColors.colorc7e,
+                        ),
+                        onPressed: () async {
+                          if (commonProvider.selectedOption == '') {
+                            ToastHelper().errorToast("Please Select the Form Type");
                           } else {
-                            ToastHelper().errorToast(
-                                "Selected file must be less than 100KB.");
+                            FilePickerResult? result =
+                                await FilePicker.platform.pickFiles(
+                              type: FileType.custom,
+                              allowedExtensions: ['pdf'],
+                              allowMultiple: false,
+                            );
+                            if (result != null) {
+                              if (result.files.first.size <= 100 * 1024) {
+                                fileUploadProvider.setFileData(result);
+                                uploadImage(commonProvider
+                                    .selectedOption); // Update the selected file data and name
+                              } else {
+                                ToastHelper().errorToast(
+                                    "Selected file must be less than 100KB.");
+                              }
+                            }
+                            Navigator.of(context).pop();
                           }
-                        }
-                        Navigator.of(context).pop();
-                      }
-                    },
-                    child: const Text(
-                      "OK",
-                      style: TextStyle(color: AppColors.colorWhite),
-                    ),
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.of(context).pop(); // Close the dialog
-                    },
-                    child: const Text("Cancel"),
-                  ),
-                ],
+                        },
+                        child: const Text(
+                          "OK",
+                          style: TextStyle(color: AppColors.colorWhite),
+                        ),
+                      ),
+                      ElevatedButton(
+                        onPressed: () {
+                          Navigator.of(context).pop(); // Close the dialog
+                        },
+                        child: const Text("Cancel"),
+                      ),
+                    ],
+                  );
+                },
               );
             },
           );
-        },
+        }
       ),
     );
   }

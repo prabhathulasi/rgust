@@ -28,6 +28,9 @@ class StudentProvider extends ChangeNotifier {
   // loading indicator
   bool _isLoading = false;
   bool get isLoading => _isLoading;
+
+    bool _isAlertLoading = false;
+  bool get isAlertLoading => _isAlertLoading;
   bool _isstudentTypeEdit = false;
   bool get isstudentTypeEdit => _isstudentTypeEdit;
   // Initial Selected Value
@@ -384,7 +387,7 @@ class StudentProvider extends ChangeNotifier {
 
   Future updateFessByStudentId(
       int feesAmount, int studentId, String token) async {
-    setLoading(true);
+    setAlertLoading(true);
 
     // Make your login API call here using the http package
 
@@ -410,7 +413,7 @@ class StudentProvider extends ChangeNotifier {
       return null;
     } finally {
       notifyListeners();
-      setLoading(false);
+      setAlertLoading(false);
     }
   }
 
@@ -465,6 +468,11 @@ class StudentProvider extends ChangeNotifier {
 // set loading value
   void setLoading(bool value) async {
     _isLoading = value;
+    notifyListeners();
+  }
+
+    void setAlertLoading(bool value) async {
+    _isAlertLoading = value;
     notifyListeners();
   }
 
