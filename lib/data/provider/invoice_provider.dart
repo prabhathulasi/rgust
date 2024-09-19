@@ -6,6 +6,7 @@ import 'package:flutter_flavor/flutter_flavor.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:rugst_alliance_academia/data/model/student/student_invoice_model.dart';
+import 'package:rugst_alliance_academia/data/provider/student_provider.dart';
 import 'package:rugst_alliance_academia/util/api_service.dart';
 import 'package:rugst_alliance_academia/util/toast_helper.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -24,6 +25,8 @@ class InvoiceProvider extends ChangeNotifier {
   String? selectedFileName;
   FilePickerResult? finalResult;
   StudentInvoiceListModel studentInvoiceListModel = StudentInvoiceListModel();
+
+  StudentProvider studentProvider = StudentProvider();
 
   var dropDownItems = ["Bank Payment", "Wire Transfer"];
   List<String> pdfRules = [
@@ -91,6 +94,8 @@ class InvoiceProvider extends ChangeNotifier {
       if (response.statusCode == 200 && context.mounted) {
         Navigator.pop(context);
         await getStudentInvoiceList(token!, studentId);
+        await studentProvider.getStudentDetailById(studentId, token);
+         studentProvider.notifyListeners();
 
         ToastHelper().sucessToast("${decodedData["Message"]} ");
       } else {
@@ -101,12 +106,14 @@ class InvoiceProvider extends ChangeNotifier {
     } catch (e) {
       ToastHelper().errorToast("data" + e.toString());
     } finally {
+      
       notifyListeners();
       setLoading(false);
     }
   }
 
   Future getStudentInvoiceList(String token, int id) async {
+    studentInvoiceListModel.invoiceList?.clear();
     try {
       var result = await ApiHelper.get("GetInvoiceByStudentId/id=$id", token);
 

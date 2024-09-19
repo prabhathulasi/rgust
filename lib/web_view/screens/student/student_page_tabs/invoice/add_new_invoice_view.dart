@@ -64,11 +64,9 @@ class AddNewInvoiceView extends StatelessWidget {
                                       "Invalid file name format. Expected format: Receipt_1234");
                                 } else {
                                   if (result.files.first.size <= 100 * 1024) {
-                                    print("file bytes ${result.files}");
                                     invoiceConsumer
                                         .setFileValue(result.files.first.name);
                                     invoiceConsumer.setMediaFileValue(result);
-                                    print(invoiceConsumer.selectedFileName);
                                   } else {
                                     ToastHelper().errorToast(
                                         "Selected file must be less than 100KB.");
@@ -155,7 +153,6 @@ class AddNewInvoiceView extends StatelessWidget {
                 }).toList(),
                 onChanged: (String? newValue) {
                   invoiceConsumer.setDropDownValue(newValue!);
-                  print(invoiceConsumer.dropdownvalue);
                 },
               ),
               AppRichTextView(
@@ -312,7 +309,6 @@ class AddNewInvoiceView extends StatelessWidget {
                             bankName: bankName,
                             fromAccountNumber: fromAccountNumber,
                           );
-                         
                         }
                       }
                     },

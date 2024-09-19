@@ -73,7 +73,7 @@ class Invoice {
           pw.Align(
               alignment: pw.Alignment.topRight,
               child: pw.Text(
-                  "Receipt No: RGUST/${DateFormat("yyyy/MMM-dd").format(DateTime.now())}/0012",
+                  "Receipt No: RGUST/${DateFormat("MMM-dd").format(DateTime.now())}/0012",
                   textAlign: pw.TextAlign.right,
                   style: pw.TextStyle(
                     color: PdfColor.fromHex("#000000"),

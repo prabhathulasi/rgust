@@ -1,10 +1,13 @@
   import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:rugst_alliance_academia/data/model/student/student_detail_model.dart';
 import 'package:rugst_alliance_academia/theme/app_colors.dart';
+import 'package:rugst_alliance_academia/web_view/screens/pdf_generate/testing.dart';
+import 'package:rugst_alliance_academia/web_view/screens/student/student_page_tabs/invoice/generate_invoice/generate_invoice.dart';
 
 import 'package:rugst_alliance_academia/widgets/app_richtext.dart';
    
-  showApprovedInvoiceDialog(BuildContext context) {
+  showApprovedInvoiceDialog(BuildContext context,  StudentDetail? studentData) {
    
 
     // set up the AlertDialog
@@ -33,6 +36,7 @@ import 'package:rugst_alliance_academia/widgets/app_richtext.dart';
                 height: 300.h,
                 width: 300.w,
                 decoration: BoxDecoration(border: Border.all()),
+                child: GenerateStudentFeeInvoice(studentData: studentData),
               ),
             ),
             SizedBox(

@@ -25,7 +25,8 @@ import 'package:rugst_alliance_academia/widgets/app_spining.dart';
 
 class StudentDetailView extends StatefulWidget {
   final int studentId;
-  const StudentDetailView({super.key, required this.studentId});
+  
+  const StudentDetailView({super.key, required this.studentId,});
 
   @override
   State<StudentDetailView> createState() => _FacultyDetailViewState();
@@ -182,462 +183,503 @@ class _FacultyDetailViewState extends State<StudentDetailView> {
               ),
             );
           } else {
-          
-    
+             
             return Consumer<StudentProvider>(
-              builder: (context, studentConsumer ,child) {
-                  final studentData =
-                studentConsumer.studentDetailModel.studentDetail!;
-                return Padding(
-                  padding: EdgeInsets.all(3.0.sp),
-                  child: Column(
-                    children: [
-                      IntrinsicHeight(
-                        child: Row(
-                          children: [
-                            Expanded(
-                              flex: 2,
-                              child: Container(
-                                decoration: BoxDecoration(
-                                    color: AppColors.colorc7e,
-                                    borderRadius: BorderRadius.circular(18.sp)),
-                                child: Padding(
-                                  padding: EdgeInsets.all(8.0.sp),
-                                  child: Row(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Column(
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        children: [
-                                          Padding(
-                                            padding: EdgeInsets.only(left: 8.0.w),
-                                            child: Stack(
-                                              children: [
-                                                CircleAvatar(
-                                                  radius: 60.sp,
-                                                  backgroundImage: MemoryImage(
-                                                      base64Decode(
-                                                          studentData.userImage!)),
-                                                ),
-                                                Positioned(
-                                                  right: 0,
-                                                  bottom: 0,
-                                                  child: Container(
-                                                    decoration: BoxDecoration(
-                                                        borderRadius:
-                                                            BorderRadius.circular(
-                                                                25.sp),
-                                                        boxShadow: const [
-                                                          BoxShadow(
-                                                              color: AppColors
-                                                                  .color582,
-                                                              blurRadius: 10,
-                                                              spreadRadius: 5)
-                                                        ]),
-                                                    child: InkWell(
-                                                      onTap: () async {
-                                                        programProvider
-                                                            .clearAllTemp();
-                                                        studentProvider
-                                                            .clearStudentTemp();
-                    
-                                                        showAddAlertDialog(
-                                                            context, studentData);
-                                                      },
-                                                      child: CircleAvatar(
-                                                        radius: 15.sp,
-                                                        backgroundColor:
-                                                            AppColors.color582,
-                                                        child: Center(
-                                                          child: Icon(
-                                                            Icons.edit,
-                                                            size: 20.sp,
+                builder: (context, studentConsumer, child) {
+                 
+            print("object${studentConsumer.studentDetailModel.studentDetail!.paidTutionFee}");
+              final studentData =
+                  studentConsumer.studentDetailModel.studentDetail!;
+              return Padding(
+                padding: EdgeInsets.all(3.0.sp),
+                child: Column(
+                  children: [
+                    IntrinsicHeight(
+                      child: Row(
+                        children: [
+                          Expanded(
+                            flex: 2,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  color: AppColors.colorc7e,
+                                  borderRadius: BorderRadius.circular(18.sp)),
+                              child: Padding(
+                                padding: EdgeInsets.all(8.0.sp),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Padding(
+                                          padding: EdgeInsets.only(left: 8.0.w),
+                                          child: Stack(
+                                            children: [
+                                              CircleAvatar(
+                                                radius: 60.sp,
+                                                backgroundImage: MemoryImage(
+                                                    base64Decode(studentData
+                                                        .userImage!)),
+                                              ),
+                                              Positioned(
+                                                right: 0,
+                                                bottom: 0,
+                                                child: Container(
+                                                  decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              25.sp),
+                                                      boxShadow: const [
+                                                        BoxShadow(
                                                             color: AppColors
-                                                                .colorWhite,
-                                                          ),
+                                                                .color582,
+                                                            blurRadius: 10,
+                                                            spreadRadius: 5)
+                                                      ]),
+                                                  child: InkWell(
+                                                    onTap: () async {
+                                                      programProvider
+                                                          .clearAllTemp();
+                                                      studentProvider
+                                                          .clearStudentTemp();
+
+                                                      showAddAlertDialog(
+                                                          context, studentData);
+                                                    },
+                                                    child: CircleAvatar(
+                                                      radius: 15.sp,
+                                                      backgroundColor:
+                                                          AppColors.color582,
+                                                      child: Center(
+                                                        child: Icon(
+                                                          Icons.edit,
+                                                          size: 20.sp,
+                                                          color: AppColors
+                                                              .colorWhite,
                                                         ),
                                                       ),
                                                     ),
                                                   ),
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: 10.h,
+                                        ),
+                                        Row(
+                                          children: [
+                                            Tooltip(
+                                                message: studentData
+                                                    .mobileNumber
+                                                    .toString(),
+                                                child: const Icon(
+                                                  Icons.phone,
+                                                  color: AppColors.colorWhite,
+                                                )),
+                                            SizedBox(
+                                              width: 5.w,
+                                            ),
+                                            Tooltip(
+                                                message: studentData.email,
+                                                child: const Icon(
+                                                  Icons.mail,
+                                                  color: AppColors.colorWhite,
+                                                )),
+                                            SizedBox(
+                                              width: 5.w,
+                                            ),
+                                            Tooltip(
+                                                message: studentData.dOB,
+                                                child: const Icon(
+                                                  Icons.cake,
+                                                  color: AppColors.colorWhite,
+                                                ))
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      width: 20.w,
+                                    ),
+                                    IntrinsicWidth(
+                                      child: Padding(
+                                        padding: EdgeInsets.only(
+                                            top: 18.0.h, left: 10.h),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Row(
+                                              children: [
+                                                AppRichTextView(
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  title:
+                                                      studentData.firstName! +
+                                                          studentData.lastName!,
+                                                  fontSize: 24.sp,
+                                                  fontWeight: FontWeight.bold,
+                                                  textColor:
+                                                      AppColors.colorWhite,
+                                                ),
+                                                Icon(
+                                                  studentData.gender == "Male"
+                                                      ? Icons.male
+                                                      : Icons.female,
+                                                  color: AppColors.colorWhite,
                                                 )
                                               ],
                                             ),
-                                          ),
-                                          SizedBox(
-                                            height: 10.h,
-                                          ),
-                                          Row(
-                                            children: [
-                                              Tooltip(
-                                                  message: studentData.mobileNumber
+                                            SizedBox(
+                                              height: 20.h,
+                                            ),
+                                            Row(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                AppRichTextView(
+                                                  title: "Student Type: ",
+                                                  fontSize: 12.sp,
+                                                  fontWeight: FontWeight.w800,
+                                                  textColor:
+                                                      AppColors.colorGrey,
+                                                ),
+                                                AppRichTextView(
+                                                  title:
+                                                      studentData.studentType!,
+                                                  fontSize: 12.sp,
+                                                  fontWeight: FontWeight.w800,
+                                                  textColor:
+                                                      AppColors.colorWhite,
+                                                ),
+                                              ],
+                                            ),
+                                            SizedBox(
+                                              height: 10.h,
+                                            ),
+                                            Row(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                AppRichTextView(
+                                                  title: "Current Class: ",
+                                                  fontSize: 12.sp,
+                                                  fontWeight: FontWeight.w800,
+                                                  textColor:
+                                                      AppColors.colorGrey,
+                                                ),
+                                                AppRichTextView(
+                                                  title: studentData
+                                                      .currentClassName!,
+                                                  fontSize: 12.sp,
+                                                  fontWeight: FontWeight.w800,
+                                                  textColor:
+                                                      AppColors.colorWhite,
+                                                ),
+                                              ],
+                                            ),
+                                            SizedBox(
+                                              height: 10.h,
+                                            ),
+                                            Row(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                AppRichTextView(
+                                                  title: "Joining Date: ",
+                                                  fontSize: 12.sp,
+                                                  fontWeight: FontWeight.w800,
+                                                  textColor:
+                                                      AppColors.colorGrey,
+                                                ),
+                                                AppRichTextView(
+                                                  title: studentData
+                                                      .admissionDate!,
+                                                  fontSize: 12.sp,
+                                                  fontWeight: FontWeight.w800,
+                                                  textColor:
+                                                      AppColors.colorWhite,
+                                                ),
+                                              ],
+                                            ),
+                                            SizedBox(
+                                              height: 10.h,
+                                            ),
+                                            Row(
+                                              children: [
+                                                AppRichTextView(
+                                                  title: "Student Id: ",
+                                                  fontSize: 12.sp,
+                                                  fontWeight: FontWeight.w800,
+                                                  textColor:
+                                                      AppColors.colorGrey,
+                                                ),
+                                                AppRichTextView(
+                                                  title: studentData.studentId!,
+                                                  fontSize: 12.sp,
+                                                  fontWeight: FontWeight.w800,
+                                                  textColor:
+                                                      AppColors.colorWhite,
+                                                ),
+                                              ],
+                                            ),
+                                            SizedBox(
+                                              height: 10.h,
+                                            ),
+                                            Row(
+                                              children: [
+                                                AppRichTextView(
+                                                  title:
+                                                      "Emergency Contact Number: ",
+                                                  fontSize: 12.sp,
+                                                  fontWeight: FontWeight.w800,
+                                                  textColor:
+                                                      AppColors.colorGrey,
+                                                ),
+                                                AppRichTextView(
+                                                  title: studentData
+                                                      .emergencyContact!
                                                       .toString(),
-                                                  child: const Icon(
-                                                    Icons.phone,
-                                                    color: AppColors.colorWhite,
-                                                  )),
-                                              SizedBox(
-                                                width: 5.w,
-                                              ),
-                                              Tooltip(
-                                                  message: studentData.email,
-                                                  child: const Icon(
-                                                    Icons.mail,
-                                                    color: AppColors.colorWhite,
-                                                  )),
-                                              SizedBox(
-                                                width: 5.w,
-                                              ),
-                                              Tooltip(
-                                                  message: studentData.dOB,
-                                                  child: const Icon(
-                                                    Icons.cake,
-                                                    color: AppColors.colorWhite,
-                                                  ))
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                      SizedBox(
-                                        width: 20.w,
-                                      ),
-                                      IntrinsicWidth(
-                                        child: Padding(
-                                          padding: EdgeInsets.only(
-                                              top: 18.0.h, left: 10.h),
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Row(
-                                                children: [
-                                                  AppRichTextView(
-                                                    overflow: TextOverflow.ellipsis,
-                                                    title: studentData.firstName! +
-                                                        studentData.lastName!,
-                                                    fontSize: 24.sp,
-                                                    fontWeight: FontWeight.bold,
-                                                    textColor: AppColors.colorWhite,
-                                                  ),
-                                                  Icon(
-                                                    studentData.gender == "Male"
-                                                        ? Icons.male
-                                                        : Icons.female,
-                                                    color: AppColors.colorWhite,
-                                                  )
-                                                ],
-                                              ),
-                                              SizedBox(
-                                                height: 20.h,
-                                              ),
-                                              Row(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  AppRichTextView(
-                                                    title: "Student Type: ",
-                                                    fontSize: 12.sp,
-                                                    fontWeight: FontWeight.w800,
-                                                    textColor: AppColors.colorGrey,
-                                                  ),
-                                                  AppRichTextView(
-                                                    title: studentData.studentType!,
-                                                    fontSize: 12.sp,
-                                                    fontWeight: FontWeight.w800,
-                                                    textColor: AppColors.colorWhite,
-                                                  ),
-                                                ],
-                                              ),
-                                              SizedBox(
-                                                height: 10.h,
-                                              ),
-                                              Row(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  AppRichTextView(
-                                                    title: "Current Class: ",
-                                                    fontSize: 12.sp,
-                                                    fontWeight: FontWeight.w800,
-                                                    textColor: AppColors.colorGrey,
-                                                  ),
-                                                  AppRichTextView(
-                                                    title: studentData
-                                                        .currentClassName!,
-                                                    fontSize: 12.sp,
-                                                    fontWeight: FontWeight.w800,
-                                                    textColor: AppColors.colorWhite,
-                                                  ),
-                                                ],
-                                              ),
-                                              SizedBox(
-                                                height: 10.h,
-                                              ),
-                                              Row(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  AppRichTextView(
-                                                    title: "Joining Date: ",
-                                                    fontSize: 12.sp,
-                                                    fontWeight: FontWeight.w800,
-                                                    textColor: AppColors.colorGrey,
-                                                  ),
-                                                  AppRichTextView(
-                                                    title:
-                                                        studentData.admissionDate!,
-                                                    fontSize: 12.sp,
-                                                    fontWeight: FontWeight.w800,
-                                                    textColor: AppColors.colorWhite,
-                                                  ),
-                                                ],
-                                              ),
-                                              SizedBox(
-                                                height: 10.h,
-                                              ),
-                                              Row(
-                                                children: [
-                                                  AppRichTextView(
-                                                    title: "Student Id: ",
-                                                    fontSize: 12.sp,
-                                                    fontWeight: FontWeight.w800,
-                                                    textColor: AppColors.colorGrey,
-                                                  ),
-                                                  AppRichTextView(
-                                                    title: studentData.studentId!,
-                                                    fontSize: 12.sp,
-                                                    fontWeight: FontWeight.w800,
-                                                    textColor: AppColors.colorWhite,
-                                                  ),
-                                                ],
-                                              ),
-                                              SizedBox(
-                                                height: 10.h,
-                                              ),
-                                              Row(
-                                                children: [
-                                                  AppRichTextView(
-                                                    title:
-                                                        "Emergency Contact Number: ",
-                                                    fontSize: 12.sp,
-                                                    fontWeight: FontWeight.w800,
-                                                    textColor: AppColors.colorGrey,
-                                                  ),
-                                                  AppRichTextView(
-                                                    title: studentData
-                                                        .emergencyContact!
-                                                        .toString(),
-                                                    fontSize: 12.sp,
-                                                    fontWeight: FontWeight.w800,
-                                                    textColor: AppColors.colorWhite,
-                                                  ),
-                                                ],
-                                              ),
-                                              SizedBox(
-                                                height: 10.h,
-                                              ),
-                                              Row(
-                                                children: [
-                                                  AppRichTextView(
-                                                    title: "Passport Number: ",
-                                                    fontSize: 12.sp,
-                                                    fontWeight: FontWeight.w800,
-                                                    textColor: AppColors.colorGrey,
-                                                  ),
-                                                  AppRichTextView(
-                                                    title:
-                                                        studentData.passportNumber!,
-                                                    fontSize: 12.sp,
-                                                    fontWeight: FontWeight.w800,
-                                                    textColor: AppColors.colorWhite,
-                                                  ),
-                                                ],
-                                              ),
-                                              SizedBox(
-                                                height: 10.h,
-                                              ),
-                                              Row(
-                                                children: [
-                                                  AppRichTextView(
-                                                    title: "Qualification: ",
-                                                    fontSize: 12.sp,
-                                                    fontWeight: FontWeight.w800,
-                                                    textColor: AppColors.colorGrey,
-                                                  ),
-                                                  AppRichTextView(
-                                                    title:
-                                                        studentData.qualification!,
-                                                    fontSize: 12.sp,
-                                                    fontWeight: FontWeight.w800,
-                                                    textColor: AppColors.colorWhite,
-                                                  ),
-                                                ],
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                      const VerticalDivider(
-                                        color: AppColors.colorWhite,
-                                      ),
-                                      Expanded(
-                                        child: Column(
-                                          children: [
-                                            Padding(
-                                              padding: EdgeInsets.only(top: 80.0.h),
-                                              child: Row(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  AppRichTextView(
-                                                    title: "Home Address: ",
-                                                    fontSize: 12.sp,
-                                                    fontWeight: FontWeight.w800,
-                                                    textColor: AppColors.colorGrey,
-                                                  ),
-                                                  Flexible(
-                                                    child: AppRichTextView(
-                                                      maxLines: 3,
-                                                      title: studentData.address!,
-                                                      fontSize: 12.sp,
-                                                      fontWeight: FontWeight.w800,
-                                                      textColor:
-                                                          AppColors.colorWhite,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
+                                                  fontSize: 12.sp,
+                                                  fontWeight: FontWeight.w800,
+                                                  textColor:
+                                                      AppColors.colorWhite,
+                                                ),
+                                              ],
                                             ),
-                                            Padding(
-                                              padding: EdgeInsets.only(top: 18.0.h),
-                                              child: Row(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  AppRichTextView(
-                                                    title: "Mailing Address: ",
-                                                    fontSize: 12.sp,
-                                                    fontWeight: FontWeight.w800,
-                                                    textColor: AppColors.colorGrey,
-                                                  ),
-                                                  Flexible(
-                                                    child: AppRichTextView(
-                                                      maxLines: 3,
-                                                      title: studentData
-                                                          .mailingAddress!,
-                                                      fontSize: 12.sp,
-                                                      fontWeight: FontWeight.w800,
-                                                      textColor:
-                                                          AppColors.colorWhite,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
+                                            SizedBox(
+                                              height: 10.h,
                                             ),
-                                            Padding(
-                                              padding: EdgeInsets.only(top: 18.0.h),
-                                              child: Row(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  AppRichTextView(
-                                                    title: "Created By: ",
-                                                    fontSize: 12.sp,
-                                                    fontWeight: FontWeight.w800,
-                                                    textColor: AppColors.colorGrey,
-                                                  ),
-                                                  Flexible(
-                                                    child: AppRichTextView(
-                                                      maxLines: 2,
-                                                      title: studentData.createdBy!,
-                                                      fontSize: 12.sp,
-                                                      fontWeight: FontWeight.w800,
-                                                      textColor:
-                                                          AppColors.colorWhite,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
+                                            Row(
+                                              children: [
+                                                AppRichTextView(
+                                                  title: "Passport Number: ",
+                                                  fontSize: 12.sp,
+                                                  fontWeight: FontWeight.w800,
+                                                  textColor:
+                                                      AppColors.colorGrey,
+                                                ),
+                                                AppRichTextView(
+                                                  title: studentData
+                                                      .passportNumber!,
+                                                  fontSize: 12.sp,
+                                                  fontWeight: FontWeight.w800,
+                                                  textColor:
+                                                      AppColors.colorWhite,
+                                                ),
+                                              ],
                                             ),
-                                            Padding(
-                                              padding: EdgeInsets.only(top: 18.0.h),
-                                              child: Row(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  AppRichTextView(
-                                                    title: "Created at: ",
-                                                    fontSize: 12.sp,
-                                                    fontWeight: FontWeight.w800,
-                                                    textColor: AppColors.colorGrey,
-                                                  ),
-                                                  Flexible(
-                                                    child: AppRichTextView(
-                                                      maxLines: 2,
-                                                      title: DateFormat.yMMMd()
-                                                          .format(DateTime.parse(
-                                                              studentData
-                                                                  .createdAt!)),
-                                                      fontSize: 12.sp,
-                                                      fontWeight: FontWeight.w800,
-                                                      textColor:
-                                                          AppColors.colorWhite,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
+                                            SizedBox(
+                                              height: 10.h,
+                                            ),
+                                            Row(
+                                              children: [
+                                                AppRichTextView(
+                                                  title: "Qualification: ",
+                                                  fontSize: 12.sp,
+                                                  fontWeight: FontWeight.w800,
+                                                  textColor:
+                                                      AppColors.colorGrey,
+                                                ),
+                                                AppRichTextView(
+                                                  title: studentData
+                                                      .qualification!,
+                                                  fontSize: 12.sp,
+                                                  fontWeight: FontWeight.w800,
+                                                  textColor:
+                                                      AppColors.colorWhite,
+                                                ),
+                                              ],
                                             ),
                                           ],
                                         ),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              width: 8.w,
-                            ),
-                           Expanded(
-                                  flex: 1,
-                                  child:studentData.fullTutionFee ==0? InkWell(
-                                    onTap: () {
-                                showUpdateFeesDialog(context, studentData.iD!);
-                                    },
-                                    child: Container(
-                                          decoration: BoxDecoration(
-                                          color: AppColors.colorc7e,
-                                          borderRadius: BorderRadius.circular(18.sp)
-                                          ),
-                                          child: Padding(
-                                                  padding: const EdgeInsets.all(18.0),
-                                            child: Column(
+                                      ),
+                                    ),
+                                    const VerticalDivider(
+                                      color: AppColors.colorWhite,
+                                    ),
+                                    Expanded(
+                                      child: Column(
+                                        children: [
+                                          Padding(
+                                            padding:
+                                                EdgeInsets.only(top: 80.0.h),
+                                            child: Row(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
                                               children: [
                                                 AppRichTextView(
-                                                title: 'Alert!',
-                                                fontSize: 30.sp,
-                                                fontWeight: FontWeight.bold,
-                                                textColor: AppColors.colorRed,
-                                              ),
-                                              Lottie.asset(LottiePath.whiteNotificationLottie,height: size.height * 0.15,repeat: false),
-                                                AppRichTextView(
-                                                title: 'Please Update Student Fees Details',
-                                                fontSize: 30.sp,
-                                                fontWeight: FontWeight.bold,
-                                                textColor: AppColors.colorWhite,
-                                              ),
+                                                  title: "Home Address: ",
+                                                  fontSize: 12.sp,
+                                                  fontWeight: FontWeight.w800,
+                                                  textColor:
+                                                      AppColors.colorGrey,
+                                                ),
+                                                Flexible(
+                                                  child: AppRichTextView(
+                                                    maxLines: 3,
+                                                    title: studentData.address!,
+                                                    fontSize: 12.sp,
+                                                    fontWeight: FontWeight.w800,
+                                                    textColor:
+                                                        AppColors.colorWhite,
+                                                  ),
+                                                ),
                                               ],
                                             ),
                                           ),
+                                          Padding(
+                                            padding:
+                                                EdgeInsets.only(top: 18.0.h),
+                                            child: Row(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                AppRichTextView(
+                                                  title: "Mailing Address: ",
+                                                  fontSize: 12.sp,
+                                                  fontWeight: FontWeight.w800,
+                                                  textColor:
+                                                      AppColors.colorGrey,
+                                                ),
+                                                Flexible(
+                                                  child: AppRichTextView(
+                                                    maxLines: 3,
+                                                    title: studentData
+                                                        .mailingAddress!,
+                                                    fontSize: 12.sp,
+                                                    fontWeight: FontWeight.w800,
+                                                    textColor:
+                                                        AppColors.colorWhite,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding:
+                                                EdgeInsets.only(top: 18.0.h),
+                                            child: Row(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                AppRichTextView(
+                                                  title: "Created By: ",
+                                                  fontSize: 12.sp,
+                                                  fontWeight: FontWeight.w800,
+                                                  textColor:
+                                                      AppColors.colorGrey,
+                                                ),
+                                                Flexible(
+                                                  child: AppRichTextView(
+                                                    maxLines: 2,
+                                                    title:
+                                                        studentData.createdBy!,
+                                                    fontSize: 12.sp,
+                                                    fontWeight: FontWeight.w800,
+                                                    textColor:
+                                                        AppColors.colorWhite,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding:
+                                                EdgeInsets.only(top: 18.0.h),
+                                            child: Row(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                AppRichTextView(
+                                                  title: "Created at: ",
+                                                  fontSize: 12.sp,
+                                                  fontWeight: FontWeight.w800,
+                                                  textColor:
+                                                      AppColors.colorGrey,
+                                                ),
+                                                Flexible(
+                                                  child: AppRichTextView(
+                                                    maxLines: 2,
+                                                    title: DateFormat.yMMMd()
+                                                        .format(DateTime.parse(
+                                                            studentData
+                                                                .createdAt!)),
+                                                    fontSize: 12.sp,
+                                                    fontWeight: FontWeight.w800,
+                                                    textColor:
+                                                        AppColors.colorWhite,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            width: 8.w,
+                          ),
+                          Expanded(
+                            flex: 1,
+                            child: studentData.fullTutionFee == 0
+                                ? InkWell(
+                                    onTap: () {
+                                      showUpdateFeesDialog(
+                                          context, studentData.iD!);
+                                    },
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                          color: AppColors.colorc7e,
+                                          borderRadius:
+                                              BorderRadius.circular(18.sp)),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(18.0),
+                                        child: Column(
+                                          children: [
+                                            AppRichTextView(
+                                              title: 'Alert!',
+                                              fontSize: 30.sp,
+                                              fontWeight: FontWeight.bold,
+                                              textColor: AppColors.colorRed,
+                                            ),
+                                            Lottie.asset(
+                                                LottiePath
+                                                    .whiteNotificationLottie,
+                                                height: size.height * 0.15,
+                                                repeat: false),
+                                            AppRichTextView(
+                                              title:
+                                                  'Please Update Student Fees Details',
+                                              fontSize: 30.sp,
+                                              fontWeight: FontWeight.bold,
+                                              textColor: AppColors.colorWhite,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
                                     ),
-                                  ):  Container(
+                                  )
+                                : Container(
                                     decoration: BoxDecoration(
                                         color: AppColors.colorc7e,
-                                        borderRadius: BorderRadius.circular(18.sp)),
+                                        borderRadius:
+                                            BorderRadius.circular(18.sp)),
                                     child: Padding(
                                       padding: const EdgeInsets.all(18.0),
                                       child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
                                         children: [
                                           AppRichTextView(
                                             title: 'Financial Details',
@@ -656,16 +698,19 @@ class _FacultyDetailViewState extends State<StudentDetailView> {
                                                   title: 'Total Fee:',
                                                   fontSize: 15.sp,
                                                   fontWeight: FontWeight.bold,
-                                                  textColor: AppColors.colorWhite,
+                                                  textColor:
+                                                      AppColors.colorWhite,
                                                 ),
                                               ),
                                               Expanded(
                                                 flex: 2,
                                                 child: AppRichTextView(
-                                                  title: '${studentData.fullTutionFee} USD',
+                                                  title:
+                                                      '${studentData.fullTutionFee} USD',
                                                   fontSize: 15.sp,
                                                   fontWeight: FontWeight.bold,
-                                                  textColor: AppColors.colorWhite,
+                                                  textColor:
+                                                      AppColors.colorWhite,
                                                 ),
                                               ),
                                             ],
@@ -681,16 +726,19 @@ class _FacultyDetailViewState extends State<StudentDetailView> {
                                                   title: 'Paid Fee:',
                                                   fontSize: 15.sp,
                                                   fontWeight: FontWeight.bold,
-                                                  textColor: AppColors.colorWhite,
+                                                  textColor:
+                                                      AppColors.colorWhite,
                                                 ),
                                               ),
                                               Expanded(
                                                 flex: 2,
                                                 child: AppRichTextView(
-                                                  title: '0 USD',
+                                                  title:
+                                                      '${studentConsumer.studentDetailModel.studentDetail!.paidTutionFee} USD',
                                                   fontSize: 15.sp,
                                                   fontWeight: FontWeight.bold,
-                                                  textColor: AppColors.colorWhite,
+                                                  textColor:
+                                                      AppColors.colorWhite,
                                                 ),
                                               ),
                                             ],
@@ -706,16 +754,19 @@ class _FacultyDetailViewState extends State<StudentDetailView> {
                                                   title: 'Payable Fee:',
                                                   fontSize: 15.sp,
                                                   fontWeight: FontWeight.bold,
-                                                  textColor: AppColors.colorWhite,
+                                                  textColor:
+                                                      AppColors.colorWhite,
                                                 ),
                                               ),
                                               Expanded(
                                                 flex: 2,
                                                 child: AppRichTextView(
-                                                  title: '${studentData.fullTutionFee} USD',
+                                                  title:
+                                                      '${studentData.fullTutionFee! - studentData.paidTutionFee!} USD',
                                                   fontSize: 15.sp,
                                                   fontWeight: FontWeight.bold,
-                                                  textColor: AppColors.colorWhite,
+                                                  textColor:
+                                                      AppColors.colorWhite,
                                                 ),
                                               ),
                                             ],
@@ -725,8 +776,10 @@ class _FacultyDetailViewState extends State<StudentDetailView> {
                                             children: [
                                               AppElevatedButon(
                                                 title: "Remainder",
-                                                borderColor: AppColors.colorBlack,
-                                                buttonColor: AppColors.colorWhite,
+                                                borderColor:
+                                                    AppColors.colorBlack,
+                                                buttonColor:
+                                                    AppColors.colorWhite,
                                                 textColor: AppColors.colorc7e,
                                                 height: 40.h,
                                                 width: 140.w,
@@ -739,8 +792,10 @@ class _FacultyDetailViewState extends State<StudentDetailView> {
                                               ),
                                               AppElevatedButon(
                                                 title: "Summary",
-                                                borderColor: AppColors.colorBlack,
-                                                buttonColor: AppColors.colorWhite,
+                                                borderColor:
+                                                    AppColors.colorBlack,
+                                                buttonColor:
+                                                    AppColors.colorWhite,
                                                 textColor: AppColors.colorc7e,
                                                 height: 40.h,
                                                 width: 140.w,
@@ -752,28 +807,25 @@ class _FacultyDetailViewState extends State<StudentDetailView> {
                                       ),
                                     ),
                                   ),
-                                
-                              
-                            ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
-                      SizedBox(
-                        height: 8.h,
+                    ),
+                    SizedBox(
+                      height: 8.h,
+                    ),
+                    Expanded(
+                        child: Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(18.sp)),
+                      child: StudentTabView(
+                        studentDetail: studentData,
                       ),
-                      Expanded(
-                          child: Container(
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(18.sp)),
-                        child: StudentTabView(
-                          studentDetail: studentData,
-                        ),
-                      ))
-                    ],
-                  ),
-                );
-              }
-            );
+                    ))
+                  ],
+                ),
+              );
+            });
           }
         });
   }

@@ -113,7 +113,6 @@ class StudentProvider extends ChangeNotifier {
 
   //  getStudent result
   Future getStudentResult(String token, int studentId) async {
-   
     try {
       var result = await ApiHelper.get("GetResult/id=$studentId", token);
 
@@ -138,7 +137,7 @@ class StudentProvider extends ChangeNotifier {
     } catch (e) {
       ToastHelper().errorToast(e.toString());
       return null;
-    } 
+    }
   }
 
   Future addStudent(String token,
@@ -206,7 +205,6 @@ class StudentProvider extends ChangeNotifier {
   }
 
   Future getStudentDetailById(int studentId, String token) async {
-    setLoading(true);
     try {
       var result = await ApiHelper.get("GetStudentById/id=$studentId", token);
 
@@ -229,9 +227,6 @@ class StudentProvider extends ChangeNotifier {
     } catch (e) {
       ToastHelper().errorToast(e.toString());
       return e.toString();
-    } finally {
-      notifyListeners();
-      setLoading(false);
     }
   }
 
