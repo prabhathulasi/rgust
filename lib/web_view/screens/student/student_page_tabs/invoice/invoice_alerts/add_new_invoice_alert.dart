@@ -7,7 +7,7 @@ import 'package:rugst_alliance_academia/widgets/app_richtext.dart';
 
 
    
-  showAddInvoiceDialog(BuildContext context,  int ?studentid) {
+  showAddInvoiceDialog(BuildContext context,  int ?studentid, String ? studentRegNo) {
    
 
     // set up the AlertDialog
@@ -31,7 +31,7 @@ import 'package:rugst_alliance_academia/widgets/app_richtext.dart';
           )
         ],
       ),
-      content:  AddNewInvoiceView(studentId: studentid!,)
+      content:  AddNewInvoiceView(studentId: studentid!,studentRegNo: studentRegNo,)
      
     );
 

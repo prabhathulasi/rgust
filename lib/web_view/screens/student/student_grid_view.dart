@@ -60,30 +60,34 @@ class _StudentGridViewState extends State<StudentGridView> {
   showDetailAlertDialog(BuildContext context, int studentId) {
     // set up the AlertDialog
     Dialog alert = Dialog(
-      child: Container(
-        height: MediaQuery.sizeOf(context).height,
-        width: MediaQuery.sizeOf(context).width,
-        color: AppColors.color0ec,
-        child: Stack(
-          children: [
-            StudentDetailView(studentId: studentId),
-            Transform.translate(
-              offset: Offset(10.w, -13.h),
-              child: GestureDetector(
-                  onTap: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: const Align(
-                    alignment: Alignment.topRight,
-                    child: CircleAvatar(
-                      radius: 14.0,
-                      backgroundColor: AppColors.colorc7e,
-                      child: Icon(Icons.close, color: AppColors.color582),
-                    ),
-                  )),
-            )
-          ],
-        ),
+      child: StatefulBuilder(
+        builder: (context , setState) {
+          return Container(
+            height: MediaQuery.sizeOf(context).height,
+            width: MediaQuery.sizeOf(context).width,
+            color: AppColors.color0ec,
+            child: Stack(
+              children: [
+                StudentDetailView(studentId: studentId,),
+                Transform.translate(
+                  offset: Offset(10.w, -13.h),
+                  child: GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: const Align(
+                        alignment: Alignment.topRight,
+                        child: CircleAvatar(
+                          radius: 14.0,
+                          backgroundColor: AppColors.colorc7e,
+                          child: Icon(Icons.close, color: AppColors.color582),
+                        ),
+                      )),
+                )
+              ],
+            ),
+          );
+        }
       ),
     );
 

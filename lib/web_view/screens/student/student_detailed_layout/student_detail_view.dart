@@ -25,8 +25,9 @@ import 'package:rugst_alliance_academia/widgets/app_spining.dart';
 
 class StudentDetailView extends StatefulWidget {
   final int studentId;
+
   
-  const StudentDetailView({super.key, required this.studentId,});
+  const StudentDetailView({super.key, required this.studentId, });
 
   @override
   State<StudentDetailView> createState() => _FacultyDetailViewState();
@@ -186,7 +187,7 @@ class _FacultyDetailViewState extends State<StudentDetailView> {
              
             return Consumer<StudentProvider>(
                 builder: (context, studentConsumer, child) {
-                 
+                 print("data${studentConsumer.studentDetailModel.studentDetail!.paidTutionFee}");
           
               final studentData =
                   studentConsumer.studentDetailModel.studentDetail!;

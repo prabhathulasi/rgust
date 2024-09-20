@@ -12,6 +12,9 @@ import 'package:rugst_alliance_academia/util/toast_helper.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class InvoiceProvider extends ChangeNotifier {
+  final StudentProvider studentProvider;
+
+  InvoiceProvider(this.studentProvider);
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
@@ -26,7 +29,7 @@ class InvoiceProvider extends ChangeNotifier {
   FilePickerResult? finalResult;
   StudentInvoiceListModel studentInvoiceListModel = StudentInvoiceListModel();
 
-  StudentProvider studentProvider = StudentProvider();
+ 
 
   var dropDownItems = ["Bank Payment", "Wire Transfer"];
   List<String> pdfRules = [
@@ -49,13 +52,15 @@ class InvoiceProvider extends ChangeNotifier {
     String? bankName,
     int? amountInGyd,
     int? amountInUsd,
+    String? studentRegNo,
   }) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     var userName = sharedPreferences.getString("username");
     String flavorUrl = FlavorConfig.instance.variables["baseUrl"];
     String flavorName = FlavorConfig.instance.variables["flavorName"];
-     Random random = Random();
- int randomNumber = random.nextInt(9000) + 1000; // Generates a number between 1000 and 9999
+    Random random = Random();
+    int randomNumber =
+        random.nextInt(9000) + 1000; // Generates a number between 1000 and 9999
     setLoading(true);
     try {
       // Define headers (if needed)
@@ -78,13 +83,14 @@ class InvoiceProvider extends ChangeNotifier {
         ..fields["AmountInUsd"] = amountInUsd.toString()
         ..fields["Status"] = "Approved"
         ..fields["UpdatedBy"] = userName!
-        ..fields["ReceiptNumber"]="RGUST/${DateFormat("yyyy/MMM-dd").format(DateTime.now())}/$randomNumber"
+        ..fields["ReceiptNumber"] =
+            "RGUST/${DateFormat("yyyy/MMM-dd").format(DateTime.now())}/$randomNumber"
         ..headers.addAll(headers)
         ..files.add(
           http.MultipartFile.fromBytes(
             'InvoiceData',
             finalResult!.files.first.bytes!,
-            filename: selectedFileName,
+            filename: "$studentRegNo-${DateFormat("yyyy-MM-HH:mm").format(DateTime.now())}-$randomNumber.pdf",
           ),
         );
 
@@ -95,7 +101,6 @@ class InvoiceProvider extends ChangeNotifier {
         Navigator.pop(context);
         await getStudentInvoiceList(token!, studentId);
         await studentProvider.getStudentDetailById(studentId, token);
-         studentProvider.notifyListeners();
 
         ToastHelper().sucessToast("${decodedData["Message"]} ");
       } else {
@@ -106,7 +111,7 @@ class InvoiceProvider extends ChangeNotifier {
     } catch (e) {
       ToastHelper().errorToast("data" + e.toString());
     } finally {
-      
+      studentProvider.notifyListeners();
       notifyListeners();
       setLoading(false);
     }
@@ -138,12 +143,13 @@ class InvoiceProvider extends ChangeNotifier {
     }
   }
 
-  Future updateStudentInvoiceStatus(String token, int invoiceId,int studentId, String status) async {
-    var data ={"Status":status};
+  Future updateStudentInvoiceStatus(
+      String token, int invoiceId, int studentId, String status) async {
+    var data = {"Status": status};
     setLoading(true);
     try {
-      var result =
-          await ApiHelper.put("UpdateStudentInvoiceById/id=$invoiceId",data, token);
+      var result = await ApiHelper.put(
+          "UpdateStudentInvoiceById/id=$invoiceId", data, token);
 
       if (result.statusCode == 200) {
         await getStudentInvoiceList(token, studentId);
@@ -158,9 +164,8 @@ class InvoiceProvider extends ChangeNotifier {
         return 500;
       }
     } catch (e) {
-     
       return e.toString();
-    }finally{
+    } finally {
       notifyListeners();
       setLoading(false);
     }

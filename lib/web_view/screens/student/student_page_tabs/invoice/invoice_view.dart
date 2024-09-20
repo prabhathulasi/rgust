@@ -586,7 +586,7 @@ class StudentInvoiceView extends StatelessWidget {
                 color: AppColors.colorWhite,
               ),
               onPressed: () async {
-                showAddInvoiceDialog(context, studentData!.iD);
+                showAddInvoiceDialog(context, studentData!.iD, studentData!.studentId);
               },
             ),
     );

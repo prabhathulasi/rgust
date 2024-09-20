@@ -1,4 +1,3 @@
-
 import 'package:calendar_view/calendar_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -30,15 +29,15 @@ import 'package:url_strategy/url_strategy.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-   setPathUrlStrategy();
+  setPathUrlStrategy();
 
   FlavorConfig(
     name: "prod",
-      variables: {
-      "flavorName":"prod",
-        "baseUrl": "rgustpanel.azurewebsites.net",
-      },
-    );
+    variables: {
+      "flavorName": "prod",
+      "baseUrl": "rgustpanel.azurewebsites.net",
+    },
+  );
   runApp(const MyApp());
 }
 
@@ -49,12 +48,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-var size = MediaQuery.sizeOf(context);
+    var size = MediaQuery.sizeOf(context);
     return kIsWeb
         ? ScreenUtilInit(
-            designSize:   Size(size.width,size.height),
+            designSize: Size(size.width, size.height),
             builder: (context, child) {
-            
               return CalendarControllerProvider(
                 controller: EventController(),
                 child: MultiProvider(
@@ -68,19 +66,19 @@ var size = MediaQuery.sizeOf(context);
                       ChangeNotifierProvider(
                         create: (context) => FacultyProvider(),
                       ),
-                       ChangeNotifierProvider(
+                      ChangeNotifierProvider(
                         create: (context) => StudentProvider(),
                       ),
-                       ChangeNotifierProvider(
+                      ChangeNotifierProvider(
                         create: (context) => FileUploadProvider(),
                       ),
-                        ChangeNotifierProvider(
+                      ChangeNotifierProvider(
                         create: (context) => TimeSheetProvider(),
                       ),
-                     ChangeNotifierProvider(
+                      ChangeNotifierProvider(
                         create: (context) => StaffProvider(),
                       ),
-                       ChangeNotifierProvider(
+                      ChangeNotifierProvider(
                         create: (context) => DashboardProvider(),
                       ),
                       ChangeNotifierProvider(
@@ -89,35 +87,40 @@ var size = MediaQuery.sizeOf(context);
                       ChangeNotifierProvider(
                         create: (context) => CommonProvider(),
                       ),
-                       ChangeNotifierProvider(
+                      ChangeNotifierProvider(
                         create: (context) => ResultProvider(),
                       ),
-                         ChangeNotifierProvider(
+                      ChangeNotifierProvider(
                         create: (context) => StudyHistoryProvider(),
                       ),
-                       ChangeNotifierProvider(
-                        create: (context) => InvoiceProvider(),
+                      ChangeNotifierProxyProvider<StudentProvider,
+                          InvoiceProvider>(
+                        create: (context) => InvoiceProvider(
+                            Provider.of<StudentProvider>(context,
+                                listen: false)),
+                        update: (context, value, previous) {
+                          return InvoiceProvider(value);
+                        },
                       ),
                     ],
                     builder: (context, child) {
                       return MaterialApp(
-                        
                           debugShowCheckedModeBanner: false,
                           initialRoute: RouteNames.login,
                           onGenerateRoute: (settings) {
-                            if(settings.name == '/'){
-                              return MaterialPageRoute(builder: (context)=> const WebLoginView());
-                            }else{
-                            
-                           return MaterialPageRoute(
-            builder: (context) => const VerticalTabView(),
-          );
+                            if (settings.name == '/') {
+                              return MaterialPageRoute(
+                                  builder: (context) => const WebLoginView());
+                            } else {
+                              return MaterialPageRoute(
+                                builder: (context) => const VerticalTabView(),
+                              );
                             }
                           },
                           // routes: {
                           //   RouteNames.welcome: (context) =>
                           //       const VerticalTabView(),
-                     
+
                           // },
                           title: 'Academia',
                           theme: ThemeData(
