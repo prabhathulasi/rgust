@@ -5,6 +5,7 @@ import 'package:flutter_flavor/flutter_flavor.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:provider/provider.dart';
+import 'package:rugst_alliance_academia/data/provider/admission_provider.dart';
 import 'package:rugst_alliance_academia/data/provider/common_provider.dart';
 import 'package:rugst_alliance_academia/data/provider/dashboard_provider.dart';
 import 'package:rugst_alliance_academia/data/provider/faculty_provider.dart';
@@ -101,6 +102,9 @@ class MyApp extends StatelessWidget {
                         update: (context, value, previous) {
                           return InvoiceProvider(value);
                         },
+                      ),
+                      ChangeNotifierProvider(
+                        create: (context) => AdmissionProvider(),
                       ),
                     ],
                     builder: (context, child) {

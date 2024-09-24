@@ -7,6 +7,7 @@ class AppColors {
   static const colorGrey = Colors.grey;
   static const colorGreen = Colors.green;
   static const colorRed = Colors.red;
+static const colorBlue = Colors.blue;
   static const color3e3 = Color(0xffe3e3e3);
   static const colorf85 = Color(0xff2a8f85);
   static const colorc7e = Color(0xff2F3C7E);
@@ -27,4 +28,5 @@ class AppColors {
     static const coloreac= Color(0xff43EEAC);
     static const colordb8= Color(0xffFE6DB8);
     static const color78a= Color(0xffFF978A);
+     static const colorca1 = Color(0xff8C8CA1);
 }

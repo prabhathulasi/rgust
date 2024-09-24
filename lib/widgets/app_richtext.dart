@@ -10,6 +10,7 @@ class AppRichTextView extends StatelessWidget {
   final TextOverflow? overflow;
   final TextDecoration? textDecoration;
   final int maxLines;
+  final FontStyle? fontStyle;
 
   const AppRichTextView({
     Key? key,
@@ -20,6 +21,7 @@ class AppRichTextView extends StatelessWidget {
     this.textDecoration,
     this.textAlign,
     this.overflow,
+    this.fontStyle,
     this.maxLines = 1,
   }) : super(key: key);
 
@@ -33,7 +35,7 @@ class AppRichTextView extends StatelessWidget {
         text: TextSpan(
             text: title,
             style: GoogleFonts.roboto(
-              
+              fontStyle: fontStyle ??FontStyle.normal ,
                 fontSize: fontSize,
                 fontWeight: fontWeight,
                 color: textColor,

@@ -50,3 +50,10 @@ class LottiePath {
   static const String noDataLottie = "assets/lottie/nodata.json";
   static const String whiteNotificationLottie = "assets/lottie/Notification_white.json";
 }
+class IconPath{
+    static const String maleIcon = "assets/icons/male.png";
+  static const String femaleIcon = "assets/icons/women.png";
+  static const String othersIcon = "assets/icons/rainbow.png";
+    static const String educationIcon = "assets/icons/education.png";
+  static const String workIcon = "assets/icons/briefcase.png";
+}

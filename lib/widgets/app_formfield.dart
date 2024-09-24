@@ -3,8 +3,10 @@ import 'package:flutter/services.dart';
 
 class AppTextFormFieldWidget extends StatelessWidget {
   final String? initialValue;
+  final TextEditingController? textEditingController;
   final TextStyle? textStyle;
   final bool enable;
+  final AutovalidateMode ?autovalidateMode;
   final TextInputType keyboardType;
   final bool obscureText;
   final Function(String)? onChanged;
@@ -17,6 +19,7 @@ final String? Function(String?)? validator;
  final List<TextInputFormatter>? inputFormatters;
 
   const AppTextFormFieldWidget({
+    this.textEditingController,
     super.key,
     this.initialValue,
     this.enable = true,
@@ -30,14 +33,16 @@ final String? Function(String?)? validator;
     this.focusNode,
     this.validator,
     this.onFieldSubmitted,
+    this.autovalidateMode,
     this.inputFormatters
   });
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      autovalidateMode: autovalidateMode ?? AutovalidateMode.disabled,
       inputFormatters: inputFormatters,
-      
+      controller: textEditingController,
       focusNode: focusNode,
       validator:validator ,
       style: textStyle,

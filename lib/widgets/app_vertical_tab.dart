@@ -61,7 +61,8 @@ class VerticalTabs extends StatefulWidget {
   VerticalTabsState createState() => VerticalTabsState();
 }
 
-class VerticalTabsState extends State<VerticalTabs> with TickerProviderStateMixin {
+class VerticalTabsState extends State<VerticalTabs>
+    with TickerProviderStateMixin {
   late int _selectedIndex;
   bool? _changePageByTapView;
 
@@ -85,10 +86,10 @@ class VerticalTabsState extends State<VerticalTabs> with TickerProviderStateMixi
         vsync: this,
       ));
     }
-    
+
     // Handle initial URL and set the correct tab
     _handleInitialUrl();
-    
+
     // Listen for URL changes
     window.onPopState.listen((event) {
       final path = window.location.pathname;
@@ -155,15 +156,16 @@ class VerticalTabsState extends State<VerticalTabs> with TickerProviderStateMixi
                                         tab.icon!,
                                         const SizedBox(width: 5),
                                       ],
-                                      if (tab.text != null) Expanded(
-                                        child: Text(
-                                          tab.text!,
-                                          softWrap: true,
-                                          style: _selectedIndex == index
-                                              ? widget.selectedTabTextStyle
-                                              : widget.tabTextStyle,
+                                      if (tab.text != null)
+                                        Expanded(
+                                          child: Text(
+                                            tab.text!,
+                                            softWrap: true,
+                                            style: _selectedIndex == index
+                                                ? widget.selectedTabTextStyle
+                                                : widget.tabTextStyle,
+                                          ),
                                         ),
-                                      ),
                                     ],
                                   ),
                                 );
@@ -188,7 +190,8 @@ class VerticalTabsState extends State<VerticalTabs> with TickerProviderStateMixi
                                     height: 60,
                                     decoration: BoxDecoration(
                                       color: itemBGColor,
-                                      borderRadius: BorderRadius.circular(15.sp),
+                                      borderRadius:
+                                          BorderRadius.circular(15.sp),
                                     ),
                                     alignment: alignment,
                                     padding: const EdgeInsets.all(5),
@@ -209,7 +212,8 @@ class VerticalTabsState extends State<VerticalTabs> with TickerProviderStateMixi
                     pageSnapping: false,
                     physics: pageScrollPhysics,
                     onPageChanged: (index) {
-                      if (_changePageByTapView == false || _changePageByTapView == null) {
+                      if (_changePageByTapView == false ||
+                          _changePageByTapView == null) {
                         _selectTab(index);
                       }
                       if (_selectedIndex == index) {
@@ -251,9 +255,12 @@ class VerticalTabsState extends State<VerticalTabs> with TickerProviderStateMixi
         newUrl = '/Department';
         break;
       case 5:
-        newUrl = '/Fees';
+        newUrl = '/Admission';
         break;
       case 6:
+        newUrl = '/Fees';
+        break;
+      case 7:
         newUrl = '/Results';
         break;
       default:
@@ -284,10 +291,12 @@ class VerticalTabsState extends State<VerticalTabs> with TickerProviderStateMixi
         return 3;
       case '/Department':
         return 4;
-      case '/Fees':
+      case '/Admission':
         return 5;
-      case '/Results':
+      case '/Fees':
         return 6;
+      case '/Results':
+        return 7;
       default:
         return null;
     }

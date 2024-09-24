@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
 import 'package:rugst_alliance_academia/theme/app_colors.dart';
 import 'package:rugst_alliance_academia/util/index.dart';
+import 'package:rugst_alliance_academia/web_view/screens/admission/admission_form_view.dart';
 import 'package:rugst_alliance_academia/web_view/screens/dashboard/overview_view.dart';
 import 'package:rugst_alliance_academia/web_view/screens/department/program_view.dart';
 import 'package:rugst_alliance_academia/web_view/screens/faculty/faculty_list_view.dart';
@@ -158,16 +159,16 @@ class VerticalTabViewState extends State<VerticalTabView> {
               child: Lottie.asset(LottiePath.deptLottie),
             ),
           ),
-          // Tab(
-          //   text: "Admission",
-          //   icon: CircleAvatar(
-          //     backgroundColor: Colors.transparent,
-          //     child: OverflowBox(
-          //         maxHeight: 100.h,
-          //         maxWidth: 100.w,
-          //         child: Lottie.asset(LottiePath.admissionLottie)),
-          //   ),
-          // ),
+          Tab(
+            text: "Admission",
+            icon: CircleAvatar(
+              backgroundColor: Colors.transparent,
+              child: OverflowBox(
+                  maxHeight: 80.h,
+                  maxWidth: 80.w,
+                  child: Lottie.asset(LottiePath.admissionLottie,repeat: false)),
+            ),
+          ),
           // Tab(
           //   text: "Leave Request",
           //   icon: CircleAvatar(
@@ -222,11 +223,8 @@ class VerticalTabViewState extends State<VerticalTabView> {
           StaffListView(),
           FacultyListView(),
           ProgramView(),
-          // const CompleteForm(),
-          // tabsContent('Dart'),
-          // tabsContent('Dart'),
-          // tabsContent('Dart'),
-          // const AccountCreationView(),
+          AdmissionFormView(),
+         
           FeesView(),
           ResultSettingsView(),
         ],
