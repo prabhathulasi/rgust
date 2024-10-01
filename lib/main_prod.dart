@@ -5,7 +5,16 @@ import 'package:flutter_flavor/flutter_flavor.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:provider/provider.dart';
-import 'package:rugst_alliance_academia/data/provider/admission_provider.dart';
+import 'package:rugst_alliance_academia/data/provider/admission_provider/admission_agent_provider.dart';
+import 'package:rugst_alliance_academia/data/provider/admission_provider/admission_criminal_check_provider.dart';
+import 'package:rugst_alliance_academia/data/provider/admission_provider/admission_education_provider.dart';
+import 'package:rugst_alliance_academia/data/provider/admission_provider/admission_eng_proficieny_provider.dart';
+import 'package:rugst_alliance_academia/data/provider/admission_provider/admission_job_provider.dart';
+import 'package:rugst_alliance_academia/data/provider/admission_provider/admission_personal_provider.dart';
+import 'package:rugst_alliance_academia/data/provider/admission_provider/admission_program_provider.dart';
+import 'package:rugst_alliance_academia/data/provider/admission_provider/admission_recommendation_provider.dart';
+import 'package:rugst_alliance_academia/data/provider/admission_provider/admission_stand_test_provider.dart';
+
 import 'package:rugst_alliance_academia/data/provider/common_provider.dart';
 import 'package:rugst_alliance_academia/data/provider/dashboard_provider.dart';
 import 'package:rugst_alliance_academia/data/provider/faculty_provider.dart';
@@ -70,6 +79,15 @@ class MyApp extends StatelessWidget {
                       ChangeNotifierProvider(
                         create: (context) => StudentProvider(),
                       ),
+                       ChangeNotifierProxyProvider<StudentProvider,
+                          ResultProvider>(
+                        create: (context) => ResultProvider(
+                            Provider.of<StudentProvider>(context,
+                                listen: false)),
+                        update: (context, value, previous) {
+                          return ResultProvider(value);
+                        },
+                      ),
                       ChangeNotifierProvider(
                         create: (context) => FileUploadProvider(),
                       ),
@@ -88,9 +106,7 @@ class MyApp extends StatelessWidget {
                       ChangeNotifierProvider(
                         create: (context) => CommonProvider(),
                       ),
-                      ChangeNotifierProvider(
-                        create: (context) => ResultProvider(),
-                      ),
+                   
                       ChangeNotifierProvider(
                         create: (context) => StudyHistoryProvider(),
                       ),
@@ -103,9 +119,36 @@ class MyApp extends StatelessWidget {
                           return InvoiceProvider(value);
                         },
                       ),
-                      ChangeNotifierProvider(
-                        create: (context) => AdmissionProvider(),
+
+                        ChangeNotifierProvider(
+                        create: (context) => AdmissionPersonalProvider(),
                       ),
+                       ChangeNotifierProvider(
+                        create: (context) => AdmissionAgentProvider(),
+                      ),
+                       ChangeNotifierProvider(
+                        create: (context) => AdmissionEducationProvider(),
+                      ),
+                      ChangeNotifierProvider(
+                        create: (context) => AdmissionJobProvider(),
+                      ),
+                      ChangeNotifierProvider(
+                        create: (context) => AdmissionEngProficienyProvider(),
+                      ),
+                       ChangeNotifierProvider(
+                        create: (context) => AdmissionProgramProvider(),
+                      ),
+                       ChangeNotifierProvider(
+                        create: (context) => AdmissionStandTestProvider(),
+                      ),
+                       ChangeNotifierProvider(
+                        create: (context) => AdmissionRecommendationProvider(),
+                      ),
+                       ChangeNotifierProvider(
+                        create: (context) => AdmissionCriminalCheckProvider(),
+                      ),
+                    
+                    
                     ],
                     builder: (context, child) {
                       return MaterialApp(

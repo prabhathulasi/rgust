@@ -170,7 +170,7 @@ class _StudentAdditionalInfoViewState extends State<StudentAdditionalInfoView> {
                   return data == null || data.isEmpty
                       ? Column(
                         children: [
-                          Lottie.asset(LottiePath.noDocLottie,repeat: false,width: size.width *0.3),
+                          Lottie.asset(LottiePath.noDocLottie,repeat: false,width: size.width *0.2),
                            Expanded(
                              child: AppRichTextView(
                                     title: "No Documents Available in the Record",

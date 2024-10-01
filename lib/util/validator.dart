@@ -49,14 +49,13 @@ class MobileNumberValidator {
   static String? validate(String? value) {
     if (value == null || value.isEmpty) {
       return 'Mobile number is required.';
-    }
-
-    final mobileNumberRegex = RegExp(r'^[6-9]\d{9}$');
-    if (!mobileNumberRegex.hasMatch(value)) {
-      return 'Please enter a valid mobile number.';
-    }
+    }else{
 
     return null; // Return null if the mobile number is valid
+    }
+
+  
+
   }
 }
 
@@ -83,6 +82,43 @@ class AmountValidator {
   static String? validate(String? value) {
     if (value == null || value.isEmpty) {
       return 'Amount is required.';
+    } else {
+      return null;
+    }
+  }
+}
+// admission Validators
+class FirstNameValidator {
+  static String? validate(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'First name is required.';
+    } else {
+      return null;
+    }
+  }
+}
+class LastNameValidator {
+  static String? validate(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Last name is required.';
+    } else {
+      return null;
+    }
+  }
+}
+class PassportNumbValidator {
+  static String? validate(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Passport Number is required.';
+    } else {
+      return null;
+    }
+  }
+}
+class AddressValidator {
+  static String? validate(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Address is required.';
     } else {
       return null;
     }

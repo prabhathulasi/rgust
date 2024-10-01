@@ -40,6 +40,7 @@ final String? Function(String?)? validator;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      
       autovalidateMode: autovalidateMode ?? AutovalidateMode.disabled,
       inputFormatters: inputFormatters,
       controller: textEditingController,

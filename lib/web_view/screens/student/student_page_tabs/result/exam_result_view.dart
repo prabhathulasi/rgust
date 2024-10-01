@@ -12,7 +12,7 @@ import 'package:rugst_alliance_academia/routes/named_routes.dart';
 import 'package:rugst_alliance_academia/theme/app_colors.dart';
 import 'package:rugst_alliance_academia/util/toast_helper.dart';
 import 'package:rugst_alliance_academia/web_view/screens/pdf_generate/student_result_summary.dart';
-import 'package:rugst_alliance_academia/web_view/screens/student/update_result_view.dart';
+import 'package:rugst_alliance_academia/web_view/screens/student/student_page_tabs/result/update_result_view.dart';
 import 'package:rugst_alliance_academia/widgets/app_spining.dart';
 
 class ExamResult extends StatefulWidget {
@@ -25,20 +25,18 @@ class ExamResult extends StatefulWidget {
 
 class _ExamResultState extends State<ExamResult> {
   updateResultAlert(BuildContext context) {
+    var size = MediaQuery.sizeOf(context);
     // set up the AlertDialog
     Dialog alert = Dialog(
       child: Card(
         elevation: 5.0,
-        child: SizedBox(
-          height: 700.h,
-          width: 1200.w,
-          child: UpdateResultView(studenId: widget.studentData!.iD),
-        ),
+        child: UpdateResultView(studenId: widget.studentData!.iD),
       ),
     );
 
     // show the dialog
     showDialog(
+      barrierDismissible: false,
       context: context,
       builder: (BuildContext context) {
         return alert;
@@ -171,7 +169,7 @@ class _ExamResultState extends State<ExamResult> {
                                       ? InkWell(
                                           onTap: () async {
                                             await studentConsumer
-                                                .updateStudentResult(
+                                                .updateStudentResultTable(
                                                     categoryItems);
                                             if (context.mounted) {
                                               updateResultAlert(context);

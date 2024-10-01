@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:rugst_alliance_academia/data/model/admission/admission_education_history_model.dart';
+
 import 'package:rugst_alliance_academia/data/model/admission/admission_job_form.dart';
-import 'package:rugst_alliance_academia/data/provider/admission_provider.dart';
+import 'package:rugst_alliance_academia/data/provider/admission_provider/admission_job_provider.dart';
+
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:rugst_alliance_academia/theme/app_colors.dart';
 import 'package:rugst_alliance_academia/util/image_path.dart';
@@ -13,30 +14,52 @@ import 'package:rugst_alliance_academia/widgets/app_formfield.dart';
 import 'package:rugst_alliance_academia/widgets/app_richtext.dart';
 
 class JobDetailsForm extends StatelessWidget {
-  const JobDetailsForm({super.key});
+  final PageController pageController;
+  const JobDetailsForm({super.key, required this.pageController});
 
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.sizeOf(context);
     TextEditingController commencedInput = TextEditingController();
     TextEditingController completedInput = TextEditingController();
-    return Consumer<AdmissionProvider>(
-        builder: (context, admissionConsumer, child) {
+    return Consumer<AdmissionJobProvider>(
+        builder: (context, admissionJobConsumer, child) {
       return Column(
         children: [
-          admissionConsumer.jobList.isEmpty
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              AppRichTextView(
+                  title: "Employment History",
+                  textColor: AppColors.colorc7e,
+                  fontSize: 24.sp,
+                  fontWeight: FontWeight.bold),
+              SizedBox(
+                width: size.width * 0.2,
+                child: LinearProgressIndicator(
+                  backgroundColor: AppColors.colorGrey.withOpacity(0.2),
+                  borderRadius: BorderRadius.circular(10.sp),
+                  color: AppColors.colorc7e,
+                  minHeight: 15.sp,
+                  value: 0.4,
+                ),
+              ),
+            ],
+          ),
+          admissionJobConsumer.jobList.isEmpty
               ? Container()
               : ListView.builder(
                   shrinkWrap: true,
-                  itemCount: admissionConsumer.jobList.length,
+                  itemCount: admissionJobConsumer.jobList.length,
                   itemBuilder: (context, index) {
                     // Parse the date
                     DateTime completeddateTime = DateFormat('dd/MM/yyyy')
-                        .parse(admissionConsumer.jobList[index].from!);
+                        .parse(admissionJobConsumer.jobList[index].from!);
                     String completedmonthYear =
                         DateFormat('MMMM yyyy').format(completeddateTime);
                     // Parse the date
                     DateTime commenceddateTime = DateFormat('dd/MM/yyyy')
-                        .parse(admissionConsumer.jobList[index].till!);
+                        .parse(admissionJobConsumer.jobList[index].till!);
                     String commencedmonthYear =
                         DateFormat('MMMM yyyy').format(commenceddateTime);
                     return Padding(
@@ -57,7 +80,8 @@ class JobDetailsForm extends StatelessWidget {
                                 width: 25.w,
                               ),
                               AppRichTextView(
-                                  title: admissionConsumer.jobList[index].role!,
+                                  title:
+                                      admissionJobConsumer.jobList[index].role!,
                                   fontSize: 22.sp,
                                   fontWeight: FontWeight.bold),
                             ],
@@ -70,7 +94,7 @@ class JobDetailsForm extends StatelessWidget {
                             child: Row(
                               children: [
                                 AppRichTextView(
-                                    title: admissionConsumer
+                                    title: admissionJobConsumer
                                         .jobList[index].organization!,
                                     fontSize: 16.sp,
                                     fontWeight: FontWeight.w400),
@@ -90,13 +114,13 @@ class JobDetailsForm extends StatelessWidget {
           SizedBox(
             height: 20.h,
           ),
-          admissionConsumer.isNewJob == false
+          admissionJobConsumer.isNewJob == false
               ? Container()
               : Align(
                   alignment: Alignment.bottomRight,
                   child: InkWell(
                     onTap: () {
-                      admissionConsumer.setNewJob(false);
+                      admissionJobConsumer.setNewJob(false);
                     },
                     child: AppRichTextView(
                         title: "\u002b Add New Experience",
@@ -105,7 +129,7 @@ class JobDetailsForm extends StatelessWidget {
                         fontWeight: FontWeight.bold),
                   ),
                 ),
-          admissionConsumer.isNewJob == true
+          admissionJobConsumer.isNewJob == true
               ? Container()
               : Column(
                   children: [
@@ -298,15 +322,17 @@ class JobDetailsForm extends StatelessWidget {
                         ),
                       ],
                     ),
-                    SizedBox(height: 15.h,),
+                    SizedBox(
+                      height: 15.h,
+                    ),
                     Row(
                       children: [
                         Radio(
                           activeColor: AppColors.colorc7e,
                           value: "Full Time",
-                          groupValue: admissionConsumer.jobTypeRadioValue,
+                          groupValue: admissionJobConsumer.jobTypeRadioValue,
                           onChanged: (String? value) {
-                            admissionConsumer.setJobTypeRadioValue(value!);
+                            admissionJobConsumer.setJobTypeRadioValue(value!);
                           },
                         ),
                         AppRichTextView(
@@ -316,9 +342,9 @@ class JobDetailsForm extends StatelessWidget {
                         Radio(
                           activeColor: AppColors.colorc7e,
                           value: "Part Time",
-                          groupValue: admissionConsumer.jobTypeRadioValue,
+                          groupValue: admissionJobConsumer.jobTypeRadioValue,
                           onChanged: (String? value) {
-                            admissionConsumer.setJobTypeRadioValue(value!);
+                            admissionJobConsumer.setJobTypeRadioValue(value!);
                           },
                         ),
                         AppRichTextView(
@@ -332,40 +358,70 @@ class JobDetailsForm extends StatelessWidget {
           SizedBox(
             height: 15.h,
           ),
-          admissionConsumer.isNewJob == false
-              ? Align(
-                  alignment: Alignment.bottomRight,
-                  child: AppElevatedButon(
-                    title: "Save",
-                    buttonColor: AppColors.colorc7e,
-                    onPressed: (context) async {
-                      admissionConsumer.storeJobDetails(
-                        ExperienceModel(
-                          employmentType: "Full Time",
-                          organization: "XYZ Company",
-                          from: "12/02/2018",
-                          till: "06/08/2020",
-                          role: "Tester"
-                        )
-                      );
-                    },
-                    textColor: AppColors.colorWhite,
-                    height: 50.h,
-                    width: 100.w,
-                  ),
+          admissionJobConsumer.isNewJob == false
+              ? Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    AppElevatedButon(
+                      borderColor: AppColors.colorc7e,
+                      title: "Back",
+                      buttonColor: AppColors.colorWhite,
+                      onPressed: (context) {
+                        pageController.previousPage(
+                            duration: const Duration(milliseconds: 1000),
+                            curve: Curves.easeOut);
+                      },
+                      textColor: AppColors.colorc7e,
+                      height: 50.h,
+                      width: 120.w,
+                    ),
+                    AppElevatedButon(
+                      title: "Save",
+                      buttonColor: AppColors.colorc7e,
+                      onPressed: (context) async {
+                        admissionJobConsumer.storeJobDetails(ExperienceModel(
+                            employmentType: "Full Time",
+                            organization: "XYZ Company",
+                            from: "12/02/2018",
+                            till: "06/08/2020",
+                            role: "Tester"));
+                      },
+                      textColor: AppColors.colorWhite,
+                      height: 50.h,
+                      width: 100.w,
+                    ),
+                  ],
                 )
-              : Align(
-                  alignment: Alignment.bottomRight,
-                  child: AppElevatedButon(
-                    title: "Save & Continue",
-                    buttonColor: AppColors.colorc7e,
-                    onPressed: (context) async {
-                      admissionConsumer.setjobSectionValue(true);
-                    },
-                    textColor: AppColors.colorWhite,
-                    height: 50.h,
-                    width: 200.w,
-                  ),
+              : Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    AppElevatedButon(
+                      borderColor: AppColors.colorc7e,
+                      title: "Back",
+                      buttonColor: AppColors.colorWhite,
+                      onPressed: (context) {
+                        pageController.previousPage(
+                            duration: const Duration(milliseconds: 1000),
+                            curve: Curves.easeOut);
+                      },
+                      textColor: AppColors.colorc7e,
+                      height: 50.h,
+                      width: 120.w,
+                    ),
+                    AppElevatedButon(
+                      title: "Save & Continue",
+                      buttonColor: AppColors.colorc7e,
+                      onPressed: (context) async {
+                        admissionJobConsumer.setjobSectionValue(true);
+                          pageController.nextPage(
+                            duration: const Duration(milliseconds: 1000),
+                            curve: Curves.easeIn);
+                      },
+                      textColor: AppColors.colorWhite,
+                      height: 50.h,
+                      width: 200.w,
+                    ),
+                  ],
                 )
         ],
       );

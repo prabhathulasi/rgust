@@ -273,7 +273,7 @@ class StudentProvider extends ChangeNotifier {
     }
   }
 
-  updateStudentResult(List<prefix.Result> result) {
+  updateStudentResultTable(List<prefix.Result> result) {
     editResult.clear();
     for (var examData in result) {
       editResult.add({
@@ -289,7 +289,7 @@ class StudentProvider extends ChangeNotifier {
         "grade": examData.grade
       });
     }
-    notifyListeners();
+   
     return editResult;
   }
 

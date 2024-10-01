@@ -7,11 +7,15 @@ import 'package:intl/intl.dart';
 import 'package:rugst_alliance_academia/custom_plugin/timeline/timeline_item.dart';
 import 'package:rugst_alliance_academia/data/model/publish_result_model.dart';
 import 'package:rugst_alliance_academia/data/model/result_approval_model.dart';
+import 'package:rugst_alliance_academia/data/provider/student_provider.dart';
 import 'package:rugst_alliance_academia/theme/app_colors.dart';
 import 'package:rugst_alliance_academia/util/api_service.dart';
 import 'package:rugst_alliance_academia/util/toast_helper.dart';
 
 class ResultProvider extends ChangeNotifier {
+   final StudentProvider studentProvider;
+
+  ResultProvider(this.studentProvider);
   // loading indicator
   bool _isLoading = false;
   bool get isLoading => _isLoading;
@@ -32,35 +36,30 @@ class ResultProvider extends ChangeNotifier {
 
       var result = await ApiHelper.put("UpdateResult/id=$id", body, token);
 
-      setLoading(false);
       if (result.statusCode == 200) {
-        notifyListeners();
         ToastHelper().sucessToast("Result Updated Sucessfully");
         return 200;
       } else if (result.statusCode == 204) {
-        notifyListeners();
         ToastHelper().errorToast("No Courses Registered Yet");
 
         return null;
       } else if (result.statusCode == 401) {
-        notifyListeners();
-
         return "Invalid Token";
       } else if (result.statusCode == 400) {
         var data = json.decode(result.body);
 
-        notifyListeners();
         ToastHelper().errorToast(data["Message"]);
         // return "Invalid Token";
       } else {
-        notifyListeners();
         ToastHelper().errorToast("Internal Server Error");
         return null;
       }
     } catch (e) {
-      setLoading(false);
       ToastHelper().errorToast(e.toString());
       return null;
+    } finally {
+      setLoading(false);
+      notifyListeners();
     }
   }
 
@@ -150,10 +149,8 @@ class ResultProvider extends ChangeNotifier {
 
       setLoading(false);
 
-     
-
       if (result.statusCode == 200) {
-         var data = json.decode(result.body);
+        var data = json.decode(result.body);
         approvalModel = ApprovalModel.fromJson(data);
         timeline = approvalModel.approvalData!.map((e) {
           return TimelineItem(
@@ -190,7 +187,7 @@ class ResultProvider extends ChangeNotifier {
         ToastHelper().errorToast("No Records Found");
         return null;
       } else {
-         var data = json.decode(result.body);
+        var data = json.decode(result.body);
         approvalModel.approvalData?.clear();
         notifyListeners();
         ToastHelper().errorToast(data["Message"]);
@@ -250,8 +247,8 @@ class ResultProvider extends ChangeNotifier {
       "ResultId": resultId,
       "UserLevel": userLevel,
       "Status": "Approved",
-      "ClassName":className,
-      "Batch":batch
+      "ClassName": className,
+      "Batch": batch
     };
 
     setLoading(true);
@@ -290,18 +287,29 @@ class ResultProvider extends ChangeNotifier {
       required String batch,
       required String programId,
       required String classId}) async {
-       Map<String, dynamic> jsonbody = {"ResultId": resultId,"ClassName":className, "Batch":batch};
+    Map<String, dynamic> jsonbody = {
+      "ResultId": resultId,
+      "ClassName": className,
+      "Batch": batch
+    };
 
-    Map<String, dynamic> body = {"ResultId": resultId, "studentId":  studentId,"ClassName":className, "Batch":batch};
-print(body.toString());
+    Map<String, dynamic> body = {
+      "ResultId": resultId,
+      "studentId": studentId,
+      "ClassName": className,
+      "Batch": batch
+    };
+    print(body.toString());
     setLoading(true);
     try {
-      var result = await ApiHelper.post("ReleaseResult", studentId.isEmpty? jsonbody:body, token);
+      var result = await ApiHelper.post(
+          "ReleaseResult", studentId.isEmpty ? jsonbody : body, token);
 
       setLoading(false);
       var data = json.decode(result.body);
       if (result.statusCode == 200) {
-         await getApprovalData(token,batch:batch, classId: classId,programId: programId);
+        await getApprovalData(token,
+            batch: batch, classId: classId, programId: programId);
         ToastHelper().sucessToast(data["Message"]);
         notifyListeners();
 
