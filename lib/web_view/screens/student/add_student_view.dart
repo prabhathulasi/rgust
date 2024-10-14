@@ -94,774 +94,772 @@ class _AddStudentViewState extends State<AddStudentView> {
             children: [
               Form(
                 key: _formKey,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        AppRichTextView(
-                            title: "Add New Student",
-                            textColor: AppColors.colorc7e,
-                            fontSize: 25.sp,
-                            fontWeight: FontWeight.w700),
-                        Radio(
-                          activeColor: AppColors.colorc7e,
-                          value: 1,
-                          groupValue: programProvider.isNewStudent,
-                          onChanged: (value) {
-                            programProvider.selectStudentType(value!);
-                          },
-                        ),
-                        AppRichTextView(
-                            title: "New Student",
-                            fontSize: 15.sp,
-                            fontWeight: FontWeight.bold),
-                        Radio(
-                          activeColor: AppColors.colorc7e,
-                          value: 2,
-                          groupValue: programProvider.isNewStudent,
-                          onChanged: (value) {
-                            programProvider.selectStudentType(value!);
-                          },
-                        ),
-                        AppRichTextView(
-                            title: "Transfer Student",
-                            fontSize: 15.sp,
-                            fontWeight: FontWeight.bold),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            AppRichTextView(
-                                title: "PROFILE IMAGE",
-                                textColor: AppColors.colorc7e,
-                                fontSize: 15.sp,
-                                fontWeight: FontWeight.w800),
-                            SizedBox(
-                              height: 10.h,
-                            ),
-                            InkWell(
-                              onTap: () async {
-                                bytesFromPicker =
-                                    await ImagePickerWeb.getImageAsBytes();
-                                // Get the size of the base64 string in bytes
-                                int imageSizeInBytes =
-                                    (base64.encode(bytesFromPicker!).length *
-                                            3 /
-                                            4)
-                                        .ceil();
-
-// Convert bytes to kilobytes
-                                double imageSizeInKB = imageSizeInBytes / 1024;
-                                if (imageSizeInKB > 50) {
-                                  ToastHelper().errorToast(
-                                      "Image size exceeds 50KB. Please choose a smaller image.");
-                                  setState(() {
-                                    imageEncoded = null;
-                                  });
-                                } else {
-                                  imageEncoded =
-                                      base64.encode(bytesFromPicker!);
-
-                                  setState(() {});
-                                }
-                              },
-                              child: CircleAvatar(
-                                  backgroundColor: AppColors.colorc7e,
-                                  radius: 60.sp,
-                                  backgroundImage: imageEncoded == null
-                                      ? const AssetImage(
-                                          ImagePath.webfacultyfLogo)
-                                      : MemoryImage(bytesFromPicker!)
-                                          as ImageProvider),
-                            ),
-                            SizedBox(
-                              height: 10.h,
-                            ),
-                            InkWell(
-                              onTap: () async {
-                                bytesFromPicker =
-                                    await ImagePickerWeb.getImageAsBytes();
-                                // Get the size of the base64 string in bytes
-                                int imageSizeInBytes =
-                                    (base64.encode(bytesFromPicker!).length *
-                                            3 /
-                                            4)
-                                        .ceil();
-
-// Convert bytes to kilobytes
-                                double imageSizeInKB = imageSizeInBytes / 1024;
-                                if (imageSizeInKB > 50) {
-                                  ToastHelper().errorToast(
-                                      "Image size exceeds 50KB. Please choose a smaller image.");
-                                  setState(() {
-                                    imageEncoded = null;
-                                  });
-                                } else {
-                                  imageEncoded =
-                                      base64.encode(bytesFromPicker!);
-
-                                  setState(() {});
-                                }
-                              },
-                              child: AppRichTextView(
-                                  title: "Select Profile Image",
-                                  textColor: AppColors.color582,
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          AppRichTextView(
+                              title: "Add New Student",
+                              textColor: AppColors.colorc7e,
+                              fontSize: 25.sp,
+                              fontWeight: FontWeight.w700),
+                          Radio(
+                            activeColor: AppColors.colorc7e,
+                            value: 1,
+                            groupValue: programProvider.isNewStudent,
+                            onChanged: (value) {
+                              programProvider.selectStudentType(value!);
+                            },
+                          ),
+                          AppRichTextView(
+                              title: "New Student",
+                              fontSize: 15.sp,
+                              fontWeight: FontWeight.bold),
+                          Radio(
+                            activeColor: AppColors.colorc7e,
+                            value: 2,
+                            groupValue: programProvider.isNewStudent,
+                            onChanged: (value) {
+                              programProvider.selectStudentType(value!);
+                            },
+                          ),
+                          AppRichTextView(
+                              title: "Transfer Student",
+                              fontSize: 15.sp,
+                              fontWeight: FontWeight.bold),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              AppRichTextView(
+                                  title: "PROFILE IMAGE",
+                                  textColor: AppColors.colorc7e,
                                   fontSize: 15.sp,
-                                  fontWeight: FontWeight.w400),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          width: 20.w,
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: [
-                                AppRichTextView(
-                                    title: "Program",
-                                    textColor: AppColors.colorc7e,
+                                  fontWeight: FontWeight.w800),
+                              SizedBox(
+                                height: 10.h,
+                              ),
+                              InkWell(
+                                onTap: () async {
+                                  bytesFromPicker =
+                                      await ImagePickerWeb.getImageAsBytes();
+                                  // Get the size of the base64 string in bytes
+                                  int imageSizeInBytes =
+                                      (base64.encode(bytesFromPicker!).length *
+                                              3 /
+                                              4)
+                                          .ceil();
+                  
+                  // Convert bytes to kilobytes
+                                  double imageSizeInKB = imageSizeInBytes / 1024;
+                                  if (imageSizeInKB > 50) {
+                                    ToastHelper().errorToast(
+                                        "Image size exceeds 50KB. Please choose a smaller image.");
+                                    setState(() {
+                                      imageEncoded = null;
+                                    });
+                                  } else {
+                                    imageEncoded =
+                                        base64.encode(bytesFromPicker!);
+                  
+                                    setState(() {});
+                                  }
+                                },
+                                child: CircleAvatar(
+                                    backgroundColor: AppColors.colorc7e,
+                                    radius: 60.sp,
+                                    backgroundImage: imageEncoded == null
+                                        ? const AssetImage(
+                                            ImagePath.webfacultyfLogo)
+                                        : MemoryImage(bytesFromPicker!)
+                                            as ImageProvider),
+                              ),
+                              SizedBox(
+                                height: 10.h,
+                              ),
+                              InkWell(
+                                onTap: () async {
+                                  bytesFromPicker =
+                                      await ImagePickerWeb.getImageAsBytes();
+                                  // Get the size of the base64 string in bytes
+                                  int imageSizeInBytes =
+                                      (base64.encode(bytesFromPicker!).length *
+                                              3 /
+                                              4)
+                                          .ceil();
+                  
+                  // Convert bytes to kilobytes
+                                  double imageSizeInKB = imageSizeInBytes / 1024;
+                                  if (imageSizeInKB > 50) {
+                                    ToastHelper().errorToast(
+                                        "Image size exceeds 50KB. Please choose a smaller image.");
+                                    setState(() {
+                                      imageEncoded = null;
+                                    });
+                                  } else {
+                                    imageEncoded =
+                                        base64.encode(bytesFromPicker!);
+                  
+                                    setState(() {});
+                                  }
+                                },
+                                child: AppRichTextView(
+                                    title: "Select Profile Image",
+                                    textColor: AppColors.color582,
                                     fontSize: 15.sp,
-                                    fontWeight: FontWeight.w500),
-                                AppRichTextView(
-                                    title: "*",
-                                    textColor: AppColors.colorRed,
-                                    fontSize: 15.sp,
-                                    fontWeight: FontWeight.w500),
-                              ],
-                            ),
-                            const ProgramDropdown(),
-                            SizedBox(
-                              height: 10.h,
-                            ),
-                            Row(
-                              children: [
-                                AppRichTextView(
-                                    title: "Class",
-                                    textColor: AppColors.colorc7e,
-                                    fontSize: 15.sp,
-                                    fontWeight: FontWeight.w500),
-                                AppRichTextView(
-                                    title: "*",
-                                    textColor: AppColors.colorRed,
-                                    fontSize: 15.sp,
-                                    fontWeight: FontWeight.w500),
-                              ],
-                            ),
-                            programProvider.selectedDept == null
-                                ? Container(
-                                    color: AppColors.colorc7e,
-                                    height: 60.h,
-                                    width: size.width * 0.2,
-                                    child: Align(
-                                      alignment: Alignment.centerLeft,
-                                      child: Padding(
-                                        padding: EdgeInsets.only(left: 8.0.w),
-                                        child: AppRichTextView(
-                                          fontSize: 15.sp,
-                                          fontWeight: FontWeight.bold,
-                                          title: "Please Select the Class",
-                                          textColor: AppColors.colorWhite,
+                                    fontWeight: FontWeight.w400),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            width: 20.w,
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  AppRichTextView(
+                                      title: "Program",
+                                      textColor: AppColors.colorc7e,
+                                      fontSize: 15.sp,
+                                      fontWeight: FontWeight.w500),
+                                  AppRichTextView(
+                                      title: "*",
+                                      textColor: AppColors.colorRed,
+                                      fontSize: 15.sp,
+                                      fontWeight: FontWeight.w500),
+                                ],
+                              ),
+                              const ProgramDropdown(),
+                              SizedBox(
+                                height: 10.h,
+                              ),
+                              Row(
+                                children: [
+                                  AppRichTextView(
+                                      title: "Class",
+                                      textColor: AppColors.colorc7e,
+                                      fontSize: 15.sp,
+                                      fontWeight: FontWeight.w500),
+                                  AppRichTextView(
+                                      title: "*",
+                                      textColor: AppColors.colorRed,
+                                      fontSize: 15.sp,
+                                      fontWeight: FontWeight.w500),
+                                ],
+                              ),
+                              programProvider.selectedDept == null
+                                  ? Container(
+                                      color: AppColors.colorc7e,
+                                      height: 60.h,
+                                      width: size.width * 0.2,
+                                      child: Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: Padding(
+                                          padding: EdgeInsets.only(left: 8.0.w),
+                                          child: AppRichTextView(
+                                            fontSize: 15.sp,
+                                            fontWeight: FontWeight.bold,
+                                            title: "Please Select the Class",
+                                            textColor: AppColors.colorWhite,
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                  )
-                                : const ClassDropdown(),
-                            SizedBox(
-                              height: 10.h,
-                            ),
-                            Row(
-                              children: [
-                                AppRichTextView(
-                                    title: "Student Id",
-                                    textColor: AppColors.colorc7e,
-                                    fontSize: 15.sp,
-                                    fontWeight: FontWeight.w500),
-                                AppRichTextView(
-                                    title: "*",
-                                    textColor: AppColors.colorRed,
-                                    fontSize: 15.sp,
-                                    fontWeight: FontWeight.w500),
-                              ],
-                            ),
-                            Container(
-                              color: AppColors.colorc7e,
-                              height: 60.h,
-                              width: size.width * 0.2,
-                              child: Padding(
-                                padding: EdgeInsets.all(8.0.sp),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Expanded(
-                                      child: AppTextFormFieldWidget(
+                                    )
+                                  : const ClassDropdown(),
+                              SizedBox(
+                                height: 10.h,
+                              ),
+                              Row(
+                                children: [
+                                  AppRichTextView(
+                                      title: "Student Id",
+                                      textColor: AppColors.colorc7e,
+                                      fontSize: 15.sp,
+                                      fontWeight: FontWeight.w500),
+                                  AppRichTextView(
+                                      title: "*",
+                                      textColor: AppColors.colorRed,
+                                      fontSize: 15.sp,
+                                      fontWeight: FontWeight.w500),
+                                ],
+                              ),
+                              Container(
+                                color: AppColors.colorc7e,
+                                height: 60.h,
+                                width: size.width * 0.2,
+                                child: Padding(
+                                  padding: EdgeInsets.all(8.0.sp),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Expanded(
+                                        child: AppTextFormFieldWidget(
+                                          inputFormatters: [
+                                            FilteringTextInputFormatter.allow(
+                                                RegExp(r'[0-9/]')),
+                                          ],
+                                          validator: (p0) {
+                                            if (p0 == null || p0.isEmpty) {
+                                              return "This Field is required";
+                                            } else {
+                                              return null;
+                                            }
+                                          },
+                                          textStyle: const TextStyle(
+                                              color: AppColors.colorWhite),
+                                          onSaved: (p0) {
+                                            studentProvider.setStudentId(p0!);
+                                          },
+                                          inputDecoration: const InputDecoration(
+                                              border: InputBorder.none,
+                                              hintText: "00/000/000",
+                                              hintStyle: TextStyle(
+                                                  color: AppColors.colorGrey)),
+                                          obscureText: false,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            width: 15.w,
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  AppRichTextView(
+                                      title: "Year",
+                                      textColor: AppColors.colorc7e,
+                                      fontSize: 15.sp,
+                                      fontWeight: FontWeight.w500),
+                                  AppRichTextView(
+                                      title: "*",
+                                      textColor: AppColors.colorRed,
+                                      fontSize: 15.sp,
+                                      fontWeight: FontWeight.w500),
+                                ],
+                              ),
+                              programProvider.selectedClass == null
+                                  ? Container(
+                                      color: AppColors.colorc7e,
+                                      height: 60.h,
+                                      width: size.width * 0.2,
+                                      child: Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: Padding(
+                                          padding: EdgeInsets.only(left: 8.0.w),
+                                          child: AppRichTextView(
+                                            fontSize: 15.sp,
+                                            fontWeight: FontWeight.bold,
+                                            title: "Please Select the Year",
+                                            textColor: AppColors.colorWhite,
+                                          ),
+                                        ),
+                                      ),
+                                    )
+                                  : const DynamicYearsDropdown(),
+                              SizedBox(
+                                height: 10.h,
+                              ),
+                              Row(
+                                children: [
+                                  AppRichTextView(
+                                      title: "Batch",
+                                      textColor: AppColors.colorc7e,
+                                      fontSize: 15.sp,
+                                      fontWeight: FontWeight.w500),
+                                  AppRichTextView(
+                                      title: "*",
+                                      textColor: AppColors.colorRed,
+                                      fontSize: 15.sp,
+                                      fontWeight: FontWeight.w500),
+                                ],
+                              ),
+                              programProvider.selectedClass == null
+                                  ? Container(
+                                      color: AppColors.colorc7e,
+                                      height: 60.h,
+                                      width: size.width * 0.2,
+                                      child: Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: Padding(
+                                          padding: EdgeInsets.only(left: 8.0.w),
+                                          child: AppRichTextView(
+                                            fontSize: 15.sp,
+                                            fontWeight: FontWeight.bold,
+                                            title: "Please Select the Batch",
+                                            textColor: AppColors.colorWhite,
+                                          ),
+                                        ),
+                                      ),
+                                    )
+                                  : const BatchDropdown(),
+                              SizedBox(
+                                height: 10.h,
+                              ),
+                              Row(
+                                children: [
+                                  AppRichTextView(
+                                      title: "Date of Admission",
+                                      textColor: AppColors.colorc7e,
+                                      fontSize: 15.sp,
+                                      fontWeight: FontWeight.w500),
+                                  AppRichTextView(
+                                      title: "*",
+                                      textColor: AppColors.colorRed,
+                                      fontSize: 15.sp,
+                                      fontWeight: FontWeight.w500),
+                                ],
+                              ),
+                              const DoaDropdown()
+                              //////
+                            ],
+                          )
+                        ],
+                      ),
+                      SizedBox(
+                        height: 30.h,
+                      ),
+                      AppRichTextView(
+                          title: "Student Personal Details".toUpperCase(),
+                          textColor: AppColors.colorBlack,
+                          fontSize: 15.sp,
+                          fontWeight: FontWeight.w800),
+                      SizedBox(
+                        height: 20.h,
+                      ),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Column(
+                            children: [
+                              Container(
+                                height: 80.h,
+                                width: size.width * 0.2,
+                                decoration: const BoxDecoration(
+                                  color: AppColors.colorc7e,
+                                ),
+                                child: Padding(
+                                  padding: EdgeInsets.all(8.0.sp),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          AppRichTextView(
+                                              title: "First Name",
+                                              textColor: AppColors.colorWhite,
+                                              fontSize: 14.sp,
+                                              fontWeight: FontWeight.w500),
+                                          SizedBox(
+                                            width: 3.w,
+                                          ),
+                                          AppRichTextView(
+                                              title: "*",
+                                              textColor: AppColors.colorRed,
+                                              fontSize: 18.sp,
+                                              fontWeight: FontWeight.w500),
+                                        ],
+                                      ),
+                                      Expanded(
+                                          child: AppTextFormFieldWidget(
                                         inputFormatters: [
                                           FilteringTextInputFormatter.allow(
-                                              RegExp(r'[0-9/]')),
+                                              RegExp(r'[a-zA-Z\s]'))
                                         ],
-                                        validator: (p0) {
-                                          if (p0 == null || p0.isEmpty) {
-                                            return "This Field is required";
+                                        textStyle: GoogleFonts.roboto(
+                                            color: AppColors.colorWhite,
+                                            fontSize: 15.sp),
+                                        validator: (value) {
+                                          if (value == null ||
+                                              value.isEmpty) {
+                                            return ToastHelper().errorToast(
+                                                "First Name is Required");
                                           } else {
                                             return null;
                                           }
                                         },
-                                        textStyle: const TextStyle(
-                                            color: AppColors.colorWhite),
-                                        onSaved: (p0) {
-                                          studentProvider.setStudentId(p0!);
-                                        },
-                                        inputDecoration: const InputDecoration(
-                                            border: InputBorder.none,
-                                            hintText: "00/000/000",
-                                            hintStyle: TextStyle(
-                                                color: AppColors.colorGrey)),
+                                        onSaved: (p0) => studentProvider
+                                            .firstNamecontroller = p0,
+                                        inputDecoration:
+                                            const InputDecoration(
+                                                border: InputBorder.none,
+                                                hintStyle: TextStyle(
+                                                    color:
+                                                        AppColors.colorGrey)),
                                         obscureText: false,
-                                      ),
-                                    ),
-                                  ],
+                                      )),
+                                      const SizedBox(
+                                        height: 3,
+                                      )
+                                    ],
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          width: 15.w,
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: [
-                                AppRichTextView(
-                                    title: "Year",
-                                    textColor: AppColors.colorc7e,
-                                    fontSize: 15.sp,
-                                    fontWeight: FontWeight.w500),
-                                AppRichTextView(
-                                    title: "*",
-                                    textColor: AppColors.colorRed,
-                                    fontSize: 15.sp,
-                                    fontWeight: FontWeight.w500),
-                              ],
-                            ),
-                            programProvider.selectedClass == null
-                                ? Container(
-                                    color: AppColors.colorc7e,
-                                    height: 60.h,
-                                    width: size.width * 0.2,
-                                    child: Align(
-                                      alignment: Alignment.centerLeft,
-                                      child: Padding(
-                                        padding: EdgeInsets.only(left: 8.0.w),
-                                        child: AppRichTextView(
-                                          fontSize: 15.sp,
-                                          fontWeight: FontWeight.bold,
-                                          title: "Please Select the Year",
-                                          textColor: AppColors.colorWhite,
-                                        ),
-                                      ),
-                                    ),
-                                  )
-                                : const DynamicYearsDropdown(),
-                            SizedBox(
-                              height: 10.h,
-                            ),
-                            Row(
-                              children: [
-                                AppRichTextView(
-                                    title: "Batch",
-                                    textColor: AppColors.colorc7e,
-                                    fontSize: 15.sp,
-                                    fontWeight: FontWeight.w500),
-                                AppRichTextView(
-                                    title: "*",
-                                    textColor: AppColors.colorRed,
-                                    fontSize: 15.sp,
-                                    fontWeight: FontWeight.w500),
-                              ],
-                            ),
-                            programProvider.selectedClass == null
-                                ? Container(
-                                    color: AppColors.colorc7e,
-                                    height: 60.h,
-                                    width: size.width * 0.2,
-                                    child: Align(
-                                      alignment: Alignment.centerLeft,
-                                      child: Padding(
-                                        padding: EdgeInsets.only(left: 8.0.w),
-                                        child: AppRichTextView(
-                                          fontSize: 15.sp,
-                                          fontWeight: FontWeight.bold,
-                                          title: "Please Select the Batch",
-                                          textColor: AppColors.colorWhite,
-                                        ),
-                                      ),
-                                    ),
-                                  )
-                                : const BatchDropdown(),
-                            SizedBox(
-                              height: 10.h,
-                            ),
-                            Row(
-                              children: [
-                                AppRichTextView(
-                                    title: "Date of Admission",
-                                    textColor: AppColors.colorc7e,
-                                    fontSize: 15.sp,
-                                    fontWeight: FontWeight.w500),
-                                AppRichTextView(
-                                    title: "*",
-                                    textColor: AppColors.colorRed,
-                                    fontSize: 15.sp,
-                                    fontWeight: FontWeight.w500),
-                              ],
-                            ),
-                            const DoaDropdown()
-                            //////
-                          ],
-                        )
-                      ],
-                    ),
-                    SizedBox(
-                      height: 30.h,
-                    ),
-                    AppRichTextView(
-                        title: "Student Personal Details".toUpperCase(),
-                        textColor: AppColors.colorBlack,
-                        fontSize: 15.sp,
-                        fontWeight: FontWeight.w800),
-                    SizedBox(
-                      height: 20.h,
-                    ),
-                    Expanded(
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SingleChildScrollView(
-                            child: Column(
-                              children: [
-                                Container(
-                                  height: 80.h,
-                                  width: size.width * 0.2,
-                                  decoration: const BoxDecoration(
-                                    color: AppColors.colorc7e,
-                                  ),
-                                  child: Padding(
-                                    padding: EdgeInsets.all(8.0.sp),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Row(
-                                          children: [
-                                            AppRichTextView(
-                                                title: "First Name",
-                                                textColor: AppColors.colorWhite,
-                                                fontSize: 14.sp,
-                                                fontWeight: FontWeight.w500),
-                                            SizedBox(
-                                              width: 3.w,
-                                            ),
-                                            AppRichTextView(
-                                                title: "*",
-                                                textColor: AppColors.colorRed,
-                                                fontSize: 18.sp,
-                                                fontWeight: FontWeight.w500),
-                                          ],
-                                        ),
-                                        Expanded(
-                                            child: AppTextFormFieldWidget(
-                                          inputFormatters: [
-                                            FilteringTextInputFormatter.allow(
-                                                RegExp(r'[a-zA-Z\s]'))
-                                          ],
-                                          textStyle: GoogleFonts.roboto(
-                                              color: AppColors.colorWhite,
-                                              fontSize: 15.sp),
-                                          validator: (value) {
-                                            if (value == null ||
-                                                value.isEmpty) {
-                                              return ToastHelper().errorToast(
-                                                  "First Name is Required");
-                                            } else {
-                                              return null;
-                                            }
-                                          },
-                                          onSaved: (p0) => studentProvider
-                                              .firstNamecontroller = p0,
-                                          inputDecoration:
-                                              const InputDecoration(
-                                                  border: InputBorder.none,
-                                                  hintStyle: TextStyle(
-                                                      color:
-                                                          AppColors.colorGrey)),
-                                          obscureText: false,
-                                        )),
-                                        const SizedBox(
-                                          height: 3,
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 10.h,
-                                ),
-                                Container(
-                                  color: AppColors.colorc7e,
-                                  height: 80.h,
-                                  width: size.width * 0.2,
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Row(
-                                          children: [
-                                            AppRichTextView(
-                                                title: "Last Name",
-                                                textColor: AppColors.colorWhite,
-                                                fontSize: 14.sp,
-                                                fontWeight: FontWeight.w500),
-                                            SizedBox(
-                                              width: 3.w,
-                                            ),
-                                            AppRichTextView(
-                                                title: "*",
-                                                textColor: AppColors.colorRed,
-                                                fontSize: 18.sp,
-                                                fontWeight: FontWeight.w500),
-                                          ],
-                                        ),
-                                        Expanded(
-                                            child: AppTextFormFieldWidget(
-                                          inputFormatters: [
-                                            FilteringTextInputFormatter.allow(
-                                                RegExp(r'[a-zA-Z\s]'))
-                                          ],
-                                          textStyle: GoogleFonts.roboto(
-                                              color: AppColors.colorWhite,
-                                              fontSize: 15.sp),
-                                          validator: (value) {
-                                            if (value == null ||
-                                                value.isEmpty) {
-                                              return "This Field is Required";
-                                            } else {
-                                              return null;
-                                            }
-                                          },
-                                          onSaved: (p0) => studentProvider
-                                              .lastNamecontroller = p0,
-                                          inputDecoration:
-                                              const InputDecoration(
-                                                  border: InputBorder.none,
-                                                  hintStyle: TextStyle(
-                                                      color:
-                                                          AppColors.colorGrey)),
-                                          obscureText: false,
-                                        )),
-                                        const SizedBox(
-                                          height: 3,
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                Container(
-                                  color: AppColors.colorc7e,
-                                  height: 80.h,
-                                  width: size.width * 0.2,
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Row(
-                                          children: [
-                                            AppRichTextView(
-                                                title: "Email Address",
-                                                textColor: AppColors.colorWhite,
-                                                fontSize: 14.sp,
-                                                fontWeight: FontWeight.w500),
-                                            SizedBox(
-                                              width: 3.w,
-                                            ),
-                                            AppRichTextView(
-                                                title: "*",
-                                                textColor: AppColors.colorRed,
-                                                fontSize: 18.sp,
-                                                fontWeight: FontWeight.w500),
-                                          ],
-                                        ),
-                                        Expanded(
-                                            child: AppTextFormFieldWidget(
-                                          textStyle: GoogleFonts.roboto(
-                                              color: AppColors.colorWhite,
-                                              fontSize: 15.sp),
-                                          validator: (value) {
-                                            return EmailFormFieldValidator
-                                                .validate(value);
-                                          },
-                                          onSaved: (p0) => studentProvider
-                                              .emailcontroller = p0,
-                                          inputDecoration: InputDecoration(
-                                              border: InputBorder.none,
-                                              hintStyle: TextStyle(
-                                                  color: AppColors.colorGrey,
-                                                  fontSize: 15.sp)),
-                                          obscureText: false,
-                                        )),
-                                        const SizedBox(
-                                          height: 3,
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                Container(
-                                  color: AppColors.colorc7e,
-                                  height: 80.h,
-                                  width: size.width * 0.2,
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Row(
-                                          children: [
-                                            AppRichTextView(
-                                                title: "Mobile Number",
-                                                textColor: AppColors.colorWhite,
-                                                fontSize: 14.sp,
-                                                fontWeight: FontWeight.w500),
-                                            SizedBox(
-                                              width: 3.w,
-                                            ),
-                                            AppRichTextView(
-                                                title: "*",
-                                                textColor: AppColors.colorRed,
-                                                fontSize: 18.sp,
-                                                fontWeight: FontWeight.w500),
-                                          ],
-                                        ),
-                                        Expanded(
-                                            child: AppTextFormFieldWidget(
-                                          inputFormatters: [
-                                            FilteringTextInputFormatter.allow(
-                                                RegExp(r'[0-9]')),
-                                          ],
-                                          textStyle: GoogleFonts.roboto(
-                                              color: AppColors.colorWhite,
-                                              fontSize: 15.sp),
-                                          validator: (value) {
-                                            if (value == null ||
-                                                value.isEmpty) {
-                                              return "This Field is Required";
-                                            } else {
-                                              return null;
-                                            }
-                                          },
-                                          onSaved: (p0) => studentProvider
-                                              .mobileController = p0,
-                                          inputDecoration:
-                                              const InputDecoration(
-                                                  border: InputBorder.none,
-                                                  hintStyle: TextStyle(
-                                                      color:
-                                                          AppColors.colorGrey)),
-                                          obscureText: false,
-                                        )),
-                                        const SizedBox(
-                                          height: 3,
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(height: 10),
-                                Container(
-                                  color: AppColors.colorc7e,
-                                  height: 80.h,
-                                  width: size.width * 0.2,
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Row(
-                                          children: [
-                                            AppRichTextView(
-                                                title: "DOB",
-                                                textColor: AppColors.colorWhite,
-                                                fontSize: 15.sp,
-                                                fontWeight: FontWeight.w500),
-                                            SizedBox(
-                                              width: 3.w,
-                                            ),
-                                            AppRichTextView(
-                                                title: "*",
-                                                textColor: AppColors.colorRed,
-                                                fontSize: 18.sp,
-                                                fontWeight: FontWeight.w500),
-                                          ],
-                                        ),
-                                        Expanded(
-                                          child: TextFormField(
-                                            validator: (value) {
-                                              if (value == null ||
-                                                  value.isEmpty) {
-                                                return "This DOB is Required";
-                                              } else {
-                                                return null;
-                                              }
-                                            },
-                                            style: GoogleFonts.roboto(
-                                                color: AppColors.colorWhite,
-                                                fontSize: 15.sp),
-                                            controller: dobinput,
-                                            decoration: InputDecoration(
-                                                hintStyle: GoogleFonts.roboto(
-                                                    color: AppColors.colorWhite,
-                                                    fontSize: 15.sp),
-                                                border: InputBorder.none),
-                                            onTap: () async {
-                                              DateTime? pickedDate =
-                                                  await showDatePicker(
-                                                      builder:
-                                                          (context, child) {
-                                                        return Theme(
-                                                            data: ThemeData
-                                                                    .light()
-                                                                .copyWith(
-                                                              primaryColor: Colors
-                                                                  .green, // Change calendar header color
-
-                                                              colorScheme:
-                                                                  const ColorScheme
-                                                                      .light(
-                                                                      primary:
-                                                                          AppColors
-                                                                              .colorc7e), // Change days' colors
-                                                              buttonTheme:
-                                                                  const ButtonThemeData(
-                                                                textTheme:
-                                                                    ButtonTextTheme
-                                                                        .primary,
-                                                              ),
-                                                            ),
-                                                            child: child!);
-                                                      },
-                                                      context: context,
-                                                      initialDate:
-                                                          DateTime.now(),
-                                                      firstDate: DateTime(
-                                                          1900), //- not to allow to choose before today.
-                                                      lastDate: DateTime(2101));
-
-                                              if (pickedDate != null) {
-                                                //pickedDate output format => 2021-03-10 00:00:00.000
-                                                String formattedDate =
-                                                    DateFormat('yyyy-MM-dd')
-                                                        .format(pickedDate);
-                                                //formatted date output using intl package =>  2021-03-16
-
-                                                setState(() {
-                                                  dobinput.text =
-                                                      formattedDate; //set output date to TextField value.
-                                                });
-                                              } else {
-                                                print("Date is not selected");
-                                              }
-                                            },
+                              SizedBox(
+                                height: 10.h,
+                              ),
+                              Container(
+                                color: AppColors.colorc7e,
+                                height: 80.h,
+                                width: size.width * 0.2,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          AppRichTextView(
+                                              title: "Last Name",
+                                              textColor: AppColors.colorWhite,
+                                              fontSize: 14.sp,
+                                              fontWeight: FontWeight.w500),
+                                          SizedBox(
+                                            width: 3.w,
                                           ),
-                                        ),
-                                        const SizedBox(
-                                          height: 3,
-                                        )
-                                      ],
-                                    ),
+                                          AppRichTextView(
+                                              title: "*",
+                                              textColor: AppColors.colorRed,
+                                              fontSize: 18.sp,
+                                              fontWeight: FontWeight.w500),
+                                        ],
+                                      ),
+                                      Expanded(
+                                          child: AppTextFormFieldWidget(
+                                        inputFormatters: [
+                                          FilteringTextInputFormatter.allow(
+                                              RegExp(r'[a-zA-Z\s]'))
+                                        ],
+                                        textStyle: GoogleFonts.roboto(
+                                            color: AppColors.colorWhite,
+                                            fontSize: 15.sp),
+                                        validator: (value) {
+                                          if (value == null ||
+                                              value.isEmpty) {
+                                            return "This Field is Required";
+                                          } else {
+                                            return null;
+                                          }
+                                        },
+                                        onSaved: (p0) => studentProvider
+                                            .lastNamecontroller = p0,
+                                        inputDecoration:
+                                            const InputDecoration(
+                                                border: InputBorder.none,
+                                                hintStyle: TextStyle(
+                                                    color:
+                                                        AppColors.colorGrey)),
+                                        obscureText: false,
+                                      )),
+                                      const SizedBox(
+                                        height: 3,
+                                      )
+                                    ],
                                   ),
                                 ),
-                                const SizedBox(height: 10),
-                                Container(
-                                  color: AppColors.colorc7e,
-                                  height: 80.h,
-                                  width: size.width * 0.2,
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Row(
-                                          children: [
-                                            AppRichTextView(
-                                                title: "Identification Number",
-                                                textColor: AppColors.colorWhite,
-                                                fontSize: 14.sp,
-                                                fontWeight: FontWeight.w500),
-                                            SizedBox(
-                                              width: 3.w,
-                                            ),
-                                            AppRichTextView(
-                                                title: "*",
-                                                textColor: AppColors.colorRed,
-                                                fontSize: 18.sp,
-                                                fontWeight: FontWeight.w500),
-                                          ],
-                                        ),
-                                        Expanded(
-                                            child: AppTextFormFieldWidget(
-                                          textStyle: GoogleFonts.roboto(
-                                              color: AppColors.colorWhite,
-                                              fontSize: 15.sp),
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              Container(
+                                color: AppColors.colorc7e,
+                                height: 80.h,
+                                width: size.width * 0.2,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          AppRichTextView(
+                                              title: "Email Address",
+                                              textColor: AppColors.colorWhite,
+                                              fontSize: 14.sp,
+                                              fontWeight: FontWeight.w500),
+                                          SizedBox(
+                                            width: 3.w,
+                                          ),
+                                          AppRichTextView(
+                                              title: "*",
+                                              textColor: AppColors.colorRed,
+                                              fontSize: 18.sp,
+                                              fontWeight: FontWeight.w500),
+                                        ],
+                                      ),
+                                      Expanded(
+                                          child: AppTextFormFieldWidget(
+                                        textStyle: GoogleFonts.roboto(
+                                            color: AppColors.colorWhite,
+                                            fontSize: 15.sp),
+                                        validator: (value) {
+                                          return EmailFormFieldValidator
+                                              .validate(value);
+                                        },
+                                        onSaved: (p0) => studentProvider
+                                            .emailcontroller = p0,
+                                        inputDecoration: InputDecoration(
+                                            border: InputBorder.none,
+                                            hintStyle: TextStyle(
+                                                color: AppColors.colorGrey,
+                                                fontSize: 15.sp)),
+                                        obscureText: false,
+                                      )),
+                                      const SizedBox(
+                                        height: 3,
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              Container(
+                                color: AppColors.colorc7e,
+                                height: 80.h,
+                                width: size.width * 0.2,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          AppRichTextView(
+                                              title: "Mobile Number",
+                                              textColor: AppColors.colorWhite,
+                                              fontSize: 14.sp,
+                                              fontWeight: FontWeight.w500),
+                                          SizedBox(
+                                            width: 3.w,
+                                          ),
+                                          AppRichTextView(
+                                              title: "*",
+                                              textColor: AppColors.colorRed,
+                                              fontSize: 18.sp,
+                                              fontWeight: FontWeight.w500),
+                                        ],
+                                      ),
+                                      Expanded(
+                                          child: AppTextFormFieldWidget(
+                                        inputFormatters: [
+                                          FilteringTextInputFormatter.allow(
+                                              RegExp(r'[0-9]')),
+                                        ],
+                                        textStyle: GoogleFonts.roboto(
+                                            color: AppColors.colorWhite,
+                                            fontSize: 15.sp),
+                                        validator: (value) {
+                                          if (value == null ||
+                                              value.isEmpty) {
+                                            return "This Field is Required";
+                                          } else {
+                                            return null;
+                                          }
+                                        },
+                                        onSaved: (p0) => studentProvider
+                                            .mobileController = p0,
+                                        inputDecoration:
+                                            const InputDecoration(
+                                                border: InputBorder.none,
+                                                hintStyle: TextStyle(
+                                                    color:
+                                                        AppColors.colorGrey)),
+                                        obscureText: false,
+                                      )),
+                                      const SizedBox(
+                                        height: 3,
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 10),
+                              Container(
+                                color: AppColors.colorc7e,
+                                height: 80.h,
+                                width: size.width * 0.2,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          AppRichTextView(
+                                              title: "DOB",
+                                              textColor: AppColors.colorWhite,
+                                              fontSize: 15.sp,
+                                              fontWeight: FontWeight.w500),
+                                          SizedBox(
+                                            width: 3.w,
+                                          ),
+                                          AppRichTextView(
+                                              title: "*",
+                                              textColor: AppColors.colorRed,
+                                              fontSize: 18.sp,
+                                              fontWeight: FontWeight.w500),
+                                        ],
+                                      ),
+                                      Expanded(
+                                        child: TextFormField(
                                           validator: (value) {
                                             if (value == null ||
                                                 value.isEmpty) {
-                                              return "This Field is Required";
+                                              return "This DOB is Required";
                                             } else {
                                               return null;
                                             }
                                           },
-                                          onSaved: (p0) => studentProvider
-                                              .passportcontroller = p0,
-                                          inputDecoration:
-                                              const InputDecoration(
-                                                  border: InputBorder.none,
-                                                  hintStyle: TextStyle(
-                                                      color:
-                                                          AppColors.colorGrey)),
-                                          obscureText: false,
-                                        )),
-                                        const SizedBox(
-                                          height: 3,
-                                        )
-                                      ],
-                                    ),
+                                          style: GoogleFonts.roboto(
+                                              color: AppColors.colorWhite,
+                                              fontSize: 15.sp),
+                                          controller: dobinput,
+                                          decoration: InputDecoration(
+                                              hintStyle: GoogleFonts.roboto(
+                                                  color: AppColors.colorWhite,
+                                                  fontSize: 15.sp),
+                                              border: InputBorder.none),
+                                          onTap: () async {
+                                            DateTime? pickedDate =
+                                                await showDatePicker(
+                                                    builder:
+                                                        (context, child) {
+                                                      return Theme(
+                                                          data: ThemeData
+                                                                  .light()
+                                                              .copyWith(
+                                                            primaryColor: Colors
+                                                                .green, // Change calendar header color
+                                      
+                                                            colorScheme:
+                                                                const ColorScheme
+                                                                    .light(
+                                                                    primary:
+                                                                        AppColors
+                                                                            .colorc7e), // Change days' colors
+                                                            buttonTheme:
+                                                                const ButtonThemeData(
+                                                              textTheme:
+                                                                  ButtonTextTheme
+                                                                      .primary,
+                                                            ),
+                                                          ),
+                                                          child: child!);
+                                                    },
+                                                    context: context,
+                                                    initialDate:
+                                                        DateTime.now(),
+                                                    firstDate: DateTime(
+                                                        1900), //- not to allow to choose before today.
+                                                    lastDate: DateTime(2101));
+                                      
+                                            if (pickedDate != null) {
+                                              //pickedDate output format => 2021-03-10 00:00:00.000
+                                              String formattedDate =
+                                                  DateFormat('yyyy-MM-dd')
+                                                      .format(pickedDate);
+                                              //formatted date output using intl package =>  2021-03-16
+                                      
+                                              setState(() {
+                                                dobinput.text =
+                                                    formattedDate; //set output date to TextField value.
+                                              });
+                                            } else {
+                                              print("Date is not selected");
+                                            }
+                                          },
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        height: 3,
+                                      )
+                                    ],
                                   ),
                                 ),
-                              ],
-                            ),
+                              ),
+                              const SizedBox(height: 10),
+                              Container(
+                                color: AppColors.colorc7e,
+                                height: 80.h,
+                                width: size.width * 0.2,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          AppRichTextView(
+                                              title: "Identification Number",
+                                              textColor: AppColors.colorWhite,
+                                              fontSize: 14.sp,
+                                              fontWeight: FontWeight.w500),
+                                          SizedBox(
+                                            width: 3.w,
+                                          ),
+                                          AppRichTextView(
+                                              title: "*",
+                                              textColor: AppColors.colorRed,
+                                              fontSize: 18.sp,
+                                              fontWeight: FontWeight.w500),
+                                        ],
+                                      ),
+                                      Expanded(
+                                          child: AppTextFormFieldWidget(
+                                        textStyle: GoogleFonts.roboto(
+                                            color: AppColors.colorWhite,
+                                            fontSize: 15.sp),
+                                        validator: (value) {
+                                          if (value == null ||
+                                              value.isEmpty) {
+                                            return "This Field is Required";
+                                          } else {
+                                            return null;
+                                          }
+                                        },
+                                        onSaved: (p0) => studentProvider
+                                            .passportcontroller = p0,
+                                        inputDecoration:
+                                            const InputDecoration(
+                                                border: InputBorder.none,
+                                                hintStyle: TextStyle(
+                                                    color:
+                                                        AppColors.colorGrey)),
+                                        obscureText: false,
+                                      )),
+                                      const SizedBox(
+                                        height: 3,
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                           SizedBox(
                             width: 20.w,
@@ -1218,106 +1216,106 @@ class _AddStudentViewState extends State<AddStudentView> {
                           )
                         ],
                       ),
-                    ),
-                    SizedBox(height: 10.h),
-                    Align(
-                      alignment: Alignment.bottomRight,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          AppElevatedButon(
-                              title: "Save",
-                              buttonColor: AppColors.colorc7e,
-                              textColor: AppColors.colorWhite,
-                              height: 50.h,
-                              width: 120.w,
-                              loading: studentProvider.isLoading,
-                              onPressed: (context) async {
-                                if (imageEncoded == null) {
-                                  ToastHelper().errorToast(
-                                      "Please Select the User Image");
-                                } else if (genderValue == null) {
-                                  ToastHelper()
-                                      .errorToast("Please Select the Gender");
-                                } else if (programProvider.selectedDept ==
-                                    null) {
-                                  ToastHelper()
-                                      .errorToast("Please Select the Program");
-                                } else if (programProvider.selectedClass ==
-                                    null) {
-                                  ToastHelper()
-                                      .errorToast("Please Select the Class");
-                                } else if (programProvider.selectedBatch ==
-                                    null) {
-                                  ToastHelper()
-                                      .errorToast("Please Select the Batch");
-                                } else if(selectedIDs.isEmpty){
-                                  ToastHelper()
-                                      .errorToast("Please select the course");
-                                }else {
-                                  var token = await getTokenAndUseIt();
-                                  if (token == null) {
-                                    if (context.mounted) {
-                                      Navigator.pushNamed(
-                                          context, RouteNames.login);
-                                    }
-                                  } else if (token == "Token Expired") {
+                      SizedBox(height: 10.h),
+                      Align(
+                        alignment: Alignment.bottomRight,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            AppElevatedButon(
+                                title: "Save",
+                                buttonColor: AppColors.colorc7e,
+                                textColor: AppColors.colorWhite,
+                                height: 50.h,
+                                width: 120.w,
+                                loading: studentProvider.isLoading,
+                                onPressed: (context) async {
+                                  if (imageEncoded == null) {
                                     ToastHelper().errorToast(
-                                        "Session Expired Please Login Again");
-
-                                    if (context.mounted) {
-                                      Navigator.pushNamed(
-                                          context, RouteNames.login);
-                                    }
-                                  } else {
-                                    if (_formKey.currentState!.validate() &&
-                                        context.mounted) {
-                                      // Save the form
-                                      _formKey.currentState!.save();
+                                        "Please Select the User Image");
+                                  } else if (genderValue == null) {
+                                    ToastHelper()
+                                        .errorToast("Please Select the Gender");
+                                  } else if (programProvider.selectedDept ==
+                                      null) {
+                                    ToastHelper()
+                                        .errorToast("Please Select the Program");
+                                  } else if (programProvider.selectedClass ==
+                                      null) {
+                                    ToastHelper()
+                                        .errorToast("Please Select the Class");
+                                  } else if (programProvider.selectedBatch ==
+                                      null) {
+                                    ToastHelper()
+                                        .errorToast("Please Select the Batch");
+                                  } else if(selectedIDs.isEmpty){
+                                    ToastHelper()
+                                        .errorToast("Please select the course");
+                                  }else {
+                                    var token = await getTokenAndUseIt();
+                                    if (token == null) {
                                       if (context.mounted) {
-                                        showDialog(
-                                          barrierDismissible: false,
-                                          context: context,
-                                          builder: (BuildContext context) {
-                                            return AlertDialog(
-                                                title: Text(
-                                                  "Confirmation",
-                                                  style: TextStyle(
-                                                      fontSize: 30.sp,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                ),
-                                                content: StudentInstructionView(
-                                                  dobInput: dobinput.text,
-                                                  gender: genderValue,
-                                                  imageEncoded: imageEncoded,
-                                                  token: token,
-                                                  selectedCourse: selectedIDs,
-                                                ));
-                                          },
-                                        );
+                                        Navigator.pushNamed(
+                                            context, RouteNames.login);
+                                      }
+                                    } else if (token == "Token Expired") {
+                                      ToastHelper().errorToast(
+                                          "Session Expired Please Login Again");
+                  
+                                      if (context.mounted) {
+                                        Navigator.pushNamed(
+                                            context, RouteNames.login);
+                                      }
+                                    } else {
+                                      if (_formKey.currentState!.validate() &&
+                                          context.mounted) {
+                                        // Save the form
+                                        _formKey.currentState!.save();
+                                        if (context.mounted) {
+                                          showDialog(
+                                            barrierDismissible: false,
+                                            context: context,
+                                            builder: (BuildContext context) {
+                                              return AlertDialog(
+                                                  title: Text(
+                                                    "Confirmation",
+                                                    style: TextStyle(
+                                                        fontSize: 30.sp,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  ),
+                                                  content: StudentInstructionView(
+                                                    dobInput: dobinput.text,
+                                                    gender: genderValue,
+                                                    imageEncoded: imageEncoded,
+                                                    token: token,
+                                                    selectedCourse: selectedIDs,
+                                                  ));
+                                            },
+                                          );
+                                        }
                                       }
                                     }
                                   }
-                                }
-                              }),
-                          SizedBox(
-                            width: 10.h,
-                          ),
-                          AppElevatedButon(
-                            title: "Cancel",
-                            buttonColor: AppColors.colorc7e,
-                            textColor: AppColors.colorWhite,
-                            height: 50.h,
-                            width: 140.w,
-                            onPressed: (context) {
-                              Navigator.pop(context);
-                            },
-                          )
-                        ],
-                      ),
-                    )
-                  ],
+                                }),
+                            SizedBox(
+                              width: 10.h,
+                            ),
+                            AppElevatedButon(
+                              title: "Cancel",
+                              buttonColor: AppColors.colorc7e,
+                              textColor: AppColors.colorWhite,
+                              height: 50.h,
+                              width: 140.w,
+                              onPressed: (context) {
+                                Navigator.pop(context);
+                              },
+                            )
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               ),
               const VerticalDivider(),

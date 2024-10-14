@@ -87,7 +87,7 @@ class _UpdateResultViewState extends State<UpdateResultView> {
                             } else {
                               var index = value["row"];
             
-                              var result = await resultConsumer.updateExamresult(
+                             await resultConsumer.updateExamresult(
                                   token, studentConsumer.editResult[index]["id"], {
                                 "CW1": value["cw1"] ??
                                     studentConsumer.editResult[index]["cw1"].toString(),
@@ -102,11 +102,12 @@ class _UpdateResultViewState extends State<UpdateResultView> {
                                         .toString(),
                                 "Grade": value["grade"] ??
                                     studentConsumer.editResult[index]["grade"],
-                              });
-                              if (result == 200) {
-                                await studentConsumer.getStudentResult(
-                                    token, widget.studenId!);
-                              }
+
+                              }, widget.studenId!);
+                              // if (result == 200) {
+                              //   await studentConsumer.getStudentResult(
+                              //       token, widget.studenId!);
+                              // }
                             }
                           },
                           onSubmitted: (value) {

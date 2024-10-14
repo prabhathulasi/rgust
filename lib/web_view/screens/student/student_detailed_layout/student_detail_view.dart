@@ -187,7 +187,7 @@ class _FacultyDetailViewState extends State<StudentDetailView> {
              
             return Consumer<StudentProvider>(
                 builder: (context, studentConsumer, child) {
-                 print("data${studentConsumer.studentDetailModel.studentDetail!.paidTutionFee}");
+               
           
               final studentData =
                   studentConsumer.studentDetailModel.studentDetail!;
@@ -635,7 +635,7 @@ class _FacultyDetailViewState extends State<StudentDetailView> {
                                 ? InkWell(
                                     onTap: () {
                                       showUpdateFeesDialog(
-                                          context, studentData.iD!);
+                                          context, studentData.iD!, studentData.currentProgramId!);
                                     },
                                     child: Container(
                                       decoration: BoxDecoration(

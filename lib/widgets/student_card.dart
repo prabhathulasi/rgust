@@ -53,14 +53,30 @@ class StudentCardWidget extends StatelessWidget {
                       shape: BoxShape.circle,
                       color: studentType == "Regular"
                           ? AppColors.color582
-                          : AppColors.colorPurple,
+                          : studentType == "Dropout"
+                              ? const Color.fromARGB(255, 58, 11, 7)
+                              : studentType == "Widthdraw"
+                                  ? AppColors.contentColorYellow
+                                  : studentType == "Transfer"
+                                      ? AppColors.colorPurple
+                                      : studentType == "clincal"
+                                          ? AppColors.colorGrey
+                                          : AppColors.colorf85,
                       boxShadow: [
                         BoxShadow(
                             color: studentType == "Regular"
-                                ? AppColors.color582
-                                : AppColors.colorPurple,
-                            blurRadius: 10,
-                            spreadRadius: 5)
+                          ? AppColors.color582
+                          : studentType == "Dropout"
+                              ? const Color.fromARGB(255, 58, 11, 7)
+                              : studentType == "Widthdraw"
+                                  ? AppColors.contentColorYellow
+                                  : studentType == "Transfer"
+                                      ? AppColors.colorPurple
+                                      : studentType == "clincal"
+                                          ? AppColors.colorGrey
+                                          : AppColors.colorf85,
+                            blurRadius: 5,
+                            spreadRadius: 2)
                       ]),
                 ),
               ),
@@ -68,10 +84,20 @@ class StudentCardWidget extends StatelessWidget {
             Center(
               child: CircleAvatar(
                 radius: 40.sp,
-                backgroundColor: AppColors.colorWhite,
+                backgroundColor: studentType == "Regular"
+                          ? AppColors.color582
+                          : studentType == "Dropout"
+                              ? const Color.fromARGB(255, 58, 11, 7)
+                              : studentType == "Widthdraw"
+                                  ? AppColors.contentColorYellow
+                                  : studentType == "Transfer"
+                                      ? AppColors.colorPurple
+                                      : studentType == "clincal"
+                                          ? AppColors.colorGrey
+                                          : AppColors.colorf85,
                 child: CircleAvatar(
                   key: UniqueKey(),
-                  radius: 38.sp,
+                  radius: 36.5.sp,
                   backgroundImage: MemoryImage(userImage),
                 ),
               ),
@@ -88,12 +114,12 @@ class StudentCardWidget extends StatelessWidget {
                     title: studentName,
                     fontSize: 14.sp,
                     fontWeight: FontWeight.bold,
-                    textColor: AppColors.colorWhite,
+                    textColor: AppColors.colorc7e,
                   ),
                 ),
                 const Icon(
                   Icons.male,
-                  color: AppColors.colorWhite,
+                  color: AppColors.colorc7e,
                 )
               ],
             ),
@@ -101,7 +127,7 @@ class StudentCardWidget extends StatelessWidget {
               title: "$studentType Student",
               fontSize: 12.sp,
               fontWeight: FontWeight.w800,
-              textColor: AppColors.colorWhite,
+              textColor: AppColors.colorc7e,
             ),
             SizedBox(
               height: 10.h,
@@ -122,7 +148,7 @@ class StudentCardWidget extends StatelessWidget {
                       title: mobileNumber,
                       fontSize: 12.sp,
                       fontWeight: FontWeight.w800,
-                      textColor: AppColors.colorWhite,
+                      textColor: AppColors.colorc7e,
                     )),
               ],
             ),
@@ -142,7 +168,7 @@ class StudentCardWidget extends StatelessWidget {
                       title: email,
                       fontSize: 12.sp,
                       fontWeight: FontWeight.w800,
-                      textColor: AppColors.colorWhite,
+                      textColor: AppColors.colorc7e,
                     )),
               ],
             ),
@@ -162,7 +188,7 @@ class StudentCardWidget extends StatelessWidget {
                       title: citizenship,
                       fontSize: 12.sp,
                       fontWeight: FontWeight.w800,
-                      textColor: AppColors.colorWhite,
+                      textColor: AppColors.colorc7e,
                     )),
               ],
             ),
@@ -182,7 +208,7 @@ class StudentCardWidget extends StatelessWidget {
                       title: dob,
                       fontSize: 12.sp,
                       fontWeight: FontWeight.w800,
-                      textColor: AppColors.colorWhite,
+                      textColor: AppColors.colorc7e,
                     )),
               ],
             ),
@@ -202,7 +228,7 @@ class StudentCardWidget extends StatelessWidget {
                       title: program,
                       fontSize: 12.sp,
                       fontWeight: FontWeight.w800,
-                      textColor: AppColors.colorWhite,
+                      textColor: AppColors.colorc7e,
                     )),
               ],
             ),
@@ -222,12 +248,12 @@ class StudentCardWidget extends StatelessWidget {
                       title: currentClass,
                       fontSize: 12.sp,
                       fontWeight: FontWeight.w800,
-                      textColor: AppColors.colorWhite,
+                      textColor: AppColors.colorc7e,
                     )),
               ],
             ),
             const Divider(
-              color: AppColors.colorWhite,
+              color: AppColors.colorc7e,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -246,7 +272,7 @@ class StudentCardWidget extends StatelessWidget {
                     title: studentRegNo,
                     fontSize: 12.sp,
                     fontWeight: FontWeight.w800,
-                    textColor: AppColors.colorWhite,
+                    textColor: AppColors.colorc7e,
                   ),
                 ),
               ],

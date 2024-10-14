@@ -70,6 +70,10 @@ class StudentProvider extends ChangeNotifier {
   int _isStandardFee = 1;
   int get isStandardFee => _isStandardFee;
 
+
+  
+
+
   void filterStudent(String query) {
     filteredList = studentModel.studentList!
         .where((element) =>
@@ -116,6 +120,7 @@ class StudentProvider extends ChangeNotifier {
 
   //  getStudent result
   Future getStudentResult(String token, int studentId) async {
+    setLoading(true);
     try {
       var result = await ApiHelper.get("GetResult/id=$studentId", token);
 
@@ -140,6 +145,8 @@ class StudentProvider extends ChangeNotifier {
     } catch (e) {
       ToastHelper().errorToast(e.toString());
       return null;
+    }finally{
+      setLoading(false);
     }
   }
 

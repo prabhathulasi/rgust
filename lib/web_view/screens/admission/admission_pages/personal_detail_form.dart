@@ -1,4 +1,6 @@
 import 'package:country_picker/country_picker.dart';
+import 'package:dotted_border/dotted_border.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -10,6 +12,7 @@ import 'package:rugst_alliance_academia/data/provider/admission_provider/admissi
 
 import 'package:rugst_alliance_academia/theme/app_colors.dart';
 import 'package:rugst_alliance_academia/util/image_path.dart';
+import 'package:rugst_alliance_academia/util/toast_helper.dart';
 import 'package:rugst_alliance_academia/util/validator.dart';
 import 'package:rugst_alliance_academia/web_view/screens/admission/admission_widget/gender_widget.dart';
 import 'package:rugst_alliance_academia/widgets/app_elevatedbutton.dart';
@@ -32,6 +35,22 @@ class PersonalDetailForm extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: Consumer<AdmissionPersonalProvider>(
           builder: (context, admissionPersonalConsumer, child) {
+               // Create a list of all values to check for null
+    List<String?> values = [
+      admissionPersonalConsumer.titleDropdownvalue,
+      admissionPersonalConsumer.maritalDropdownvalue,
+      admissionPersonalConsumer.selectedCountry,
+      admissionPersonalConsumer.ethinicityDropdownvalue,
+      admissionPersonalConsumer.selectCitizenCountry,
+      //radio value
+      admissionPersonalConsumer.radioValue,
+      admissionPersonalConsumer.visaRadioValue,
+      admissionPersonalConsumer.langRadioValue,
+      admissionPersonalConsumer.disablityRadioValue,
+    ];
+    // Check if all values are null
+    bool allValuesNull = values.any((value) => value == null);
+ 
         return SingleChildScrollView(
           controller: scrollController,
           child: Form(
@@ -39,6 +58,7 @@ class PersonalDetailForm extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+ 
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -62,6 +82,87 @@ class PersonalDetailForm extends StatelessWidget {
                 SizedBox(
                   height: 20.h,
                 ),
+                 Row(
+                  children: [
+                    admissionPersonalConsumer.selectedMediaFile != null?Container(): DottedBorder(
+                      strokeCap: StrokeCap.butt,
+                      color: AppColors.colorc7e,
+                      strokeWidth: 2,
+                      child: SizedBox(
+                          height: 130.h,
+                          width: size.width * 0.3,
+                          child: InkWell(
+                            onTap: () async {
+                              FilePickerResult? result =
+                                  await FilePicker.platform.pickFiles(
+                                type: FileType.custom,
+                                allowedExtensions: ['png'],
+                                allowMultiple: false,
+                              );
+                              if (result != null) {
+                     
+                             
+                                  if (result.files.first.size <= 100 * 1024) {
+                                    // admissionPersonalConsumer.setFileNameValue(result.files.first.name);
+                                    admissionPersonalConsumer.setMediaFileValue(result.files.first.bytes!);
+                                    // invoiceConsumer
+                                    //     .setFileValue(result.files.first.name);
+                                    // invoiceConsumer.setMediaFileValue(result);
+                                  } else {
+                                    ToastHelper().errorToast(
+                                        "Selected file must be less than 100KB.");
+                                  }
+                                
+                              }
+                            },
+                            child: Column(
+                              mainAxisAlignment:
+                                  MainAxisAlignment.center,
+                              crossAxisAlignment:
+                                  CrossAxisAlignment.center,
+                              children: [
+                                Image.asset(
+                                  ImagePath.uploadPdfLogo,
+                                  width: 50.w,
+                                ),
+                                SizedBox(
+                                  height: 15.h,
+                                ),
+                                AppRichTextView(
+                                  title:
+                                      "Please Attach Photo in PNG format",
+                                  textColor: AppColors.colorBlack,
+                                  fontSize: 14.sp,
+                                  fontWeight: FontWeight.w800,
+                                ),
+                                
+                              ],
+                            ),
+                          )),
+                    ),
+                  SizedBox(width: 15.w,),
+                 admissionPersonalConsumer.selectedMediaFile == null ? Container(): Container(
+                    height: 130.h,
+                    width: 100.w,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(image: 
+                      MemoryImage(admissionPersonalConsumer.selectedMediaFile!)
+                      ),
+                      border: Border.all()
+                    ),
+                    child: InkWell(
+                      onTap: () {
+                        admissionPersonalConsumer.setClearFileValue();
+                      },
+                      child: const Align(
+                        alignment: Alignment.topRight,
+                        child: Icon(Icons.close,color: AppColors.colorRed,),
+                      ),
+                    ),
+                  )
+                  ],
+                ),
+                SizedBox(height: 15.h,),
                 Row(
                   children: [
                     Column(
@@ -156,7 +257,8 @@ class PersonalDetailForm extends StatelessWidget {
                             height: 10.h,
                           ),
                           AppTextFormFieldWidget(
-                            onSaved: (p0) => admissionPersonalConsumer.firstName = p0,
+                            onSaved: (p0) =>
+                                admissionPersonalConsumer.firstName = p0,
                             inputFormatters: [
                               FilteringTextInputFormatter.allow(
                                   RegExp(r'[a-zA-Z]')),
@@ -210,7 +312,8 @@ class PersonalDetailForm extends StatelessWidget {
                             height: 10.h,
                           ),
                           AppTextFormFieldWidget(
-                            onSaved: (p0) => admissionPersonalConsumer.lastName = p0,
+                            onSaved: (p0) =>
+                                admissionPersonalConsumer.lastName = p0,
                             inputFormatters: [
                               FilteringTextInputFormatter.allow(
                                   RegExp(r'[a-zA-Z]')),
@@ -335,7 +438,8 @@ class PersonalDetailForm extends StatelessWidget {
                             height: 10.h,
                           ),
                           AppTextFormFieldWidget(
-                            onSaved: (p0) => admissionPersonalConsumer.email = p0,
+                            onSaved: (p0) =>
+                                admissionPersonalConsumer.email = p0,
                             autovalidateMode:
                                 AutovalidateMode.onUserInteraction,
                             validator: (p0) =>
@@ -386,7 +490,8 @@ class PersonalDetailForm extends StatelessWidget {
                             height: 10.h,
                           ),
                           AppTextFormFieldWidget(
-                            onSaved: (p0) => admissionPersonalConsumer.contactNumber = p0,
+                            onSaved: (p0) =>
+                                admissionPersonalConsumer.contactNumber = p0,
                             inputFormatters: [
                               FilteringTextInputFormatter.allow(
                                   RegExp(r'[+0-9]')),
@@ -916,8 +1021,10 @@ class PersonalDetailForm extends StatelessWidget {
                             height: 10.h,
                           ),
                           AppTextFormFieldWidget(
-                            onSaved: (p0) => admissionPersonalConsumer.passportNum = p0,
-                            validator: (p0) => PassportNumbValidator.validate(p0),
+                            onSaved: (p0) =>
+                                admissionPersonalConsumer.passportNum = p0,
+                            validator: (p0) =>
+                                PassportNumbValidator.validate(p0),
                             obscureText: false,
                             inputDecoration: InputDecoration(
                                 border: const OutlineInputBorder(),
@@ -968,7 +1075,8 @@ class PersonalDetailForm extends StatelessWidget {
                             height: 10.h,
                           ),
                           AppTextFormFieldWidget(
-                            onSaved: (p0) => admissionPersonalConsumer.homeAddress = p0,
+                            onSaved: (p0) =>
+                                admissionPersonalConsumer.homeAddress = p0,
                             validator: (p0) => AddressValidator.validate(p0),
                             maxLines: 5,
                             obscureText: false,
@@ -1016,12 +1124,13 @@ class PersonalDetailForm extends StatelessWidget {
                             height: 10.h,
                           ),
                           AppTextFormFieldWidget(
-                            onSaved: (p0) => admissionPersonalConsumer.mailingAddress = p0,
+                            onSaved: (p0) =>
+                                admissionPersonalConsumer.mailingAddress = p0,
                             validator: (p0) => AddressValidator.validate(p0),
                             maxLines: 5,
                             obscureText: false,
                             inputDecoration: InputDecoration(
-                                   errorBorder: OutlineInputBorder(
+                                errorBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
                                         color: AppColors.colorRed, width: 2.w)),
                                 border: const OutlineInputBorder(),
@@ -1352,25 +1461,29 @@ class PersonalDetailForm extends StatelessWidget {
                         : Container(),
                   ],
                 ),
-
-           admissionPersonalConsumer.titleDropdownvalue == null ? Container():    Align(
-                  alignment: Alignment.bottomRight,
-                  child: AppElevatedButon(
-                    title: "Save & Continue",
-                    buttonColor: AppColors.colorc7e,
-                    onPressed: (context) {
-                      if (formKey.currentState!.validate()) {
-                        formKey.currentState!.save();
-                        pageController.nextPage(
-                            duration: const Duration(milliseconds: 1000),
-                            curve: Curves.easeIn);
-                      }
-                    },
-                    textColor: AppColors.colorWhite,
-                    height: 50.h,
-                    width: 200.w,
-                  ),
-                )
+                 SizedBox(
+                  height: 15.h,
+                ),
+              
+                allValuesNull == true || admissionPersonalConsumer.selectedMediaFile == null  ?Container()
+                    : Align(
+                        alignment: Alignment.bottomRight,
+                        child: AppElevatedButon(
+                          title: "Save & Continue",
+                          buttonColor: AppColors.colorc7e,
+                          onPressed: (context) {
+                            if (formKey.currentState!.validate()) {
+                              formKey.currentState!.save();
+                              pageController.nextPage(
+                                  duration: const Duration(milliseconds: 1000),
+                                  curve: Curves.easeIn);
+                            }
+                          },
+                          textColor: AppColors.colorWhite,
+                          height: 50.h,
+                          width: 200.w,
+                        ),
+                      )
               ],
             ),
           ),

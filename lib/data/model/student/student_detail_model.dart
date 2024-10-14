@@ -104,7 +104,7 @@ class StudentDetail {
     currentProgramName = json['program_name'];
     currentClassId = json['CurrentClassId'];
     currentClassName = json['class_name'];
-    batch = json['Batch'];
+    batch = json['batch'];
     admissionDate = json['AdmissionDate'];
     emergencyContact = json['EmergencyContact'];
     firstName = json['FirstName'];
@@ -152,7 +152,7 @@ class StudentDetail {
     data['program_name'] = currentProgramName;
     data['CurrentClassId'] = currentClassId;
     data['class_name'] = currentClassName;
-    data['Batch'] = batch;
+    data['batch'] = batch;
     data['AdmissionDate'] = admissionDate;
     data['EmergencyContact'] = emergencyContact;
     data['FirstName'] = firstName;

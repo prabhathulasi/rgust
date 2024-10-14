@@ -112,7 +112,7 @@ class VerticalTabsState extends State<VerticalTabs>
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: widget.backgroundColor ?? Theme.of(context).canvasColor,
+      color: AppColors.colorWhite,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
@@ -124,7 +124,13 @@ class VerticalTabsState extends State<VerticalTabs>
                   shadowColor: widget.tabsShadowColor,
                   shape: const BeveledRectangleBorder(),
                   child: Container(
-                    color: AppColors.colorc7e,
+                    decoration: BoxDecoration(
+                      color: AppColors.colorWhite,
+                      border: Border.all(
+                        color: AppColors.colorc7e,
+                       width: 3.w 
+                      )
+                    ),
                     width: widget.tabsWidth,
                     child: Column(
                       children: [
@@ -133,73 +139,81 @@ class VerticalTabsState extends State<VerticalTabs>
                           child: widget.header,
                         ),
                         Expanded(
-                          child: ListView.builder(
-                            shrinkWrap: true,
-                            itemCount: widget.tabs.length,
-                            itemBuilder: (context, index) {
-                              Tab tab = widget.tabs[index];
-
-                              Alignment alignment = Alignment.centerLeft;
-                              if (widget.direction == TextDirection.rtl) {
-                                alignment = Alignment.centerRight;
-                              }
-
-                              Widget child;
-                              if (tab.child != null) {
-                                child = tab.child!;
-                              } else {
-                                child = Container(
-                                  padding: const EdgeInsets.all(10),
-                                  child: Row(
-                                    children: <Widget>[
-                                      if (tab.icon != null) ...[
-                                        tab.icon!,
-                                        const SizedBox(width: 5),
-                                      ],
-                                      if (tab.text != null)
-                                        Expanded(
-                                          child: Text(
-                                            tab.text!,
-                                            softWrap: true,
-                                            style: _selectedIndex == index
-                                                ? widget.selectedTabTextStyle
-                                                : widget.tabTextStyle,
+                          child: Padding(
+                            padding: const EdgeInsets.only(left:8.0),
+                            child: ListView.builder(
+                              shrinkWrap: true,
+                              itemCount: widget.tabs.length,
+                              itemBuilder: (context, index) {
+                                Tab tab = widget.tabs[index];
+                                                    
+                                Alignment alignment = Alignment.centerLeft;
+                                if (widget.direction == TextDirection.rtl) {
+                                  alignment = Alignment.centerRight;
+                                }
+                                                    
+                                Widget child;
+                                if (tab.child != null) {
+                                  child = tab.child!;
+                                } else {
+                                  child = Container(
+                                    color: AppColors.colorWhite,
+                                    padding: const EdgeInsets.all(10),
+                                    child: Row(
+                                      children: <Widget>[
+                                        if (tab.icon != null) ...[
+                                          tab.icon!,
+                                          const SizedBox(width: 5),
+                                        ],
+                                        if (tab.text != null)
+                                          Expanded(
+                                            child: Text(
+                                              
+                                              tab.text!,
+                                              softWrap: true,
+                                              style: _selectedIndex == index
+                                                  ? widget.selectedTabTextStyle
+                                                  : widget.tabTextStyle,
+                                            ),
                                           ),
+                                      ],
+                                    ),
+                                  );
+                                }
+                                                    
+                                Color itemBGColor = widget.tabBackgroundColor;
+                                if (_selectedIndex == index) {
+                                  itemBGColor = widget.selectedTabBackgroundColor;
+                                }
+                                                    
+                                return GestureDetector(
+                                  onTap: () {
+                                    _changePageByTapView = true;
+                                    setState(() {
+                                      _selectTab(index);
+                                    });
+                                    pageController.jumpToPage(index);
+                                  },
+                                  child: Padding(
+                                    padding: EdgeInsets.only(right: 10.w),
+                                    child: Container(
+                                      height: 60,
+                                      decoration: BoxDecoration(
+                                        border: Border.all(
+                                          color: itemBGColor,
+                                          width: 3.w
                                         ),
-                                    ],
+                                        borderRadius:
+                                            BorderRadius.circular(15.sp),
+                                      ),
+                                      alignment: alignment,
+                                      padding: const EdgeInsets.all(5),
+                                      child: child,
+                                    ),
                                   ),
                                 );
-                              }
-
-                              Color itemBGColor = widget.tabBackgroundColor;
-                              if (_selectedIndex == index) {
-                                itemBGColor = widget.selectedTabBackgroundColor;
-                              }
-
-                              return GestureDetector(
-                                onTap: () {
-                                  _changePageByTapView = true;
-                                  setState(() {
-                                    _selectTab(index);
-                                  });
-                                  pageController.jumpToPage(index);
-                                },
-                                child: Padding(
-                                  padding: EdgeInsets.only(right: 10.w),
-                                  child: Container(
-                                    height: 60,
-                                    decoration: BoxDecoration(
-                                      color: itemBGColor,
-                                      borderRadius:
-                                          BorderRadius.circular(15.sp),
-                                    ),
-                                    alignment: alignment,
-                                    padding: const EdgeInsets.all(5),
-                                    child: child,
-                                  ),
-                                ),
-                              );
-                            },
+                              },
+                            ),
                           ),
                         ),
                         widget.footer ?? Container(),
@@ -208,24 +222,32 @@ class VerticalTabsState extends State<VerticalTabs>
                   ),
                 ),
                 Expanded(
-                  child: PageView.builder(
-                    pageSnapping: false,
-                    physics: pageScrollPhysics,
-                    onPageChanged: (index) {
-                      if (_changePageByTapView == false ||
-                          _changePageByTapView == null) {
-                        _selectTab(index);
-                      }
-                      if (_selectedIndex == index) {
-                        _changePageByTapView = null;
-                      }
-                      setState(() {});
-                    },
-                    controller: pageController,
-                    itemCount: widget.contents.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return widget.contents[index];
-                    },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: AppColors.colorc7e,
+                        width: 3.w
+                      )
+                    ),
+                    child: PageView.builder(
+                      pageSnapping: false,
+                      physics: pageScrollPhysics,
+                      onPageChanged: (index) {
+                        if (_changePageByTapView == false ||
+                            _changePageByTapView == null) {
+                          _selectTab(index);
+                        }
+                        if (_selectedIndex == index) {
+                          _changePageByTapView = null;
+                        }
+                        setState(() {});
+                      },
+                      controller: pageController,
+                      itemCount: widget.contents.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return widget.contents[index];
+                      },
+                    ),
                   ),
                 ),
               ],

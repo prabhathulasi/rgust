@@ -1,3 +1,6 @@
+import 'dart:typed_data';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:rugst_alliance_academia/data/enum/enum.dart';
 
@@ -32,7 +35,9 @@ class AdmissionPersonalProvider  extends ChangeNotifier{
   String? passportNum;
   String? homeAddress;
   String? mailingAddress;
-  
+
+  String? selectedFileName;
+    Uint8List ?selectedMediaFile;
 
 var maritalItems = ['Married', 'Widow', 'Seperated', 'Divorced', 'Single'];
 var titleItems = [
@@ -103,6 +108,21 @@ void setTitleDropDownValue(String value) async {
     notifyListeners();
   }
 
+  //selectedFIlename
+  void setFileNameValue(String value) async {
+    selectedFileName = value;
+    notifyListeners();
+  }
+    //selectedFIle
+  void setMediaFileValue(  Uint8List value) async {
+    selectedMediaFile = value;
+    notifyListeners();
+  }
+  // clearFIle
+  void setClearFileValue() async {
+    selectedMediaFile = null;
+    notifyListeners();
+  }
  void setMoreLangValue(String value) async {
     if (!moreLang.contains(value)) {
       moreLang.add(value);

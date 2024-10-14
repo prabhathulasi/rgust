@@ -44,6 +44,7 @@ class VerticalTabViewState extends State<VerticalTabView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.colorWhite,
       body: VerticalTabs(
         footer: Padding(
           padding: EdgeInsets.only(bottom: 18.0.h),
@@ -65,14 +66,14 @@ class VerticalTabViewState extends State<VerticalTabView> {
                   fontSize: 20.sp,
                   fontWeight: FontWeight.bold,
                   title: "Logout",
-                  textColor: AppColors.color0ec,
+                  textColor: AppColors.colorc7e,
                 ),
                 SizedBox(
                   width: 20.w,
                 ),
                 const Icon(
                   Icons.logout,
-                  color: AppColors.colorWhite,
+                  color: AppColors.colorc7e,
                 )
               ],
             ),
@@ -83,20 +84,22 @@ class VerticalTabViewState extends State<VerticalTabView> {
             fontWeight: FontWeight.bold,
             fontSize: 20.sp),
         tabTextStyle: const TextStyle(
-          color: AppColors.color0ec,
+          color: AppColors.colorBlack,
           fontWeight: FontWeight.bold,
         ),
-        tabBackgroundColor: AppColors.colorc7e,
-        selectedTabBackgroundColor: AppColors.color0ec,
+        tabBackgroundColor: AppColors.colorWhite,
+        selectedTabBackgroundColor: AppColors.colorc7e,
         tabsWidth: 250.w,
         direction: TextDirection.ltr,
         contentScrollAxis: Axis.vertical,
         changePageDuration: const Duration(milliseconds: 500),
         header: ListTile(
           leading: CircleAvatar(
+            backgroundColor: AppColors.colorc7e,
             child: Center(
               child: AppRichTextView(
                 fontSize: 20.sp,
+                textColor: AppColors.colorWhite,
                 fontWeight: FontWeight.bold,
                 title: userName?[0] ?? "A",
               ),
@@ -106,7 +109,7 @@ class VerticalTabViewState extends State<VerticalTabView> {
             fontSize: 20.sp,
             fontWeight: FontWeight.bold,
             title: userName ?? "Admin",
-            textColor: AppColors.color0ec,
+            textColor: AppColors.colorc7e,
           ),
         ),
         tabs: <Tab>[

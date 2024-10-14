@@ -22,7 +22,7 @@ class ResultProvider extends ChangeNotifier {
   PublishResultModel resultPublishModel = PublishResultModel();
   ApprovalModel approvalModel = ApprovalModel();
   List<TimelineItem> timeline = [];
-  updateExamresult(String token, int id, dynamic data) async {
+  updateExamresult(String token, int id, dynamic data, int studentId) async {
     setLoading(true);
     try {
       Map<String, dynamic> body = {
@@ -38,7 +38,8 @@ class ResultProvider extends ChangeNotifier {
 
       if (result.statusCode == 200) {
         ToastHelper().sucessToast("Result Updated Sucessfully");
-        return 200;
+         await studentProvider.getStudentResult( token, studentId);
+       
       } else if (result.statusCode == 204) {
         ToastHelper().errorToast("No Courses Registered Yet");
 
@@ -59,6 +60,7 @@ class ResultProvider extends ChangeNotifier {
       return null;
     } finally {
       setLoading(false);
+      studentProvider.notifyListeners();
       notifyListeners();
     }
   }

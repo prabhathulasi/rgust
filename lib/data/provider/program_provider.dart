@@ -26,10 +26,10 @@ class ProgramProvider extends ChangeNotifier {
   String? selectedCourse;
   String? selectedCourseName;
 
-   int _isNewStudent = 1;
+  int _isNewStudent = 1;
   int get isNewStudent => _isNewStudent;
 // change the value of radio button in add faculty screen
-   bool _isCore = false;
+  bool _isCore = false;
   bool get isCore => _isCore;
 
   ProgramModel get getDepts => programModel;
@@ -50,12 +50,12 @@ class ProgramProvider extends ChangeNotifier {
         notifyListeners();
 
         return programModel;
-      } else if(result.statusCode == 401){
+      } else if (result.statusCode == 401) {
         setLoading(false);
         notifyListeners();
-       
+
         return "Invalid token";
-      }else {
+      } else {
         setLoading(false);
         notifyListeners();
         ToastHelper().errorToast("Internal Server Error");
@@ -73,34 +73,31 @@ class ProgramProvider extends ChangeNotifier {
     var result = await ApiHelper.get("getProgramClass/$selectedDept", token);
     try {
       if (result.statusCode == 200) {
-        setLoading(false);
         var data = json.decode(result.body);
 
         programClassModel = ProgramClassModel.fromJson(data);
 
-        notifyListeners();
-
         return programClassModel;
       } else {
-        setLoading(false);
-        notifyListeners();
         ToastHelper().errorToast("Internal Server Error");
         return null;
       }
     } catch (e) {
-      setLoading(false);
       Fluttertoast.showToast(msg: e.toString());
       return e.toString();
+    } finally {
+      notifyListeners();
+      setLoading(false);
     }
   }
 
 // get course List depend on the selected class and the batch
   Future getCoursesList(String token) async {
+    setLoading(true);
     var result = await ApiHelper.get(
         "GetCourse/id=$selectedClass/batch=$selectedBatch", token);
     try {
       if (result.statusCode == 200) {
-        setLoading(false);
         var data = json.decode(result.body);
 
         coursesModel = CoursesModel.fromJson(data);
@@ -117,57 +114,51 @@ class ProgramProvider extends ChangeNotifier {
           });
         }
 
-        notifyListeners();
-
         return newData;
       } else if (result.statusCode == 204) {
-        setLoading(false);
-        notifyListeners();
         ToastHelper().errorToast("No Courses Added Yet");
         return null;
       } else {
-        setLoading(false);
-        notifyListeners();
         ToastHelper().errorToast("Internal Server Error");
         return null;
       }
     } catch (e) {
-      setLoading(false);
       Fluttertoast.showToast(msg: e.toString());
       return e.toString();
+    } finally {
+      setLoading(false);
+      notifyListeners();
     }
   }
 
 // create course or add new course
   Future postCoursesList(String? token,
       {String? courseid, String? courseName, int? credits}) async {
-            try {
-    var result = await ApiHelper.post(
-        "PostCourse",
-        {
-          "ProgramId": int.parse(selectedDept!),
-          "ClassId": int.parse(selectedClass!),
-          "CourseId": courseid,
-          "CourseName": courseName,
-          "credits": credits,
-          "batch": selectedBatch
-        },
-        token!);
+    try {
+      var result = await ApiHelper.post(
+          "PostCourse",
+          {
+            "ProgramId": int.parse(selectedDept!),
+            "ClassId": int.parse(selectedClass!),
+            "CourseId": courseid,
+            "CourseName": courseName,
+            "credits": credits,
+            "batch": selectedBatch
+          },
+          token!);
 
-var data = json.decode(result.body);
+      var data = json.decode(result.body);
       if (result.statusCode == 200) {
         setLoading(false);
         ToastHelper().sucessToast("Course Added Successfully");
         await getCoursesList(token);
         notifyListeners();
-      }else if(result.statusCode == 409){
-               setLoading(false);
+      } else if (result.statusCode == 409) {
+        setLoading(false);
         notifyListeners();
         ToastHelper().errorToast(data["Message"]);
-        return null; 
-      } 
-      
-      else {
+        return null;
+      } else {
         setLoading(false);
         notifyListeners();
         ToastHelper().errorToast("Internal Server Error");
@@ -182,8 +173,8 @@ var data = json.decode(result.body);
 
   // get course List depend on the selected class and the batch
   Future getClinicalCourses(String token) async {
-    var result = await ApiHelper.get(
-        "GetClinical", token);
+    setLoading(true);
+    var result = await ApiHelper.get("GetClinical", token);
     try {
       if (result.statusCode == 200) {
         setLoading(false);
@@ -191,15 +182,47 @@ var data = json.decode(result.body);
 
         clinicalCoursesModel = ClinicalCoursesModel.fromJson(data);
 
-     
-
-        notifyListeners();
-
         return clinicalCoursesModel;
       } else if (result.statusCode == 204) {
+        ToastHelper().errorToast("No Clinical Courses Added Yet");
+        return null;
+      } else {
+        ToastHelper().errorToast("Internal Server Error");
+        return null;
+      }
+    } catch (e) {
+      Fluttertoast.showToast(msg: e.toString());
+      return e.toString();
+    } finally {
+      setLoading(false);
+    }
+  }
+
+// create course or add new course
+  Future postClinicalCourse(String? token,
+      {String? rotationName, int? duration, int? credits}) async {
+    try {
+      var result = await ApiHelper.post(
+          "PostClinical",
+          {
+            "ProgramId": int.parse(selectedDept!),
+            "RotationName": rotationName,
+            "RotationCredits": credits,
+            "RotationDuration": duration,
+            "RotationType": _isCore == false ? "Core" : "Elective"
+          },
+          token!);
+
+      var data = json.decode(result.body);
+      if (result.statusCode == 200) {
+        setLoading(false);
+        ToastHelper().sucessToast("Course Added Successfully");
+        await getClinicalCourses(token);
+        notifyListeners();
+      } else if (result.statusCode == 409) {
         setLoading(false);
         notifyListeners();
-        ToastHelper().errorToast("No Clinical Courses Added Yet");
+        ToastHelper().errorToast(data["Message"]);
         return null;
       } else {
         setLoading(false);
@@ -214,46 +237,6 @@ var data = json.decode(result.body);
     }
   }
 
-// create course or add new course
-  Future postClinicalCourse(String? token,
-      {String? rotationName, int? duration, int? credits}) async {
-            try {
-    var result = await ApiHelper.post(
-        "PostClinical",
-        {
-          "ProgramId": int.parse(selectedDept!),
-        "RotationName":rotationName,
-        "RotationCredits":credits,
-        "RotationDuration":duration,
-        "RotationType":_isCore == false?"Core":"Elective"
-        },
-        token!);
-
-var data = json.decode(result.body);
-      if (result.statusCode == 200) {
-        setLoading(false);
-        ToastHelper().sucessToast("Course Added Successfully");
-        await getClinicalCourses(token);
-        notifyListeners();
-      }else if(result.statusCode == 409){
-               setLoading(false);
-        notifyListeners();
-        ToastHelper().errorToast(data["Message"]);
-        return null; 
-      } 
-      
-      else {
-        setLoading(false);
-        notifyListeners();
-        ToastHelper().errorToast("Internal Server Error");
-        return null;
-      }
-    } catch (e) {
-      setLoading(false);
-      Fluttertoast.showToast(msg: e.toString());
-      return e.toString();
-    }
-  }
 //TODO have to parse the token and complete the patch work in front end
 // create course or add new course
   Future<void> patchCoursesList(BuildContext context,
@@ -295,12 +278,11 @@ var data = json.decode(result.body);
     selectedCourse = null;
 
     notifyListeners();
-    if(value != "300"){
-await getClasses(token);
-    }else{
+    if (value != "300") {
+      await getClasses(token);
+    } else {
       getClinicalCourses(token);
     }
-    
   }
 
 //set class
@@ -323,7 +305,7 @@ await getClasses(token);
   void setSelectedYear(int value) {
     selectedYear = value;
     selectedCourse = null;
-    selectedBatch=null;
+    selectedBatch = null;
     newData.clear();
     notifyListeners();
   }
@@ -359,7 +341,7 @@ await getClasses(token);
     notifyListeners();
   }
 
-   clearAllTemp(){
+  clearAllTemp() {
     selectedDept = null;
     selectedClass = null;
     selectedBatch = null;
@@ -372,5 +354,4 @@ await getClasses(token);
     _isCore = isNew;
     notifyListeners();
   }
-
 }

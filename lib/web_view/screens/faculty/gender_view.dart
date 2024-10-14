@@ -34,9 +34,9 @@ class _GenderViewState extends State<GenderView> {
                                         children: [
                                           AppRichTextView(
                                               title: "Gender",
-                                              textColor: AppColors.colorWhite,
+                                              textColor: AppColors.colorBlack,
                                               fontSize: 14.sp,
-                                              fontWeight: FontWeight.w500),
+                                              fontWeight: FontWeight.bold),
                                          facultyGender.isGenderEdited == false? Expanded(
                                             child: Row(
                                               mainAxisAlignment:
@@ -46,16 +46,16 @@ class _GenderViewState extends State<GenderView> {
                                                   title:
                                                       widget.gender!,
                                                   fontSize: 15.sp,
-                                                  fontWeight: FontWeight.bold,
-                                                  textColor: AppColors.color0ec,
+                                                  fontWeight: FontWeight.w700,
+                                                  textColor: AppColors.colorc7e,
                                                 ),
                                                 InkWell(
                                                   onTap: () {
                                                     facultyGender.updateGender(true);
                                                   },
                                                   child:  Icon(
-                                                    Icons.edit,
-                                                    color: AppColors.color0ec,
+                                                    Icons.edit_outlined,
+                                                    color: AppColors.colorRed,
                                                     size: 20.sp,
                                                   ),
                                                 )

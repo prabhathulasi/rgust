@@ -21,7 +21,7 @@ class _AppRadioButtonState extends State<AppRadioButton> {
             size: 15.sp,
             color: widget.gender!.isSelected
                 ? AppColors.color582
-                : AppColors.colorWhite),
+                : AppColors.colorc7e),
         const SizedBox(
           width: 10,
         ),
@@ -31,7 +31,7 @@ class _AppRadioButtonState extends State<AppRadioButton> {
             fontSize: 13.sp,
               color: widget.gender!.isSelected
                   ? AppColors.color582
-                  : AppColors.colorWhite),
+                  : AppColors.colorc7e),
         )
       ],
     ):Row(
@@ -40,7 +40,7 @@ class _AppRadioButtonState extends State<AppRadioButton> {
             size: 15.sp,
             color: widget.jobType!.isSelected
                 ? AppColors.color582
-                : AppColors.colorWhite),
+                : AppColors.colorc7e),
         const SizedBox(
           width: 10,
         ),
@@ -50,7 +50,7 @@ class _AppRadioButtonState extends State<AppRadioButton> {
             fontSize: 13.sp,
               color: widget.jobType!.isSelected
                   ? AppColors.color582
-                  : AppColors.colorWhite),
+                  : AppColors.colorc7e),
         )
       ],
     ) ;

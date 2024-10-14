@@ -82,7 +82,7 @@ class StudentListView extends StatelessWidget {
       }
     }
     return Scaffold(
-      backgroundColor: AppColors.color0ec,
+      backgroundColor: AppColors.colorWhite,
       body: Padding(
         padding: EdgeInsets.all(18.0.sp),
         child: FutureBuilder(

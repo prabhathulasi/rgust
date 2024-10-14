@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -60,35 +61,35 @@ class _StudentGridViewState extends State<StudentGridView> {
   showDetailAlertDialog(BuildContext context, int studentId) {
     // set up the AlertDialog
     Dialog alert = Dialog(
-      child: StatefulBuilder(
-        builder: (context , setState) {
-          return Container(
-            height: MediaQuery.sizeOf(context).height,
-            width: MediaQuery.sizeOf(context).width,
-            color: AppColors.color0ec,
-            child: Stack(
-              children: [
-                StudentDetailView(studentId: studentId,),
-                Transform.translate(
-                  offset: Offset(10.w, -13.h),
-                  child: GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).pop();
-                      },
-                      child: const Align(
-                        alignment: Alignment.topRight,
-                        child: CircleAvatar(
-                          radius: 14.0,
-                          backgroundColor: AppColors.colorc7e,
-                          child: Icon(Icons.close, color: AppColors.color582),
-                        ),
-                      )),
-                )
-              ],
-            ),
-          );
-        }
-      ),
+      child: StatefulBuilder(builder: (context, setState) {
+        return Container(
+          height: MediaQuery.sizeOf(context).height,
+          width: MediaQuery.sizeOf(context).width,
+          color: AppColors.color0ec,
+          child: Stack(
+            children: [
+              StudentDetailView(
+                studentId: studentId,
+              ),
+              Transform.translate(
+                offset: Offset(10.w, -13.h),
+                child: GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: const Align(
+                      alignment: Alignment.topRight,
+                      child: CircleAvatar(
+                        radius: 14.0,
+                        backgroundColor: AppColors.colorc7e,
+                        child: Icon(Icons.close, color: AppColors.color582),
+                      ),
+                    )),
+              )
+            ],
+          ),
+        );
+      }),
     );
 
     // show the dialog
@@ -109,7 +110,7 @@ class _StudentGridViewState extends State<StudentGridView> {
 
     return Scaffold(
       body: Container(
-        color: AppColors.color0ec,
+        color: AppColors.colorWhite,
         child: Column(
           children: [
             Row(
@@ -118,8 +119,8 @@ class _StudentGridViewState extends State<StudentGridView> {
                   width: 300.w,
                   height: 48.h,
                   decoration: BoxDecoration(
-                      color: AppColors.colorc7e,
-                      borderRadius: BorderRadius.circular(10.sp)),
+                      border: Border.all(color: AppColors.colorc7e, width: 3.w),
+                      borderRadius: BorderRadius.circular(8.sp)),
                   child: Padding(
                     padding: EdgeInsets.only(left: 18.0.w, right: 18.w),
                     child: AppTextFormFieldWidget(
@@ -129,17 +130,17 @@ class _StudentGridViewState extends State<StudentGridView> {
                         studentProvider.filterStudent(p0);
                       },
                       textStyle: GoogleFonts.oswald(
-                          color: AppColors.colorWhite, fontSize: 15.sp),
+                          color: AppColors.colorBlack, fontSize: 15.sp),
                       inputDecoration: InputDecoration(
                           suffixIcon: Icon(
                             Icons.search,
-                            color: AppColors.colorWhite,
+                            color: AppColors.colorBlack,
                             size: 25.sp,
                           ),
                           border: InputBorder.none,
                           hintText: "Search by Name",
                           hintStyle: GoogleFonts.oswald(
-                              color: AppColors.colorWhite, fontSize: 15.sp)),
+                              color: AppColors.colorBlack, fontSize: 15.sp)),
                     ),
                   ),
                 ),
@@ -271,7 +272,7 @@ class _StudentGridViewState extends State<StudentGridView> {
                           crossAxisCount: size.width <= 1400 ? 4 : 6,
                           //  childAspectRatio:
                           childAspectRatio:
-                              size.width <= 1400 ? 1 / 1.3 : 1 / 1.2),
+                              size.width <= 1400 ? 1 / 1.2 : 1 / 1.1),
                       itemBuilder: (context, index) {
                         var studentData = studentProvider.filteredList[index];
                         var memoryImagedata =
@@ -280,10 +281,12 @@ class _StudentGridViewState extends State<StudentGridView> {
                           onTap: () async {
                             showDetailAlertDialog(context, studentData.iD!);
                           },
-                          child: Card(
-                              color: AppColors.colorc7e,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(18.sp)),
+                          child: Container(
+                              decoration: BoxDecoration(
+                                  color: AppColors.colorWhite,
+                                  border: Border.all(
+                                      color: AppColors.colorc7e, width: 3.w),
+                                  borderRadius: BorderRadius.circular(15.sp)),
                               child: StudentCardWidget(
                                 userImage: memoryImagedata,
                                 address: studentData.address!,
@@ -304,47 +307,56 @@ class _StudentGridViewState extends State<StudentGridView> {
                     ),
                   )
                 : Expanded(
-                    child: GridView.builder(
-                      shrinkWrap: true,
-                      itemCount:
-                          studentProvider.studentModel.studentList!.length,
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: size.width <= 1400 ? 4 : 6,
-                          //  childAspectRatio:
-                          childAspectRatio:
-                              size.width <= 1400 ? 1 / 1.3 : 1 / 1.2),
-                      itemBuilder: (context, index) {
-                        var studentData =
-                            studentProvider.studentModel.studentList![index];
-                        var memoryImagedata =
-                            base64Decode(studentData.userImage!);
+                    child: LayoutBuilder(builder: (context, constraints) {
+                      return GridView.builder(
+                        shrinkWrap: true,
+                        itemCount:
+                            studentProvider.studentModel.studentList!.length,
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount:
+                                constraints.maxWidth <= 1400 ? 4 : 6,
+                            mainAxisSpacing: 5.0, // Adjust as needed
+                            crossAxisSpacing: 5.0, // Adjust as needed
+                            //  childAspectRatio:
+                            childAspectRatio: constraints.maxWidth <= 1400
+                                ? 1 / 1.2
+                                : 1 / 1.16),
+                        itemBuilder: (context, index) {
+                          var studentData =
+                              studentProvider.studentModel.studentList![index];
+                          var memoryImagedata =
+                              base64Decode(studentData.userImage!);
 
-                        return InkWell(
-                          onTap: () {
-                            showDetailAlertDialog(context, studentData.iD!);
-                          },
-                          child: Card(
-                              color: AppColors.colorc7e,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(18.sp)),
-                              child: StudentCardWidget(
-                                userImage: memoryImagedata,
-                                address: studentData.address!,
-                                citizenship: studentData.citizenship!,
-                                currentClass: studentData.currentClassName!,
-                                dob: studentData.dOB!,
-                                email: studentData.email!,
-                                mobileNumber:
-                                    studentData.mobileNumber!.toString(),
-                                studentRegNo: studentData.studentRegiterNumber!,
-                                studentName: studentData.firstName! +
-                                    studentData.lastName!,
-                                studentType: studentData.studentType!,
-                                program: studentData.currentProgramName!,
-                              )),
-                        );
-                      },
-                    ),
+                          return InkWell(
+                            onTap: () {
+                              showDetailAlertDialog(context, studentData.iD!);
+                            },
+                            child: Container(
+                                decoration: BoxDecoration(
+                                    color: AppColors.colorWhite,
+                                    border: Border.all(
+                                        color: AppColors.colorc7e, width: 3.w),
+                                    borderRadius: BorderRadius.circular(15.sp)),
+                                child: StudentCardWidget(
+                                  userImage: memoryImagedata,
+                                  address: studentData.address!,
+                                  citizenship: studentData.citizenship!,
+                                  currentClass: studentData.currentClassName!,
+                                  dob: studentData.dOB!,
+                                  email: studentData.email!,
+                                  mobileNumber:
+                                      studentData.mobileNumber!.toString(),
+                                  studentRegNo:
+                                      studentData.studentRegiterNumber!,
+                                  studentName: studentData.firstName! +
+                                      studentData.lastName!,
+                                  studentType: studentData.studentType!,
+                                  program: studentData.currentProgramName!,
+                                )),
+                          );
+                        },
+                      );
+                    }),
                   ),
           ],
         ),

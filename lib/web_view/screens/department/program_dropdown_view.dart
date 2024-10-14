@@ -39,10 +39,10 @@ class _ProgramDropdownState extends State<ProgramDropdown> {
         }
       } else {
         var result = await programProvider.getProgram(token);
-        if(result =="Invalid token"){
-           if (context.mounted) {
-          Navigator.pushNamed(context, RouteNames.login);
-        }
+        if (result == "Invalid token") {
+          if (context.mounted) {
+            Navigator.pushNamed(context, RouteNames.login);
+          }
         }
       }
     }
@@ -52,38 +52,46 @@ class _ProgramDropdownState extends State<ProgramDropdown> {
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Container(
-                color: AppColors.colorc7e,
+                decoration: BoxDecoration(
+                    border: Border.all(color: AppColors.colorc7e, width: 3.w),
+                    borderRadius: BorderRadius.circular(8.sp)),
                 height: 60.h,
                 width: size.width * 0.2,
                 child: Center(
                     child: SpinKitSpinningLines(
-                  color: AppColors.colorWhite,
+                  color: AppColors.colorc7e,
                   size: 20.sp,
                 )));
           } else {
             return programProvider.programModel.program == null
                 ? Container(
-                    color: AppColors.colorc7e,
+                    decoration: BoxDecoration(
+                        border:
+                            Border.all(color: AppColors.colorc7e, width: 3.w),
+                        borderRadius: BorderRadius.circular(8.sp)),
                     height: 60.h,
                     width: size.width * 0.2,
                     child: Center(
                         child: SpinKitSpinningLines(
-                      color: AppColors.colorWhite,
+                      color: AppColors.colorc7e,
                       size: 20.sp,
                     )))
                 : Consumer<ProgramProvider>(
                     builder: (context, programProvider, child) {
                     return Container(
-                      color: AppColors.colorc7e,
+                      decoration: BoxDecoration(
+                          border:
+                              Border.all(color: AppColors.colorc7e, width: 3.w),
+                          borderRadius: BorderRadius.circular(8.sp)),
                       height: 60.h,
                       width: size.width * 0.2,
                       child: Padding(
                         padding: EdgeInsets.all(8.0.sp),
                         child: DropdownButtonHideUnderline(
                           child: DropdownButton(
-                            iconEnabledColor: AppColors.colorWhite,
-                            iconDisabledColor: AppColors.colorWhite,
-                            dropdownColor: AppColors.colorc7e,
+                            iconSize: 34.sp,
+                            iconEnabledColor: AppColors.colorc7e,
+                            dropdownColor: AppColors.colorWhite,
                             isExpanded: true,
                             value: programProvider.selectedDept,
                             items: programProvider.programModel.program!
@@ -94,7 +102,7 @@ class _ProgramDropdownState extends State<ProgramDropdown> {
                                   fontSize: 15.sp,
                                   title: department.programname!,
                                   fontWeight: FontWeight.w700,
-                                  textColor: AppColors.colorWhite,
+                                  textColor: AppColors.colorBlack,
                                 ),
                               );
                             }).toList(),
@@ -102,7 +110,7 @@ class _ProgramDropdownState extends State<ProgramDropdown> {
                               fontSize: 15.sp,
                               fontWeight: FontWeight.w700,
                               title: "Please Select the Program",
-                              textColor: AppColors.colorWhite,
+                              textColor: AppColors.colorBlack,
                             ),
                             onChanged: (String? value) async {
                               print(value);

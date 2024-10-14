@@ -28,16 +28,18 @@ class DynamicYearsDropdownState extends State<DynamicYearsDropdown> {
     return yearProvider.selectedClass == null
         ? Container()
         : Container(
-            color: AppColors.colorc7e,
+            decoration: BoxDecoration(
+                    border: Border.all(color: AppColors.colorc7e, width: 3.w),
+                    borderRadius: BorderRadius.circular(8.sp)),
             height: 60.h,
             width: size.width * 0.2,
             child: Padding(
               padding: EdgeInsets.all(8.0.sp),
               child: DropdownButtonHideUnderline(
                 child: DropdownButton<int>(
-                  iconEnabledColor: AppColors.colorWhite,
-                  iconDisabledColor: AppColors.colorWhite,
-                  dropdownColor: AppColors.colorc7e,
+                  iconEnabledColor: AppColors.colorc7e,
+                iconSize: 34.sp,
+                  dropdownColor: AppColors.colorWhite,
                   isExpanded: true,
                   value: yearProvider.selectedYear,
                   onChanged: (int? newValue) {
@@ -51,12 +53,9 @@ class DynamicYearsDropdownState extends State<DynamicYearsDropdown> {
                         fontSize: 15.sp,
                         fontWeight: FontWeight.w700,
                         title: year.toString(),
-                        textColor: AppColors.colorWhite,
+                        textColor: AppColors.colorBlack,
                       ),
-                      // child: Text(year.toString(),style:const TextStyle(
-                      //                           color:  AppColors.colorWhite
-
-                      //                         )),
+                  
                     );
                   }).toList(),
                 ),

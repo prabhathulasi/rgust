@@ -23,15 +23,18 @@ class _BatchDropdownState extends State<BatchDropdown> {
     return programProvider.selectedClass == null
         ? Container()
         : Container(
-            color: AppColors.colorc7e,
+             decoration: BoxDecoration(
+                    border: Border.all(color: AppColors.colorc7e, width: 3.w),
+                    borderRadius: BorderRadius.circular(8.sp)),
             height: 60.h,
             width: size.width * 0.2,
             child: Padding(
               padding: EdgeInsets.all(8.0.sp),
               child: DropdownButtonHideUnderline(
                 child: DropdownButton(
-                  iconEnabledColor: AppColors.colorWhite,
-                  dropdownColor: AppColors.colorc7e,
+                  iconSize: 34.sp,
+                  iconEnabledColor: AppColors.colorc7e,
+                  dropdownColor: AppColors.colorWhite,
                   isExpanded: true,
                   value: programProvider.selectedBatch,
                   items: <String>[
@@ -43,7 +46,7 @@ class _BatchDropdownState extends State<BatchDropdown> {
                             value: val,
                             child: AppRichTextView(
                               fontSize: 15.sp,
-                              textColor: AppColors.colorWhite,
+                              textColor: AppColors.colorBlack,
                               fontWeight: FontWeight.w700,
                               title: val,
                             ),
@@ -51,7 +54,7 @@ class _BatchDropdownState extends State<BatchDropdown> {
                       .toList(),
                   hint: AppRichTextView(
                     fontSize: 15.sp,
-                    textColor: AppColors.colorWhite,
+                    textColor: AppColors.colorBlack,
                     fontWeight: FontWeight.w700,
                     title: "Please Select the Batch",
                   ),
