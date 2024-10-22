@@ -54,7 +54,7 @@ class StudentCardWidget extends StatelessWidget {
                       color: studentType == "Regular"
                           ? AppColors.color582
                           : studentType == "Dropout"
-                              ? const Color.fromARGB(255, 58, 11, 7)
+                              ? AppColors.colorRed
                               : studentType == "Widthdraw"
                                   ? AppColors.contentColorYellow
                                   : studentType == "Transfer"
@@ -67,7 +67,7 @@ class StudentCardWidget extends StatelessWidget {
                             color: studentType == "Regular"
                           ? AppColors.color582
                           : studentType == "Dropout"
-                              ? const Color.fromARGB(255, 58, 11, 7)
+                              ?AppColors.colorRed
                               : studentType == "Widthdraw"
                                   ? AppColors.contentColorYellow
                                   : studentType == "Transfer"
@@ -87,7 +87,7 @@ class StudentCardWidget extends StatelessWidget {
                 backgroundColor: studentType == "Regular"
                           ? AppColors.color582
                           : studentType == "Dropout"
-                              ? const Color.fromARGB(255, 58, 11, 7)
+                              ? AppColors.colorRed
                               : studentType == "Widthdraw"
                                   ? AppColors.contentColorYellow
                                   : studentType == "Transfer"

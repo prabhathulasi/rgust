@@ -14,6 +14,7 @@ import 'package:rugst_alliance_academia/data/provider/admission_provider/admissi
 import 'package:rugst_alliance_academia/data/provider/admission_provider/admission_program_provider.dart';
 import 'package:rugst_alliance_academia/data/provider/admission_provider/admission_recommendation_provider.dart';
 import 'package:rugst_alliance_academia/data/provider/admission_provider/admission_stand_test_provider.dart';
+import 'package:rugst_alliance_academia/data/provider/clincial_provider.dart';
 
 import 'package:rugst_alliance_academia/data/provider/common_provider.dart';
 import 'package:rugst_alliance_academia/data/provider/dashboard_provider.dart';
@@ -122,7 +123,9 @@ class MyApp extends StatelessWidget {
                           return InvoiceProvider(value);
                         },
                       ),
-                      
+                       ChangeNotifierProvider(
+                        create: (context) => ClincialProvider(),
+                      ),
                         ChangeNotifierProvider(
                         create: (context) => AdmissionPersonalProvider(),
                       ),

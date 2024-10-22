@@ -7,6 +7,7 @@ import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:rugst_alliance_academia/data/middleware/check_auth_middleware.dart';
 import 'package:rugst_alliance_academia/data/model/student/student_detail_model.dart';
+import 'package:rugst_alliance_academia/data/provider/fees_provider.dart';
 import 'package:rugst_alliance_academia/data/provider/program_provider.dart';
 import 'package:rugst_alliance_academia/data/provider/student_provider.dart';
 import 'package:rugst_alliance_academia/routes/named_routes.dart';
@@ -16,7 +17,7 @@ import 'package:rugst_alliance_academia/util/toast_helper.dart';
 import 'package:rugst_alliance_academia/web_view/screens/student/student_detailed_layout/alerts/update_fees_detail_alert.dart';
 
 import 'package:rugst_alliance_academia/web_view/screens/student/student_page_tabs/student_tab_view.dart';
-import 'package:rugst_alliance_academia/web_view/screens/student/update_student_detail.dart';
+import 'package:rugst_alliance_academia/web_view/screens/student/update_student_details/update_student_detail.dart';
 import 'package:rugst_alliance_academia/widgets/app_elevatedbutton.dart';
 import 'package:rugst_alliance_academia/widgets/app_formfield.dart';
 
@@ -26,8 +27,10 @@ import 'package:rugst_alliance_academia/widgets/app_spining.dart';
 class StudentDetailView extends StatefulWidget {
   final int studentId;
 
-  
-  const StudentDetailView({super.key, required this.studentId, });
+  const StudentDetailView({
+    super.key,
+    required this.studentId,
+  });
 
   @override
   State<StudentDetailView> createState() => _FacultyDetailViewState();
@@ -184,11 +187,8 @@ class _FacultyDetailViewState extends State<StudentDetailView> {
               ),
             );
           } else {
-             
             return Consumer<StudentProvider>(
                 builder: (context, studentConsumer, child) {
-               
-          
               final studentData =
                   studentConsumer.studentDetailModel.studentDetail!;
               return Padding(
@@ -631,44 +631,70 @@ class _FacultyDetailViewState extends State<StudentDetailView> {
                           ),
                           Expanded(
                             flex: 1,
-                            child: studentData.fullTutionFee == 0 || studentData.fullTutionFee == null
-                                ? InkWell(
-                                    onTap: () {
-                                      showUpdateFeesDialog(
-                                          context, studentData.iD!, studentData.currentProgramId!);
-                                    },
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                          color: AppColors.colorc7e,
-                                          borderRadius:
-                                              BorderRadius.circular(18.sp)),
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(18.0),
-                                        child: Column(
-                                          children: [
-                                            AppRichTextView(
-                                              title: 'Alert!',
-                                              fontSize: 30.sp,
-                                              fontWeight: FontWeight.bold,
-                                              textColor: AppColors.colorRed,
-                                            ),
-                                            Lottie.asset(
-                                                LottiePath
-                                                    .whiteNotificationLottie,
-                                                height: size.height * 0.15,
-                                                repeat: false),
-                                            AppRichTextView(
-                                              title:
-                                                  'Please Update Student Fees Details',
-                                              fontSize: 30.sp,
-                                              fontWeight: FontWeight.bold,
-                                              textColor: AppColors.colorWhite,
-                                            ),
-                                          ],
+                            child: studentData.fullTutionFee == 0 ||
+                                    studentData.fullTutionFee == null
+                                ? Consumer<FeesProvider>(
+                                    builder: (context, feesConsumer, child) {
+                                    return InkWell(
+                                      onTap: () async {
+                                        var token = await getTokenAndUseIt();
+                                        if (token == null) {
+                                          if (context.mounted) {
+                                            Navigator.pushNamed(
+                                                context, RouteNames.login);
+                                          }
+                                        } else if (token == "Token Expired") {
+                                          ToastHelper().errorToast(
+                                              "Session Expired Please Login Again");
+
+                                          if (context.mounted) {
+                                            Navigator.pushNamed(
+                                                context, RouteNames.login);
+                                          }
+                                        } else {
+                                          feesConsumer.getFeesByid(token,
+                                              studentData.currentProgramId!);
+                                        }
+                                        if (context.mounted) {
+                                          showUpdateFeesDialog(
+                                              context,
+                                              studentData.iD!,
+                                              studentData.currentProgramId!);
+                                        }
+                                      },
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                            color: AppColors.colorc7e,
+                                            borderRadius:
+                                                BorderRadius.circular(18.sp)),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(18.0),
+                                          child: Column(
+                                            children: [
+                                              AppRichTextView(
+                                                title: 'Alert!',
+                                                fontSize: 30.sp,
+                                                fontWeight: FontWeight.bold,
+                                                textColor: AppColors.colorRed,
+                                              ),
+                                              Lottie.asset(
+                                                  LottiePath
+                                                      .whiteNotificationLottie,
+                                                  height: size.height * 0.15,
+                                                  repeat: false),
+                                              AppRichTextView(
+                                                title:
+                                                    'Please Update Student Fees Details',
+                                                fontSize: 30.sp,
+                                                fontWeight: FontWeight.bold,
+                                                textColor: AppColors.colorWhite,
+                                              ),
+                                            ],
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                  )
+                                    );
+                                  })
                                 : Container(
                                     decoration: BoxDecoration(
                                         color: AppColors.colorc7e,
@@ -762,8 +788,11 @@ class _FacultyDetailViewState extends State<StudentDetailView> {
                                               Expanded(
                                                 flex: 2,
                                                 child: AppRichTextView(
-                                                  title:studentData.paidTutionFee == null ? '${studentData.fullTutionFee!}':
-                                                      '${studentData.fullTutionFee! - studentData.paidTutionFee!} USD',
+                                                  title: studentData
+                                                              .paidTutionFee ==
+                                                          null
+                                                      ? '${studentData.fullTutionFee!}'
+                                                      : '${studentData.fullTutionFee! - studentData.paidTutionFee!} USD',
                                                   fontSize: 15.sp,
                                                   fontWeight: FontWeight.bold,
                                                   textColor:

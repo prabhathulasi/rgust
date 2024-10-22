@@ -29,7 +29,7 @@ class StudentProvider extends ChangeNotifier {
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
-    bool _isAlertLoading = false;
+  bool _isAlertLoading = false;
   bool get isAlertLoading => _isAlertLoading;
   bool _isstudentTypeEdit = false;
   bool get isstudentTypeEdit => _isstudentTypeEdit;
@@ -69,10 +69,6 @@ class StudentProvider extends ChangeNotifier {
 
   int _isStandardFee = 1;
   int get isStandardFee => _isStandardFee;
-
-
-  
-
 
   void filterStudent(String query) {
     filteredList = studentModel.studentList!
@@ -145,7 +141,7 @@ class StudentProvider extends ChangeNotifier {
     } catch (e) {
       ToastHelper().errorToast(e.toString());
       return null;
-    }finally{
+    } finally {
       setLoading(false);
     }
   }
@@ -234,7 +230,7 @@ class StudentProvider extends ChangeNotifier {
         ToastHelper().errorToast("Internal Server Error");
         return null;
       }
-    } on Exception  catch  (e) {
+    } on Exception catch (e) {
       ToastHelper().errorToast(e.toString());
       return e.toString();
     }
@@ -296,7 +292,7 @@ class StudentProvider extends ChangeNotifier {
         "grade": examData.grade
       });
     }
-   
+
     return editResult;
   }
 
@@ -478,7 +474,7 @@ class StudentProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-    void setAlertLoading(bool value) async {
+  void setAlertLoading(bool value) async {
     _isAlertLoading = value;
     notifyListeners();
   }

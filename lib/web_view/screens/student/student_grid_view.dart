@@ -270,6 +270,8 @@ class _StudentGridViewState extends State<StudentGridView> {
                       itemCount: studentProvider.filteredList.length,
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: size.width <= 1400 ? 4 : 6,
+                          mainAxisSpacing: 5.0, // Adjust as needed
+                          crossAxisSpacing: 5.0, // Adjust as needed
                           //  childAspectRatio:
                           childAspectRatio:
                               size.width <= 1400 ? 1 / 1.2 : 1 / 1.1),

@@ -215,25 +215,21 @@ class ProgramProvider extends ChangeNotifier {
 
       var data = json.decode(result.body);
       if (result.statusCode == 200) {
-        setLoading(false);
         ToastHelper().sucessToast("Course Added Successfully");
         await getClinicalCourses(token);
-        notifyListeners();
       } else if (result.statusCode == 409) {
-        setLoading(false);
-        notifyListeners();
         ToastHelper().errorToast(data["Message"]);
         return null;
       } else {
-        setLoading(false);
-        notifyListeners();
         ToastHelper().errorToast("Internal Server Error");
         return null;
       }
     } catch (e) {
-      setLoading(false);
       Fluttertoast.showToast(msg: e.toString());
       return e.toString();
+    } finally {
+      notifyListeners();
+      setLoading(false);
     }
   }
 

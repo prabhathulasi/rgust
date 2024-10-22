@@ -465,13 +465,13 @@ class _StudentAdditionalInfoViewState extends State<StudentAdditionalInfoView> {
                               allowMultiple: false,
                             );
                             if (result != null) {
-                              if (result.files.first.size <= 100 * 1024) {
+                              if (result.files.first.size <= 500 * 1024) {
                                 fileUploadProvider.setFileData(result);
                                 uploadImage(commonProvider
                                     .selectedOption); // Update the selected file data and name
                               } else {
                                 ToastHelper().errorToast(
-                                    "Selected file must be less than 100KB.");
+                                    "Selected file must be less than 500KB.");
                               }
                             }
                             Navigator.of(context).pop();

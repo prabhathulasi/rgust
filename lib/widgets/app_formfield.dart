@@ -6,6 +6,7 @@ class AppTextFormFieldWidget extends StatelessWidget {
   final TextEditingController? textEditingController;
   final TextStyle? textStyle;
   final bool enable;
+  final bool autofocus;
   final AutovalidateMode ?autovalidateMode;
   final TextInputType keyboardType;
   final bool obscureText;
@@ -34,13 +35,14 @@ final String? Function(String?)? validator;
     this.validator,
     this.onFieldSubmitted,
     this.autovalidateMode,
-    this.inputFormatters
+    this.inputFormatters,
+    this.autofocus = false,
   });
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      
+      autofocus: autofocus,
       autovalidateMode: autovalidateMode ?? AutovalidateMode.disabled,
       inputFormatters: inputFormatters,
       controller: textEditingController,

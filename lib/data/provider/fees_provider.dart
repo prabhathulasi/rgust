@@ -16,13 +16,13 @@ class FeesProvider extends ChangeNotifier {
 
   MiscFeeModel miscFeeModel = MiscFeeModel();
 
-  String? feesTypeRadioValue;
+  String? feesTypeRadioValue ="Standard Tution";
 
-  void setfeesTypeRadioValue(String value, int programId, String token) async {
+  void setfeesTypeRadioValue(String value, int programId,) async {
     feesTypeRadioValue = value;
-    if (value == "Standard Fees") {
-      await getFeesByid(token, programId);
-    }
+    // if (value == "Standard Tution") {
+    //   await getFeesByid(token, programId);
+    // }
     notifyListeners();
   }
 
@@ -31,13 +31,7 @@ class FeesProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  double _gydConversion = 0;
-  double get gydConversion => _gydConversion;
 
-void setGydConversionValue(int value) async {
-    _gydConversion = value * 218;
-    notifyListeners();
-  }
   //  getFees list
   Future getFeesList(String token) async {
     setLoading(true);
@@ -63,6 +57,7 @@ void setGydConversionValue(int value) async {
       ToastHelper().errorToast(e.toString());
       return e.toString();
     } finally {
+      notifyListeners();
       setLoading(false);
     }
   }

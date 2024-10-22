@@ -30,15 +30,18 @@ showUpdateFeesDialog(BuildContext context, int studentId, int programId) {
               fontSize: 20.sp,
               fontWeight: FontWeight.bold,
               textColor: AppColors.colorBlack),
-          InkWell(
-            onTap: () {
-              Navigator.pop(context);
-            },
-            child: const Icon(
-              Icons.close,
-              color: AppColors.colorRed,
-            ),
-          )
+          Consumer<FeesProvider>(builder: (context, feesConsumer, child) {
+            return InkWell(
+              onTap: () {
+                Navigator.pop(context);
+                feesConsumer.setfeesTypeRadioValue("", programId, );
+              },
+              child: const Icon(
+                Icons.close,
+                color: AppColors.colorRed,
+              ),
+            );
+          })
         ],
       ),
       content:
@@ -62,42 +65,30 @@ showUpdateFeesDialog(BuildContext context, int studentId, int programId) {
                     children: [
                       Radio(
                         activeColor: AppColors.colorc7e,
-                        value: "Standard Fees",
+                        value: "Standard Tution",
                         groupValue: feesConsumer.feesTypeRadioValue,
                         onChanged: (String? value) async {
-                          var token = await getTokenAndUseIt();
-                          if (token == null) {
-                            if (context.mounted) {
-                              Navigator.pushNamed(context, RouteNames.login);
-                            }
-                          } else if (token == "Token Expired") {
-                            ToastHelper().errorToast(
-                                "Session Expired Please Login Again");
-
-                            if (context.mounted) {
-                              Navigator.pushNamed(context, RouteNames.login);
-                            }
-                          } else {
+                       
                             feesConsumer.setfeesTypeRadioValue(
-                                value!, programId, token);
-                          }
+                                value!, programId);
+                        
                         },
                       ),
                       AppRichTextView(
-                          title: "Standard Fees",
+                          title: "Standard Tution",
                           fontSize: 12.sp,
                           fontWeight: FontWeight.bold),
                       Radio(
                         activeColor: AppColors.colorc7e,
-                        value: "Custom Fees",
+                        value: "Scholarship Tution",
                         groupValue: feesConsumer.feesTypeRadioValue,
                         onChanged: (String? value) {
                           feesConsumer.setfeesTypeRadioValue(
-                              value!, programId, "");
+                              value!, programId, );
                         },
                       ),
                       AppRichTextView(
-                          title: "Custom Fees",
+                          title: "Scholarship Tution",
                           fontSize: 12.sp,
                           fontWeight: FontWeight.bold),
                     ],
@@ -105,9 +96,7 @@ showUpdateFeesDialog(BuildContext context, int studentId, int programId) {
                   SizedBox(
                     height: 15.h,
                   ),
-                  feesConsumer.feesTypeRadioValue == null
-                      ? Container()
-                      : feesConsumer.isLoading == true
+                  feesConsumer.isLoading == true
                           ? const Center(
                               child: SpinKitSpinningLines(
                                   color: AppColors.colorc7e),
@@ -116,7 +105,7 @@ showUpdateFeesDialog(BuildContext context, int studentId, int programId) {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 AppRichTextView(
-                                    title: "Semester Fees Amount",
+                                    title: "Semester Tution",
                                     fontSize: 15.sp,
                                     fontWeight: FontWeight.w500,
                                     textColor: AppColors.colorBlack),
@@ -124,34 +113,15 @@ showUpdateFeesDialog(BuildContext context, int studentId, int programId) {
                                   height: 5.h,
                                 ),
                                 AppTextFormFieldWidget(
-                                  onChanged: (p0) {
-                                    if (feesConsumer.feesTypeRadioValue !=
-                                        "Standard Fees") {
-                                      if (p0.isEmpty) {
-                                        feesConsumer.setGydConversionValue(
-                                            int.parse("0"));
-                                      } else {
-                                        feesConsumer.setGydConversionValue(
-                                            int.parse(p0));
-                                      }
-                                    }
-                                  },
-                                  enable: feesConsumer.feesTypeRadioValue ==
-                                          "Standard Fees"
-                                      ? false
-                                      : true,
+                             
+                                 initialValue: feesConsumer.feesDetailModel
+                                                  .feesDetails?.tutionFee.toString() ?? "0",
                                   validator: (p0) =>
                                       AmountValidator.validate(p0!),
                                   onSaved: (p0) => feesAmount = int.parse(p0!),
                                   obscureText: false,
                                   inputDecoration: InputDecoration(
-                                      hintText:
-                                          feesConsumer.feesTypeRadioValue ==
-                                                  "Standard Fees"
-                                              ? feesConsumer.feesDetailModel
-                                                  .feesDetails!.tutionFee
-                                                  .toString()
-                                              : "Enter Semester Fees in USD",
+                                      hintText: "Enter Semester Fees in USD",
                                       hintStyle: GoogleFonts.roboto(
                                         fontSize: 15.sp,
                                         fontWeight: FontWeight.w500,
@@ -163,24 +133,14 @@ showUpdateFeesDialog(BuildContext context, int studentId, int programId) {
                                   height: 15.h,
                                 ),
                                 AppTextFormFieldWidget(
-                                  enable: false,
+                               
 
                                   // validator: (p0) =>
                                   //     AmountValidator.validate(p0!),
                                   onSaved: (p0) => feesAmount = int.parse(p0!),
                                   obscureText: false,
                                   inputDecoration: InputDecoration(
-                                      hintText:
-                                          feesConsumer.feesTypeRadioValue ==
-                                                  "Standard Fees"
-                                              ? (feesConsumer
-                                                          .feesDetailModel
-                                                          .feesDetails!
-                                                          .tutionFee! *
-                                                      218)
-                                                  .toString()
-                                              : feesConsumer.gydConversion
-                                                  .toString(),
+                                      hintText:"Enter the Semester Tution in GYD",
                                       hintStyle: GoogleFonts.roboto(
                                         fontSize: 15.sp,
                                         fontWeight: FontWeight.w500,
@@ -242,7 +202,11 @@ showUpdateFeesDialog(BuildContext context, int studentId, int programId) {
                                       textColor: AppColors.colorWhite,
                                       height: 50.h,
                                       width: 110.w,
-                                      onPressed: (context) {},
+                                      onPressed: (context) {
+                                        Navigator.pop(context);
+                                        feesConsumer.setfeesTypeRadioValue(
+                                            "", programId, );
+                                      },
                                     )
                                   ],
                                 )
