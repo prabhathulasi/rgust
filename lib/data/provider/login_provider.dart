@@ -11,6 +11,11 @@ import 'package:rugst_alliance_academia/util/api_service.dart';
 class LoginProvider extends ChangeNotifier {
   bool _isLoading = false;
   bool get isLoading => _isLoading;
+
+
+  bool _passwordVisibility = true;
+  bool get passwordVisibility => _passwordVisibility;
+
   String flavorUrl = FlavorConfig.instance.variables["baseUrl"];
   String flavorName = FlavorConfig.instance.variables["flavorName"];
   Future<http.Response> login(String email, String password) async {
@@ -54,6 +59,10 @@ class LoginProvider extends ChangeNotifier {
 
   void setLoading(bool value) async {
     _isLoading = value;
+    notifyListeners();
+  }
+   void setPasswordVisibility() async {
+     _passwordVisibility = !_passwordVisibility;
     notifyListeners();
   }
 }

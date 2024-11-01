@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:rugst_alliance_academia/custom_plugin/commons/helper.dart';
 import 'package:rugst_alliance_academia/custom_plugin/editable.dart';
 import 'package:rugst_alliance_academia/data/middleware/check_auth_middleware.dart';
-import 'package:rugst_alliance_academia/data/model/clinical_course_model.dart';
+import 'package:rugst_alliance_academia/data/model/clinical/clinical_course_model.dart';
 import 'package:rugst_alliance_academia/data/provider/program_provider.dart';
 import 'package:rugst_alliance_academia/routes/named_routes.dart';
 import 'package:rugst_alliance_academia/theme/app_colors.dart';

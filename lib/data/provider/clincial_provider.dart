@@ -14,31 +14,33 @@ class ClincialProvider extends ChangeNotifier {
 //dropdown
   String? clinicalFeeRadioValue;
 
-  Future postClinicalCourse(String? token, String? studentId) async {
+  Future postClinicalCourse(String? token, int? studentId) async {
+    setLoading(true);
     try {
       var result = await ApiHelper.post(
-          "PostClinical",
+          "RegisterClinical",
           {
             "ClinicalId": selectedClinicalRadio,
             "StudentId": studentId,
             "StartDate": clincalStartDate,
             "EndDate": clincalEndDate,
-            "Status": "",
+            "Status": "OnProgress",
             "TotalClinicalFee": clincalFees,
             "ClinicalFeeStatus": clinicalFeeRadioValue
           },
           token!);
-
+print(result.body);
       var data = json.decode(result.body);
       if (result.statusCode == 201) {
         ToastHelper().sucessToast("Clinical Rotation Registered Successfully");
+      
         return result.statusCode;
   
       } else if (result.statusCode == 400) {
         ToastHelper().errorToast(data["Message"]);
         return result.statusCode;
       } else {
-        ToastHelper().errorToast("Internal Server Error");
+      ToastHelper().errorToast(data["Message"]);
         return result.statusCode;
       }
     } catch (e) {

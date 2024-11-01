@@ -56,7 +56,9 @@ class StudentDetail {
   int? fullTutionFee;
   int? paidTutionFee;
   List<RegisteredCourse>? registeredCourse;
+  List<StudentFees>? studentFees;
   List<Result>? result;
+  String ? rotationName;
 
   StudentDetail(
       {this.iD,
@@ -91,7 +93,10 @@ class StudentDetail {
       this.result,
       this.fullTutionFee,
       this.registeredCourse,
-      this.paidTutionFee});
+      this.paidTutionFee,
+      this.rotationName,
+      this.studentFees
+      });
 
   StudentDetail.fromJson(Map<String, dynamic> json) {
     iD = json['ID'];
@@ -125,6 +130,7 @@ class StudentDetail {
     createdBy = json['CreatedBy'];
     fullTutionFee = json["FullTutionFee"];
     paidTutionFee = json["PaidTutionFee"];
+    rotationName =json["rotation_name"];
 
     if (json['Result'] != null) {
       result = <Result>[];
@@ -136,6 +142,13 @@ class StudentDetail {
       registeredCourse = <RegisteredCourse>[];
       json['RegisteredCourse'].forEach((v) {
         registeredCourse!.add(RegisteredCourse.fromJson(v));
+      });
+    }
+
+      if (json['StudentFees'] != null) {
+      studentFees = <StudentFees>[];
+      json['StudentFees'].forEach((v) {
+        studentFees!.add( StudentFees.fromJson(v));
       });
     }
   }
@@ -173,6 +186,7 @@ class StudentDetail {
     data['CreatedBy'] = createdBy;
     data["FullTutionFee"] = fullTutionFee;
     data["PaidTutionFee"] = paidTutionFee;
+    data["rotation_name"]= rotationName;
 
     if (result != null) {
       data['Result'] = result!.map((v) => v.toJson()).toList();
@@ -181,6 +195,10 @@ class StudentDetail {
       data['RegisteredCourse'] =
           registeredCourse!.map((v) => v.toJson()).toList();
     }
+ if (studentFees != null) {
+      data['StudentFees'] = studentFees!.map((v) => v.toJson()).toList();
+    }
+
     return data;
   }
 }
@@ -254,6 +272,63 @@ class RegisteredCourse {
     data['status'] = status;
     data['approved_by'] = approvedBy;
     data["course_credits"] = courseCredits;
+    return data;
+  }
+}
+class StudentFees {
+  int? iD;
+  String? createdAt;
+  String? updatedAt;
+  String? deletedAt;
+  int? studentId;
+  int? feesId;
+  int? classId;
+  int? amountInUsd;
+  int? amountInGyd;
+  String? tutionType;
+  String? className;
+
+  StudentFees(
+      {this.iD,
+      this.createdAt,
+      this.updatedAt,
+      this.deletedAt,
+      this.studentId,
+      this.feesId,
+      this.classId,
+      this.amountInUsd,
+      this.amountInGyd,
+      this.tutionType,
+      this.className
+      });
+
+  StudentFees.fromJson(Map<String, dynamic> json) {
+    iD = json['ID'];
+    createdAt = json['CreatedAt'];
+    updatedAt = json['UpdatedAt'];
+    deletedAt = json['DeletedAt'].toString();
+    studentId = json['StudentId'];
+    feesId = json['FeesId'];
+    classId = json['ClassId'];
+    amountInUsd = json['AmountInUsd'];
+    amountInGyd = json['AmountInGyd'];
+    tutionType = json['TutionType'];
+    className =json["ClassName"];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['ID'] = iD;
+    data['CreatedAt'] = createdAt;
+    data['UpdatedAt'] = updatedAt;
+    data['DeletedAt'] = deletedAt;
+    data['StudentId'] = studentId;
+    data['FeesId'] = feesId;
+    data['ClassId'] = classId;
+    data['AmountInUsd'] = amountInUsd;
+    data['AmountInGyd'] = amountInGyd;
+    data['TutionType'] = tutionType;
+    data["ClassName"]= className;
     return data;
   }
 }

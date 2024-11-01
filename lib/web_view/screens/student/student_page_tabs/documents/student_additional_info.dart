@@ -149,6 +149,7 @@ class _StudentAdditionalInfoViewState extends State<StudentAdditionalInfoView> {
     }
 
     return Scaffold(
+      backgroundColor: AppColors.colorWhite,
       body: SizedBox(
         width: MediaQuery.sizeOf(context).width,
 

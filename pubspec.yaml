@@ -65,6 +65,10 @@ dependencies:
   desktop_drop: ^0.4.4
   pdf_render: ^1.4.12
   country_picker: ^2.0.26
+  carousel_slider: ^5.0.0
+  u_credit_card:
+    path: ./card_ui
+
   
  
 dependency_overrides:

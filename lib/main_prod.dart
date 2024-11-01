@@ -80,7 +80,7 @@ class MyApp extends StatelessWidget {
                       ChangeNotifierProvider(
                         create: (context) => StudentProvider(),
                       ),
-                       ChangeNotifierProxyProvider<StudentProvider,
+                      ChangeNotifierProxyProvider<StudentProvider,
                           ResultProvider>(
                         create: (context) => ResultProvider(
                             Provider.of<StudentProvider>(context,
@@ -107,7 +107,6 @@ class MyApp extends StatelessWidget {
                       ChangeNotifierProvider(
                         create: (context) => CommonProvider(),
                       ),
-                   
                       ChangeNotifierProvider(
                         create: (context) => StudyHistoryProvider(),
                       ),
@@ -120,16 +119,16 @@ class MyApp extends StatelessWidget {
                           return InvoiceProvider(value);
                         },
                       ),
-        ChangeNotifierProvider(
+                      ChangeNotifierProvider(
                         create: (context) => ClincialProvider(),
                       ),
-                        ChangeNotifierProvider(
+                      ChangeNotifierProvider(
                         create: (context) => AdmissionPersonalProvider(),
                       ),
-                       ChangeNotifierProvider(
+                      ChangeNotifierProvider(
                         create: (context) => AdmissionAgentProvider(),
                       ),
-                       ChangeNotifierProvider(
+                      ChangeNotifierProvider(
                         create: (context) => AdmissionEducationProvider(),
                       ),
                       ChangeNotifierProvider(
@@ -138,20 +137,18 @@ class MyApp extends StatelessWidget {
                       ChangeNotifierProvider(
                         create: (context) => AdmissionEngProficienyProvider(),
                       ),
-                       ChangeNotifierProvider(
+                      ChangeNotifierProvider(
                         create: (context) => AdmissionProgramProvider(),
                       ),
-                       ChangeNotifierProvider(
+                      ChangeNotifierProvider(
                         create: (context) => AdmissionStandTestProvider(),
                       ),
-                       ChangeNotifierProvider(
+                      ChangeNotifierProvider(
                         create: (context) => AdmissionRecommendationProvider(),
                       ),
-                       ChangeNotifierProvider(
+                      ChangeNotifierProvider(
                         create: (context) => AdmissionCriminalCheckProvider(),
                       ),
-                    
-                    
                     ],
                     builder: (context, child) {
                       return MaterialApp(

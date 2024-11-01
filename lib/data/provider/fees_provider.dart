@@ -11,6 +11,8 @@ class FeesProvider extends ChangeNotifier {
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
+ String? selectedClassForFee;
+
   FeesModel feesModel = FeesModel();
   FeesDetailModel feesDetailModel = FeesDetailModel();
 
@@ -28,6 +30,10 @@ class FeesProvider extends ChangeNotifier {
 
   void setLoading(bool value) async {
     _isLoading = value;
+    notifyListeners();
+  }
+  void setSelectedFeeClass(dynamic value) async {
+    selectedClassForFee = value;
     notifyListeners();
   }
 

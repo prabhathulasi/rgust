@@ -59,7 +59,7 @@ class StudentCardWidget extends StatelessWidget {
                                   ? AppColors.contentColorYellow
                                   : studentType == "Transfer"
                                       ? AppColors.colorPurple
-                                      : studentType == "clincal"
+                                      : studentType == "Clinicals"
                                           ? AppColors.colorGrey
                                           : AppColors.colorf85,
                       boxShadow: [
@@ -72,7 +72,7 @@ class StudentCardWidget extends StatelessWidget {
                                   ? AppColors.contentColorYellow
                                   : studentType == "Transfer"
                                       ? AppColors.colorPurple
-                                      : studentType == "clincal"
+                                      : studentType == "Clinicals"
                                           ? AppColors.colorGrey
                                           : AppColors.colorf85,
                             blurRadius: 5,
@@ -92,7 +92,7 @@ class StudentCardWidget extends StatelessWidget {
                                   ? AppColors.contentColorYellow
                                   : studentType == "Transfer"
                                       ? AppColors.colorPurple
-                                      : studentType == "clincal"
+                                      : studentType == "Clinicals"
                                           ? AppColors.colorGrey
                                           : AppColors.colorf85,
                 child: CircleAvatar(
@@ -237,7 +237,7 @@ class StudentCardWidget extends StatelessWidget {
                 Expanded(
                     flex: 2,
                     child: AppRichTextView(
-                      title: "Class: ",
+                      title:program =="Clinicals"? "Rotation": "Class: ",
                       fontSize: 12.sp,
                       fontWeight: FontWeight.w800,
                       textColor: AppColors.colorGrey,

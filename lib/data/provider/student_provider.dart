@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+
 import 'package:flutter/material.dart';
 import 'package:rugst_alliance_academia/data/model/exam_result_model.dart'
     as prefix;
@@ -388,17 +389,21 @@ class StudentProvider extends ChangeNotifier {
     }
   }
 
-  Future updateFessByStudentId(
-      int feesAmount, int studentId, String token) async {
+  Future updateFessByStudentId(String amountInGyd, String amountInUsd,
+      int studentId, int classId, String tutitonType, String token) async {
     setAlertLoading(true);
 
     // Make your login API call here using the http package
 
     try {
       var result = await ApiHelper.put(
-          "UpdateStudentFeesDetails/id=$studentId",
+          "UpdateStudentFeesDetails",
           {
-            "FullTutionFee": feesAmount,
+            "AmountInGyd": double.parse(amountInGyd),
+            "AmountInUsd": double.parse(amountInUsd),
+            "StudentId": studentId,
+            "ClassId": classId,
+            "TutitonType": tutitonType,
           },
           token);
 
@@ -407,7 +412,10 @@ class StudentProvider extends ChangeNotifier {
         await getStudentDetailById(studentId, token);
 
         return "200";
-      } else {
+      } else if (result.statusCode == 409){
+        ToastHelper().errorToast("Tution Detail Already Exists");
+        return null;
+      }else {
         ToastHelper().errorToast("Internal Server Error");
         return null;
       }

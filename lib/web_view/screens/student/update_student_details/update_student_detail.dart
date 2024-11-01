@@ -80,7 +80,7 @@ class _AddFacultyViewState extends State<UpdateStudentDetails> {
             children: [
               SingleChildScrollView(
                 child: Padding(
-                  padding: EdgeInsets.only(left: 10.w, top: 10.h),
+                  padding: EdgeInsets.only(left: 5.w, top:5.h),
                   child: Container(
                     padding: EdgeInsets.all(19.sp),
                     decoration: BoxDecoration(
@@ -891,689 +891,789 @@ class _AddFacultyViewState extends State<UpdateStudentDetails> {
               Expanded(child: Consumer<ProgramProvider>(
                   builder: (context, programConsumer, child) {
                 return Consumer<ClincialProvider>(
-                  builder: (context, clincalConsumer, child) {
-                    return Consumer<CommonProvider>(
-                        builder: (context, commonConsumer, child) {
-                      log(widget.studentDetails.batch ?? "No data");
-                      return Padding(
-                        padding: EdgeInsets.only(right: 10.w, top: 10.h),
-                        child: Container(
-                          height: size.height,
-                          decoration: BoxDecoration(
-                              border: Border.all(
-                                  color: AppColors.colorc7e, width: 3.w)),
-                          child: SingleChildScrollView(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Padding(
-                                  padding: EdgeInsets.only(top: 19.h),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      AppRichTextView(
-                                        title:
-                                            studentConsumer.selectedCourseIndex ==
-                                                    false
-                                                ? "Current Class"
-                                                : "Update Class",
-                                        fontSize: 25.sp,
-                                        fontWeight: FontWeight.bold,
-                                        textColor: AppColors.colorc7e,
-                                      ),
-                                      SizedBox(
-                                        width: 10.w,
-                                      ),
-                                      InkWell(
-                                          onTap: () {
-                                            if (studentConsumer
-                                                    .selectedCourseIndex ==
-                                                false) {
-                                              programConsumer.newData.clear();
-                                              studentConsumer
-                                                  .selectCourseIndex(true);
-                                            } else {
-                                              programConsumer.newData.clear();
-                                              studentConsumer
-                                                  .selectCourseIndex(false);
-                                            }
-                                          },
-                                          child:
-                                              studentConsumer.selectedCourseIndex ==
-                                                      false
-                                                  ? const Icon(
-                                                      Icons.edit_outlined,
-                                                      color: AppColors.colorRed,
-                                                    )
-                                                  : const Icon(
-                                                      Icons.close,
-                                                      color: AppColors.colorRed,
-                                                    ))
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 15.h,
-                                ),
-                                studentConsumer.selectedCourseIndex == false
-                                    ? Padding(
-                                        padding: const EdgeInsets.only(
-                                            top: 18.0, left: 18),
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                              color: AppColors.colorWhite,
-                                              border: Border.all(
-                                                  color: AppColors.colorc7e,
-                                                  width: 2),
-                                              borderRadius:
-                                                  BorderRadius.circular(8)),
-                                          height: 75.h,
-                                          width: size.width * 0.2,
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                AppRichTextView(
-                                                    title: "Current Program",
-                                                    textColor: AppColors.colorBlack,
-                                                    fontSize: 14.sp,
-                                                    fontWeight: FontWeight.bold),
-                                                Expanded(
-                                                    child: AppTextFormFieldWidget(
-                                                  enable: false,
-                                                  initialValue: widget
-                                                      .studentDetails
-                                                      .currentProgramName,
-                                                  textStyle: GoogleFonts.roboto(
-                                                      fontWeight: FontWeight.w700,
-                                                      color: AppColors.colorc7e,
-                                                      fontSize: 15.sp),
-                                                  inputDecoration:
-                                                      const InputDecoration(
-                                                          border: InputBorder.none,
-                                                          hintStyle: TextStyle(
-                                                              color: AppColors
-                                                                  .colorGrey)),
-                                                  obscureText: false,
-                                                )),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      )
-                                    : const Padding(
-                                        padding:
-                                            EdgeInsets.only(top: 18.0, left: 18),
-                                        child: ProgramDropdown(),
-                                      ),
-                                SizedBox(
-                                  height: 15.h,
-                                ),
-                                studentConsumer.selectedCourseIndex == false
-                                    ? Padding(
-                                        padding: const EdgeInsets.only(left: 18),
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                              color: AppColors.colorWhite,
-                                              border: Border.all(
-                                                  color: AppColors.colorc7e,
-                                                  width: 2),
-                                              borderRadius:
-                                                  BorderRadius.circular(8)),
-                                          height: 70.h,
-                                          width: size.width * 0.2,
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                AppRichTextView(
-                                                    title: "Current class",
-                                                    textColor: AppColors.colorBlack,
-                                                    fontSize: 14.sp,
-                                                    fontWeight: FontWeight.bold),
-                                                Expanded(
-                                                    child: AppTextFormFieldWidget(
-                                                  enable: false,
-                                                  initialValue: widget
-                                                      .studentDetails
-                                                      .currentClassName,
-                                                  textStyle: GoogleFonts.roboto(
-                                                      fontWeight: FontWeight.w700,
-                                                      color: AppColors.colorc7e,
-                                                      fontSize: 15.sp),
-                                                  onSaved: (p0) {
-                                                    // facultyProvider.setLastName(p0!);
-                                                  },
-                                                  inputDecoration:
-                                                      const InputDecoration(
-                                                          border: InputBorder.none,
-                                                          hintStyle: TextStyle(
-                                                              color: AppColors
-                                                                  .colorGrey)),
-                                                  obscureText: false,
-                                                )),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      )
-                                    : programConsumer.selectedDept == "300"
-                                        ? Container()
-                                        : const Padding(
-                                            padding: EdgeInsets.only(left: 18),
-                                            child: ClassDropdown(),
-                                          ),
-                                SizedBox(
-                                  height: 15.h,
-                                ),
-                                studentConsumer.selectedCourseIndex == false
-                                    ? Container()
-                                    : programConsumer.selectedDept == "300"
-                                        ? Container()
-                                        : Padding(
-                                            padding:
-                                                const EdgeInsets.only(left: 18),
-                                            child: Column(
-                                              children: [
-                                                const DynamicYearsDropdown(),
-                                                SizedBox(
-                                                  height: 10.h,
-                                                ),
-                                                const BatchDropdown(),
-                                              ],
-                                            ),
-                                          ),
-                                SizedBox(
-                                  height: 15.h,
-                                ),
-                                (studentConsumer.selectedCourseIndex == false ||
-                                        programConsumer.selectedBatch == null)
-                                    ? Container()
-                                    : Padding(
-                                        padding: const EdgeInsets.only(left: 18),
-                                        child: Row(
-                                          children: [
-                                            Checkbox(
-                                              activeColor: AppColors.colorc7e,
-                                              value: commonConsumer.isChecked,
-                                              onChanged: (bool? value) {
-                                                commonConsumer
-                                                    .toggleCheckbox(value ?? false);
-                                              },
-                                            ),
-                                            AppRichTextView(
-                                              title: "Current Class",
-                                              fontSize: 15.sp,
-                                              fontWeight: FontWeight.bold,
-                                              textColor: AppColors.colorc7e,
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                Divider(
-                                  height: 3.h,
-                                  color: AppColors.colorc7e,
-                                  thickness: 3,
-                                ),
-                                SizedBox(
-                                  height: 15.h,
-                                ),
-                                studentConsumer.selectedCourseIndex == true &&
-                                            programConsumer.selectedBatch != null ||
-                                        programConsumer.selectedDept == "300"
-                                    ? Column(
-                                        children: [
-                                          programConsumer.selectedDept == "300"
-                                              ? programConsumer.isLoading == true
-                                                  ? const Center(
-                                                      child: SpinKitSpinningLines(
-                                                          color:
-                                                              AppColors.colorc7e),
-                                                    )
-                                                  : programConsumer
-                                                              .clinicalCoursesModel
-                                                              .clinicals ==
-                                                          null
-                                                      ? Container()
-                                                      : Column(
-                                                          children: [
-                                                            AppRichTextView(
-                                                              title:
-                                                                  "Clinical Courses",
-                                                              fontSize: 25.sp,
-                                                              fontWeight:
-                                                                  FontWeight.bold,
-                                                              textColor: AppColors
-                                                                  .colorc7e,
-                                                            ),
-                                                            SizedBox(
-                                                              height: 15.h,
-                                                            ),
-                                                            ListView.builder(
-                                                              shrinkWrap: true,
-                                                              itemCount: programConsumer
-                                                                  .clinicalCoursesModel
-                                                                  .clinicals!
-                                                                  .length,
-                                                              itemBuilder:
-                                                                  (context, index) {
-                                                                var currentItem =
-                                                                    programConsumer
-                                                                        .clinicalCoursesModel
-                                                                        .clinicals![index];
-                    
-                                                                return Padding(
-                                                                  padding:
-                                                                      const EdgeInsets
-                                                                          .all(8.0),
-                                                                  child: Container(
-                                                                    decoration: BoxDecoration(
-                                                                        border: Border.all(
-                                                                            color: AppColors
-                                                                                .colorc7e,
-                                                                            width: 3
-                                                                                .w),
-                                                                        borderRadius:
-                                                                            BorderRadius.circular(
-                                                                                8.sp)),
-                                                                    child: ListTile(
-                                                                      dense: true,
-                                                                      trailing: clincalConsumer.clincalFees !=
-                                                                                  null &&
-                                                                              clincalConsumer.selectedClinicalRadio ==
-                                                                                  currentItem.iD
-                                                                          ? Row(
-                                                                              mainAxisSize:
-                                                                                  MainAxisSize.min,
-                                                                              children: [
-                                                                                InkWell(
-                                                                                  onTap: () async {
-                                                                                    DateTime? pickedDate = await showDatePicker(
-                                                                                        builder: (context, child) {
-                                                                                          return Theme(
-                                                                                              data: ThemeData.dark().copyWith(
-                                                                                                colorScheme: const ColorScheme.dark(
-                                                                                                  primary: AppColors.colorc7e,
-                                                                                                  onPrimary: Colors.white,
-                                                                                                  surface: AppColors.colorWhite,
-                                                                                                  onSurface: AppColors.colorc7e,
-                                                                                                ),
-                                                                                                dialogBackgroundColor: AppColors.colorc7e,
-                                                                                              ),
-                                                                                              child: child!);
-                                                                                        },
-                                                                                        barrierDismissible: false,
-                                                                                        context: context,
-                                                                                        initialDate: DateTime.now(),
-                                                                                        firstDate: DateTime(1900), //- not to allow to choose before today.
-                                                                                        lastDate: DateTime.now().add(const Duration(days: 91)));
-                    
-                                                                                    if (pickedDate != null) {
-                                                                                      //pickedDate output format => 2021-03-10 00:00:00.000
-                                                                                      String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate);
-                                                                                      clincalConsumer.setClinicalStartDate(formattedDate);
-                                                                                    } else {
-                                                                                      print("Date is not selected");
-                                                                                    }
-                                                                                  },
-                                                                                  child: Column(
-                                                                                    children: [
-                                                                                      const Icon(Icons.calendar_month),
-                                                                                      Expanded(
-                                                                                        child: AppRichTextView(
-                                                                                          title: clincalConsumer.clincalStartDate == null ? "Start Date" : clincalConsumer.clincalStartDate!,
-                                                                                          fontSize: 10.sp,
-                                                                                          fontWeight: FontWeight.bold,
-                                                                                          textColor: AppColors.colorGreen,
-                                                                                        ),
-                                                                                      ),
-                                                                                    ],
-                                                                                  ),
-                                                                                ),
-                                                                                SizedBox(
-                                                                                  width: 15.w,
-                                                                                ),
-                                                                                clincalConsumer.clincalStartDate == null
-                                                                                    ? const SizedBox()
-                                                                                    : InkWell(
-                                                                                        onTap: () async {
-                                                                                          DateTime? pickedDate = await showDatePicker(
-                                                                                              builder: (context, child) {
-                                                                                                return Theme(
-                                                                                                    data: ThemeData.dark().copyWith(
-                                                                                                      colorScheme: const ColorScheme.dark(
-                                                                                                        primary: AppColors.colorc7e,
-                                                                                                        onPrimary: Colors.white,
-                                                                                                        surface: AppColors.colorWhite,
-                                                                                                        onSurface: AppColors.colorc7e,
-                                                                                                      ),
-                                                                                                      dialogBackgroundColor: AppColors.colorc7e,
-                                                                                                    ),
-                                                                                                    child: child!);
-                                                                                              },
-                                                                                              barrierDismissible: false,
-                                                                                              context: context,
-                                                                                              initialDate: DateTime.parse(clincalConsumer.clincalStartDate!),
-                                                                                              firstDate: DateTime.parse(clincalConsumer.clincalStartDate!), //- not to allow to choose before today.
-                                                                                              lastDate: DateTime.now().add(const Duration(days: 91)));
-                    
-                                                                                          if (pickedDate != null) {
-                                                                                            String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate);
-                                                                                            clincalConsumer.setClinicalendDate(formattedDate);
-                    
-                                                                                            //pickedDate output format => 2021-03-10 00:00:00.000
-                                                                                          } else {
-                                                                                            print("Date is not selected");
-                                                                                          }
-                                                                                        },
-                                                                                        child: Column(
-                                                                                          children: [
-                                                                                            const Icon(Icons.calendar_month),
-                                                                                            Expanded(
-                                                                                              child: AppRichTextView(
-                                                                                                title: clincalConsumer.clincalEndDate == null ? "End Date" : clincalConsumer.clincalEndDate!,
-                                                                                                fontSize: 10.sp,
-                                                                                                fontWeight: FontWeight.bold,
-                                                                                                textColor: AppColors.colorRed,
-                                                                                              ),
-                                                                                            ),
-                                                                                          ],
-                                                                                        ),
-                                                                                      )
-                                                                              ],
-                                                                            )
-                                                                          : const SizedBox(),
-                                                                      isThreeLine:
-                                                                          true,
-                                                                      title:
-                                                                          AppRichTextView(
-                                                                        title:"${currentItem
-                                                                            .rotationName!
-                                                                            .trim()} ${clincalConsumer.clincalFees != null && clincalConsumer.selectedClinicalRadio ==
-                                                                                  currentItem.iD ? "(${clincalConsumer.clincalFees} USD)":"" }" ,
-                                                                        fontSize:
-                                                                            15.sp,
-                                                                        fontWeight:
-                                                                            FontWeight
-                                                                                .bold,
-                                                                        textColor:
-                                                                            AppColors
-                                                                                .colorc7e,
-                                                                      ),
-                                                                      subtitle: Column(
-                                                                          crossAxisAlignment:
-                                                                              CrossAxisAlignment
-                                                                                  .start,
-                                                                          children: [
-                                                                            AppRichTextView(
-                                                                              title:
-                                                                                  "Duration: ${currentItem.rotationDuration!} Weeks",
-                                                                              fontSize:
-                                                                                  12.sp,
-                                                                              fontWeight:
-                                                                                  FontWeight.w700,
-                                                                              textColor:
-                                                                                  AppColors.colorc7e,
-                                                                            ),
-                                                                            AppRichTextView(
-                                                                              title:
-                                                                                  "Credits: ${currentItem.rotationCredits!}",
-                                                                              fontSize:
-                                                                                  12.sp,
-                                                                              fontWeight:
-                                                                                  FontWeight.w700,
-                                                                              textColor:
-                                                                                  AppColors.colorc7e,
-                                                                            ),
-                                                                          ]),
-                                                                      leading: Radio<
-                                                                              int>(
-                                                                                activeColor: AppColors.colorc7e,
-                                                                          value: currentItem
-                                                                              .iD!,
-                                                                          groupValue:
-                                                                              clincalConsumer
-                                                                                  .selectedClinicalRadio,
-                                                                          onChanged:
-                                                                              (value) async{
-                                                                                await showClinicalFeeAlert(context, value!);
-                                                                           
-                                                                          }),
-                                                                    ),
-                                                                  ),
-                                                                );
-                                                              },
-                                                            ),
-                                                            SizedBox(
-                                                              height: 15.h,
-                                                            ),
-                                                          ],
-                                                        )
-                                              : Container(),
+                    builder: (context, clincalConsumer, child) {
+                  return Consumer<CommonProvider>(
+                      builder: (context, commonConsumer, child) {
+                    return Padding(
+                      padding: EdgeInsets.only(right: 5.w, top: 5.h),
+                      child: Container(
+                        height: size.height,
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                                color: AppColors.colorc7e, width: 3.w)),
+                        child: SingleChildScrollView(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.only(top: 19.h),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    AppRichTextView(
+                                      title:
                                           studentConsumer.selectedCourseIndex ==
-                                                      true &&
-                                                  programConsumer.selectedBatch !=
-                                                      null
-                                              ? programConsumer.isLoading == true
-                                                  ? const Center(
-                                                      child: SpinKitSpinningLines(
-                                                          color:
-                                                              AppColors.colorc7e),
-                                                    )
-                                                  : Center(
-                                                      child: (widget.studentDetails
-                                                                      .currentClassId
-                                                                      .toString() ==
-                                                                  programConsumer
-                                                                      .selectedClass &&
-                                                              widget.studentDetails
-                                                                      .batch ==
-                                                                  programConsumer
-                                                                      .selectedBatch)
-                                                          ? AppRichTextView(
-                                                              title:
-                                                                  "Current Class",
-                                                              fontSize: 20.sp,
-                                                              fontWeight:
-                                                                  FontWeight.bold,
-                                                              textColor: AppColors
-                                                                  .colorc7e,
-                                                            )
-                                                          : programConsumer
-                                                                  .newData.isEmpty
-                                                              ? AppRichTextView(
-                                                                  maxLines: 2,
-                                                                  title:
-                                                                      "No Course Found Kindly add the Course in the Department Section",
-                                                                  fontSize: 20.sp,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold,
-                                                                  textColor:
-                                                                      AppColors
-                                                                          .colorRed,
-                                                                )
-                                                              : AppRichTextView(
-                                                                  title:
-                                                                      "Registered Course",
-                                                                  fontSize: 20.sp,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold,
-                                                                  textColor:
-                                                                      AppColors
-                                                                          .colorc7e,
-                                                                ))
-                                              : Container(),
-                                          programConsumer.newData.isEmpty
-                                              ? Container()
-                                              : ListView.builder(
-                                                  shrinkWrap: true,
-                                                  itemCount: programConsumer
-                                                      .coursesModel.courses!.length,
-                                                  itemBuilder: (context, index) {
-                                                    var currentItem =
-                                                        programConsumer.coursesModel
-                                                            .courses![index];
-                                                    int itemId = currentItem.iD!;
-                    
-                                                    return Padding(
-                                                      padding:
-                                                          const EdgeInsets.all(8.0),
-                                                      child: Container(
-                                                        decoration: BoxDecoration(
-                                                            color: widget.studentDetails
-                                                                            .currentClassId
-                                                                            .toString() ==
-                                                                        programConsumer
-                                                                            .selectedClass &&
-                                                                    widget.studentDetails
-                                                                            .batch ==
-                                                                        programConsumer
-                                                                            .selectedBatch
-                                                                ? AppColors
-                                                                    .colorGrey
-                                                                : AppColors
-                                                                    .colorWhite,
-                                                            border: Border.all(
-                                                                color: AppColors
-                                                                    .colorc7e,
-                                                                width: 3.w),
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        8.sp)),
-                                                        child: CheckboxListTile(
-                                                          side:
-                                                              WidgetStateBorderSide
-                                                                  .resolveWith(
-                                                            (states) =>
-                                                                const BorderSide(
-                                                                    width: 2.0,
-                                                                    color: AppColors
-                                                                        .colorc7e),
-                                                          ),
-                                                          checkColor:
-                                                              AppColors.colorc7e,
-                                                          activeColor:
-                                                              AppColors.colorWhite,
-                                                          title: AppRichTextView(
-                                                            title: currentItem
-                                                                .courseName!
-                                                                .trim(),
-                                                            fontSize: 15.sp,
+                                                  false
+                                              ? "Current Class"
+                                              : "Update Class",
+                                      fontSize: 25.sp,
+                                      fontWeight: FontWeight.bold,
+                                      textColor: AppColors.colorc7e,
+                                    ),
+                                    SizedBox(
+                                      width: 10.w,
+                                    ),
+                                    InkWell(
+                                        onTap: () {
+                                          if (studentConsumer
+                                                  .selectedCourseIndex ==
+                                              false) {
+                                            programConsumer.newData.clear();
+                                            studentConsumer
+                                                .selectCourseIndex(true);
+                                          } else {
+                                            programConsumer.newData.clear();
+                                            studentConsumer
+                                                .selectCourseIndex(false);
+                                          }
+                                        },
+                                        child: studentConsumer
+                                                    .selectedCourseIndex ==
+                                                false
+                                            ? const Icon(
+                                                Icons.edit_outlined,
+                                                color: AppColors.colorRed,
+                                              )
+                                            : const Icon(
+                                                Icons.close,
+                                                color: AppColors.colorRed,
+                                              ))
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                height: 15.h,
+                              ),
+                              studentConsumer.selectedCourseIndex == false
+                                  ? Padding(
+                                      padding: const EdgeInsets.only(
+                                          top: 18.0, left: 18),
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                            color: AppColors.colorWhite,
+                                            border: Border.all(
+                                                color: AppColors.colorc7e,
+                                                width: 2),
+                                            borderRadius:
+                                                BorderRadius.circular(8)),
+                                        height: 75.h,
+                                        width: size.width * 0.2,
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              AppRichTextView(
+                                                  title: "Current Program",
+                                                  textColor:
+                                                      AppColors.colorBlack,
+                                                  fontSize: 14.sp,
+                                                  fontWeight: FontWeight.bold),
+                                              Expanded(
+                                                  child: AppTextFormFieldWidget(
+                                                enable: false,
+                                                initialValue: widget
+                                                    .studentDetails
+                                                    .currentProgramName,
+                                                textStyle: GoogleFonts.roboto(
+                                                    fontWeight: FontWeight.w700,
+                                                    color: AppColors.colorc7e,
+                                                    fontSize: 15.sp),
+                                                inputDecoration:
+                                                    const InputDecoration(
+                                                        border:
+                                                            InputBorder.none,
+                                                        hintStyle: TextStyle(
+                                                            color: AppColors
+                                                                .colorGrey)),
+                                                obscureText: false,
+                                              )),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    )
+                                  : const Padding(
+                                      padding:
+                                          EdgeInsets.only(top: 18.0, left: 18),
+                                      child: ProgramDropdown(),
+                                    ),
+                              SizedBox(
+                                height: 15.h,
+                              ),
+                              studentConsumer.selectedCourseIndex == false
+                                  ? Padding(
+                                      padding: const EdgeInsets.only(left: 18),
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                            color: AppColors.colorWhite,
+                                            border: Border.all(
+                                                color: AppColors.colorc7e,
+                                                width: 2),
+                                            borderRadius:
+                                                BorderRadius.circular(8)),
+                                        height: 70.h,
+                                        width: size.width * 0.2,
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              AppRichTextView(
+                                                  title: "Current class",
+                                                  textColor:
+                                                      AppColors.colorBlack,
+                                                  fontSize: 14.sp,
+                                                  fontWeight: FontWeight.bold),
+                                              Expanded(
+                                                  child: AppTextFormFieldWidget(
+                                                enable: false,
+                                                initialValue: widget
+                                                            .studentDetails
+                                                            .currentProgramId ==
+                                                        300
+                                                    ? widget.studentDetails
+                                                        .rotationName
+                                                    : widget.studentDetails
+                                                        .currentClassName,
+                                                textStyle: GoogleFonts.roboto(
+                                                    fontWeight: FontWeight.w700,
+                                                    color: AppColors.colorc7e,
+                                                    fontSize: 15.sp),
+                                                onSaved: (p0) {
+                                                  // facultyProvider.setLastName(p0!);
+                                                },
+                                                inputDecoration:
+                                                    const InputDecoration(
+                                                        border:
+                                                            InputBorder.none,
+                                                        hintStyle: TextStyle(
+                                                            color: AppColors
+                                                                .colorGrey)),
+                                                obscureText: false,
+                                              )),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    )
+                                  : programConsumer.selectedDept == "300"
+                                      ? Container()
+                                      : const Padding(
+                                          padding: EdgeInsets.only(left: 18),
+                                          child: ClassDropdown(),
+                                        ),
+                              SizedBox(
+                                height: 15.h,
+                              ),
+                              studentConsumer.selectedCourseIndex == false
+                                  ? Container()
+                                  : programConsumer.selectedDept == "300"
+                                      ? Container()
+                                      : Padding(
+                                          padding:
+                                              const EdgeInsets.only(left: 18),
+                                          child: Column(
+                                            children: [
+                                              const DynamicYearsDropdown(),
+                                              SizedBox(
+                                                height: 10.h,
+                                              ),
+                                              const BatchDropdown(),
+                                            ],
+                                          ),
+                                        ),
+                              SizedBox(
+                                height: 15.h,
+                              ),
+                              (studentConsumer.selectedCourseIndex == false ||
+                                      programConsumer.selectedBatch == null)
+                                  ? Container()
+                                  : Padding(
+                                      padding: const EdgeInsets.only(left: 18),
+                                      child: Row(
+                                        children: [
+                                          Checkbox(
+                                            activeColor: AppColors.colorc7e,
+                                            value: commonConsumer.isChecked,
+                                            onChanged: (bool? value) {
+                                              commonConsumer.toggleCheckbox(
+                                                  value ?? false);
+                                            },
+                                          ),
+                                          AppRichTextView(
+                                            title: "Current Class",
+                                            fontSize: 15.sp,
+                                            fontWeight: FontWeight.bold,
+                                            textColor: AppColors.colorc7e,
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                              Divider(
+                                height: 3.h,
+                                color: AppColors.colorc7e,
+                                thickness: 3,
+                              ),
+                              SizedBox(
+                                height: 15.h,
+                              ),
+                              studentConsumer.selectedCourseIndex == true &&
+                                          programConsumer.selectedBatch !=
+                                              null ||
+                                      programConsumer.selectedDept == "300"
+                                  ? Column(
+                                      children: [
+                                        programConsumer.selectedDept == "300"
+                                            ? programConsumer.isLoading == true
+                                                ? const Center(
+                                                    child: SpinKitSpinningLines(
+                                                        color:
+                                                            AppColors.colorc7e),
+                                                  )
+                                                : programConsumer
+                                                            .clinicalCoursesModel
+                                                            .clinicals ==
+                                                        null
+                                                    ? Container()
+                                                    : Column(
+                                                        children: [
+                                                          AppRichTextView(
+                                                            title:
+                                                                "Clinical Courses",
+                                                            fontSize: 25.sp,
                                                             fontWeight:
                                                                 FontWeight.bold,
                                                             textColor: AppColors
-                                                                .colorBlack,
+                                                                .colorc7e,
                                                           ),
-                                                          subtitle: Column(
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .start,
-                                                            children: [
-                                                              AppRichTextView(
-                                                                title: currentItem
-                                                                    .courseId!,
-                                                                fontSize: 12.sp,
+                                                          SizedBox(
+                                                            height: 15.h,
+                                                          ),
+                                                          ListView.builder(
+                                                            shrinkWrap: true,
+                                                            itemCount:
+                                                                programConsumer
+                                                                    .clinicalCoursesModel
+                                                                    .clinicals!
+                                                                    .length,
+                                                            itemBuilder:
+                                                                (context,
+                                                                    index) {
+                                                              var currentItem =
+                                                                  programConsumer
+                                                                      .clinicalCoursesModel
+                                                                      .clinicals![index];
+
+                                                              return Padding(
+                                                                padding:
+                                                                    const EdgeInsets
+                                                                        .all(
+                                                                        8.0),
+                                                                child:
+                                                                    Container(
+                                                                  decoration: BoxDecoration(
+                                                                      border: Border.all(
+                                                                          color: AppColors
+                                                                              .colorc7e,
+                                                                          width: 3
+                                                                              .w),
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(
+                                                                              8.sp)),
+                                                                  child:
+                                                                      ListTile(
+                                                                    dense: true,
+                                                                    trailing: clincalConsumer.clincalFees !=
+                                                                                null &&
+                                                                            clincalConsumer.selectedClinicalRadio ==
+                                                                                currentItem.iD
+                                                                        ? Row(
+                                                                            mainAxisSize:
+                                                                                MainAxisSize.min,
+                                                                            children: [
+                                                                              InkWell(
+                                                                                onTap: () async {
+                                                                                  DateTime? pickedDate = await showDatePicker(
+                                                                                      builder: (context, child) {
+                                                                                        return Theme(
+                                                                                            data: ThemeData.dark().copyWith(
+                                                                                              colorScheme: const ColorScheme.dark(
+                                                                                                primary: AppColors.colorc7e,
+                                                                                                onPrimary: Colors.white,
+                                                                                                surface: AppColors.colorWhite,
+                                                                                                onSurface: AppColors.colorc7e,
+                                                                                              ),
+                                                                                              dialogBackgroundColor: AppColors.colorc7e,
+                                                                                            ),
+                                                                                            child: child!);
+                                                                                      },
+                                                                                      barrierDismissible: false,
+                                                                                      context: context,
+                                                                                      initialDate: DateTime.now(),
+                                                                                      firstDate: DateTime(1900), //- not to allow to choose before today.
+                                                                                      lastDate: DateTime.now().add(const Duration(days: 91)));
+
+                                                                                  if (pickedDate != null) {
+                                                                                    //pickedDate output format => 2021-03-10 00:00:00.000
+                                                                                    String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate);
+                                                                                    clincalConsumer.setClinicalStartDate(formattedDate);
+                                                                                  } else {
+                                                                                    print("Date is not selected");
+                                                                                  }
+                                                                                },
+                                                                                child: Column(
+                                                                                  children: [
+                                                                                    const Icon(Icons.calendar_month),
+                                                                                    Expanded(
+                                                                                      child: AppRichTextView(
+                                                                                        title: clincalConsumer.clincalStartDate == null ? "Start Date" : clincalConsumer.clincalStartDate!,
+                                                                                        fontSize: 10.sp,
+                                                                                        fontWeight: FontWeight.bold,
+                                                                                        textColor: AppColors.colorGreen,
+                                                                                      ),
+                                                                                    ),
+                                                                                  ],
+                                                                                ),
+                                                                              ),
+                                                                              SizedBox(
+                                                                                width: 15.w,
+                                                                              ),
+                                                                              clincalConsumer.clincalStartDate == null
+                                                                                  ? const SizedBox()
+                                                                                  : InkWell(
+                                                                                      onTap: () async {
+                                                                                        DateTime? pickedDate = await showDatePicker(
+                                                                                            builder: (context, child) {
+                                                                                              return Theme(
+                                                                                                  data: ThemeData.dark().copyWith(
+                                                                                                    colorScheme: const ColorScheme.dark(
+                                                                                                      primary: AppColors.colorc7e,
+                                                                                                      onPrimary: Colors.white,
+                                                                                                      surface: AppColors.colorWhite,
+                                                                                                      onSurface: AppColors.colorc7e,
+                                                                                                    ),
+                                                                                                    dialogBackgroundColor: AppColors.colorc7e,
+                                                                                                  ),
+                                                                                                  child: child!);
+                                                                                            },
+                                                                                            barrierDismissible: false,
+                                                                                            context: context,
+                                                                                            initialDate: DateTime.parse(clincalConsumer.clincalStartDate!),
+                                                                                            firstDate: DateTime.parse(clincalConsumer.clincalStartDate!), //- not to allow to choose before today.
+                                                                                            lastDate: DateTime.now().add(const Duration(days: 91)));
+
+                                                                                        if (pickedDate != null) {
+                                                                                          String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate);
+                                                                                          clincalConsumer.setClinicalendDate(formattedDate);
+
+                                                                                          //pickedDate output format => 2021-03-10 00:00:00.000
+                                                                                        } else {
+                                                                                          print("Date is not selected");
+                                                                                        }
+                                                                                      },
+                                                                                      child: Column(
+                                                                                        children: [
+                                                                                          const Icon(Icons.calendar_month),
+                                                                                          Expanded(
+                                                                                            child: AppRichTextView(
+                                                                                              title: clincalConsumer.clincalEndDate == null ? "End Date" : clincalConsumer.clincalEndDate!,
+                                                                                              fontSize: 10.sp,
+                                                                                              fontWeight: FontWeight.bold,
+                                                                                              textColor: AppColors.colorRed,
+                                                                                            ),
+                                                                                          ),
+                                                                                        ],
+                                                                                      ),
+                                                                                    )
+                                                                            ],
+                                                                          )
+                                                                        : const SizedBox(),
+                                                                    isThreeLine:
+                                                                        true,
+                                                                    title: Row(
+                                                                      children: [
+                                                                        AppRichTextView(
+                                                                          title: currentItem
+                                                                              .rotationName!
+                                                                              .trim(),
+                                                                          fontSize:
+                                                                              15.sp,
+                                                                          fontWeight:
+                                                                              FontWeight.bold,
+                                                                          textColor:
+                                                                              AppColors.colorc7e,
+                                                                        ),
+                                                                        SizedBox(
+                                                                          width:
+                                                                              3.w,
+                                                                        ),
+                                                                        clincalConsumer.clincalFees != null &&
+                                                                                clincalConsumer.selectedClinicalRadio == currentItem.iD
+                                                                            ? AppRichTextView(
+                                                                                title: "(${clincalConsumer.clincalFees} USD)",
+                                                                                fontSize: 15.sp,
+                                                                                fontWeight: FontWeight.bold,
+                                                                                textColor: AppColors.colorc7e,
+                                                                              )
+                                                                            : const SizedBox(),
+                                                                        SizedBox(
+                                                                          width:
+                                                                              3.w,
+                                                                        ),
+                                                                        clincalConsumer.clincalFees != null &&
+                                                                                clincalConsumer.selectedClinicalRadio == currentItem.iD
+                                                                            ? InkWell(
+                                                                                onTap: () async {
+                                                                                  await showClinicalFeeAlert(context, clincalConsumer.selectedClinicalRadio!);
+                                                                                },
+                                                                                child: AppRichTextView(
+                                                                                  title: clincalConsumer.clinicalFeeRadioValue!,
+                                                                                  fontSize: 15.sp,
+                                                                                  fontWeight: FontWeight.bold,
+                                                                                  textColor: clincalConsumer.clinicalFeeRadioValue == "Paid" ? AppColors.color582 : Colors.red,
+                                                                                ),
+                                                                              )
+                                                                            : const SizedBox(),
+                                                                      ],
+                                                                    ),
+                                                                    subtitle: Column(
+                                                                        crossAxisAlignment:
+                                                                            CrossAxisAlignment.start,
+                                                                        children: [
+                                                                          AppRichTextView(
+                                                                            title:
+                                                                                "Duration: ${currentItem.rotationDuration!} Weeks",
+                                                                            fontSize:
+                                                                                12.sp,
+                                                                            fontWeight:
+                                                                                FontWeight.w700,
+                                                                            textColor:
+                                                                                AppColors.colorc7e,
+                                                                          ),
+                                                                          AppRichTextView(
+                                                                            title:
+                                                                                "Credits: ${currentItem.rotationCredits!}",
+                                                                            fontSize:
+                                                                                12.sp,
+                                                                            fontWeight:
+                                                                                FontWeight.w700,
+                                                                            textColor:
+                                                                                AppColors.colorc7e,
+                                                                          ),
+                                                                        ]),
+                                                                    leading: Radio<
+                                                                            int>(
+                                                                        activeColor:
+                                                                            AppColors
+                                                                                .colorc7e,
+                                                                        value: currentItem
+                                                                            .iD!,
+                                                                        groupValue:
+                                                                            clincalConsumer
+                                                                                .selectedClinicalRadio,
+                                                                        onChanged:
+                                                                            (value) async {
+                                                                          await showClinicalFeeAlert(
+                                                                              context,
+                                                                              value!);
+                                                                        }),
+                                                                  ),
+                                                                ),
+                                                              );
+                                                            },
+                                                          ),
+                                                          SizedBox(
+                                                            height: 15.h,
+                                                          ),
+                                                        ],
+                                                      )
+                                            : Container(),
+                                        studentConsumer.selectedCourseIndex ==
+                                                    true &&
+                                                programConsumer.selectedBatch !=
+                                                    null
+                                            ? programConsumer.isLoading == true
+                                                ? const Center(
+                                                    child: SpinKitSpinningLines(
+                                                        color:
+                                                            AppColors.colorc7e),
+                                                  )
+                                                : Center(
+                                                    child: (widget.studentDetails
+                                                                    .currentClassId
+                                                                    .toString() ==
+                                                                programConsumer
+                                                                    .selectedClass &&
+                                                            widget.studentDetails
+                                                                    .batch ==
+                                                                programConsumer
+                                                                    .selectedBatch)
+                                                        ? AppRichTextView(
+                                                            title:
+                                                                "Current Class",
+                                                            fontSize: 20.sp,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            textColor: AppColors
+                                                                .colorc7e,
+                                                          )
+                                                        : programConsumer
+                                                                .newData.isEmpty
+                                                            ? AppRichTextView(
+                                                                maxLines: 2,
+                                                                title:
+                                                                    "No Course Found Kindly add the Course in the Department Section",
+                                                                fontSize: 20.sp,
                                                                 fontWeight:
-                                                                    FontWeight.w500,
-                                                                textColor: AppColors
-                                                                    .colorBlack,
-                                                              ),
-                                                              AppRichTextView(
-                                                                title: widget.studentDetails
-                                                                                .batch ==
-                                                                            programConsumer
-                                                                                .selectedBatch &&
-                                                                        widget.studentDetails
-                                                                                .currentClassId
-                                                                                .toString() ==
-                                                                            programConsumer
-                                                                                .selectedClass
-                                                                    ? "Already Registered"
-                                                                    : "Assigned Lecture: ${currentItem.assignedLec! == "" ? "Not Assigned" : currentItem.assignedLec!}",
-                                                                fontSize: 12.sp,
+                                                                    FontWeight
+                                                                        .bold,
+                                                                textColor:
+                                                                    AppColors
+                                                                        .colorRed,
+                                                              )
+                                                            : AppRichTextView(
+                                                                title:
+                                                                    "Registered Course",
+                                                                fontSize: 20.sp,
                                                                 fontWeight:
-                                                                    FontWeight.bold,
-                                                                textColor: currentItem
-                                                                            .assignedLec! ==
-                                                                        ""
-                                                                    ? AppColors
-                                                                        .colorRed
-                                                                    : AppColors
+                                                                    FontWeight
+                                                                        .bold,
+                                                                textColor:
+                                                                    AppColors
                                                                         .colorc7e,
-                                                              ),
-                                                            ],
-                                                          ),
-                                                          value: widget.studentDetails
-                                                                          .batch ==
-                                                                      programConsumer
-                                                                          .selectedBatch &&
-                                                                  widget.studentDetails
+                                                              ))
+                                            : Container(),
+                                        programConsumer.newData.isEmpty
+                                            ? Container()
+                                            : ListView.builder(
+                                                shrinkWrap: true,
+                                                itemCount: programConsumer
+                                                    .coursesModel
+                                                    .courses!
+                                                    .length,
+                                                itemBuilder: (context, index) {
+                                                  var currentItem =
+                                                      programConsumer
+                                                          .coursesModel
+                                                          .courses![index];
+                                                  int itemId = currentItem.iD!;
+
+                                                  return Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            8.0),
+                                                    child: Container(
+                                                      decoration: BoxDecoration(
+                                                          color: widget.studentDetails
                                                                           .currentClassId
                                                                           .toString() ==
                                                                       programConsumer
-                                                                          .selectedClass
-                                                              ? true
-                                                              : selectedIDs
-                                                                  .contains(itemId),
-                                                          onChanged: (value) {
-                                                            setState(() {
-                                                              if (value!) {
-                                                                // Add the selected ID to the list
-                                                                selectedIDs
-                                                                    .add(itemId);
-                                                              } else {
-                                                                // Remove the ID if the checkbox is unchecked
-                                                                selectedIDs
-                                                                    .remove(itemId);
-                                                              }
-                                                            });
-                                                            print(selectedIDs);
-                                                          },
+                                                                          .selectedClass &&
+                                                                  widget.studentDetails
+                                                                          .batch ==
+                                                                      programConsumer
+                                                                          .selectedBatch
+                                                              ? AppColors
+                                                                  .colorGrey
+                                                              : AppColors
+                                                                  .colorWhite,
+                                                          border: Border.all(
+                                                              color: AppColors
+                                                                  .colorc7e,
+                                                              width: 3.w),
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      8.sp)),
+                                                      child: CheckboxListTile(
+                                                        side:
+                                                            WidgetStateBorderSide
+                                                                .resolveWith(
+                                                          (states) =>
+                                                              const BorderSide(
+                                                                  width: 2.0,
+                                                                  color: AppColors
+                                                                      .colorc7e),
                                                         ),
+                                                        checkColor:
+                                                            AppColors.colorc7e,
+                                                        activeColor: AppColors
+                                                            .colorWhite,
+                                                        title: AppRichTextView(
+                                                          title: currentItem
+                                                              .courseName!
+                                                              .trim(),
+                                                          fontSize: 15.sp,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          textColor: AppColors
+                                                              .colorBlack,
+                                                        ),
+                                                        subtitle: Column(
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .start,
+                                                          children: [
+                                                            AppRichTextView(
+                                                              title: currentItem
+                                                                  .courseId!,
+                                                              fontSize: 12.sp,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500,
+                                                              textColor: AppColors
+                                                                  .colorBlack,
+                                                            ),
+                                                            AppRichTextView(
+                                                              title: widget.studentDetails
+                                                                              .batch ==
+                                                                          programConsumer
+                                                                              .selectedBatch &&
+                                                                      widget.studentDetails
+                                                                              .currentClassId
+                                                                              .toString() ==
+                                                                          programConsumer
+                                                                              .selectedClass
+                                                                  ? "Already Registered"
+                                                                  : "Assigned Lecture: ${currentItem.assignedLec! == "" ? "Not Assigned" : currentItem.assignedLec!}",
+                                                              fontSize: 12.sp,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                              textColor: currentItem.assignedLec! ==
+                                                                      ""
+                                                                  ? AppColors
+                                                                      .colorRed
+                                                                  : AppColors
+                                                                      .colorc7e,
+                                                            ),
+                                                          ],
+                                                        ),
+                                                        value: widget.studentDetails
+                                                                        .batch ==
+                                                                    programConsumer
+                                                                        .selectedBatch &&
+                                                                widget.studentDetails
+                                                                        .currentClassId
+                                                                        .toString() ==
+                                                                    programConsumer
+                                                                        .selectedClass
+                                                            ? true
+                                                            : selectedIDs
+                                                                .contains(
+                                                                    itemId),
+                                                        onChanged: (value) {
+                                                          setState(() {
+                                                            if (value!) {
+                                                              // Add the selected ID to the list
+                                                              selectedIDs
+                                                                  .add(itemId);
+                                                            } else {
+                                                              // Remove the ID if the checkbox is unchecked
+                                                              selectedIDs
+                                                                  .remove(
+                                                                      itemId);
+                                                            }
+                                                          });
+                                                          print(selectedIDs);
+                                                        },
                                                       ),
-                                                    );
-                                                  },
-                                                ),
-                                          programConsumer.isLoading == true ||
-                                                  programConsumer
-                                                          .clinicalCoursesModel
-                                                          .clinicals ==
-                                                      null ||
-                                                  clincalConsumer.clincalEndDate ==
-                                                      null
-                                              ? Container()
-                                              : widget.studentDetails.currentClassId
-                                                              .toString() !=
-                                                          programConsumer
-                                                              .selectedClass &&
-                                                      widget.studentDetails.batch !=
-                                                          programConsumer
-                                                              .selectedBatch
-                                                  ? Padding(
-                                                      padding: EdgeInsets.only(
-                                                          left: 15.w, bottom: 15.h),
-                                                      child: Row(
-                                                        children: [
-                                                          AppElevatedButon(
-                                                            loading: studentConsumer
-                                                                .isLoading,
-                                                            title: "Update",
-                                                            buttonColor: AppColors
-                                                                .colorWhite,
-                                                            height: 50.h,
-                                                            width: 150.w,
-                                                            onPressed:
-                                                                (context) async {
+                                                    ),
+                                                  );
+                                                },
+                                              ),
+                                        programConsumer.isLoading == true ||
+                                                programConsumer
+                                                        .clinicalCoursesModel
+                                                        .clinicals ==
+                                                    null ||
+                                                clincalConsumer
+                                                        .clincalEndDate ==
+                                                    null
+                                            ? Container()
+                                            : widget.studentDetails
+                                                            .currentClassId
+                                                            .toString() !=
+                                                        programConsumer
+                                                            .selectedClass &&
+                                                    widget.studentDetails
+                                                            .batch !=
+                                                        programConsumer
+                                                            .selectedBatch
+                                                ? Padding(
+                                                    padding: EdgeInsets.only(
+                                                        left: 15.w,
+                                                        bottom: 15.h),
+                                                    child: Row(
+                                                      children: [
+                                                        AppElevatedButon(
+                                                          loading:
+                                                              studentConsumer
+                                                                  .isLoading,
+                                                          title: "Update",
+                                                          buttonColor: AppColors
+                                                              .colorWhite,
+                                                          height: 50.h,
+                                                          width: 150.w,
+                                                          onPressed:
+                                                              (context) async {
+                                                            var token =
+                                                                await getTokenAndUseIt();
+                                                            if (token == null) {
+                                                              if (context
+                                                                  .mounted) {
+                                                                Navigator.pushNamed(
+                                                                    context,
+                                                                    RouteNames
+                                                                        .login);
+                                                              }
+                                                            } else if (token ==
+                                                                "Token Expired") {
+                                                              ToastHelper()
+                                                                  .errorToast(
+                                                                      "Session Expired Please Login Again");
+
+                                                              if (context
+                                                                  .mounted) {
+                                                                Navigator.pushNamed(
+                                                                    context,
+                                                                    RouteNames
+                                                                        .login);
+                                                              }
+                                                            } else {
                                                               if (programConsumer
                                                                       .selectedDept ==
                                                                   "300") {
+                                                                var result = await clincalConsumer
+                                                                    .postClinicalCourse(
+                                                                        token,
+                                                                        widget
+                                                                            .studentDetails
+                                                                            .iD);
+                                                                if (result ==
+                                                                    201) {
+                                                                  await studentConsumer
+                                                                      .getStudent(
+                                                                          token);
+                                                                  if (context
+                                                                      .mounted) {
+                                                                    Navigator.pop(
+                                                                        context);
+                                                                  }
+                                                                }
                                                               } else {
                                                                 if (selectedIDs
                                                                     .isEmpty) {
@@ -1581,95 +1681,70 @@ class _AddFacultyViewState extends State<UpdateStudentDetails> {
                                                                       .errorToast(
                                                                           "Please Select the Course");
                                                                 } else {
-                                                                  var token =
-                                                                      await getTokenAndUseIt();
-                                                                  if (token ==
+                                                                  var result = await studentConsumer.updateStudentClass(
+                                                                      token,
+                                                                      selectedCourseList:
+                                                                          selectedIDs,
+                                                                      programId:
+                                                                          int.parse(programConsumer
+                                                                              .selectedDept!),
+                                                                      classId: int.parse(
+                                                                          programConsumer
+                                                                              .selectedClass!),
+                                                                      studentId:
+                                                                          widget
+                                                                              .studentDetails
+                                                                              .iD,
+                                                                      currentClass:
+                                                                          commonConsumer
+                                                                              .isChecked);
+                                                                  if (result !=
                                                                       null) {
                                                                     if (context
                                                                         .mounted) {
-                                                                      Navigator.pushNamed(
-                                                                          context,
-                                                                          RouteNames
-                                                                              .login);
-                                                                    }
-                                                                  } else if (token ==
-                                                                      "Token Expired") {
-                                                                    ToastHelper()
-                                                                        .errorToast(
-                                                                            "Session Expired Please Login Again");
-                    
-                                                                    if (context
-                                                                        .mounted) {
-                                                                      Navigator.pushNamed(
-                                                                          context,
-                                                                          RouteNames
-                                                                              .login);
-                                                                    }
-                                                                  } else {
-                                                                    var result = await studentConsumer.updateStudentClass(
-                                                                        token,
-                                                                        selectedCourseList:
-                                                                            selectedIDs,
-                                                                        programId: int.parse(
-                                                                            programConsumer
-                                                                                .selectedDept!),
-                                                                        classId: int.parse(
-                                                                            programConsumer
-                                                                                .selectedClass!),
-                                                                        studentId:
-                                                                            widget
-                                                                                .studentDetails
-                                                                                .iD,
-                                                                        currentClass:
-                                                                            commonConsumer
-                                                                                .isChecked);
-                                                                    if (result !=
-                                                                        null) {
-                                                                      if (context
-                                                                          .mounted) {
-                                                                        Navigator.pop(
-                                                                            context);
-                                                                      }
+                                                                      Navigator.pop(
+                                                                          context);
                                                                     }
                                                                   }
                                                                 }
                                                               }
-                                                            },
-                                                            borderColor:
-                                                                AppColors.color582,
-                                                            textColor:
-                                                                AppColors.color582,
-                                                          ),
-                                                          SizedBox(
-                                                            width: 10.w,
-                                                          ),
-                                                          AppElevatedButon(
-                                                            title: "Cancel",
-                                                            buttonColor: AppColors
-                                                                .colorWhite,
-                                                            height: 50.h,
-                                                            width: 150.w,
-                                                            onPressed: (context) {},
-                                                            borderColor:
-                                                                AppColors.colorRed,
-                                                            textColor:
-                                                                AppColors.colorRed,
-                                                          )
-                                                        ],
-                                                      ),
-                                                    )
-                                                  : Container()
-                                        ],
-                                      )
-                                    : Container()
-                              ],
-                            ),
+                                                            }
+                                                          },
+                                                          borderColor: AppColors
+                                                              .color582,
+                                                          textColor: AppColors
+                                                              .color582,
+                                                        ),
+                                                        SizedBox(
+                                                          width: 10.w,
+                                                        ),
+                                                        AppElevatedButon(
+                                                          title: "Cancel",
+                                                          buttonColor: AppColors
+                                                              .colorWhite,
+                                                          height: 50.h,
+                                                          width: 150.w,
+                                                          onPressed:
+                                                              (context) {},
+                                                          borderColor: AppColors
+                                                              .colorRed,
+                                                          textColor: AppColors
+                                                              .colorRed,
+                                                        )
+                                                      ],
+                                                    ),
+                                                  )
+                                                : Container()
+                                      ],
+                                    )
+                                  : Container()
+                            ],
                           ),
                         ),
-                      );
-                    });
-                  }
-                );
+                      ),
+                    );
+                  });
+                });
               }))
             ],
           );

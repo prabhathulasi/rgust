@@ -54,6 +54,7 @@ class StudentList {
   String? qualifiation;
    String? createdBy;
    int ?fullTutionFee;
+   String ? rotationName;
   
 
   StudentList(
@@ -85,7 +86,7 @@ class StudentList {
       this.accountCreated,
       this.qualifiation,
       this.fullTutionFee,
-   
+   this.rotationName,
       this.createdBy
       });
 
@@ -119,6 +120,7 @@ class StudentList {
     createdBy =json["CreatedBy"];
         qualifiation = json['Qualification'];
         fullTutionFee = json["FullTutionFee"];
+        rotationName = json["rotation_name"];
  
   }
 
@@ -153,6 +155,7 @@ class StudentList {
     data["Qualification"] = qualifiation;
     data["CreatedBy"]=createdBy;
     data["FullTutionFee"]= fullTutionFee;
+    data["rotation_name"]= rotationName;
  
     return data;
   }

@@ -40,7 +40,7 @@ class _WebLoginViewState extends State<WebLoginView> {
     AppColors.colorRed,
   ];
   var colorizeTextStyle =
-      GoogleFonts.oswald(fontSize: 35.sp, fontWeight: FontWeight.w600);
+      GoogleFonts.londrinaSketch(fontSize: 35.sp, fontWeight: FontWeight.w600);
  final FocusNode passwordFocus = FocusNode();
  @override
   void dispose() {
@@ -52,6 +52,7 @@ class _WebLoginViewState extends State<WebLoginView> {
   Widget build(BuildContext context) {
     var size = MediaQuery.sizeOf(context);
     return Scaffold(
+      backgroundColor: AppColors.colorWhite,
       appBar: AppBar(
         toolbarHeight: 150.h,
         leadingWidth: 80.h,
@@ -73,9 +74,10 @@ class _WebLoginViewState extends State<WebLoginView> {
               height: size.height,
               width: size.width * 0.53,
               decoration: BoxDecoration(
+                color: AppColors.colorWhite,
                 borderRadius:
                     BorderRadius.only(topRight: Radius.circular(30.sp)),
-                color: AppColors.colorc7e,
+                border: Border.all(color: AppColors.colorc7e,width: 3.w)
               ),
               child: Padding(
                 padding: EdgeInsets.all(20.0.sp),
@@ -125,11 +127,11 @@ class _WebLoginViewState extends State<WebLoginView> {
                       ),
                       Container(
                         decoration: BoxDecoration(
-                            color: AppColors.colorc7e,
+                          border: Border.all(color: AppColors.colorc7e,width: 3.w),
                             borderRadius: BorderRadius.circular(18.sp)),
                         child: AppTextFormFieldWidget(
-                          textStyle: GoogleFonts.oswald(
-                            color: AppColors.colorWhite,
+                          textStyle: GoogleFonts.poppins(
+                            color: AppColors.colorc7e,
                           ),
                           validator: (value) {
                             return EmailFormFieldValidator.validate(value!);
@@ -143,7 +145,7 @@ class _WebLoginViewState extends State<WebLoginView> {
                               floatingLabelBehavior: FloatingLabelBehavior.always,
                               hintText: "Enter Username",
                               hintStyle:
-                                  GoogleFonts.oswald(color: AppColors.colorWhite),
+                                  GoogleFonts.poppins(color: AppColors.colorGrey),
                               contentPadding: EdgeInsets.symmetric(
                                   vertical: 20.0.h, horizontal: 10.0.w),
                               border: InputBorder.none),
@@ -159,26 +161,31 @@ class _WebLoginViewState extends State<WebLoginView> {
                         builder: (context, authProvider, child) {
                           return Container(
                             decoration: BoxDecoration(
-                                color: AppColors.colorc7e,
+                             border: Border.all(color: AppColors.colorc7e,width: 3.w),
                                 borderRadius: BorderRadius.circular(18.sp)),
                             child: AppTextFormFieldWidget(
                               focusNode: passwordFocus,
-                              textStyle: GoogleFonts.oswald(
-                                color: AppColors.colorWhite,
+                              textStyle: GoogleFonts.poppins(
+                                color: AppColors.colorc7e,
                               ),
                               onSaved: (p0) => password = p0,
                               validator: (value) {
                                 return PasswordFormFieldValidator.validate(value!);
                               },
-                              obscureText: true,
+                              obscureText: authProvider.passwordVisibility,
                               inputDecoration: InputDecoration(
+                                suffixIcon:  InkWell(
+                                  onTap: () {
+                                    authProvider.setPasswordVisibility();
+                                  },
+                                  child:  Icon(authProvider.passwordVisibility == true? Icons.visibility_outlined : Icons.visibility_off_outlined, color: AppColors.colorc7e,)),
                                 errorStyle: GoogleFonts.oswald(
                                     color: AppColors.colorRed,
                                     fontWeight: FontWeight.bold),
                                 floatingLabelBehavior: FloatingLabelBehavior.always,
                                 hintText: "Enter Password",
                                 hintStyle:
-                                    GoogleFonts.oswald(color: AppColors.colorWhite),
+                                    GoogleFonts.poppins(color: AppColors.colorGrey),
                                 contentPadding: EdgeInsets.symmetric(
                                     vertical: 20.0.h, horizontal: 10.0.w),
                                 border: InputBorder.none,
@@ -221,8 +228,9 @@ class _WebLoginViewState extends State<WebLoginView> {
                             builder: (context, authProvider, child) {
                           return AppElevatedButon(
                             loading: authProvider.isLoading,
+                            borderColor: AppColors.colorc7e,
                             title: "Login",
-                            buttonColor: AppColors.colorc7e,
+                            buttonColor: AppColors.colorWhite,
                             height: 50.h,
                             width: size.width * 0.15,
                             onPressed: (context) async {
@@ -249,7 +257,7 @@ class _WebLoginViewState extends State<WebLoginView> {
                                 }
                               }
                             },
-                            textColor: AppColors.colorWhite,
+                            textColor: AppColors.colorc7e,
                           );
                         }),
                       ),

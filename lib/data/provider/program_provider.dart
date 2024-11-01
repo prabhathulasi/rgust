@@ -2,7 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:rugst_alliance_academia/data/model/clinical_course_model.dart';
+import 'package:rugst_alliance_academia/data/model/clinical/clinical_course_model.dart';
+import 'package:rugst_alliance_academia/data/model/clinical/clinical_registration_model.dart';
 import 'package:rugst_alliance_academia/data/model/course_model.dart';
 import 'package:rugst_alliance_academia/data/model/program_class_model.dart';
 import 'package:rugst_alliance_academia/data/model/program_model.dart';
@@ -18,6 +19,7 @@ class ProgramProvider extends ChangeNotifier {
   ProgramClassModel programClassModel = ProgramClassModel();
   CoursesModel coursesModel = CoursesModel();
   ClinicalCoursesModel clinicalCoursesModel = ClinicalCoursesModel();
+  ClinicalRegistrationModel clinicalRegistrationModel = ClinicalRegistrationModel();
   bool showCreateButton = false;
   List<dynamic> newData = [];
   String? selectedDept;
@@ -177,7 +179,7 @@ class ProgramProvider extends ChangeNotifier {
     var result = await ApiHelper.get("GetClinical", token);
     try {
       if (result.statusCode == 200) {
-        setLoading(false);
+   
         var data = json.decode(result.body);
 
         clinicalCoursesModel = ClinicalCoursesModel.fromJson(data);
@@ -197,7 +199,31 @@ class ProgramProvider extends ChangeNotifier {
       setLoading(false);
     }
   }
+  Future getClinicalRegistrations(String token, int studentId) async {
+    setLoading(true);
+    var result = await ApiHelper.get("GetClinicalStudentRegistration/$studentId", token);
+    try {
+      if (result.statusCode == 200) {
+       
+        var data = json.decode(result.body);
 
+        clinicalRegistrationModel = ClinicalRegistrationModel.fromJson(data);
+
+        return clinicalRegistrationModel;
+      } else if (result.statusCode == 204) {
+        ToastHelper().errorToast("No Record Found");
+        return null;
+      } else {
+        ToastHelper().errorToast("Internal Server Error");
+        return null;
+      }
+    } catch (e) {
+      Fluttertoast.showToast(msg: e.toString());
+      return e.toString();
+    } finally {
+      setLoading(false);
+    }
+  }
 // create course or add new course
   Future postClinicalCourse(String? token,
       {String? rotationName, int? duration, int? credits}) async {
@@ -278,6 +304,7 @@ class ProgramProvider extends ChangeNotifier {
       await getClasses(token);
     } else {
       getClinicalCourses(token);
+     
     }
   }
 

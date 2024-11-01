@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
@@ -23,6 +24,7 @@ import 'package:rugst_alliance_academia/widgets/app_formfield.dart';
 
 import 'package:rugst_alliance_academia/widgets/app_richtext.dart';
 import 'package:rugst_alliance_academia/widgets/app_spining.dart';
+import 'package:u_credit_card/u_credit_card.dart';
 
 class StudentDetailView extends StatefulWidget {
   final int studentId;
@@ -38,7 +40,14 @@ class StudentDetailView extends StatefulWidget {
 
 class _FacultyDetailViewState extends State<StudentDetailView> {
   String? password;
-
+  final List<String> imgList = [
+    'https://images.unsplash.com/photo-1520342868574-5fa3804e551c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6ff92caffcdd63681a35134a6770ed3b&auto=format&fit=crop&w=1951&q=80',
+    'https://images.unsplash.com/photo-1522205408450-add114ad53fe?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=368f45b0888aeb0b7b08e3a1084d3ede&auto=format&fit=crop&w=1950&q=80',
+    'https://images.unsplash.com/photo-1519125323398-675f0ddb6308?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=94a1e718d89ca60a6337a6008341ca50&auto=format&fit=crop&w=1950&q=80',
+    'https://images.unsplash.com/photo-1523205771623-e0faa4d2813d?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=89719a0d55dd05e2deae4120227e6efc&auto=format&fit=crop&w=1953&q=80',
+    'https://images.unsplash.com/photo-1508704019882-f9cf40e475b4?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=8c6e5e3aba713b17aa1fe71ab4f0ae5b&auto=format&fit=crop&w=1352&q=80',
+    'https://images.unsplash.com/photo-1519985176271-adb1088fa94c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=a0c8d632e977f94e5d312d9893258f59&auto=format&fit=crop&w=1355&q=80'
+  ];
   showAddAlertDialog(BuildContext context, StudentDetail details) {
     // set up the AlertDialog
     Dialog alert = Dialog(
@@ -47,16 +56,20 @@ class _FacultyDetailViewState extends State<StudentDetailView> {
           UpdateStudentDetails(studentDetails: details),
           Transform.translate(
             offset: Offset(10.w, -13.h),
-            child: GestureDetector(
+            child: InkWell(
                 onTap: () {
                   Navigator.of(context).pop();
                 },
-                child: const Align(
+                child: Align(
                   alignment: Alignment.topRight,
                   child: CircleAvatar(
-                    radius: 14.0,
+                    radius: 14.0.sp,
                     backgroundColor: AppColors.colorc7e,
-                    child: Icon(Icons.close, color: AppColors.color582),
+                    child: CircleAvatar(
+                        backgroundColor: AppColors.colorWhite,
+                        radius: 12.sp,
+                        child:
+                            const Icon(Icons.close, color: AppColors.colorRed)),
                   ),
                 )),
           )
@@ -202,8 +215,10 @@ class _FacultyDetailViewState extends State<StudentDetailView> {
                             flex: 2,
                             child: Container(
                               decoration: BoxDecoration(
-                                  color: AppColors.colorc7e,
-                                  borderRadius: BorderRadius.circular(18.sp)),
+                                border: Border.all(
+                                    color: AppColors.colorc7e, width: 3.w),
+                                color: AppColors.colorWhite,
+                              ),
                               child: Padding(
                                 padding: EdgeInsets.all(8.0.sp),
                                 child: Row(
@@ -226,38 +241,30 @@ class _FacultyDetailViewState extends State<StudentDetailView> {
                                               Positioned(
                                                 right: 0,
                                                 bottom: 0,
-                                                child: Container(
-                                                  decoration: BoxDecoration(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              25.sp),
-                                                      boxShadow: const [
-                                                        BoxShadow(
-                                                            color: AppColors
-                                                                .color582,
-                                                            blurRadius: 10,
-                                                            spreadRadius: 5)
-                                                      ]),
-                                                  child: InkWell(
-                                                    onTap: () async {
-                                                      programProvider
-                                                          .clearAllTemp();
-                                                      studentProvider
-                                                          .clearStudentTemp();
+                                                child: InkWell(
+                                                  onTap: () async {
+                                                    programProvider
+                                                        .clearAllTemp();
+                                                    studentProvider
+                                                        .clearStudentTemp();
 
-                                                      showAddAlertDialog(
-                                                          context, studentData);
-                                                    },
+                                                    showAddAlertDialog(
+                                                        context, studentData);
+                                                  },
+                                                  child: CircleAvatar(
+                                                    radius: 15.sp,
+                                                    backgroundColor:
+                                                        AppColors.color582,
                                                     child: CircleAvatar(
-                                                      radius: 15.sp,
+                                                      radius: 13.sp,
                                                       backgroundColor:
-                                                          AppColors.color582,
+                                                          AppColors.colorWhite,
                                                       child: Center(
                                                         child: Icon(
                                                           Icons.edit,
-                                                          size: 20.sp,
+                                                          size: 15.sp,
                                                           color: AppColors
-                                                              .colorWhite,
+                                                              .color582,
                                                         ),
                                                       ),
                                                     ),
@@ -278,7 +285,7 @@ class _FacultyDetailViewState extends State<StudentDetailView> {
                                                     .toString(),
                                                 child: const Icon(
                                                   Icons.phone,
-                                                  color: AppColors.colorWhite,
+                                                  color: AppColors.colorc7e,
                                                 )),
                                             SizedBox(
                                               width: 5.w,
@@ -287,7 +294,7 @@ class _FacultyDetailViewState extends State<StudentDetailView> {
                                                 message: studentData.email,
                                                 child: const Icon(
                                                   Icons.mail,
-                                                  color: AppColors.colorWhite,
+                                                  color: AppColors.colorc7e,
                                                 )),
                                             SizedBox(
                                               width: 5.w,
@@ -296,7 +303,7 @@ class _FacultyDetailViewState extends State<StudentDetailView> {
                                                 message: studentData.dOB,
                                                 child: const Icon(
                                                   Icons.cake,
-                                                  color: AppColors.colorWhite,
+                                                  color: AppColors.colorc7e,
                                                 ))
                                           ],
                                         ),
@@ -323,14 +330,13 @@ class _FacultyDetailViewState extends State<StudentDetailView> {
                                                           studentData.lastName!,
                                                   fontSize: 24.sp,
                                                   fontWeight: FontWeight.bold,
-                                                  textColor:
-                                                      AppColors.colorWhite,
+                                                  textColor: AppColors.colorc7e,
                                                 ),
                                                 Icon(
                                                   studentData.gender == "Male"
                                                       ? Icons.male
                                                       : Icons.female,
-                                                  color: AppColors.colorWhite,
+                                                  color: AppColors.colorc7e,
                                                 )
                                               ],
                                             ),
@@ -353,8 +359,7 @@ class _FacultyDetailViewState extends State<StudentDetailView> {
                                                       studentData.studentType!,
                                                   fontSize: 12.sp,
                                                   fontWeight: FontWeight.w800,
-                                                  textColor:
-                                                      AppColors.colorWhite,
+                                                  textColor: AppColors.colorc7e,
                                                 ),
                                               ],
                                             ),
@@ -366,7 +371,11 @@ class _FacultyDetailViewState extends State<StudentDetailView> {
                                                   CrossAxisAlignment.start,
                                               children: [
                                                 AppRichTextView(
-                                                  title: "Current Class: ",
+                                                  title: studentData
+                                                              .currentProgramId ==
+                                                          300
+                                                      ? "Clinical Rotation: "
+                                                      : "Current Class: ",
                                                   fontSize: 12.sp,
                                                   fontWeight: FontWeight.w800,
                                                   textColor:
@@ -374,11 +383,15 @@ class _FacultyDetailViewState extends State<StudentDetailView> {
                                                 ),
                                                 AppRichTextView(
                                                   title: studentData
-                                                      .currentClassName!,
+                                                              .currentProgramId ==
+                                                          300
+                                                      ? studentData
+                                                          .rotationName!
+                                                      : studentData
+                                                          .currentClassName!,
                                                   fontSize: 12.sp,
                                                   fontWeight: FontWeight.w800,
-                                                  textColor:
-                                                      AppColors.colorWhite,
+                                                  textColor: AppColors.colorc7e,
                                                 ),
                                               ],
                                             ),
@@ -401,8 +414,7 @@ class _FacultyDetailViewState extends State<StudentDetailView> {
                                                       .admissionDate!,
                                                   fontSize: 12.sp,
                                                   fontWeight: FontWeight.w800,
-                                                  textColor:
-                                                      AppColors.colorWhite,
+                                                  textColor: AppColors.colorc7e,
                                                 ),
                                               ],
                                             ),
@@ -422,8 +434,7 @@ class _FacultyDetailViewState extends State<StudentDetailView> {
                                                   title: studentData.studentId!,
                                                   fontSize: 12.sp,
                                                   fontWeight: FontWeight.w800,
-                                                  textColor:
-                                                      AppColors.colorWhite,
+                                                  textColor: AppColors.colorc7e,
                                                 ),
                                               ],
                                             ),
@@ -446,8 +457,7 @@ class _FacultyDetailViewState extends State<StudentDetailView> {
                                                       .toString(),
                                                   fontSize: 12.sp,
                                                   fontWeight: FontWeight.w800,
-                                                  textColor:
-                                                      AppColors.colorWhite,
+                                                  textColor: AppColors.colorc7e,
                                                 ),
                                               ],
                                             ),
@@ -468,8 +478,7 @@ class _FacultyDetailViewState extends State<StudentDetailView> {
                                                       .passportNumber!,
                                                   fontSize: 12.sp,
                                                   fontWeight: FontWeight.w800,
-                                                  textColor:
-                                                      AppColors.colorWhite,
+                                                  textColor: AppColors.colorc7e,
                                                 ),
                                               ],
                                             ),
@@ -490,8 +499,7 @@ class _FacultyDetailViewState extends State<StudentDetailView> {
                                                       .qualification!,
                                                   fontSize: 12.sp,
                                                   fontWeight: FontWeight.w800,
-                                                  textColor:
-                                                      AppColors.colorWhite,
+                                                  textColor: AppColors.colorc7e,
                                                 ),
                                               ],
                                             ),
@@ -500,7 +508,7 @@ class _FacultyDetailViewState extends State<StudentDetailView> {
                                       ),
                                     ),
                                     const VerticalDivider(
-                                      color: AppColors.colorWhite,
+                                      color: AppColors.colorc7e,
                                     ),
                                     Expanded(
                                       child: Column(
@@ -526,7 +534,7 @@ class _FacultyDetailViewState extends State<StudentDetailView> {
                                                     fontSize: 12.sp,
                                                     fontWeight: FontWeight.w800,
                                                     textColor:
-                                                        AppColors.colorWhite,
+                                                        AppColors.colorc7e,
                                                   ),
                                                 ),
                                               ],
@@ -554,7 +562,7 @@ class _FacultyDetailViewState extends State<StudentDetailView> {
                                                     fontSize: 12.sp,
                                                     fontWeight: FontWeight.w800,
                                                     textColor:
-                                                        AppColors.colorWhite,
+                                                        AppColors.colorc7e,
                                                   ),
                                                 ),
                                               ],
@@ -582,7 +590,7 @@ class _FacultyDetailViewState extends State<StudentDetailView> {
                                                     fontSize: 12.sp,
                                                     fontWeight: FontWeight.w800,
                                                     textColor:
-                                                        AppColors.colorWhite,
+                                                        AppColors.colorc7e,
                                                   ),
                                                 ),
                                               ],
@@ -612,7 +620,7 @@ class _FacultyDetailViewState extends State<StudentDetailView> {
                                                     fontSize: 12.sp,
                                                     fontWeight: FontWeight.w800,
                                                     textColor:
-                                                        AppColors.colorWhite,
+                                                        AppColors.colorc7e,
                                                   ),
                                                 ),
                                               ],
@@ -627,230 +635,146 @@ class _FacultyDetailViewState extends State<StudentDetailView> {
                             ),
                           ),
                           SizedBox(
-                            width: 8.w,
+                            width: 4.w,
                           ),
-                          Expanded(
-                            flex: 1,
-                            child: studentData.fullTutionFee == 0 ||
-                                    studentData.fullTutionFee == null
-                                ? Consumer<FeesProvider>(
-                                    builder: (context, feesConsumer, child) {
-                                    return InkWell(
-                                      onTap: () async {
-                                        var token = await getTokenAndUseIt();
-                                        if (token == null) {
-                                          if (context.mounted) {
-                                            Navigator.pushNamed(
-                                                context, RouteNames.login);
-                                          }
-                                        } else if (token == "Token Expired") {
-                                          ToastHelper().errorToast(
-                                              "Session Expired Please Login Again");
-
-                                          if (context.mounted) {
-                                            Navigator.pushNamed(
-                                                context, RouteNames.login);
-                                          }
-                                        } else {
-                                          feesConsumer.getFeesByid(token,
-                                              studentData.currentProgramId!);
-                                        }
-                                        if (context.mounted) {
-                                          showUpdateFeesDialog(
-                                              context,
-                                              studentData.iD!,
-                                              studentData.currentProgramId!);
-                                        }
-                                      },
-                                      child: Container(
+                          Consumer<FeesProvider>(
+                            builder: (context, feesConsumer, child) {
+                              return Expanded(
+                                flex: 1,
+                                child: studentData.studentFees!.isEmpty
+                                    ?  InkWell(
+                                          onTap: () async {
+                                            var token = await getTokenAndUseIt();
+                                            if (token == null) {
+                                              if (context.mounted) {
+                                                Navigator.pushNamed(
+                                                    context, RouteNames.login);
+                                              }
+                                            } else if (token == "Token Expired") {
+                                              ToastHelper().errorToast(
+                                                  "Session Expired Please Login Again");
+                              
+                                              if (context.mounted) {
+                                                Navigator.pushNamed(
+                                                    context, RouteNames.login);
+                                              }
+                                            } else {
+                                              feesConsumer.getFeesByid(token,
+                                                  studentData.currentProgramId!);
+                                            }
+                                            if (context.mounted) {
+                                              showUpdateFeesDialog(
+                                                  context, studentData);
+                                            }
+                                          },
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                                color: AppColors.colorWhite,
+                                                border: Border.all(
+                                                    color: AppColors.colorc7e,
+                                                    width: 3)),
+                                            child: Padding(
+                                              padding: const EdgeInsets.all(18.0),
+                                              child: Column(
+                                                children: [
+                                                  AppRichTextView(
+                                                    title: 'Alert!',
+                                                    fontSize: 30.sp,
+                                                    fontWeight: FontWeight.bold,
+                                                    textColor: AppColors.colorRed,
+                                                  ),
+                                                  Lottie.asset(
+                                                      LottiePath
+                                                          .whiteNotificationLottie,
+                                                      height: size.height * 0.15,
+                                                      repeat: false),
+                                                  AppRichTextView(
+                                                    textAlign: TextAlign.center,
+                                                    title:
+                                                        'Please Update Student Fees Details',
+                                                    fontSize: 20.sp,
+                                                    fontWeight: FontWeight.bold,
+                                                    textColor: AppColors.colorc7e,
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        )
+                                      
+                                    : Container(
                                         decoration: BoxDecoration(
-                                            color: AppColors.colorc7e,
-                                            borderRadius:
-                                                BorderRadius.circular(18.sp)),
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(18.0),
-                                          child: Column(
-                                            children: [
-                                              AppRichTextView(
-                                                title: 'Alert!',
-                                                fontSize: 30.sp,
-                                                fontWeight: FontWeight.bold,
-                                                textColor: AppColors.colorRed,
-                                              ),
-                                              Lottie.asset(
-                                                  LottiePath
-                                                      .whiteNotificationLottie,
-                                                  height: size.height * 0.15,
-                                                  repeat: false),
-                                              AppRichTextView(
-                                                title:
-                                                    'Please Update Student Fees Details',
-                                                fontSize: 30.sp,
-                                                fontWeight: FontWeight.bold,
-                                                textColor: AppColors.colorWhite,
-                                              ),
-                                            ],
-                                          ),
+                                          color: AppColors.colorWhite,
+                                          border: Border.all(
+                                              color: AppColors.colorc7e,
+                                              width: 3.w),
                                         ),
-                                      ),
-                                    );
-                                  })
-                                : Container(
-                                    decoration: BoxDecoration(
-                                        color: AppColors.colorc7e,
-                                        borderRadius:
-                                            BorderRadius.circular(18.sp)),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(18.0),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        children: [
-                                          AppRichTextView(
-                                            title: 'Financial Details',
-                                            fontSize: 25.sp,
-                                            fontWeight: FontWeight.bold,
-                                            textColor: AppColors.colorWhite,
-                                          ),
-                                          SizedBox(
-                                            height: 20.h,
-                                          ),
-                                          Row(
-                                            children: [
-                                              Expanded(
-                                                flex: 2,
-                                                child: AppRichTextView(
-                                                  title: 'Total Fee:',
-                                                  fontSize: 15.sp,
-                                                  fontWeight: FontWeight.bold,
-                                                  textColor:
-                                                      AppColors.colorWhite,
-                                                ),
-                                              ),
-                                              Expanded(
-                                                flex: 2,
-                                                child: AppRichTextView(
-                                                  title:
-                                                      '${studentData.fullTutionFee} USD',
-                                                  fontSize: 15.sp,
-                                                  fontWeight: FontWeight.bold,
-                                                  textColor:
-                                                      AppColors.colorWhite,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          SizedBox(
-                                            height: 10.h,
-                                          ),
-                                          Row(
-                                            children: [
-                                              Expanded(
-                                                flex: 2,
-                                                child: AppRichTextView(
-                                                  title: 'Paid Fee:',
-                                                  fontSize: 15.sp,
-                                                  fontWeight: FontWeight.bold,
-                                                  textColor:
-                                                      AppColors.colorWhite,
-                                                ),
-                                              ),
-                                              Expanded(
-                                                flex: 2,
-                                                child: AppRichTextView(
-                                                  title:
-                                                      '${studentConsumer.studentDetailModel.studentDetail!.paidTutionFee ?? "0"} USD',
-                                                  fontSize: 15.sp,
-                                                  fontWeight: FontWeight.bold,
-                                                  textColor:
-                                                      AppColors.colorWhite,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          SizedBox(
-                                            height: 10.h,
-                                          ),
-                                          Row(
-                                            children: [
-                                              Expanded(
-                                                flex: 2,
-                                                child: AppRichTextView(
-                                                  title: 'Payable Fee:',
-                                                  fontSize: 15.sp,
-                                                  fontWeight: FontWeight.bold,
-                                                  textColor:
-                                                      AppColors.colorWhite,
-                                                ),
-                                              ),
-                                              Expanded(
-                                                flex: 2,
-                                                child: AppRichTextView(
-                                                  title: studentData
-                                                              .paidTutionFee ==
-                                                          null
-                                                      ? '${studentData.fullTutionFee!}'
-                                                      : '${studentData.fullTutionFee! - studentData.paidTutionFee!} USD',
-                                                  fontSize: 15.sp,
-                                                  fontWeight: FontWeight.bold,
-                                                  textColor:
-                                                      AppColors.colorWhite,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          const Spacer(),
-                                          Row(
-                                            children: [
-                                              AppElevatedButon(
-                                                title: "Remainder",
-                                                borderColor:
-                                                    AppColors.colorBlack,
-                                                buttonColor:
-                                                    AppColors.colorWhite,
-                                                textColor: AppColors.colorc7e,
-                                                height: 40.h,
-                                                width: 140.w,
-                                                onPressed: (context) {
-                                                  remainderDialog(context);
-                                                },
-                                              ),
-                                              SizedBox(
-                                                width: 5.w,
-                                              ),
-                                              AppElevatedButon(
-                                                title: "Summary",
-                                                borderColor:
-                                                    AppColors.colorBlack,
-                                                buttonColor:
-                                                    AppColors.colorWhite,
-                                                textColor: AppColors.colorc7e,
-                                                height: 40.h,
-                                                width: 140.w,
-                                                onPressed: (context) {},
-                                              ),
-                                            ],
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                  ),
+                                        child: CarouselSlider(
+                                          options: CarouselOptions(
+                                            enlargeCenterPage: true ,
+                                              enableInfiniteScroll: false),
+                                          items: studentData.studentFees!
+                                              .map((item) => Center(
+                                                child: CreditCardUi(
+                                                  onTap: () async{
+                                                      var token = await getTokenAndUseIt();
+                                            if (token == null) {
+                                              if (context.mounted) {
+                                                Navigator.pushNamed(
+                                                    context, RouteNames.login);
+                                              }
+                                            } else if (token == "Token Expired") {
+                                              ToastHelper().errorToast(
+                                                  "Session Expired Please Login Again");
+                              
+                                              if (context.mounted) {
+                                                Navigator.pushNamed(
+                                                    context, RouteNames.login);
+                                              }
+                                            } else {
+                                              feesConsumer.getFeesByid(token,
+                                                  studentData.currentProgramId!);
+                                            }
+                                            if (context.mounted) {
+                                              showUpdateFeesDialog(
+                                                  context, studentData);
+                                            }
+                                                  },
+                                                      className: item.className!,
+                                                      topLeftColor:
+                                                          AppColors.colorc7e,
+                                                      creditCardType:
+                                                          CreditCardType.none,
+                                                      shouldMaskCardNumber: false,
+                                                      balance: double.parse(item
+                                                          .amountInUsd
+                                                          .toString()),
+                                                      showBalance: true,
+                                                      doesSupportNfc: false,
+                                                      cardType: CardType.other,
+                                                      showValidFrom: false,
+                                                      showValidThru: false,
+                                                      cardHolderFullName:
+                                                          '${studentData.firstName!} ${studentData.lastName!}',
+                                                      cardNumber:
+                                                          'Due: \$${item.amountInUsd}',
+                                                      validThru: '10/24',
+                                                    ),
+                                              ))
+                                              .toList(),
+                                        )),
+                              );
+                            }
                           ),
                         ],
                       ),
                     ),
                     SizedBox(
-                      height: 8.h,
+                      height: 5.h,
                     ),
                     Expanded(
-                        child: Container(
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(18.sp)),
-                      child: StudentTabView(
-                        studentDetail: studentData,
-                      ),
+                        child: StudentTabView(
+                      studentDetail: studentData,
                     ))
                   ],
                 ),
