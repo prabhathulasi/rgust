@@ -12,7 +12,7 @@ import 'package:rugst_alliance_academia/theme/app_colors.dart';
 import 'package:rugst_alliance_academia/util/toast_helper.dart';
 import 'package:rugst_alliance_academia/web_view/screens/student/student_page_tabs/invoice/generate_invoice/generate_invoice.dart';
 import 'package:rugst_alliance_academia/web_view/screens/student/student_page_tabs/invoice/invoice_alerts/add_new_invoice_alert.dart';
-import 'package:rugst_alliance_academia/web_view/screens/student/student_page_tabs/invoice/invoice_alerts/approved_invoice_alert.dart';
+
 import 'package:rugst_alliance_academia/web_view/screens/student/student_page_tabs/invoice/invoice_alerts/pending_invoice_alert.dart';
 import 'package:rugst_alliance_academia/web_view/screens/student/student_page_tabs/invoice/invoice_alerts/rejected_invoice_alert.dart';
 import 'package:rugst_alliance_academia/widgets/app_elevatedbutton.dart';
@@ -54,14 +54,15 @@ class StudentInvoiceView extends StatelessWidget {
     }
 
     return Scaffold(
-      body: studentData!.fullTutionFee == 0
+      
+      body: studentData!.studentFees!.isEmpty
           ? Center(
               child: AppRichTextView(
                   title:
-                      "Please Update Full Fees Detail to view Invoice Section",
+                      "Please Update Semester Tution Details to upload Invoice",
                   fontSize: 20.sp,
                   fontWeight: FontWeight.bold,
-                  textColor: AppColors.colorc7e),
+                  textColor: AppColors.colorRed),
             )
           : FutureBuilder(
               future: getInvoiceLIst(),
@@ -101,7 +102,7 @@ class StudentInvoiceView extends StatelessWidget {
                                           MainAxisAlignment.start,
                                       children: [
                                         AppRichTextView(
-                                            title: "Approved Invoices",
+                                            title: "Approved Payments",
                                             fontSize: 30.sp,
                                             fontWeight: FontWeight.bold,
                                             textColor: AppColors.colorc7e),
@@ -116,7 +117,7 @@ class StudentInvoiceView extends StatelessWidget {
                                                       top: 150.h),
                                                   child: AppRichTextView(
                                                       title:
-                                                          "No Approved Invoice Record Available",
+                                                          "No Approved Payments Record Available",
                                                       fontSize: 15.sp,
                                                       fontWeight:
                                                           FontWeight.bold,
@@ -274,7 +275,7 @@ class StudentInvoiceView extends StatelessWidget {
                                           CrossAxisAlignment.start,
                                       children: [
                                         AppRichTextView(
-                                            title: "Pending Invoices",
+                                            title: "Pending Payments",
                                             fontSize: 30.sp,
                                             fontWeight: FontWeight.bold,
                                             textColor: AppColors.colorc7e),
@@ -288,7 +289,7 @@ class StudentInvoiceView extends StatelessWidget {
                                                       top: 150.h),
                                                   child: AppRichTextView(
                                                       title:
-                                                          "No Pending Invoice Record Available",
+                                                          "No Pending Payments Record Available",
                                                       fontSize: 15.sp,
                                                       fontWeight:
                                                           FontWeight.bold,
@@ -428,7 +429,7 @@ class StudentInvoiceView extends StatelessWidget {
                                           CrossAxisAlignment.start,
                                       children: [
                                         AppRichTextView(
-                                            title: "Rejected Invoices",
+                                            title: "Rejected Payments",
                                             fontSize: 30.sp,
                                             fontWeight: FontWeight.bold,
                                             textColor: AppColors.colorc7e),
@@ -443,7 +444,7 @@ class StudentInvoiceView extends StatelessWidget {
                                                       top: 150.h),
                                                   child: AppRichTextView(
                                                       title:
-                                                          "No Rejected Invoice Record Available",
+                                                          "No Rejected Payments Record Available",
                                                       fontSize: 15.sp,
                                                       fontWeight:
                                                           FontWeight.bold,
@@ -577,7 +578,7 @@ class StudentInvoiceView extends StatelessWidget {
                   });
                 }
               }),
-      floatingActionButton: studentData!.fullTutionFee == 0
+      floatingActionButton: studentData!.studentFees!.isEmpty
           ? Container()
           : FloatingActionButton(
               backgroundColor: AppColors.colorc7e,
@@ -586,7 +587,7 @@ class StudentInvoiceView extends StatelessWidget {
                 color: AppColors.colorWhite,
               ),
               onPressed: () async {
-                showAddInvoiceDialog(context, studentData!.iD, studentData!.studentId);
+                showAddInvoiceDialog(context, studentData);
               },
             ),
     );

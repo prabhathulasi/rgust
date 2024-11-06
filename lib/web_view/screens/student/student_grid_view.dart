@@ -10,7 +10,7 @@ import 'package:rugst_alliance_academia/data/provider/program_provider.dart';
 import 'package:rugst_alliance_academia/data/provider/student_provider.dart';
 import 'package:rugst_alliance_academia/theme/app_colors.dart';
 
-import 'package:rugst_alliance_academia/web_view/screens/student/add_student_view.dart';
+import 'package:rugst_alliance_academia/web_view/screens/student/add_new_student/add_student_view.dart';
 import 'package:rugst_alliance_academia/web_view/screens/student/student_detailed_layout/student_detail_view.dart';
 import 'package:rugst_alliance_academia/widgets/app_formfield.dart';
 import 'package:rugst_alliance_academia/widgets/app_richtext.dart';
@@ -32,18 +32,23 @@ class _StudentGridViewState extends State<StudentGridView> {
           const AddStudentView(),
           Transform.translate(
             offset: Offset(10.w, -13.h),
-            child: InkWell(
-                onTap: () {
-                  Navigator.of(context).pop();
-                },
-                child: const Align(
-                  alignment: Alignment.topRight,
+            child: GestureDetector(
+              onTap: () {
+                Navigator.pop(context);
+              },
+              child: const Align(
+                alignment: Alignment.topRight,
+                child: CircleAvatar(
+                  backgroundColor: AppColors.colorc7e,
+                  radius: 14.0,
                   child: CircleAvatar(
-                    radius: 14.0,
-                    backgroundColor: AppColors.colorc7e,
-                    child: Icon(Icons.close, color: AppColors.color582),
+                    radius: 12.0,
+                    backgroundColor: AppColors.colorWhite ,
+                    child: Icon(Icons.close, color: AppColors.colorRed),
                   ),
-                )),
+                ),
+              ),
+            ),
           )
         ],
       ),
@@ -51,6 +56,7 @@ class _StudentGridViewState extends State<StudentGridView> {
 
     // show the dialog
     showDialog(
+      barrierDismissible: false,
       context: context,
       builder: (BuildContext context) {
         return alert;

@@ -15,7 +15,7 @@ final String ? dobInput;
 final String ? imageEncoded;
 final String? gender;
 final List<int>? selectedCourse;
-  const StudentInstructionView({super.key,required this.token,required this.dobInput,  required this.imageEncoded,required this.gender, this.selectedCourse});
+  const   StudentInstructionView({super.key,required this.token,required this.dobInput,  required this.imageEncoded,required this.gender, this.selectedCourse});
 
   @override
   State<StudentInstructionView> createState() => _StudentInstructionViewState();
@@ -89,6 +89,7 @@ class _StudentInstructionViewState extends State<StudentInstructionView> {
                         userImage: widget.imageEncoded!,
                         selectedCourseList: widget.selectedCourse!
                       );
+                      
 
                       if (result != null) {
                         if (context.mounted) {

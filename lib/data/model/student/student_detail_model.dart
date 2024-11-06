@@ -53,8 +53,6 @@ class StudentDetail {
   String? citizenship;
   bool? accountCreated;
   String? createdBy;
-  int? fullTutionFee;
-  int? paidTutionFee;
   List<RegisteredCourse>? registeredCourse;
   List<StudentFees>? studentFees;
   List<Result>? result;
@@ -91,9 +89,7 @@ class StudentDetail {
       this.accountCreated,
       this.createdBy,
       this.result,
-      this.fullTutionFee,
       this.registeredCourse,
-      this.paidTutionFee,
       this.rotationName,
       this.studentFees
       });
@@ -128,8 +124,6 @@ class StudentDetail {
     citizenship = json['Citizenship'];
     accountCreated = json['AccountCreated'];
     createdBy = json['CreatedBy'];
-    fullTutionFee = json["FullTutionFee"];
-    paidTutionFee = json["PaidTutionFee"];
     rotationName =json["rotation_name"];
 
     if (json['Result'] != null) {
@@ -184,8 +178,6 @@ class StudentDetail {
     data['Citizenship'] = citizenship;
     data['AccountCreated'] = accountCreated;
     data['CreatedBy'] = createdBy;
-    data["FullTutionFee"] = fullTutionFee;
-    data["PaidTutionFee"] = paidTutionFee;
     data["rotation_name"]= rotationName;
 
     if (result != null) {
@@ -287,6 +279,7 @@ class StudentFees {
   int? amountInGyd;
   String? tutionType;
   String? className;
+int ? dueAmount;
 
   StudentFees(
       {this.iD,
@@ -299,7 +292,8 @@ class StudentFees {
       this.amountInUsd,
       this.amountInGyd,
       this.tutionType,
-      this.className
+      this.className,
+      this.dueAmount
       });
 
   StudentFees.fromJson(Map<String, dynamic> json) {
@@ -314,6 +308,7 @@ class StudentFees {
     amountInGyd = json['AmountInGyd'];
     tutionType = json['TutionType'];
     className =json["ClassName"];
+        dueAmount =json["DueAmount"];
   }
 
   Map<String, dynamic> toJson() {
@@ -329,6 +324,7 @@ class StudentFees {
     data['AmountInGyd'] = amountInGyd;
     data['TutionType'] = tutionType;
     data["ClassName"]= className;
+    data["DueAmount"]= dueAmount;
     return data;
   }
 }

@@ -11,16 +11,19 @@ class FeesProvider extends ChangeNotifier {
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
- String? selectedClassForFee;
-
+  String? selectedClassForFee;
+  String? semFeeId ;
   FeesModel feesModel = FeesModel();
   FeesDetailModel feesDetailModel = FeesDetailModel();
 
   MiscFeeModel miscFeeModel = MiscFeeModel();
 
-  String? feesTypeRadioValue ="Standard Tution";
+  String? feesTypeRadioValue = "Standard Tution";
 
-  void setfeesTypeRadioValue(String value, int programId,) async {
+  void setfeesTypeRadioValue(
+    String value,
+    int programId,
+  ) async {
     feesTypeRadioValue = value;
     // if (value == "Standard Tution") {
     //   await getFeesByid(token, programId);
@@ -32,12 +35,15 @@ class FeesProvider extends ChangeNotifier {
     _isLoading = value;
     notifyListeners();
   }
+
   void setSelectedFeeClass(dynamic value) async {
     selectedClassForFee = value;
     notifyListeners();
   }
-
-
+  void setSemFeeId(dynamic value) async {
+    semFeeId = value;
+    notifyListeners();
+  }
   //  getFees list
   Future getFeesList(String token) async {
     setLoading(true);

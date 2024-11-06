@@ -44,49 +44,42 @@ class DoaDropdown extends StatelessWidget {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Container(
-      color: AppColors.colorc7e,
+decoration: BoxDecoration(
+  color: AppColors.colorWhite,
+   borderRadius: BorderRadius.circular(8.sp),
+  border: Border.all(color: AppColors.colorc7e,width: 3.w)
+),
       height: 70.h,
       width: size.width * 0.2,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            AppRichTextView(
-                title: "Date of Admission",
-                textColor: AppColors.colorWhite,
-                fontSize: 14.sp,
-                fontWeight: FontWeight.w500),
-            Consumer<CommonProvider>(builder: (context, commonConsumer, child) {
-              return Expanded(
-                child: TextFormField(
-                  readOnly: true,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return "This DOB is Required";
-                    } else {
-                      return null;
-                    }
-                  },
-                  style: GoogleFonts.roboto(
-                      color: AppColors.colorWhite, fontSize: 15.sp),
-                  controller: commonConsumer.doaTextController,
-                  decoration: InputDecoration(
-                      errorStyle: TextStyle(
-                          fontSize: 15.sp,
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.colorRed),
-                      hintStyle:
-                          GoogleFonts.roboto(color: AppColors.colorWhite),
-                      border: InputBorder.none),
-                  onTap: () {
-                    showAlert(commonConsumer, context);
-                  },
-                ),
-              );
-            }),
-          ],
-        ),
+        child: Consumer<CommonProvider>(builder: (context, commonConsumer, child) {
+          return TextFormField(
+            readOnly: true,
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return "This DOB is Required";
+              } else {
+                return null;
+              }
+            },
+            style: GoogleFonts.roboto(
+                color: AppColors.colorBlack, fontSize: 15.sp),
+            controller: commonConsumer.doaTextController,
+            decoration: InputDecoration(
+              hintText: "Please Select the date",
+                errorStyle: TextStyle(
+                    fontSize: 15.sp,
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.colorRed),
+                hintStyle:
+                    GoogleFonts.roboto(color: AppColors.colorBlack ,fontWeight: FontWeight.bold, ),
+                border: InputBorder.none),
+            onTap: () {
+              showAlert(commonConsumer, context);
+            },
+          );
+        }),
       ),
     );
   }

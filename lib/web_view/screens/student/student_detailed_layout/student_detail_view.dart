@@ -40,52 +40,48 @@ class StudentDetailView extends StatefulWidget {
 
 class _FacultyDetailViewState extends State<StudentDetailView> {
   String? password;
-  final List<String> imgList = [
-    'https://images.unsplash.com/photo-1520342868574-5fa3804e551c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6ff92caffcdd63681a35134a6770ed3b&auto=format&fit=crop&w=1951&q=80',
-    'https://images.unsplash.com/photo-1522205408450-add114ad53fe?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=368f45b0888aeb0b7b08e3a1084d3ede&auto=format&fit=crop&w=1950&q=80',
-    'https://images.unsplash.com/photo-1519125323398-675f0ddb6308?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=94a1e718d89ca60a6337a6008341ca50&auto=format&fit=crop&w=1950&q=80',
-    'https://images.unsplash.com/photo-1523205771623-e0faa4d2813d?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=89719a0d55dd05e2deae4120227e6efc&auto=format&fit=crop&w=1953&q=80',
-    'https://images.unsplash.com/photo-1508704019882-f9cf40e475b4?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=8c6e5e3aba713b17aa1fe71ab4f0ae5b&auto=format&fit=crop&w=1352&q=80',
-    'https://images.unsplash.com/photo-1519985176271-adb1088fa94c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=a0c8d632e977f94e5d312d9893258f59&auto=format&fit=crop&w=1355&q=80'
-  ];
+
   showAddAlertDialog(BuildContext context, StudentDetail details) {
     // set up the AlertDialog
     Dialog alert = Dialog(
-      child: Stack(
-        children: [
-          UpdateStudentDetails(studentDetails: details),
-          Transform.translate(
-            offset: Offset(10.w, -13.h),
-            child: InkWell(
-                onTap: () {
-                  Navigator.of(context).pop();
-                },
+      child: StatefulBuilder(
+        builder: (context, setState) {
+          return Stack(
+            children: [
+              UpdateStudentDetails(studentDetails: details),
+              Transform.translate(
+                offset: Offset(10.w, -13.h),
                 child: Align(
                   alignment: Alignment.topRight,
                   child: CircleAvatar(
                     radius: 14.0.sp,
-                    backgroundColor: AppColors.colorc7e,
+                    backgroundColor: AppColors.colorRed ,
                     child: CircleAvatar(
                         backgroundColor: AppColors.colorWhite,
                         radius: 12.sp,
                         child:
-                            const Icon(Icons.close, color: AppColors.colorRed)),
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.pop(context);
+                              },
+                              child: const Icon(Icons.close, color: AppColors.colorRed))),
                   ),
-                )),
-          )
-        ],
+                ),
+              )
+            ],
+          );
+        }
       ),
     );
 
     // show the dialog
     showDialog(
+      barrierDismissible: false,
       context: context,
       builder: (BuildContext context) {
         return alert;
       },
-    ).then((value) {
-      Navigator.pop(context);
-    });
+    );
   }
 
   Future<void> remainderDialog(BuildContext context) async {
@@ -710,7 +706,9 @@ class _FacultyDetailViewState extends State<StudentDetailView> {
                                               width: 3.w),
                                         ),
                                         child: CarouselSlider(
+
                                           options: CarouselOptions(
+                                            viewportFraction: 0.5,
                                             enlargeCenterPage: true ,
                                               enableInfiniteScroll: false),
                                           items: studentData.studentFees!
@@ -746,9 +744,7 @@ class _FacultyDetailViewState extends State<StudentDetailView> {
                                                       creditCardType:
                                                           CreditCardType.none,
                                                       shouldMaskCardNumber: false,
-                                                      balance: double.parse(item
-                                                          .amountInUsd
-                                                          .toString()),
+                                                      balance: double.parse(item.amountInUsd.toString()),
                                                       showBalance: true,
                                                       doesSupportNfc: false,
                                                       cardType: CardType.other,
@@ -757,7 +753,7 @@ class _FacultyDetailViewState extends State<StudentDetailView> {
                                                       cardHolderFullName:
                                                           '${studentData.firstName!} ${studentData.lastName!}',
                                                       cardNumber:
-                                                          'Due: \$${item.amountInUsd}',
+                                                          'Due: \$${item.dueAmount == null || item.dueAmount == 0 ? double.parse(item.amountInUsd.toString()): double.parse((item.amountInUsd! - item.dueAmount!).toString() )}',
                                                       validThru: '10/24',
                                                     ),
                                               ))

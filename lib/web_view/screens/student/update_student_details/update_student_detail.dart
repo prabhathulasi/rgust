@@ -877,7 +877,7 @@ class _AddFacultyViewState extends State<UpdateStudentDetails> {
                                 height: 50.h,
                                 width: 150.w,
                                 onPressed: (context) {
-                                  Navigator.pop(context);
+                                      Navigator.of(context).pop();
                                 },
                               )
                             ],

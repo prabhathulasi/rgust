@@ -48,11 +48,10 @@ class InvoiceProvider extends ChangeNotifier {
     BuildContext context, {
     String? token,
     int? studentId,
-    String? fromAccountNumber,
-    String? bankName,
     int? amountInGyd,
     int? amountInUsd,
     String? studentRegNo,
+    int? semfeeId
   }) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     var userName = sharedPreferences.getString("username");
@@ -77,12 +76,11 @@ class InvoiceProvider extends ChangeNotifier {
         ..fields["FormType"] = "F"
         ..fields["FeesId"] = '1'
         ..fields["PaymentType"] = dropdownvalue!
-        ..fields["FromAccountNumber"] = fromAccountNumber!
-        ..fields["BankName"] = bankName!
         ..fields["AmountInGyd"] = amountInGyd!.toString()
         ..fields["AmountInUsd"] = amountInUsd.toString()
         ..fields["Status"] = "Approved"
         ..fields["UpdatedBy"] = userName!
+        ..fields["ClassId"]=semfeeId!.toString()
         ..fields["ReceiptNumber"] =
             "RGUST/${DateFormat("yyyy/MMM-dd").format(DateTime.now())}/$randomNumber"
         ..headers.addAll(headers)
@@ -99,6 +97,7 @@ class InvoiceProvider extends ChangeNotifier {
       var decodedData = json.decode(responseBody);
       if (response.statusCode == 200 && context.mounted) {
         Navigator.pop(context);
+
         await getStudentInvoiceList(token!, studentId);
         await studentProvider.getStudentDetailById(studentId, token);
 
@@ -129,7 +128,7 @@ class InvoiceProvider extends ChangeNotifier {
 
         return studentInvoiceListModel;
       } else if (result.statusCode == 404) {
-        ToastHelper().errorToast("No Invoice Details Found");
+        
         return null;
       } else if (result.statusCode == 401) {
         return "Invalid Token";
@@ -142,6 +141,9 @@ class InvoiceProvider extends ChangeNotifier {
       return e.toString();
     }
   }
+
+
+
 
   Future updateStudentInvoiceStatus(
       String token, int invoiceId, int studentId, String status) async {

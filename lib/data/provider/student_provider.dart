@@ -184,7 +184,13 @@ class StudentProvider extends ChangeNotifier {
             "UserImage": userImage,
             "Qualification": qualification,
             "EmergencyContact": int.parse(emergencyContact),
-            "SelectedCourse": selectedCourseList
+            "SelectedCourse": selectedCourseList,
+            "ClinicalId":1,
+            "StartDate":"05/10/2023",
+            "EndDate":"07/12/2023",
+            "Status":"OnProgress",
+            "TotalClinicalFee":2700,
+            "ClinicalFeeStatus":"Paid"
           },
           token);
       var data = json.decode(result.body);
