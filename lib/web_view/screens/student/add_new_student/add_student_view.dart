@@ -78,9 +78,9 @@ class _AddStudentViewState extends State<AddStudentView> {
   bool loading = false;
   @override
   Widget build(BuildContext context) {
-    final programConsumer = Provider.of<ProgramProvider>(context, listen:  false);
-    final studentConsumer = Provider.of<StudentProvider>(context, listen:  false);
-     final clincalConsumer = Provider.of<ClincialProvider>(context, listen:  false);
+    final programConsumer = Provider.of<ProgramProvider>(context, );
+    final studentConsumer = Provider.of<StudentProvider>(context, );
+     final clincalConsumer = Provider.of<ClincialProvider>(context, );
 
     var size = MediaQuery.of(context).size;
     return Scaffold(
@@ -1455,20 +1455,20 @@ class _AddStudentViewState extends State<AddStudentView> {
                                           ToastHelper().errorToast(
                                               "Please Select the Program");
                                         } 
-                                        // else if (programConsumer
-                                        //         .selectedClass ==
-                                        //     null) {
-                                        //   ToastHelper().errorToast(
-                                        //       "Please Select the Class");}
-                                        // } else if (programConsumer
-                                        //         .selectedBatch ==
-                                        //     null) {
-                                        //   ToastHelper().errorToast(
-                                        //       "Please Select the Batch");
-                                        // } else if (selectedIDs.isEmpty) {
-                                        //   ToastHelper().errorToast(
-                                        //       "Please select the course");
-                                        // } 
+                                        else if (programConsumer
+                                                .selectedClass ==
+                                            null && programConsumer.selectedDept!="300") {
+                                          ToastHelper().errorToast(
+                                              "Please Select the Class");}
+                                         else if (programConsumer
+                                                .selectedBatch ==
+                                            null&& programConsumer.selectedDept!="300") {
+                                          ToastHelper().errorToast(
+                                              "Please Select the Batch");
+                                        } else if (selectedIDs.isEmpty && programConsumer.selectedDept!="300") {
+                                          ToastHelper().errorToast(
+                                              "Please select the course");
+                                        } 
                                             else {
                                           var token = await getTokenAndUseIt();
                                           if (token == null) {
@@ -1894,7 +1894,7 @@ class _AddStudentViewState extends State<AddStudentView> {
                                           return Card(
                                             color: AppColors.colorc7e,
                                             child: CheckboxListTile(
-                                              side: MaterialStateBorderSide
+                                              side: WidgetStateBorderSide
                                                   .resolveWith(
                                                 (states) =>
                                                     const BorderSide(

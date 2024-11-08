@@ -23,6 +23,7 @@ class ImagePath {
   static const String webclockLogo = "assets/clock.png";
   static const String rgustLogo = "assets/rgust_logo.gif";
   static const String uploadPdfLogo = "assets/upload_pdf.png";
+   static const String cardImage = "assets/card.png";
 
 }
 

@@ -157,7 +157,13 @@ class StudentProvider extends ChangeNotifier {
       required String dob,
       required String studentType,
       required String userImage,
-      required List<int> selectedCourseList}) async {
+      required List<int> selectedCourseList,
+      required String startdate,
+      required String endDate,
+      required int totalClinicalFee,
+      required String clinicalFeeStatus,
+      required int clinicalId
+      }) async {
     setLoading(true);
 
     try {
@@ -185,12 +191,12 @@ class StudentProvider extends ChangeNotifier {
             "Qualification": qualification,
             "EmergencyContact": int.parse(emergencyContact),
             "SelectedCourse": selectedCourseList,
-            "ClinicalId":1,
-            "StartDate":"05/10/2023",
-            "EndDate":"07/12/2023",
+            "ClinicalId":clinicalId,
+            "StartDate":startdate,
+            "EndDate":endDate,
             "Status":"OnProgress",
-            "TotalClinicalFee":2700,
-            "ClinicalFeeStatus":"Paid"
+            "TotalClinicalFee":totalClinicalFee,
+            "ClinicalFeeStatus":clinicalFeeStatus
           },
           token);
       var data = json.decode(result.body);

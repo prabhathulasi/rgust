@@ -24,7 +24,6 @@ import 'package:rugst_alliance_academia/widgets/app_formfield.dart';
 
 import 'package:rugst_alliance_academia/widgets/app_richtext.dart';
 import 'package:rugst_alliance_academia/widgets/app_spining.dart';
-import 'package:u_credit_card/u_credit_card.dart';
 
 class StudentDetailView extends StatefulWidget {
   final int studentId;
@@ -44,34 +43,32 @@ class _FacultyDetailViewState extends State<StudentDetailView> {
   showAddAlertDialog(BuildContext context, StudentDetail details) {
     // set up the AlertDialog
     Dialog alert = Dialog(
-      child: StatefulBuilder(
-        builder: (context, setState) {
-          return Stack(
-            children: [
-              UpdateStudentDetails(studentDetails: details),
-              Transform.translate(
-                offset: Offset(10.w, -13.h),
-                child: Align(
-                  alignment: Alignment.topRight,
+      child: StatefulBuilder(builder: (context, setState) {
+        return Stack(
+          children: [
+            UpdateStudentDetails(studentDetails: details),
+            Transform.translate(
+              offset: Offset(10.w, -13.h),
+              child: Align(
+                alignment: Alignment.topRight,
+                child: CircleAvatar(
+                  radius: 14.0.sp,
+                  backgroundColor: AppColors.colorRed,
                   child: CircleAvatar(
-                    radius: 14.0.sp,
-                    backgroundColor: AppColors.colorRed ,
-                    child: CircleAvatar(
-                        backgroundColor: AppColors.colorWhite,
-                        radius: 12.sp,
-                        child:
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.pop(context);
-                              },
-                              child: const Icon(Icons.close, color: AppColors.colorRed))),
-                  ),
+                      backgroundColor: AppColors.colorWhite,
+                      radius: 12.sp,
+                      child: GestureDetector(
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
+                          child: const Icon(Icons.close,
+                              color: AppColors.colorRed))),
                 ),
-              )
-            ],
-          );
-        }
-      ),
+              ),
+            )
+          ],
+        );
+      }),
     );
 
     // show the dialog
@@ -634,134 +631,125 @@ class _FacultyDetailViewState extends State<StudentDetailView> {
                             width: 4.w,
                           ),
                           Consumer<FeesProvider>(
-                            builder: (context, feesConsumer, child) {
-                              return Expanded(
-                                flex: 1,
-                                child: studentData.studentFees!.isEmpty
-                                    ?  InkWell(
-                                          onTap: () async {
-                                            var token = await getTokenAndUseIt();
-                                            if (token == null) {
-                                              if (context.mounted) {
-                                                Navigator.pushNamed(
-                                                    context, RouteNames.login);
-                                              }
-                                            } else if (token == "Token Expired") {
-                                              ToastHelper().errorToast(
-                                                  "Session Expired Please Login Again");
-                              
-                                              if (context.mounted) {
-                                                Navigator.pushNamed(
-                                                    context, RouteNames.login);
-                                              }
-                                            } else {
-                                              feesConsumer.getFeesByid(token,
-                                                  studentData.currentProgramId!);
-                                            }
-                                            if (context.mounted) {
-                                              showUpdateFeesDialog(
-                                                  context, studentData);
-                                            }
-                                          },
-                                          child: Container(
-                                            decoration: BoxDecoration(
-                                                color: AppColors.colorWhite,
-                                                border: Border.all(
-                                                    color: AppColors.colorc7e,
-                                                    width: 3)),
-                                            child: Padding(
-                                              padding: const EdgeInsets.all(18.0),
-                                              child: Column(
-                                                children: [
-                                                  AppRichTextView(
-                                                    title: 'Alert!',
-                                                    fontSize: 30.sp,
-                                                    fontWeight: FontWeight.bold,
-                                                    textColor: AppColors.colorRed,
-                                                  ),
-                                                  Lottie.asset(
-                                                      LottiePath
-                                                          .whiteNotificationLottie,
-                                                      height: size.height * 0.15,
-                                                      repeat: false),
-                                                  AppRichTextView(
-                                                    textAlign: TextAlign.center,
-                                                    title:
-                                                        'Please Update Student Fees Details',
-                                                    fontSize: 20.sp,
-                                                    fontWeight: FontWeight.bold,
-                                                    textColor: AppColors.colorc7e,
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                        )
-                                      
-                                    : Container(
-                                        decoration: BoxDecoration(
-                                          color: AppColors.colorWhite,
-                                          border: Border.all(
-                                              color: AppColors.colorc7e,
-                                              width: 3.w),
-                                        ),
-                                        child: CarouselSlider(
+                              builder: (context, feesConsumer, child) {
+                            return Expanded(
+                              flex: 1,
+                              child: studentData.studentFees!.isEmpty
+                                  ? InkWell(
+                                      onTap: () async {
+                                        var token = await getTokenAndUseIt();
+                                        if (token == null) {
+                                          if (context.mounted) {
+                                            Navigator.pushNamed(
+                                                context, RouteNames.login);
+                                          }
+                                        } else if (token == "Token Expired") {
+                                          ToastHelper().errorToast(
+                                              "Session Expired Please Login Again");
 
-                                          options: CarouselOptions(
-                                            viewportFraction: 0.5,
-                                            enlargeCenterPage: true ,
-                                              enableInfiniteScroll: false),
-                                          items: studentData.studentFees!
-                                              .map((item) => Center(
-                                                child: CreditCardUi(
-                                                  onTap: () async{
-                                                      var token = await getTokenAndUseIt();
-                                            if (token == null) {
-                                              if (context.mounted) {
-                                                Navigator.pushNamed(
-                                                    context, RouteNames.login);
-                                              }
-                                            } else if (token == "Token Expired") {
-                                              ToastHelper().errorToast(
-                                                  "Session Expired Please Login Again");
-                              
-                                              if (context.mounted) {
-                                                Navigator.pushNamed(
-                                                    context, RouteNames.login);
-                                              }
-                                            } else {
-                                              feesConsumer.getFeesByid(token,
-                                                  studentData.currentProgramId!);
-                                            }
-                                            if (context.mounted) {
-                                              showUpdateFeesDialog(
-                                                  context, studentData);
-                                            }
-                                                  },
-                                                      className: item.className!,
-                                                      topLeftColor:
-                                                          AppColors.colorc7e,
-                                                      creditCardType:
-                                                          CreditCardType.none,
-                                                      shouldMaskCardNumber: false,
-                                                      balance: double.parse(item.amountInUsd.toString()),
-                                                      showBalance: true,
-                                                      doesSupportNfc: false,
-                                                      cardType: CardType.other,
-                                                      showValidFrom: false,
-                                                      showValidThru: false,
-                                                      cardHolderFullName:
-                                                          '${studentData.firstName!} ${studentData.lastName!}',
-                                                      cardNumber:
-                                                          'Due: \$${item.dueAmount == null || item.dueAmount == 0 ? double.parse(item.amountInUsd.toString()): double.parse((item.amountInUsd! - item.dueAmount!).toString() )}',
-                                                      validThru: '10/24',
+                                          if (context.mounted) {
+                                            Navigator.pushNamed(
+                                                context, RouteNames.login);
+                                          }
+                                        } else {
+                                          feesConsumer.getFeesByid(token,
+                                              studentData.currentProgramId!);
+                                        }
+                                        if (context.mounted) {
+                                          showUpdateFeesDialog(
+                                              context, studentData);
+                                        }
+                                      },
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                            color: AppColors.colorWhite,
+                                            border: Border.all(
+                                                color: AppColors.colorc7e,
+                                                width: 3)),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(18.0),
+                                          child: Column(
+                                            children: [
+                                              AppRichTextView(
+                                                title: 'Alert!',
+                                                fontSize: 30.sp,
+                                                fontWeight: FontWeight.bold,
+                                                textColor: AppColors.colorRed,
+                                              ),
+                                              Lottie.asset(
+                                                  LottiePath
+                                                      .whiteNotificationLottie,
+                                                  height: size.height * 0.15,
+                                                  repeat: false),
+                                              AppRichTextView(
+                                                textAlign: TextAlign.center,
+                                                title:
+                                                    'Please Update Student Fees Details',
+                                                fontSize: 20.sp,
+                                                fontWeight: FontWeight.bold,
+                                                textColor: AppColors.colorc7e,
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    )
+                                  : Container(
+                                      decoration: BoxDecoration(
+                                        color: AppColors.colorWhite,
+                                        border: Border.all(
+                                            color: AppColors.colorc7e,
+                                            width: 3.w),
+                                      ),
+                                      child: CarouselSlider(
+                                        options: CarouselOptions(
+                                            height: 250.h,
+                                            
+                                            viewportFraction: 0.55,
+                                            enlargeCenterPage: true,
+                                            enableInfiniteScroll: false),
+                                        items: studentData.studentFees!
+                                            .map((item) => Container(
+                                              width: 400.w,
+                                                  margin: EdgeInsets.symmetric(
+                                                      vertical: 25.h),
+                                                  decoration: BoxDecoration(
+                                                    image: const DecorationImage(image: AssetImage(ImagePath.cardImage),
+                                                    fit: BoxFit.cover
                                                     ),
-                                              ))
-                                              .toList(),
-                                        )),
-                              );
-                            }
-                          ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              18),
+                                                     ),
+                                                     child:  Column(
+                                                   
+                                                      children: [
+                                                         Padding(
+                                                           padding:  EdgeInsets.only(top: 18.h,left: 18.w),
+                                                           child: Align(
+                                                            alignment: Alignment.topLeft,
+                                                            child: AppRichTextView(title: item.className!, fontSize: 15.sp, fontWeight: FontWeight.bold,textColor: AppColors.colorWhite,)),
+                                                         ),
+                                                        const Spacer(),
+                                                        AppRichTextView(title: "Total Tution \$ ${item.amountInUsd}", fontSize: 17.sp, fontWeight: FontWeight.bold,textColor: AppColors.colorWhite,),
+                                                       item.dueAmount == null?  AppRichTextView(title: "Payable Tution \$  ${item.amountInUsd}", fontSize: 17.sp, fontWeight: FontWeight.bold,textColor: AppColors.colorWhite,): 
+                                                       AppRichTextView(title: "Payable Tution \$ ${(item.amountInUsd! - item.dueAmount!)} ", fontSize: 17.sp, fontWeight: FontWeight.bold,textColor: AppColors.colorWhite,),
+                                                      const Spacer(),
+                                                         Padding(
+                                                           padding:  EdgeInsets.only(left: 18.w,bottom: 18.h),
+                                                           child: Align(
+                                                            alignment: Alignment.bottomLeft,
+                                                            child: AppRichTextView(title: "${studentData.firstName!} ${studentData.lastName!}", fontSize: 15.sp, fontWeight: FontWeight.bold,textColor: AppColors.colorWhite,)),
+                                                         ),
+                                                      ],
+                                                     ),
+                                                ),
+                                                
+                                                )
+                                            .toList(),
+                                      )),
+                            );
+                          }),
                         ],
                       ),
                     ),
