@@ -1865,109 +1865,111 @@ class _AddStudentViewState extends State<AddStudentView> {
                                     ],
                                   ),
                               )
-                          : programConsumer.newData.isEmpty
+                          :  programConsumer.coursesModel.courses == null
                               ? Container()
-                              : Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    AppRichTextView(
-                                        title: "Registered Course",
-                                        fontSize: 25.sp,
-                                        fontWeight: FontWeight.w500),
-                                    SizedBox(
-                                      width: 10.w,
-                                    ),
-                                    Consumer<ProgramProvider>(
-                                        builder: (context,
-                                            departmentProvider, child) {
-                                      return ListView.builder(
-                                        shrinkWrap: true,
-                                        itemCount: departmentProvider
-                                            .coursesModel.courses!.length,
-                                        itemBuilder: (context, index) {
-                                          var currentItem =
-                                              departmentProvider
-                                                  .coursesModel
-                                                  .courses![index];
-                                          int itemId = currentItem.iD!;
-                                    
-                                          return Card(
-                                            color: AppColors.colorc7e,
-                                            child: CheckboxListTile(
-                                              side: WidgetStateBorderSide
-                                                  .resolveWith(
-                                                (states) =>
-                                                    const BorderSide(
-                                                        width: 2.0,
-                                                        color: AppColors
-                                                            .colorWhite),
-                                              ),
-                                              checkColor:
-                                                  AppColors.colorc7e,
-                                              activeColor:
-                                                  AppColors.colorWhite,
-                                              title: AppRichTextView(
-                                                title: currentItem
-                                                    .courseName!
-                                                    .trim(),
-                                                fontSize: 15.sp,
-                                                fontWeight: FontWeight.bold,
-                                                textColor:
+                              : SingleChildScrollView(
+                                child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      AppRichTextView(
+                                          title: "Registered Course",
+                                          fontSize: 25.sp,
+                                          fontWeight: FontWeight.w500),
+                                      SizedBox(
+                                        width: 10.w,
+                                      ),
+                                      Consumer<ProgramProvider>(
+                                          builder: (context,
+                                              departmentProvider, child) {
+                                        return ListView.builder(
+                                          shrinkWrap: true,
+                                          itemCount: departmentProvider
+                                              .coursesModel.courses!.length,
+                                          itemBuilder: (context, index) {
+                                            var currentItem =
+                                                departmentProvider
+                                                    .coursesModel
+                                                    .courses![index];
+                                            int itemId = currentItem.iD!;
+                                                                            
+                                            return Card(
+                                              color: AppColors.colorc7e,
+                                              child: CheckboxListTile(
+                                                side: WidgetStateBorderSide
+                                                    .resolveWith(
+                                                  (states) =>
+                                                      const BorderSide(
+                                                          width: 2.0,
+                                                          color: AppColors
+                                                              .colorWhite),
+                                                ),
+                                                checkColor:
+                                                    AppColors.colorc7e,
+                                                activeColor:
                                                     AppColors.colorWhite,
+                                                title: AppRichTextView(
+                                                  title: currentItem
+                                                      .courseName!
+                                                      .trim(),
+                                                  fontSize: 15.sp,
+                                                  fontWeight: FontWeight.bold,
+                                                  textColor:
+                                                      AppColors.colorWhite,
+                                                ),
+                                                subtitle: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment
+                                                          .start,
+                                                  children: [
+                                                    AppRichTextView(
+                                                      title: currentItem
+                                                          .courseId!,
+                                                      fontSize: 12.sp,
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                      textColor: AppColors
+                                                          .colorWhite,
+                                                    ),
+                                                    AppRichTextView(
+                                                      title:
+                                                          "Assigned Lecture: ${currentItem.assignedLec! == "" ? "Not Assigned" : currentItem.assignedLec!}",
+                                                      fontSize: 12.sp,
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                      textColor: currentItem
+                                                                  .assignedLec! ==
+                                                              ""
+                                                          ? AppColors.colorRed
+                                                          : AppColors
+                                                              .colorWhite,
+                                                    ),
+                                                  ],
+                                                ),
+                                                value: selectedIDs
+                                                    .contains(itemId),
+                                                onChanged: (value) {
+                                                  setState(() {
+                                                    if (value!) {
+                                                      // Add the selected ID to the list
+                                                      selectedIDs.add(itemId);
+                                                    } else {
+                                                      // Remove the ID if the checkbox is unchecked
+                                                      selectedIDs
+                                                          .remove(itemId);
+                                                    }
+                                                  });
+                                                  print(selectedIDs);
+                                                },
                                               ),
-                                              subtitle: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment
-                                                        .start,
-                                                children: [
-                                                  AppRichTextView(
-                                                    title: currentItem
-                                                        .courseId!,
-                                                    fontSize: 12.sp,
-                                                    fontWeight:
-                                                        FontWeight.w500,
-                                                    textColor: AppColors
-                                                        .colorWhite,
-                                                  ),
-                                                  AppRichTextView(
-                                                    title:
-                                                        "Assigned Lecture: ${currentItem.assignedLec! == "" ? "Not Assigned" : currentItem.assignedLec!}",
-                                                    fontSize: 12.sp,
-                                                    fontWeight:
-                                                        FontWeight.w500,
-                                                    textColor: currentItem
-                                                                .assignedLec! ==
-                                                            ""
-                                                        ? AppColors.colorRed
-                                                        : AppColors
-                                                            .colorWhite,
-                                                  ),
-                                                ],
-                                              ),
-                                              value: selectedIDs
-                                                  .contains(itemId),
-                                              onChanged: (value) {
-                                                setState(() {
-                                                  if (value!) {
-                                                    // Add the selected ID to the list
-                                                    selectedIDs.add(itemId);
-                                                  } else {
-                                                    // Remove the ID if the checkbox is unchecked
-                                                    selectedIDs
-                                                        .remove(itemId);
-                                                  }
-                                                });
-                                                print(selectedIDs);
-                                              },
-                                            ),
-                                          );
-                                        },
-                                      );
-                                    }),
-                                    const Divider(),
-                                    const Expanded(child: StudentFeesDetails())
-                                  ],
-                                ),
+                                            );
+                                          },
+                                        );
+                                      }),
+                                      // const Divider(),
+                                      // const Expanded(child: StudentFeesDetails())
+                                    ],
+                                  ),
+                              ),
                     )
                   ],
                 ),
