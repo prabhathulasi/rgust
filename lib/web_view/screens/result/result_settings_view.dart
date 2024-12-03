@@ -96,7 +96,7 @@ class _ResultSettingsViewState extends State<ResultSettingsView> {
                               title: "Class",
                               fontSize: 25.sp,
                               fontWeight: FontWeight.w500),
-                      const ClassDropdown(),
+                      const ClassDropdown(isUpdatingStudent: false,),
                       SizedBox(
                         height: 10.h,
                       ),
@@ -119,7 +119,7 @@ class _ResultSettingsViewState extends State<ResultSettingsView> {
                       SizedBox(
                         height: 10.h,
                       ),
-                      const BatchDropdown(),
+                      const BatchDropdown(isUpdatingStudent: false,),
                       SizedBox(
                         height: 20.h,
                       ),

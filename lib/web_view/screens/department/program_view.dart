@@ -90,206 +90,92 @@ class _ProgramViewState extends State<ProgramView> {
         body: Padding(
             padding: EdgeInsets.all(18.0.sp),
             child: Row(children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    AppRichTextView(
-                        title: "Program",
-                        fontSize: 25.sp,
-                        fontWeight: FontWeight.w500),
-                    SizedBox(
-                      height: 10.h,
-                    ),
-                    const ProgramDropdown(),
-                    SizedBox(
-                      height: 10.h,
-                    ),
-                    programProvider.selectedDept == null
-                        ? Container()
-                        : programProvider.selectedDept == "300"
-                            ? Container()
-                            : AppRichTextView(
-                                title: "Class",
-                                fontSize: 25.sp,
-                                fontWeight: FontWeight.w500),
-                    programProvider.selectedDept == "300"
-                        ? Container()
-                        : const ClassDropdown(),
-                    SizedBox(
-                      height: 10.h,
-                    ),
-                    programProvider.selectedClass == null
-                        ? Container()
-                        : AppRichTextView(
-                            title: "Year",
-                            fontSize: 25.sp,
-                            fontWeight: FontWeight.w500),
-                    const DynamicYearsDropdown(),
-                    SizedBox(
-                      height: 10.h,
-                    ),
-                    programProvider.selectedClass == null
-                        ? Container()
-                        : AppRichTextView(
-                            title: "Batch",
-                            fontSize: 25.sp,
-                            fontWeight: FontWeight.w500),
-                    SizedBox(
-                      height: 10.h,
-                    ),
-                    const BatchDropdown(),
-                    SizedBox(
-                      height: 10.h,
-                    ),
-                    programProvider.selectedDept == "300"
-                        ? Expanded(
-                            child: Column(
-                              children: [
-                                Row(
-                                  children: [
-                                    Radio(
-                                      activeColor: AppColors.colorc7e,
-                                      value: false,
-                                      groupValue: programProvider.isCore,
-                                      onChanged: (value) {
-                                        programProvider
-                                            .selectRotationType(value!);
-                                      },
-                                    ),
-                                    AppRichTextView(
-                                        title: "Core Rotation",
-                                        fontSize: 15.sp,
-                                        fontWeight: FontWeight.bold),
-                                    Radio(
-                                      activeColor: AppColors.colorc7e,
-                                      value: true,
-                                      groupValue: programProvider.isCore,
-                                      onChanged: (value) {
-                                        programProvider
-                                            .selectRotationType(value!);
-                                      },
-                                    ),
-                                    AppRichTextView(
-                                        title: "Elective Rotation",
-                                        fontSize: 15.sp,
-                                        fontWeight: FontWeight.bold),
-                                  ],
-                                ),
-                                Expanded(
-                                  child: Editable(
-                                    key: _clinicaleditableKey,
-                                    showRemoveIcon: true,
-                                    columns: clinicalcols,
-                                    rows: clinicalRows,
-                                    zebraStripe: true,
-                                    stripeColor1: Colors.blue[50]!,
-                                    stripeColor2: Colors.grey[200]!,
-                                    onRowSaved: (value) async {
-                                      if (value == null) {
-                                        ToastHelper().errorToast(
-                                            "Please Fill the Required Field");
-                                      } else if (value["rotations"] == null) {
-                                        ToastHelper().errorToast(
-                                            "Rotation Name is Required ");
-                                      } else if (value["duration"] == null) {
-                                        ToastHelper().errorToast(
-                                            "Duration is Required ");
-                                      } else if (value["credits"] == null) {
-                                        ToastHelper()
-                                            .errorToast("credits is Required ");
-                                      } else {
-                                        var token = await getTokenAndUseIt();
-                                        if (token == null) {
-                                          if (context.mounted) {
-                                            Navigator.pushNamed(
-                                                context, RouteNames.login);
-                                          }
-                                        } else if (token == "Token Expired") {
-                                          ToastHelper().errorToast(
-                                              "Session Expired Please Login Again");
-
-                                          if (context.mounted) {
-                                            Navigator.pushNamed(
-                                                context, RouteNames.login);
-                                          }
-                                        } else {
-                                          await programProvider
-                                              .postClinicalCourse(token,
-                                                  duration: int.parse(
-                                                    value["duration"],
-                                                  ),
-                                                  rotationName:
-                                                      value["rotations"],
-                                                  credits: int.parse(
-                                                      value["credits"]));
-
-                                          clinicalRows = removeOneRow(
-                                              clinicalRows,
-                                              clinicalRows,
-                                              clinicalRows[0]);
-                                          programProvider.setCreateButton(true);
-                                        }
-                                      }
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  AppRichTextView(
+                      title: "Program",
+                      fontSize: 25.sp,
+                      fontWeight: FontWeight.w500),
+                  SizedBox(
+                    height: 10.h,
+                  ),
+                  const ProgramDropdown(),
+                  SizedBox(
+                    height: 10.h,
+                  ),
+                  programProvider.selectedDept == null
+                      ? Container()
+                      : programProvider.selectedDept == "300"
+                          ? Container()
+                          : AppRichTextView(
+                              title: "Class",
+                              fontSize: 25.sp,
+                              fontWeight: FontWeight.w500),
+                  programProvider.selectedDept == "300"
+                      ? Container()
+                      : const ClassDropdown(isUpdatingStudent: false,),
+                
+                 
+                  SizedBox(
+                    height: 10.h,
+                  ),
+                  programProvider.selectedDept == "300"
+                      ? Expanded(
+                          child: Column(
+                            children: [
+                              Row(
+                                children: [
+                                  Radio(
+                                    activeColor: AppColors.colorc7e,
+                                    value: false,
+                                    groupValue: programProvider.isCore,
+                                    onChanged: (value) {
+                                      programProvider
+                                          .selectRotationType(value!);
                                     },
-                                    onSubmitted: (value) {
-                                      print(value);
-                                    },
-                                    borderColor: Colors.blueGrey,
-                                    tdStyle: const TextStyle(
-                                        fontWeight: FontWeight.bold),
-                                    trHeight: 40.h,
-                                    removeIconColor: AppColors.colorRed,
-
-                                    thStyle: TextStyle(
-                                        fontSize: 15.sp,
-                                        fontWeight: FontWeight.bold,
-                                        color: AppColors.colorWhite),
-                                    thAlignment: TextAlign.center,
-                                    thVertAlignment: CrossAxisAlignment.end,
-                                    thPaddingBottom: 3,
-                                    showSaveIcon: true,
-                                    saveIconColor: AppColors.colorc7e,
-                                    showCreateButton:
-                                        programProvider.showCreateButton,
-                                    tdAlignment: TextAlign.left,
-                                    tdEditableMaxLines:
-                                        100, // don't limit and allow data to wrap
-                                    tdPaddingTop: 0,
-                                    tdPaddingBottom: 14,
-                                    tdPaddingLeft: 10,
-                                    tdPaddingRight: 8,
-                                    focusedBorder: const OutlineInputBorder(
-                                        borderSide:
-                                            BorderSide(color: Colors.blue),
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(0))),
                                   ),
-                                ),
-                              ],
-                            ),
-                          )
-                        : programProvider.selectedBatch == null
-                            ? Container()
-                            : Expanded(
+                                  AppRichTextView(
+                                      title: "Core Rotation",
+                                      fontSize: 15.sp,
+                                      fontWeight: FontWeight.bold),
+                                  Radio(
+                                    activeColor: AppColors.colorc7e,
+                                    value: true,
+                                    groupValue: programProvider.isCore,
+                                    onChanged: (value) {
+                                      programProvider
+                                          .selectRotationType(value!);
+                                    },
+                                  ),
+                                  AppRichTextView(
+                                      title: "Elective Rotation",
+                                      fontSize: 15.sp,
+                                      fontWeight: FontWeight.bold),
+                                ],
+                              ),
+                              Expanded(
                                 child: Editable(
-                                  key: _editableKey,
+                                  key: _clinicaleditableKey,
                                   showRemoveIcon: true,
-                                  columns: cols,
-                                  rows: rows,
+                                  columns: clinicalcols,
+                                  rows: clinicalRows,
                                   zebraStripe: true,
                                   stripeColor1: Colors.blue[50]!,
                                   stripeColor2: Colors.grey[200]!,
                                   onRowSaved: (value) async {
-                                    if (value["coursename"] == null) {
-                                      Fluttertoast.showToast(
-                                          msg: "Course Name is Required ");
-                                    } else if (value["coursecode"] == null) {
-                                      Fluttertoast.showToast(
-                                          msg: "Course Code is Required ");
+                                    if (value == null) {
+                                      ToastHelper().errorToast(
+                                          "Please Fill the Required Field");
+                                    } else if (value["rotations"] == null) {
+                                      ToastHelper().errorToast(
+                                          "Rotation Name is Required ");
+                                    } else if (value["duration"] == null) {
+                                      ToastHelper().errorToast(
+                                          "Duration is Required ");
                                     } else if (value["credits"] == null) {
-                                      Fluttertoast.showToast(
-                                          msg: "credits is Required ");
+                                      ToastHelper()
+                                          .errorToast("credits is Required ");
                                     } else {
                                       var token = await getTokenAndUseIt();
                                       if (token == null) {
@@ -300,21 +186,26 @@ class _ProgramViewState extends State<ProgramView> {
                                       } else if (token == "Token Expired") {
                                         ToastHelper().errorToast(
                                             "Session Expired Please Login Again");
-
+              
                                         if (context.mounted) {
                                           Navigator.pushNamed(
                                               context, RouteNames.login);
                                         }
                                       } else {
-                                        await programProvider.postCoursesList(
-                                            token,
-                                            courseName: value["coursename"],
-                                            courseid: value["coursecode"],
-                                            credits:
-                                                int.parse(value["credits"]));
-
-                                        rows =
-                                            removeOneRow(cols, rows, rows[0]);
+                                        await programProvider
+                                            .postClinicalCourse(token,
+                                                duration: int.parse(
+                                                  value["duration"],
+                                                ),
+                                                rotationName:
+                                                    value["rotations"],
+                                                credits: int.parse(
+                                                    value["credits"]));
+              
+                                        clinicalRows = removeOneRow(
+                                            clinicalRows,
+                                            clinicalRows,
+                                            clinicalRows[0]);
                                         programProvider.setCreateButton(true);
                                       }
                                     }
@@ -327,7 +218,7 @@ class _ProgramViewState extends State<ProgramView> {
                                       fontWeight: FontWeight.bold),
                                   trHeight: 40.h,
                                   removeIconColor: AppColors.colorRed,
-
+              
                                   thStyle: TextStyle(
                                       fontSize: 15.sp,
                                       fontWeight: FontWeight.bold,
@@ -349,14 +240,102 @@ class _ProgramViewState extends State<ProgramView> {
                                   focusedBorder: const OutlineInputBorder(
                                       borderSide:
                                           BorderSide(color: Colors.blue),
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(0))),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(0))),
                                 ),
-                              )
-                  ],
-                ),
+                              ),
+                            ],
+                          ),
+                        )
+                      : programProvider.selectedBatch == null
+                          ? Container()
+                          : Expanded(
+                              child: Editable(
+                                key: _editableKey,
+                                showRemoveIcon: true,
+                                columns: cols,
+                                rows: rows,
+                                zebraStripe: true,
+                                stripeColor1: Colors.blue[50]!,
+                                stripeColor2: Colors.grey[200]!,
+                                onRowSaved: (value) async {
+                                  if (value["coursename"] == null) {
+                                    Fluttertoast.showToast(
+                                        msg: "Course Name is Required ");
+                                  } else if (value["coursecode"] == null) {
+                                    Fluttertoast.showToast(
+                                        msg: "Course Code is Required ");
+                                  } else if (value["credits"] == null) {
+                                    Fluttertoast.showToast(
+                                        msg: "credits is Required ");
+                                  } else {
+                                    var token = await getTokenAndUseIt();
+                                    if (token == null) {
+                                      if (context.mounted) {
+                                        Navigator.pushNamed(
+                                            context, RouteNames.login);
+                                      }
+                                    } else if (token == "Token Expired") {
+                                      ToastHelper().errorToast(
+                                          "Session Expired Please Login Again");
+              
+                                      if (context.mounted) {
+                                        Navigator.pushNamed(
+                                            context, RouteNames.login);
+                                      }
+                                    } else {
+                                      await programProvider.postCoursesList(
+                                          token,
+                                          courseName: value["coursename"],
+                                          courseid: value["coursecode"],
+                                          credits:
+                                              int.parse(value["credits"]));
+              
+                                      rows =
+                                          removeOneRow(cols, rows, rows[0]);
+                                      programProvider.setCreateButton(true);
+                                    }
+                                  }
+                                },
+                                onSubmitted: (value) {
+                                  print(value);
+                                },
+                                borderColor: Colors.blueGrey,
+                                tdStyle: const TextStyle(
+                                    fontWeight: FontWeight.bold),
+                                trHeight: 40.h,
+                                removeIconColor: AppColors.colorRed,
+              
+                                thStyle: TextStyle(
+                                    fontSize: 15.sp,
+                                    fontWeight: FontWeight.bold,
+                                    color: AppColors.colorWhite),
+                                thAlignment: TextAlign.center,
+                                thVertAlignment: CrossAxisAlignment.end,
+                                thPaddingBottom: 3,
+                                showSaveIcon: true,
+                                saveIconColor: AppColors.colorc7e,
+                                showCreateButton:
+                                    programProvider.showCreateButton,
+                                tdAlignment: TextAlign.left,
+                                tdEditableMaxLines:
+                                    100, // don't limit and allow data to wrap
+                                tdPaddingTop: 0,
+                                tdPaddingBottom: 14,
+                                tdPaddingLeft: 10,
+                                tdPaddingRight: 8,
+                                focusedBorder: const OutlineInputBorder(
+                                    borderSide:
+                                        BorderSide(color: Colors.blue),
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(0))),
+                              ),
+                            )
+                ],
               ),
-              const VerticalDivider(),
+              const VerticalDivider(
+                color: AppColors.colorc7e,
+              ),
               programProvider.selectedDept == "300"
                   ? Expanded(child: Consumer<ProgramProvider>(
                       builder: (context, clinicalConsumer, child) {
@@ -467,7 +446,7 @@ class _ProgramViewState extends State<ProgramView> {
                                 ),
                                 Builder(builder: (context) {
                                   return Expanded(
-                                    flex: 1,
+                                    
                                     child: Consumer<ProgramProvider>(builder:
                                         (context, departmentProvider, child) {
                                       return Editable(
@@ -477,8 +456,8 @@ class _ProgramViewState extends State<ProgramView> {
                                         columns: filterdcols,
                                         rows: departmentProvider.newData,
                                         zebraStripe: true,
-                                        stripeColor1: AppColors.colorc7e,
-                                        stripeColor2: AppColors.colorc7e,
+                                        // stripeColor1: AppColors.colorc7e,
+                                        // stripeColor2: AppColors.colorc7e,
                                         onRowSaved: (value) async {
                                           log(value);
                                           //   await departmentProvider.patchCoursesList(context,
@@ -490,14 +469,14 @@ class _ProgramViewState extends State<ProgramView> {
                                           print(value);
                                         },
 
-                                        borderColor: Colors.blueGrey,
+                                        borderColor: AppColors.colorc7e,
                                         tdStyle: TextStyle(
                                             fontSize: 15.sp,
                                             fontWeight: FontWeight.bold,
-                                            color: AppColors.colorWhite),
+                                            color: AppColors.colorBlack),
                                         trHeight: 100.h,
                                         thStyle: TextStyle(
-                                            fontSize: 18.sp,
+                                            fontSize: 15.sp,
                                             fontWeight: FontWeight.bold,
                                             color: AppColors.colorWhite),
                                         thAlignment: TextAlign.center,

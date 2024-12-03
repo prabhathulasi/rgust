@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -7,6 +8,7 @@ import 'package:rugst_alliance_academia/data/model/clinical/clinical_registratio
 import 'package:rugst_alliance_academia/data/model/course_model.dart';
 import 'package:rugst_alliance_academia/data/model/program_class_model.dart';
 import 'package:rugst_alliance_academia/data/model/program_model.dart';
+import 'package:rugst_alliance_academia/data/provider/student_provider.dart';
 import 'package:rugst_alliance_academia/routes/named_routes.dart';
 import 'package:rugst_alliance_academia/util/api_service.dart';
 import 'package:rugst_alliance_academia/util/toast_helper.dart';
@@ -19,7 +21,8 @@ class ProgramProvider extends ChangeNotifier {
   ProgramClassModel programClassModel = ProgramClassModel();
   CoursesModel coursesModel = CoursesModel();
   ClinicalCoursesModel clinicalCoursesModel = ClinicalCoursesModel();
-  ClinicalRegistrationModel clinicalRegistrationModel = ClinicalRegistrationModel();
+  ClinicalRegistrationModel clinicalRegistrationModel =
+      ClinicalRegistrationModel();
   bool showCreateButton = false;
   List<dynamic> newData = [];
   String? selectedDept;
@@ -96,8 +99,7 @@ class ProgramProvider extends ChangeNotifier {
 // get course List depend on the selected class and the batch
   Future getCoursesList(String token) async {
     setLoading(true);
-    var result = await ApiHelper.get(
-        "GetCourse/id=$selectedClass/batch=$selectedBatch", token);
+    var result = await ApiHelper.get("GetCourse/id=$selectedClass", token);
     try {
       if (result.statusCode == 200) {
         var data = json.decode(result.body);
@@ -133,6 +135,33 @@ class ProgramProvider extends ChangeNotifier {
     }
   }
 
+// get course List depend on the selected class and the batch
+  Future getAllCoursesList(String token) async {
+    setLoading(true);
+    var result = await ApiHelper.get("GetAllCourse", token);
+    try {
+      if (result.statusCode == 200) {
+        var data = json.decode(result.body);
+
+        coursesModel = CoursesModel.fromJson(data);
+
+        return coursesModel;
+      } else if (result.statusCode == 204) {
+        ToastHelper().errorToast("No Courses Added Yet");
+        return null;
+      } else {
+        ToastHelper().errorToast("Internal Server Error");
+        return null;
+      }
+    } catch (e) {
+      Fluttertoast.showToast(msg: e.toString());
+      return e.toString();
+    } finally {
+      setLoading(false);
+      notifyListeners();
+    }
+  }
+
 // create course or add new course
   Future postCoursesList(String? token,
       {String? courseid, String? courseName, int? credits}) async {
@@ -145,7 +174,7 @@ class ProgramProvider extends ChangeNotifier {
             "CourseId": courseid,
             "CourseName": courseName,
             "credits": credits,
-            "batch": selectedBatch
+            // "batch": selectedBatch
           },
           token!);
 
@@ -179,7 +208,6 @@ class ProgramProvider extends ChangeNotifier {
     var result = await ApiHelper.get("GetClinical", token);
     try {
       if (result.statusCode == 200) {
-   
         var data = json.decode(result.body);
 
         clinicalCoursesModel = ClinicalCoursesModel.fromJson(data);
@@ -199,12 +227,13 @@ class ProgramProvider extends ChangeNotifier {
       setLoading(false);
     }
   }
+
   Future getClinicalRegistrations(String token, int studentId) async {
     setLoading(true);
-    var result = await ApiHelper.get("GetClinicalStudentRegistration/$studentId", token);
+    var result =
+        await ApiHelper.get("GetClinicalStudentRegistration/$studentId", token);
     try {
       if (result.statusCode == 200) {
-       
         var data = json.decode(result.body);
 
         clinicalRegistrationModel = ClinicalRegistrationModel.fromJson(data);
@@ -224,6 +253,7 @@ class ProgramProvider extends ChangeNotifier {
       setLoading(false);
     }
   }
+
 // create course or add new course
   Future postClinicalCourse(String? token,
       {String? rotationName, int? duration, int? credits}) async {
@@ -298,22 +328,28 @@ class ProgramProvider extends ChangeNotifier {
     selectedDept = value;
     selectedClass = null;
     selectedCourse = null;
-
+    newData.clear();
     notifyListeners();
     if (value != "300") {
       await getClasses(token);
     } else {
       getClinicalCourses(token);
-     
     }
   }
 
 //set class
-  void setSelectedClass(String value, BuildContext context) {
+  void setSelectedClass(String value, String token, bool isUpdatingStudent) {
     selectedClass = value;
+    // is updating student is falsue show only filtered course list depend on selected class else show full course list from the db
+    if (isUpdatingStudent == false) {
+      getCoursesList(token);
+    }
+
+   
+    
+
     selectedBatch = null;
     selectedCourse = null;
-    newData.clear();
 
     notifyListeners();
   }
@@ -340,10 +376,14 @@ class ProgramProvider extends ChangeNotifier {
   }
 
 // set batch
-  void setSelectedBatch(String value, String token) async {
+  void setSelectedBatch(
+      String value, String token, bool isUpdatingStudent) async {
+    // is updating student is falsue show only filtered course list depend on selected class else show full course list from the db
+    if (isUpdatingStudent == true) {
+      getAllCoursesList(token);
+    }
     selectedBatch = value;
-    newData.clear();
-    getCoursesList(token);
+
     notifyListeners();
   }
 

@@ -227,7 +227,7 @@ class _AddFacultyViewState extends State<AddFacultyView> {
                                       ),
                                     ),
                                   )
-                                : const ClassDropdown(),
+                                : const ClassDropdown(isUpdatingStudent: true,),
                             AppRichTextView(
                                 title: "Faculty Id",
                                 textColor: AppColors.colorBlack,
@@ -328,7 +328,7 @@ class _AddFacultyViewState extends State<AddFacultyView> {
                                       ),
                                     ),
                                   )
-                                : const BatchDropdown(),
+                                : const BatchDropdown(isUpdatingStudent: true,),
                             AppRichTextView(
                                 title: "Course",
                                 textColor: AppColors.colorc7e,

@@ -34,7 +34,7 @@ class StudentDetail {
   String? currentProgramName;
   int? currentClassId;
   String? currentClassName;
-  String? batch;
+  // String? batch;
   String? admissionDate;
   int? emergencyContact;
   String? firstName;
@@ -69,7 +69,7 @@ class StudentDetail {
       this.currentProgramName,
       this.currentClassId,
       this.currentClassName,
-      this.batch,
+      // this.batch,
       this.admissionDate,
       this.emergencyContact,
       this.firstName,
@@ -105,7 +105,7 @@ class StudentDetail {
     currentProgramName = json['program_name'];
     currentClassId = json['CurrentClassId'];
     currentClassName = json['class_name'];
-    batch = json['batch'];
+    // batch = json['batch'];
     admissionDate = json['AdmissionDate'];
     emergencyContact = json['EmergencyContact'];
     firstName = json['FirstName'];
@@ -159,7 +159,7 @@ class StudentDetail {
     data['program_name'] = currentProgramName;
     data['CurrentClassId'] = currentClassId;
     data['class_name'] = currentClassName;
-    data['batch'] = batch;
+    // data['batch'] = batch;
     data['AdmissionDate'] = admissionDate;
     data['EmergencyContact'] = emergencyContact;
     data['FirstName'] = firstName;

@@ -830,7 +830,7 @@ class _AddFacultyViewState extends State<UpdateFacultyView> {
                                 children: [
                                     facultyProvider.selectedCourseIndex == index? const Padding(
                                       padding: EdgeInsets.all(8.0),
-                                      child: ClassDropdown(),
+                                      child: ClassDropdown(isUpdatingStudent: true,),
                                     ): Padding(
                                      padding:  EdgeInsets.all(8.0.sp),
                                      child: Container(
@@ -902,7 +902,7 @@ class _AddFacultyViewState extends State<UpdateFacultyView> {
                                 children: [
                                 facultyProvider.selectedCourseIndex == index? const Padding(
                                   padding: EdgeInsets.all(8.0),
-                                  child: BatchDropdown(),
+                                  child: BatchDropdown(isUpdatingStudent: true,),
                                 ):   Padding(
                                      padding:  EdgeInsets.all(8.0.sp),
                                      child: Container(

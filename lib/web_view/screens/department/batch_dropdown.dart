@@ -9,7 +9,8 @@ import 'package:rugst_alliance_academia/util/toast_helper.dart';
 import 'package:rugst_alliance_academia/widgets/app_richtext.dart';
 
 class BatchDropdown extends StatefulWidget {
-  const BatchDropdown({super.key});
+   final bool isUpdatingStudent;
+  const BatchDropdown({super.key, required this.isUpdatingStudent});
 
   @override
   State<BatchDropdown> createState() => _BatchDropdownState();
@@ -72,7 +73,7 @@ class _BatchDropdownState extends State<BatchDropdown> {
                         Navigator.pushNamed(context, RouteNames.login);
                       }
                     } else {
-                      programProvider.setSelectedBatch(value!, token);
+                      programProvider.setSelectedBatch(value!, token, widget.isUpdatingStudent);
                     }
                   },
                 ),

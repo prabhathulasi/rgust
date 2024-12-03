@@ -300,7 +300,7 @@ class _AddStudentViewState extends State<AddStudentView> {
                                           )
                                         : programConsumer.selectedDept == "300"
                                             ? Container()
-                                            : const ClassDropdown(),
+                                            : const ClassDropdown(isUpdatingStudent: true,),
                                     SizedBox(
                                       height: 10.h,
                                     ),
@@ -470,7 +470,7 @@ class _AddStudentViewState extends State<AddStudentView> {
                                               ),
                                             ),
                                           )
-                                        : const BatchDropdown(),
+                                        : const BatchDropdown(isUpdatingStudent: true,),
                                     SizedBox(
                                       height: 10.h,
                                     ),

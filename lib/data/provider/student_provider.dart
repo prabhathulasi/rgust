@@ -254,6 +254,7 @@ class StudentProvider extends ChangeNotifier {
       int? classId,
       int? studentId,
       bool? currentClass,
+      String? batch,
       required List<int> selectedCourseList}) async {
     setLoading(true);
     try {
@@ -262,7 +263,8 @@ class StudentProvider extends ChangeNotifier {
         "ClassId": classId,
         "StudentId": studentId,
         "SelectedCourse": selectedCourseList,
-        "CurrentClass": currentClass
+        "CurrentClass": currentClass,
+        "Batch":batch
       };
       var result = await ApiHelper.post("UpdateStudentCourses", data, token);
 
