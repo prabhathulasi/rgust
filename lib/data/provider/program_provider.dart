@@ -41,7 +41,7 @@ class ProgramProvider extends ChangeNotifier {
   ProgramClassModel get getDeptsClass => programClassModel;
   bool _isLoading = false;
   bool get isLoading => _isLoading;
-
+ bool filteredEnable = false;
 // get program list
   Future getProgram(String token) async {
     var result = await ApiHelper.get("getProgram", token);
@@ -321,6 +321,19 @@ class ProgramProvider extends ChangeNotifier {
       Fluttertoast.showToast(msg: "Internal Server Error");
       return null;
     });
+  }
+List<Courses> filteredCourse = [];
+
+ void filterCourses(String query) {
+    filteredCourse = coursesModel.courses!
+        .where((element) =>
+            element.courseName!.toLowerCase().startsWith(query.toLowerCase()))
+        .toList();
+    notifyListeners();
+  }
+  void setEnableFilter(bool value) {
+    filteredEnable = value;
+    notifyListeners();
   }
 
 // set program or dept
