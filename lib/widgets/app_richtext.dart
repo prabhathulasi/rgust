@@ -28,6 +28,7 @@ class AppRichTextView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RichText(
+      softWrap: true,
         textAlign: textAlign ?? TextAlign.left,
         
         maxLines: maxLines,

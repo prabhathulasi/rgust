@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:rugst_alliance_academia/data/model/student/student_detail_model.dart';
 
-
 import 'package:rugst_alliance_academia/theme/app_colors.dart';
 
 import 'package:rugst_alliance_academia/web_view/screens/faculty/faculty_checkin_view.dart';
@@ -26,10 +25,9 @@ class StudentTabView extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-            decoration: BoxDecoration(
-              color: AppColors.colorWhite,
-              border: Border.all(color: AppColors.colorc7e,width: 3.w)
-            ),
+              decoration: BoxDecoration(
+                  color: AppColors.colorWhite,
+                  border: Border.all(color: AppColors.colorc7e, width: 3.w)),
               width: MediaQuery.sizeOf(context).width,
 
               // ignore: prefer_const_constructors
@@ -38,34 +36,36 @@ class StudentTabView extends StatelessWidget {
                 unselectedLabelColor: AppColors.colorBlack,
                 labelColor: AppColors.colorc7e,
                 labelStyle: GoogleFonts.roboto(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 15.sp
-                ),
-                unselectedLabelStyle: GoogleFonts.roboto(fontWeight: FontWeight.w600,fontSize: 13.sp),
-                indicatorColor:Colors.transparent,
-               
+                    fontWeight: FontWeight.bold, fontSize: 15.sp),
+                unselectedLabelStyle: GoogleFonts.roboto(
+                    fontWeight: FontWeight.w600, fontSize: 13.sp),
+                indicatorColor: Colors.transparent,
                 indicatorWeight: 1.0,
-
-              
                 tabs: const [
-                   Tab(text: "Additional Documents"),
+                  Tab(text: "Additional Documents"),
                   Tab(text: "Attendance"),
                   Tab(text: "Study History"),
                   Tab(text: "Results"),
-                  Tab(text: "Invoice"),
+                  Tab(text: "Payments"),
                   Tab(text: "Settings"),
                 ],
               ),
             ),
-             Expanded(
+            Expanded(
               child: TabBarView(
                 children: [
-                     StudentAdditionalInfoView(studentDetail: studentDetail),
-               const FacultyCheckInView(),
-                 StudyHistoryView(studentData: studentDetail,),
-                ExamResult(studentData: studentDetail),
-                   StudentInvoiceView(studentData: studentDetail,),
-                    SettingsTabView(studentDetail: studentDetail,)
+                  StudentAdditionalInfoView(studentDetail: studentDetail),
+                  const FacultyCheckInView(),
+                  StudyHistoryView(
+                    studentData: studentDetail,
+                  ),
+                  ExamResult(studentData: studentDetail),
+                  StudentInvoiceView(
+                    studentData: studentDetail,
+                  ),
+                  SettingsTabView(
+                    studentDetail: studentDetail,
+                  )
                 ],
               ),
             )

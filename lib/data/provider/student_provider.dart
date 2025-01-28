@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-
 import 'package:flutter/material.dart';
 import 'package:rugst_alliance_academia/data/model/exam_result_model.dart'
     as prefix;
@@ -162,8 +161,7 @@ class StudentProvider extends ChangeNotifier {
       required String endDate,
       required int totalClinicalFee,
       required String clinicalFeeStatus,
-      required int clinicalId
-      }) async {
+      required int clinicalId}) async {
     setLoading(true);
 
     try {
@@ -191,12 +189,12 @@ class StudentProvider extends ChangeNotifier {
             "Qualification": qualification,
             "EmergencyContact": int.parse(emergencyContact),
             "SelectedCourse": selectedCourseList,
-            "ClinicalId":clinicalId,
-            "StartDate":startdate,
-            "EndDate":endDate,
-            "Status":"OnProgress",
-            "TotalClinicalFee":totalClinicalFee,
-            "ClinicalFeeStatus":clinicalFeeStatus
+            "ClinicalId": clinicalId,
+            "StartDate": startdate,
+            "EndDate": endDate,
+            "Status": "OnProgress",
+            "TotalClinicalFee": totalClinicalFee,
+            "ClinicalFeeStatus": clinicalFeeStatus
           },
           token);
       var data = json.decode(result.body);
@@ -231,7 +229,7 @@ class StudentProvider extends ChangeNotifier {
         var data = json.decode(result.body);
 
         studentDetailModel = StudentDetailModel.fromJson(data);
-
+        notifyListeners();
         return studentDetailModel;
       } else if (result.statusCode == 204) {
         ToastHelper().errorToast("No Courses Registered Yet");
@@ -264,13 +262,14 @@ class StudentProvider extends ChangeNotifier {
         "StudentId": studentId,
         "SelectedCourse": selectedCourseList,
         "CurrentClass": currentClass,
-        "Batch":batch
+        "Batch": batch
       };
       var result = await ApiHelper.post("UpdateStudentCourses", data, token);
 
       setLoading(false);
       var decodedJson = json.decode(result.body);
       if (result.statusCode == 200) {
+        getStudentDetailById(studentId!, token);
         notifyListeners();
         ToastHelper().sucessToast(decodedJson["Message"]);
         return decodedJson;
@@ -366,6 +365,30 @@ class StudentProvider extends ChangeNotifier {
     }
   }
 
+  Future deleteCourseById(
+    String token,
+    int id,
+    int studentId,
+  ) async {
+    setLoading(true);
+    try {
+      var result = await ApiHelper.delete("DeleteCourse/id=$id", token);
+      if (result.statusCode == 200) {
+        ToastHelper().sucessToast("Course Deleted Successfully");
+        await getStudentDetailById(studentId, token);
+        return 200;
+      } else {
+        ToastHelper().errorToast("Internal Server Error");
+        return null;
+      }
+    } catch (e) {
+      print(e);
+    } finally {
+      setLoading(false);
+      notifyListeners();
+    }
+  }
+
   Future createAccount(String token, String email, String password,
       String userName, int studentId) async {
     setLoading(true);
@@ -426,10 +449,10 @@ class StudentProvider extends ChangeNotifier {
         await getStudentDetailById(studentId, token);
 
         return "200";
-      } else if (result.statusCode == 409){
+      } else if (result.statusCode == 409) {
         ToastHelper().errorToast("Tution Detail Already Exists");
         return null;
-      }else {
+      } else {
         ToastHelper().errorToast("Internal Server Error");
         return null;
       }

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:rugst_alliance_academia/data/model/admission/admission_education_history_model.dart';
+import 'package:rugst_alliance_academia/util/api_service.dart';
 import 'package:rugst_alliance_academia/util/toast_helper.dart';
+import 'package:http/http.dart' as http;
 
 class AdmissionEducationProvider extends ChangeNotifier {
   // loading indicator
@@ -8,9 +10,46 @@ class AdmissionEducationProvider extends ChangeNotifier {
   bool get isLoading => _isLoading;
   bool _isNewEdu = false;
   bool get isNewEdu => _isNewEdu;
-  bool _isEduCompleted = true;
-  bool get isEduCompleted => _isEduCompleted;
+
   List<EducationModel> educationList = [];
+String? selectedFileName;
+String? selectedFileBytes;
+String? courseName;
+String? institutionName;
+String? _startDate ;
+String get startDate => _startDate!;   
+String? _endDate;
+String get endDate => _endDate!;
+
+    TextEditingController commencedInput = TextEditingController();
+    TextEditingController completedInput = TextEditingController();
+
+
+
+
+  Future<http.Response> postAdmissionEducationDetails(int admissionId) async {
+    setLoading(true);
+    
+    var bodywithData = {
+  "admissionID": admissionId,
+  "EducationDetail":educationList.map((e) => e.toJson()).toList()
+    };
+    try {
+      var result = await ApiHelper.post("admissionEducationDetails",
+        bodywithData , "");
+
+      return result;
+      //api call
+    } catch (e) {
+      print(e);
+      rethrow;
+    } finally {
+      setLoading(false);
+    }
+  }
+
+
+
 
 // set loading value
   void setLoading(bool value) async {
@@ -35,10 +74,44 @@ class AdmissionEducationProvider extends ChangeNotifier {
     }
   }
 
-//education section isComplete
-  void setEduSectionValue(bool value) async {
-    _isEduCompleted = value;
+void removeEducationDetails(int index){
+  educationList.removeAt(index);
+  notifyListeners();
+}
 
+void setStartDate(String startDate){
+  _startDate = startDate;
+  commencedInput.text = startDate;
+  notifyListeners();
+}
+
+void setEndDate(String endDate){
+  _endDate = endDate;
+  completedInput.text = endDate;
+  notifyListeners();
+
+}
+
+void clearStartendDate(){
+  _startDate = null;
+  _endDate = null;
+  commencedInput.clear();
+  completedInput.clear();
+    selectedFileName = null;
+    selectedFileBytes = null;
+  notifyListeners();
+}
+
+  void addFile(String name, String bytes) {
+    selectedFileName = name;
+    selectedFileBytes = bytes;
     notifyListeners();
   }
+
+  void clearFile() {
+    selectedFileName = null;
+    selectedFileBytes = null;
+    notifyListeners();
+  }
+
 }

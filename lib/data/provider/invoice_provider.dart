@@ -83,14 +83,14 @@ class InvoiceProvider extends ChangeNotifier {
         ..fields["ClassId"]=semfeeId!.toString()
         ..fields["ReceiptNumber"] =
             "RGUST/${DateFormat("yyyy/MMM-dd").format(DateTime.now())}/$randomNumber"
-        ..headers.addAll(headers)
-        ..files.add(
-          http.MultipartFile.fromBytes(
-            'InvoiceData',
-            finalResult!.files.first.bytes!,
-            filename: "$studentRegNo-${DateFormat("yyyy-MM-HH:mm").format(DateTime.now())}-$randomNumber.pdf",
-          ),
-        );
+        ..headers.addAll(headers);
+        // ..files.add(
+          // http.MultipartFile.fromBytes(
+          //   'InvoiceData',
+          //   finalResult!.files.first.bytes!,
+          //   filename: "$studentRegNo-${DateFormat("yyyy-MM-HH:mm").format(DateTime.now())}-$randomNumber.pdf",
+          // ),
+        // );
 
       final response = await request.send();
       var responseBody = await response.stream.bytesToString();

@@ -47,8 +47,6 @@ class _AddFacultyViewState extends State<UpdateStudentDetails> {
   Uint8List? bytesFromPicker;
   String? imageEncoded;
 
-  
-
   @override
   Widget build(BuildContext context) {
     TextEditingController dateinput =
@@ -1135,113 +1133,101 @@ class _AddFacultyViewState extends State<UpdateStudentDetails> {
                                       : Container(),
                               programConsumer.selectedBatch != null ||
                                       programConsumer.selectedDept == "300"
-                                  ? registeredCourse.any((course) =>
-                                              course.classId.toString() ==
-                                              programConsumer.selectedClass) ==
-                                          false
-                                      ? Padding(
-                                          padding: EdgeInsets.only(
-                                              left: 15.w, bottom: 15.h),
-                                          child: Row(
-                                            children: [
-                                              AppElevatedButon(
-                                                loading:
-                                                    studentConsumer.isLoading,
-                                                title: "Update",
-                                                buttonColor:
-                                                    AppColors.colorWhite,
-                                                height: 50.h,
-                                                width: 150.w,
-                                                onPressed: (context) async {
-                                                  var token =
-                                                      await getTokenAndUseIt();
-                                                  if (token == null) {
-                                                    if (context.mounted) {
-                                                      Navigator.pushNamed(
-                                                          context,
-                                                          RouteNames.login);
-                                                    }
-                                                  } else if (token ==
-                                                      "Token Expired") {
-                                                    ToastHelper().errorToast(
-                                                        "Session Expired Please Login Again");
+                                  ? Padding(
+                                      padding: EdgeInsets.only(
+                                          left: 15.w, bottom: 15.h),
+                                      child: Row(
+                                        children: [
+                                          AppElevatedButon(
+                                            loading: studentConsumer.isLoading,
+                                            title: "Update",
+                                            buttonColor: AppColors.colorWhite,
+                                            height: 50.h,
+                                            width: 150.w,
+                                            onPressed: (context) async {
+                                              var token =
+                                                  await getTokenAndUseIt();
+                                              if (token == null) {
+                                                if (context.mounted) {
+                                                  Navigator.pushNamed(context,
+                                                      RouteNames.login);
+                                                }
+                                              } else if (token ==
+                                                  "Token Expired") {
+                                                ToastHelper().errorToast(
+                                                    "Session Expired Please Login Again");
 
+                                                if (context.mounted) {
+                                                  Navigator.pushNamed(context,
+                                                      RouteNames.login);
+                                                }
+                                              } else {
+                                                if (programConsumer
+                                                        .selectedDept ==
+                                                    "300") {
+                                                  var result =
+                                                      await clincalConsumer
+                                                          .postClinicalCourse(
+                                                              token,
+                                                              widget
+                                                                  .studentDetails
+                                                                  .iD);
+                                                  if (result == 201) {
+                                                    await studentConsumer
+                                                        .getStudent(token);
                                                     if (context.mounted) {
-                                                      Navigator.pushNamed(
-                                                          context,
-                                                          RouteNames.login);
+                                                      Navigator.pop(context);
                                                     }
+                                                  }
+                                                } else {
+                                                  if (selectedIDs.isEmpty) {
+                                                    ToastHelper().errorToast(
+                                                        "Please Select the Course");
                                                   } else {
-                                                    if (programConsumer
-                                                            .selectedDept ==
-                                                        "300") {
-                                                      var result =
-                                                          await clincalConsumer
-                                                              .postClinicalCourse(
-                                                                  token,
-                                                                  widget
-                                                                      .studentDetails
-                                                                      .iD);
-                                                      if (result == 201) {
-                                                        await studentConsumer
-                                                            .getStudent(token);
-                                                        if (context.mounted) {
-                                                          Navigator.pop(
-                                                              context);
-                                                        }
-                                                      }
-                                                    } else {
-                                                      if (selectedIDs.isEmpty) {
-                                                        ToastHelper().errorToast(
-                                                            "Please Select the Course");
-                                                      } else {
-                                                        var result = await studentConsumer.updateStudentClass(
-                                                            token,
-                                                            batch: programConsumer.selectedBatch,
-                                                            selectedCourseList:
-                                                                selectedIDs,
-                                                            programId: int.parse(
-                                                                programConsumer
-                                                                    .selectedDept!),
-                                                            classId: int.parse(
-                                                                programConsumer
-                                                                    .selectedClass!),
-                                                            studentId: widget
-                                                                .studentDetails
-                                                                .iD,
-                                                            currentClass:
-                                                                commonConsumer
-                                                                    .isChecked);
-                                                        if (result != null) {
-                                                          if (context.mounted) {
-                                                            Navigator.pop(
-                                                                context);
-                                                          }
-                                                        }
+                                                    var result = await studentConsumer.updateStudentClass(
+                                                        token,
+                                                        batch: programConsumer
+                                                            .selectedBatch,
+                                                        selectedCourseList:
+                                                            selectedIDs,
+                                                        programId: int.parse(
+                                                            programConsumer
+                                                                .selectedDept!),
+                                                        classId: int.parse(
+                                                            programConsumer
+                                                                .selectedClass!),
+                                                        studentId: widget
+                                                            .studentDetails.iD,
+                                                        currentClass:
+                                                            commonConsumer
+                                                                .isChecked);
+                                                    if (result != null) {
+                                                      if (context.mounted) {
+                                                        Navigator.pop(context);
                                                       }
                                                     }
                                                   }
-                                                },
-                                                borderColor: AppColors.color582,
-                                                textColor: AppColors.color582,
-                                              ),
-                                              SizedBox(
-                                                width: 10.w,
-                                              ),
-                                              AppElevatedButon(
-                                                title: "Cancel",
-                                                buttonColor:
-                                                    AppColors.colorWhite,
-                                                height: 50.h,
-                                                width: 150.w,
-                                                onPressed: (context) {},
-                                                borderColor: AppColors.colorRed,
-                                                textColor: AppColors.colorRed,
-                                              )
-                                            ],
+                                                }
+                                              }
+                                            },
+                                            borderColor: AppColors.color582,
+                                            textColor: AppColors.color582,
                                           ),
-                                        )
-                                      : Container()
+                                          SizedBox(
+                                            width: 10.w,
+                                          ),
+                                          AppElevatedButon(
+                                            title: "Cancel",
+                                            buttonColor: AppColors.colorWhite,
+                                            height: 50.h,
+                                            width: 150.w,
+                                            onPressed: (context) {},
+                                            borderColor: AppColors.colorRed,
+                                            textColor: AppColors.colorRed,
+                                          )
+                                        ],
+                                      ),
+                                    )
                                   : Container()
                             ],
                           ),

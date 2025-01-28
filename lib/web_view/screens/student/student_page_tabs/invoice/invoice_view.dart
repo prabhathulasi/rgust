@@ -139,7 +139,7 @@ class StudentInvoiceView extends StatelessWidget {
                                                             8.0),
                                                     child: InkWell(
                                                       onTap: () async{
-                                                       var result = await generateStudentInvoice(PdfPageFormat.a4, studentData);
+                                                       var result = await generateStudentInvoice(PdfPageFormat.a4, studentData, data[index]);
                                                              final blob = html.Blob(
                                                 [result], 'application/pdf');
                                             final url = html.Url
@@ -152,17 +152,12 @@ class StudentInvoiceView extends StatelessWidget {
                                                           elevation: 10.0,
                                                           child: ListTile(
                                                             isThreeLine: true,
-                                                            leading: const Icon(
-                                                              Icons
-                                                                  .receipt_long_outlined,
-                                                              color: AppColors
-                                                                  .colorc7e,
-                                                            ),
+                                                          
                                                             title: AppRichTextView(
                                                                 title: data[
                                                                         index]
                                                                     .invoiceName!,
-                                                                fontSize: 15.sp,
+                                                                fontSize: 12.sp,
                                                                 fontWeight:
                                                                     FontWeight
                                                                         .bold,
@@ -181,7 +176,7 @@ class StudentInvoiceView extends StatelessWidget {
                                                                             data[index]
                                                                                 .createdAt!)),
                                                                     fontSize:
-                                                                        15.sp,
+                                                                        12.sp,
                                                                     fontWeight:
                                                                         FontWeight
                                                                             .w500,
@@ -193,7 +188,7 @@ class StudentInvoiceView extends StatelessWidget {
                                                                     AppRichTextView(
                                                                         title:
                                                                             "Status: ",
-                                                                        fontSize: 15
+                                                                        fontSize: 12
                                                                             .sp,
                                                                         fontWeight:
                                                                             FontWeight
@@ -203,7 +198,7 @@ class StudentInvoiceView extends StatelessWidget {
                                                                     AppRichTextView(
                                                                         title: data[index]
                                                                             .status!,
-                                                                        fontSize: 15
+                                                                        fontSize: 12
                                                                             .sp,
                                                                         fontWeight:
                                                                             FontWeight
@@ -225,7 +220,7 @@ class StudentInvoiceView extends StatelessWidget {
                                                                       title:
                                                                           "Amount: \$${data[index].amountInUsd}",
                                                                       fontSize:
-                                                                          15.sp,
+                                                                          12.sp,
                                                                       fontWeight:
                                                                           FontWeight
                                                                               .bold,

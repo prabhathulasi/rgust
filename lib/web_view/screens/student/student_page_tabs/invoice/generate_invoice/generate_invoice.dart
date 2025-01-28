@@ -7,10 +7,12 @@ import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
 import 'package:rugst_alliance_academia/data/model/student/student_detail_model.dart';
+import 'package:rugst_alliance_academia/data/model/student/student_invoice_model.dart';
 
 class GenerateStudentFeeInvoice extends StatelessWidget {
   final StudentDetail? studentData;
-  const GenerateStudentFeeInvoice({super.key, this.studentData});
+  final InvoiceList ?invoiceData;
+  const GenerateStudentFeeInvoice({super.key, this.studentData, this.invoiceData});
 
   @override
   Widget build(BuildContext context) {
@@ -18,19 +20,19 @@ class GenerateStudentFeeInvoice extends StatelessWidget {
       canChangeOrientation: false,
       canChangePageFormat: false,
       canDebug: false,
-      build: (format) => generateStudentInvoice(format, studentData),
+      build: (format) => generateStudentInvoice(format, studentData,invoiceData!),
     );
   }
 }
 
 Future<Uint8List> generateStudentInvoice(
-    PdfPageFormat pageFormat, StudentDetail? studentData) async {
+    PdfPageFormat pageFormat, StudentDetail? studentData, InvoiceList invoiceData) async {
   final invoice = Invoice(
     baseColor: PdfColors.teal,
     accentColor: PdfColors.blueGrey900,
   );
 
-  return await invoice.buildPdf(pageFormat, studentData);
+  return await invoice.buildPdf(pageFormat, studentData,invoiceData);
 }
 
 class Invoice {
@@ -47,7 +49,7 @@ class Invoice {
   pw.Image? image1;
 
   Future<Uint8List> buildPdf(
-      PdfPageFormat pageFormat, StudentDetail? studentData) async {
+      PdfPageFormat pageFormat, StudentDetail? studentData, InvoiceList invoiceData) async {
     // Create a PDF document.
     final doc = pw.Document();
 
@@ -73,7 +75,7 @@ class Invoice {
           pw.Align(
               alignment: pw.Alignment.topRight,
               child: pw.Text(
-                  "Receipt No: RGUST/${DateFormat("MMM-dd").format(DateTime.now())}/0012",
+                  "Receipt No: ${invoiceData.invoiceName}",
                   textAlign: pw.TextAlign.right,
                   style: pw.TextStyle(
                     color: PdfColor.fromHex("#000000"),
@@ -82,7 +84,7 @@ class Invoice {
           pw.Align(
               alignment: pw.Alignment.topRight,
               child: pw.Text(
-                  "Receipt Date: ${DateFormat("yyyy-MMM-dd HH:mm").format(DateTime.now())}",
+                  "Receipt Date: ${DateFormat("yyyy-MMM-dd HH:mm").format(DateTime.parse(invoiceData.createdAt!))}",
                   textAlign: pw.TextAlign.right,
                   style: pw.TextStyle(
                     color: PdfColor.fromHex("#000000"),
@@ -138,22 +140,22 @@ class Invoice {
               ),
               headers: [
                 "Details",
-                "Regular Tution\n(USD)",
-                "Scholarship Offered\n(USD)",
-                "Amount to be Paid under scholarship\nPer Year (USD)"
+                "Regular Tution\n(USD) Per Semester",
+                "Paid Tution\n(USD)",
+                "Amount to be Paid\nPer Year (USD)"
               ],
               data: [
                 [
                   pw.Text("Tution Fee"),
-                  pw.Text("10000"),
-                  pw.Text("2000"),
-                  pw.Text("8000"),
+                  pw.Text("6500"),
+                  pw.Text(invoiceData.amountInUsd.toString()),
+                  pw.Text((6500 - invoiceData.amountInUsd!).toString()),
                 ]
               ]),
           pw.SizedBox(height: 10.h),
           pw.Align(
             alignment: pw.Alignment.topRight,
-            child: pw.Text("Total Tuition: 8000",
+          child: pw.Text("Total Tuition: ${(6500 - invoiceData.amountInUsd!).toString()}",
                 style: pw.TextStyle(
                     fontWeight: pw.FontWeight.bold, fontSize: 12.sp)),
           ),

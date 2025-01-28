@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:rugst_alliance_academia/util/api_service.dart';
 
 class AdmissionCriminalCheckProvider extends ChangeNotifier {
+  // loading indicator
+  bool _isLoading = false;
+  bool get isLoading => _isLoading;
   List<Map<String, dynamic>> dataList = [
     {
       "title":
@@ -52,6 +57,33 @@ class AdmissionCriminalCheckProvider extends ChangeNotifier {
   //add new recommendation
   void setCheckboxValue(bool value, int index) async {
     dataList[index]["isChecked"] = value;
+    notifyListeners();
+  }
+
+  bool areAllCheckboxesSelected() {
+    return dataList.every((item) => item["isChecked"] == true);
+  }
+
+  Future<http.Response> postAdmissionCriminalCheckDetails(int admissionId) async {
+    setLoading(true);
+
+    try {
+      var result = await ApiHelper.post(
+          "admissionCriminalCheck/id=$admissionId", {}, "");
+
+      return result;
+      //api call
+    } catch (e) {
+      print(e);
+      rethrow;
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  // set loading value
+  void setLoading(bool value) async {
+    _isLoading = value;
     notifyListeners();
   }
 }

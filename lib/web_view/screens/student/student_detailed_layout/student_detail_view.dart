@@ -704,48 +704,116 @@ class _FacultyDetailViewState extends State<StudentDetailView> {
                                       child: CarouselSlider(
                                         options: CarouselOptions(
                                             height: 250.h,
-                                            
                                             viewportFraction: 0.55,
                                             enlargeCenterPage: true,
                                             enableInfiniteScroll: false),
                                         items: studentData.studentFees!
-                                            .map((item) => Container(
-                                              width: 400.w,
-                                                  margin: EdgeInsets.symmetric(
-                                                      vertical: 25.h),
-                                                  decoration: BoxDecoration(
-                                                    image: const DecorationImage(image: AssetImage(ImagePath.cardImage),
-                                                    fit: BoxFit.cover
-                                                    ),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              18),
-                                                     ),
-                                                     child:  Column(
-                                                   
-                                                      children: [
-                                                         Padding(
-                                                           padding:  EdgeInsets.only(top: 18.h,left: 18.w),
-                                                           child: Align(
-                                                            alignment: Alignment.topLeft,
-                                                            child: AppRichTextView(title: item.className!, fontSize: 15.sp, fontWeight: FontWeight.bold,textColor: AppColors.colorWhite,)),
-                                                         ),
-                                                        const Spacer(),
-                                                        AppRichTextView(title: "Total Tution \$ ${item.amountInUsd}", fontSize: 17.sp, fontWeight: FontWeight.bold,textColor: AppColors.colorWhite,),
-                                                       item.dueAmount == null?  AppRichTextView(title: "Payable Tution \$  ${item.amountInUsd}", fontSize: 17.sp, fontWeight: FontWeight.bold,textColor: AppColors.colorWhite,): 
-                                                       AppRichTextView(title: "Payable Tution \$ ${(item.amountInUsd! - item.dueAmount!)} ", fontSize: 17.sp, fontWeight: FontWeight.bold,textColor: AppColors.colorWhite,),
-                                                      const Spacer(),
-                                                         Padding(
-                                                           padding:  EdgeInsets.only(left: 18.w,bottom: 18.h),
-                                                           child: Align(
-                                                            alignment: Alignment.bottomLeft,
-                                                            child: AppRichTextView(title: "${studentData.firstName!} ${studentData.lastName!}", fontSize: 15.sp, fontWeight: FontWeight.bold,textColor: AppColors.colorWhite,)),
-                                                         ),
-                                                      ],
-                                                     ),
+                                            .map(
+                                              (item) => Container(
+                                                width: 400.w,
+                                                margin: EdgeInsets.symmetric(
+                                                    vertical: 25.h),
+                                                decoration: BoxDecoration(
+                                                  image: const DecorationImage(
+                                                      image: AssetImage(
+                                                          ImagePath.cardImage),
+                                                      fit: BoxFit.cover),
+                                                  borderRadius:
+                                                      BorderRadius.circular(18),
                                                 ),
-                                                
-                                                )
+                                                child: Column(
+                                                  children: [
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              right: 10.0,
+                                                              top: 10),
+                                                      child: InkWell(
+                                                        onTap: () {
+                                                          showUpdateFeesDialog(
+                                                              context,
+                                                              studentData);
+                                                        },
+                                                        child: const Align(
+                                                          alignment: Alignment
+                                                              .topRight,
+                                                          child: Icon(
+                                                            Icons.add,
+                                                            color: AppColors
+                                                                .colorWhite,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    Padding(
+                                                      padding: EdgeInsets.only(
+                                                          left: 18.w),
+                                                      child: Align(
+                                                          alignment:
+                                                              Alignment.topLeft,
+                                                          child:
+                                                              AppRichTextView(
+                                                            title:
+                                                                item.className!,
+                                                            fontSize: 15.sp,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            textColor: AppColors
+                                                                .colorWhite,
+                                                          )),
+                                                    ),
+                                                    const Spacer(),
+                                                    AppRichTextView(
+                                                      title:
+                                                          "Total Tution \$ ${item.amountInUsd}",
+                                                      fontSize: 17.sp,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      textColor:
+                                                          AppColors.colorWhite,
+                                                    ),
+                                                    item.dueAmount == null
+                                                        ? AppRichTextView(
+                                                            title:
+                                                                "Payable Tution \$  ${item.amountInUsd}",
+                                                            fontSize: 17.sp,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            textColor: AppColors
+                                                                .colorWhite,
+                                                          )
+                                                        : AppRichTextView(
+                                                            title:
+                                                                "Payable Tution \$ ${(item.amountInUsd! - item.dueAmount!)} ",
+                                                            fontSize: 17.sp,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            textColor: AppColors
+                                                                .colorWhite,
+                                                          ),
+                                                    const Spacer(),
+                                                    Padding(
+                                                      padding: EdgeInsets.only(
+                                                          left: 18.w,
+                                                          bottom: 18.h),
+                                                      child: Align(
+                                                          alignment: Alignment
+                                                              .bottomLeft,
+                                                          child:
+                                                              AppRichTextView(
+                                                            title:
+                                                                "${studentData.firstName!} ${studentData.lastName!}",
+                                                            fontSize: 15.sp,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            textColor: AppColors
+                                                                .colorWhite,
+                                                          )),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            )
                                             .toList(),
                                       )),
                             );

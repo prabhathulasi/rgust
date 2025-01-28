@@ -10,8 +10,11 @@ import 'package:rugst_alliance_academia/data/provider/admission_provider/admissi
 import 'package:rugst_alliance_academia/data/provider/admission_provider/admission_education_provider.dart';
 import 'package:rugst_alliance_academia/data/provider/admission_provider/admission_eng_proficieny_provider.dart';
 import 'package:rugst_alliance_academia/data/provider/admission_provider/admission_job_provider.dart';
+import 'package:rugst_alliance_academia/data/provider/admission_provider/admission_login_provider.dart';
+import 'package:rugst_alliance_academia/data/provider/admission_provider/admission_payment_provider.dart';
 import 'package:rugst_alliance_academia/data/provider/admission_provider/admission_personal_provider.dart';
 import 'package:rugst_alliance_academia/data/provider/admission_provider/admission_program_provider.dart';
+import 'package:rugst_alliance_academia/data/provider/admission_provider/admission_provider.dart';
 import 'package:rugst_alliance_academia/data/provider/admission_provider/admission_recommendation_provider.dart';
 import 'package:rugst_alliance_academia/data/provider/admission_provider/admission_stand_test_provider.dart';
 import 'package:rugst_alliance_academia/data/provider/clincial_provider.dart';
@@ -32,6 +35,7 @@ import 'package:rugst_alliance_academia/data/provider/timesheet_provider.dart';
 
 import 'package:rugst_alliance_academia/mobile_view/screens/splash_screen.dart';
 import 'package:rugst_alliance_academia/routes/named_routes.dart';
+import 'package:rugst_alliance_academia/web_view/screens/admission_form/admission_form_view.dart';
 import 'package:rugst_alliance_academia/web_view/screens/dashboard/vertical_tab_view.dart';
 import 'package:rugst_alliance_academia/web_view/screens/login_view.dart';
 
@@ -149,6 +153,15 @@ class MyApp extends StatelessWidget {
                       ChangeNotifierProvider(
                         create: (context) => AdmissionCriminalCheckProvider(),
                       ),
+                       ChangeNotifierProvider(
+                        create: (context) => AdmissionLoginProvider(),
+                      ),
+                       ChangeNotifierProvider(
+                        create: (context) => AdmissionPaymentProvider(),
+                      ),
+                      ChangeNotifierProvider(
+                        create: (context) => AdmissionProvider(),
+                      ),
                     ],
                     builder: (context, child) {
                       return MaterialApp(
@@ -158,6 +171,10 @@ class MyApp extends StatelessWidget {
                             if (settings.name == '/') {
                               return MaterialPageRoute(
                                   builder: (context) => const WebLoginView());
+                            }  else if (settings.name == '/applicationform') {
+                              return MaterialPageRoute(
+                                  builder: (context) =>
+                                      const AdmissionFormView());
                             } else {
                               return MaterialPageRoute(
                                 builder: (context) => const VerticalTabView(),
