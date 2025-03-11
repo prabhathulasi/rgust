@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:rugst_alliance_academia/data/model/time_sheet_model.dart';
 import 'package:rugst_alliance_academia/util/api_service.dart';
 import 'package:rugst_alliance_academia/util/toast_helper.dart';
-import 'package:rugst_alliance_academia/web_view/screens/faculty/faculty_attendance_view.dart';
+import 'package:rugst_alliance_academia/web_view/screens/admin_view/faculty/faculty_attendance_view.dart';
 
 class TimeSheetProvider extends ChangeNotifier{
     bool _isLoading = false;

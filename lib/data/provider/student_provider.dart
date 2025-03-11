@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:rugst_alliance_academia/data/model/exam_result_model.dart'
     as prefix;
+import 'package:rugst_alliance_academia/data/model/student/single_student_detail_model.dart';
+import 'package:rugst_alliance_academia/data/model/student/single_student_result_model.dart';
 import 'package:rugst_alliance_academia/data/model/student/student_course_model.dart';
 import 'package:rugst_alliance_academia/data/model/student/student_detail_model.dart';
 import 'package:rugst_alliance_academia/data/model/student/student_model.dart';
@@ -17,6 +19,10 @@ class StudentProvider extends ChangeNotifier {
 
   prefix.ExamResultModel examResultModel = prefix.ExamResultModel();
   StudentDetailModel studentDetailModel = StudentDetailModel();
+  SingleStudentResultModel singleStudentResultModel =
+      SingleStudentResultModel();
+  SingleStudentDetailModel singleStudentDetailModel =
+      SingleStudentDetailModel();
   List<StudentList> filteredList = [];
   List<dynamic> editResult = [];
 
@@ -146,6 +152,38 @@ class StudentProvider extends ChangeNotifier {
     }
   }
 
+  //  getSingle Student result
+  Future getSingleStudentResult(String token, int studentId) async {
+    setLoading(true);
+    try {
+      var result = await ApiHelper.get("mobile/GetResult/id=$studentId", token);
+
+      if (result.statusCode == 200) {
+        var data = json.decode(result.body);
+
+        singleStudentResultModel = SingleStudentResultModel.fromJson(data);
+
+        return examResultModel;
+      } else if (result.statusCode == 204) {
+        examResultModel.result?.clear();
+
+        ToastHelper().errorToast("No Result Data Added Yet");
+
+        return null;
+      } else if (result.statusCode == 401) {
+        return "Invalid Token";
+      } else {
+        ToastHelper().errorToast("Internal Server Error");
+        return null;
+      }
+    } catch (e) {
+      ToastHelper().errorToast(e.toString());
+      return null;
+    } finally {
+      setLoading(false);
+    }
+  }
+
   Future addStudent(String token,
       {required String registerNo,
       required int programId,
@@ -237,6 +275,39 @@ class StudentProvider extends ChangeNotifier {
         return null;
       } else if (result.statusCode == 401) {
         return "Invalid Token";
+      } else if (result.statusCode == 403) {
+        ToastHelper().errorToast("UnAuthorized Access");
+        return null;
+      } else {
+        ToastHelper().errorToast("Internal Server Error");
+        return null;
+      }
+    } on Exception catch (e) {
+      ToastHelper().errorToast(e.toString());
+      return e.toString();
+    }
+  }
+
+  Future getSingleStudentDetailById(int studentId, String token) async {
+    try {
+      var result = await ApiHelper.get("mobile/profile/id=$studentId", token);
+
+      if (result.statusCode == 200) {
+        var data = json.decode(result.body);
+
+        singleStudentDetailModel = SingleStudentDetailModel.fromJson(data);
+        // print(data);
+        notifyListeners();
+        return studentDetailModel;
+      } else if (result.statusCode == 204) {
+        ToastHelper().errorToast("No Courses Registered Yet");
+
+        return null;
+      } else if (result.statusCode == 401) {
+        return "Invalid Token";
+      } else if (result.statusCode == 403) {
+        ToastHelper().errorToast("UnAuthorized Access");
+        return null;
       } else {
         ToastHelper().errorToast("Internal Server Error");
         return null;
@@ -364,7 +435,7 @@ class StudentProvider extends ChangeNotifier {
       return null;
     }
   }
-
+// TODO ADD Student Id in delete flow to delete all items in the id
   Future deleteCourseById(
     String token,
     int id,
@@ -372,7 +443,7 @@ class StudentProvider extends ChangeNotifier {
   ) async {
     setLoading(true);
     try {
-      var result = await ApiHelper.delete("DeleteCourse/id=$id", token);
+      var result = await ApiHelper.delete("DeleteCourse/id=$id/studentid=$studentId", token);
       if (result.statusCode == 200) {
         ToastHelper().sucessToast("Course Deleted Successfully");
         await getStudentDetailById(studentId, token);

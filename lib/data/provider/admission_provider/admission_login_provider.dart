@@ -10,8 +10,8 @@ class AdmissionLoginProvider extends ChangeNotifier {
 
   bool get isLoading => _isLoading;
 
-bool _changePage = false;
-bool get changePage => _changePage;
+  bool _changePage = false;
+  bool get changePage => _changePage;
 
   bool _passwordVisibility = true;
   bool get passwordVisibility => _passwordVisibility;
@@ -45,7 +45,8 @@ bool get changePage => _changePage;
     _isLoading = value;
     notifyListeners();
   }
-   void setPage(bool value) {
+
+  void setPage(bool value) {
     _changePage = value;
     notifyListeners();
   }
@@ -60,20 +61,19 @@ bool get changePage => _changePage;
     await prefs.setString('Status', status);
     await prefs.setString("ApplicationId", applicationId);
     getApplicationStatus();
-
   }
-  void getApplicationStatus() async {
+
+  Future getApplicationStatus() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    status =  prefs.getString('Status') ?? "0";
-    applicationId= prefs.getString("ApplicationId") ?? "0";
+    status = prefs.getString('Status') ?? "0";
+    applicationId = prefs.getString("ApplicationId") ?? "0";
     log(status.toString());
-  await  setPageController(int.parse(status!));
+    await setPageController(int.parse(status!));
     notifyListeners();
-    
   }
 
-   setPageController(int value)async{
-     pageController = PageController(
+  setPageController(int value) async {
+    pageController = PageController(
       initialPage: value,
       viewportFraction: 1.0,
     );

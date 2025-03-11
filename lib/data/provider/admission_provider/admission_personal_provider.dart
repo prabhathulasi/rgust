@@ -223,7 +223,7 @@ class AdmissionPersonalProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void clearMoreLangValue(String value) async {
+  void clearMoreLangValue() async {
     moreLang.clear();
     notifyListeners();
   }

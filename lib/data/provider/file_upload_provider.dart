@@ -44,7 +44,32 @@ class FileUploadProvider extends ChangeNotifier {
     }
   }
 
+ Future getStudentMediaFile(String token, int id) async {
+    setLoading(true);
+    try {
+      var result = await ApiHelper.get("mobile/upload/id=$id", token);
 
+      if (result.statusCode == 200) {
+        var data = json.decode(result.body);
+        mediaFileModel = MediaFileModel.fromJson(data);
+
+        return mediaFileModel;
+      } else if (result.statusCode == 204) {
+        return null;
+      } else if (result.statusCode == 401) {
+        return "Invalid Token";
+      } else {
+        ToastHelper().errorToast("Internal Server Error");
+        return null;
+      }
+    } catch (e) {
+      ToastHelper().errorToast(e.toString());
+      return e.toString();
+    } finally {
+      notifyListeners();
+      setLoading(false);
+    }
+  }
 
   Future delteMediabyId(String token, int mediaFileId, int userId) async {
     setLoading(true);

@@ -11,7 +11,8 @@ import 'package:rugst_alliance_academia/util/api_service.dart';
 class LoginProvider extends ChangeNotifier {
   bool _isLoading = false;
   bool get isLoading => _isLoading;
-
+ bool _isStudent = false;
+  bool get isStudent => _isStudent;
 
   bool _passwordVisibility = true;
   bool get passwordVisibility => _passwordVisibility;
@@ -57,8 +58,36 @@ class LoginProvider extends ChangeNotifier {
     });
   }
 
+
+
+// student apis
+
+  Future<http.Response> studentLogin(String email, String password) async {
+    var bodyData = {"email": email, "password": password};
+    setLoading(true);
+
+    // Make your login API call here using the http package
+
+    var result = await http.post(
+      flavorName == "dev"
+          ? Uri.parse("$flavorUrl/mobile/studentlogin")
+          : Uri.https(flavorUrl, '/mobile/studentlogin'),
+      body: jsonEncode(bodyData),
+      headers: {
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+    );
+
+    setLoading(false);
+    notifyListeners();
+    return result;
+  }
   void setLoading(bool value) async {
     _isLoading = value;
+    notifyListeners();
+  }
+    void setIsStudent(bool value) async {
+    _isStudent = value;
     notifyListeners();
   }
    void setPasswordVisibility() async {

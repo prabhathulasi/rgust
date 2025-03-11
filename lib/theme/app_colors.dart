@@ -29,4 +29,6 @@ static const colorBlue = Colors.blue;
     static const colordb8= Color(0xffFE6DB8);
     static const color78a= Color(0xffFF978A);
      static const colorca1 = Color(0xff8C8CA1);
+
+  static const color446 = Color(0xff354446);
 }

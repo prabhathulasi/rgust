@@ -1,7 +1,7 @@
 class ImagePath {
   static const String splashLogo = "assets/AllianceAcademia.png";
   static const String logiLogo = "assets/login.png";
-  static const String webLoginLogo = "assets/web_login.png";
+  static const String webLoginLogo = "assets/login_bg.png";
   static const String webDashboardLogo = "assets/dashboard.png";
   static const String webGraduateLogo = "assets/graduated.png";
   static const String webStudentLogo = "assets/student.png";

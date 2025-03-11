@@ -24,7 +24,7 @@ class AdmissionCriminalCheckProvider extends ChangeNotifier {
     },
     {
       "title":
-          "I understand that I have a right to review the information that the program receives in this criminal background investigation by putting a request in writing to “The Office of the Registrar” and that I may respond to the information.",
+          "I understand that I have a right to review the information that the program receives in this criminal background investigation by putting a request in writing to \u201cThe Office of the Registrar\u201d and that I may respond to the information.",
       "isChecked": false
     },
     {

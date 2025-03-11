@@ -32,15 +32,21 @@ import 'package:rugst_alliance_academia/data/provider/staff_provider.dart';
 import 'package:rugst_alliance_academia/data/provider/student_provider.dart';
 import 'package:rugst_alliance_academia/data/provider/study_history_provider.dart';
 import 'package:rugst_alliance_academia/data/provider/timesheet_provider.dart';
+import 'package:rugst_alliance_academia/mobile_view/screens/application_form/mobile_application_form.dart';
+import 'package:rugst_alliance_academia/mobile_view/screens/mobile_home_screen/mobile_home_screen.dart';
+import 'package:rugst_alliance_academia/mobile_view/screens/mobile_login_screen.dart';
 
-import 'package:rugst_alliance_academia/mobile_view/screens/splash_screen.dart';
+
+
 import 'package:rugst_alliance_academia/routes/named_routes.dart';
-import 'package:rugst_alliance_academia/web_view/screens/admission_form/admission_form_view.dart';
+import 'package:rugst_alliance_academia/web_view/screens/admin_view/admission_form/admission_form_view.dart';
 
-import 'package:rugst_alliance_academia/web_view/screens/dashboard/vertical_tab_view.dart';
-import 'package:rugst_alliance_academia/web_view/screens/login_view.dart';
+import 'package:rugst_alliance_academia/web_view/screens/admin_view/dashboard/vertical_tab_view.dart';
+import 'package:rugst_alliance_academia/web_view/screens/admin_view/login_view.dart';
 
 import 'package:flutter/foundation.dart';
+
+import 'package:rugst_alliance_academia/web_view/screens/student_view/single_student_detailed_view.dart';
 
 import 'package:url_strategy/url_strategy.dart';
 
@@ -66,8 +72,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.sizeOf(context);
-    return kIsWeb
-        ? ScreenUtilInit(
+    return ScreenUtilInit(
             designSize: Size(size.width, size.height),
             builder: (context, child) {
               return CalendarControllerProvider(
@@ -158,10 +163,10 @@ class MyApp extends StatelessWidget {
                       ChangeNotifierProvider(
                         create: (context) => AdmissionLoginProvider(),
                       ),
-                       ChangeNotifierProvider(
+                      ChangeNotifierProvider(
                         create: (context) => AdmissionPaymentProvider(),
                       ),
-                       ChangeNotifierProvider(
+                      ChangeNotifierProvider(
                         create: (context) => AdmissionProvider(),
                       ),
                     ],
@@ -169,15 +174,42 @@ class MyApp extends StatelessWidget {
                       return MaterialApp(
                           debugShowCheckedModeBanner: false,
                           initialRoute: RouteNames.login,
+                         
                           onGenerateRoute: (settings) {
+                            final screenWidth =
+                                MediaQuery.of(context).size.width;
+                            const mobileBreakpoint = 600.0;
                             if (settings.name == '/') {
-                              return MaterialPageRoute(
-                                  builder: (context) => const WebLoginView());
+                              if (screenWidth < mobileBreakpoint && kIsWeb) {
+                                return MaterialPageRoute(
+                                    builder: (context) =>
+                                        const MobileLoginScreen());
+                              } else {
+                                return MaterialPageRoute(
+                                    builder: (context) => const WebLoginView());
+                              }
                             } else if (settings.name == '/applicationform') {
-                              return MaterialPageRoute(
-                                  builder: (context) =>
-                                      const AdmissionFormView());
-                            } else {
+                              if (screenWidth < mobileBreakpoint && kIsWeb) {
+                                return MaterialPageRoute(
+                                    builder: (context) =>
+                                        const MobileApplicationForm());
+                              } else {
+                                return MaterialPageRoute(
+                                    builder: (context) =>
+                                        const AdmissionFormView());
+                              }
+                            } else if (settings.name == RouteNames.studentDetail){
+                               if (screenWidth < mobileBreakpoint && kIsWeb) {
+                          return MaterialPageRoute(
+                                    builder: (context) =>
+                                        const MobileHomeScreen());
+                              } else {
+                         return MaterialPageRoute(
+                                    builder: (context) =>
+                                        const SingleStudentDetailView());
+                              }
+                             
+                            }else {
                               return MaterialPageRoute(
                                 builder: (context) => const VerticalTabView(),
                               );
@@ -187,19 +219,10 @@ class MyApp extends StatelessWidget {
                           theme: ThemeData(
                             primarySwatch: Colors.grey,
                           ),
-                          home: const WebLoginView());
+                          home: MediaQuery.of(context).size.width < 600 ?const MobileLoginScreen(): const WebLoginView());
                     }),
               );
-            })
-        : ScreenUtilInit(
-            designSize: const Size(428, 926),
-            builder: (context, child) {
-              return MaterialApp(
-                  debugShowCheckedModeBanner: false,
-                  theme: ThemeData(
-                    primarySwatch: Colors.grey,
-                  ),
-                  home: const SplashScreen());
             });
+        
   }
 }

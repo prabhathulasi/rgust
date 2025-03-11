@@ -55,6 +55,7 @@ class StudentDetail {
   String? createdBy;
   List<RegisteredCourse>? registeredCourse;
   List<StudentFees>? studentFees;
+  List<RegisteredClinicalCourses>? registeredClinicalCourses;
   List<Result>? result;
   String ? rotationName;
 
@@ -91,7 +92,8 @@ class StudentDetail {
       this.result,
       this.registeredCourse,
       this.rotationName,
-      this.studentFees
+      this.studentFees,
+      this.registeredClinicalCourses,
       });
 
   StudentDetail.fromJson(Map<String, dynamic> json) {
@@ -138,7 +140,13 @@ class StudentDetail {
         registeredCourse!.add(RegisteredCourse.fromJson(v));
       });
     }
-
+if (json['RegisteredClinicalCourses'] != null) {
+      registeredClinicalCourses = <RegisteredClinicalCourses>[];
+      json['RegisteredClinicalCourses'].forEach((v) {
+        registeredClinicalCourses!
+            .add( RegisteredClinicalCourses.fromJson(v));
+      });
+    }
       if (json['StudentFees'] != null) {
       studentFees = <StudentFees>[];
       json['StudentFees'].forEach((v) {
@@ -190,7 +198,10 @@ class StudentDetail {
  if (studentFees != null) {
       data['StudentFees'] = studentFees!.map((v) => v.toJson()).toList();
     }
-
+  if (registeredClinicalCourses != null) {
+      data['RegisteredClinicalCourses'] =
+          registeredClinicalCourses!.map((v) => v.toJson()).toList();
+    }
     return data;
   }
 }
@@ -211,6 +222,7 @@ class RegisteredCourse {
   String? status;
   String? approvedBy;
   int? courseCredits;
+  int? year;
 
   RegisteredCourse(
       {this.iD,
@@ -227,7 +239,9 @@ class RegisteredCourse {
       this.className,
       this.status,
       this.courseCredits,
-      this.approvedBy});
+      this.approvedBy,
+      this.year
+      });
 
   RegisteredCourse.fromJson(Map<String, dynamic> json) {
     iD = json['id'];
@@ -245,6 +259,7 @@ class RegisteredCourse {
     status = json['status'];
     approvedBy = json['approved_by'];
     courseCredits = json['course_credits'];
+    year = json['year'];
   }
 
   Map<String, dynamic> toJson() {
@@ -264,6 +279,7 @@ class RegisteredCourse {
     data['status'] = status;
     data['approved_by'] = approvedBy;
     data["course_credits"] = courseCredits;
+    data["year"] = year;
     return data;
   }
 }
@@ -325,6 +341,70 @@ int ? dueAmount;
     data['TutionType'] = tutionType;
     data["ClassName"]= className;
     data["DueAmount"]= dueAmount;
+    return data;
+  }
+}
+class RegisteredClinicalCourses {
+  int? iD;
+  String? createdAt;
+  String? updatedAt;
+  String? deletedAt;
+  int? clinicalId;
+  int? studentId;
+  String? startDate;
+  String? endDate;
+  String? status;
+  int? totalClinicalFee;
+  String? clinicalFeeStatus;
+  String? feePaidDate;
+  String? updatedBy;
+
+  RegisteredClinicalCourses(
+      {this.iD,
+      this.createdAt,
+      this.updatedAt,
+      this.deletedAt,
+      this.clinicalId,
+      this.studentId,
+      this.startDate,
+      this.endDate,
+      this.status,
+      this.totalClinicalFee,
+      this.clinicalFeeStatus,
+      this.feePaidDate,
+      this.updatedBy});
+
+  RegisteredClinicalCourses.fromJson(Map<String, dynamic> json) {
+    iD = json['ID'];
+    createdAt = json['CreatedAt'];
+    updatedAt = json['UpdatedAt'];
+    deletedAt = json['DeletedAt'].toString();
+    clinicalId = json['ClinicalId'];
+    studentId = json['StudentId'];
+    startDate = json['StartDate'];
+    endDate = json['EndDate'];
+    status = json['Status'];
+    totalClinicalFee = json['TotalClinicalFee'];
+    clinicalFeeStatus = json['ClinicalFeeStatus'];
+    feePaidDate = json['FeePaidDate'];
+    updatedBy = json['UpdatedBy'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data =  <String, dynamic>{};
+    data['ID'] = iD;
+    data['CreatedAt'] = createdAt;
+    data['UpdatedAt'] = updatedAt;
+    data['DeletedAt'] = deletedAt;
+    data['ClinicalId'] = clinicalId;
+    data['StudentId'] = studentId;
+    data['StartDate'] = startDate;
+    data['EndDate'] = endDate;
+    data['Status'] = status;
+    data['TotalClinicalFee'] = totalClinicalFee;
+    data['ClinicalFeeStatus'] = clinicalFeeStatus;
+    data['FeePaidDate'] = feePaidDate;
+    data['UpdatedBy'] = updatedBy;
     return data;
   }
 }
