@@ -99,7 +99,7 @@ Future<void> printApplication(AdmissionProvider admissionProvider,
                         height: 100.h,
                         width: 80.w,
                         decoration: pw.BoxDecoration(
-                          border: pw.Border.all(color: PdfColors.black),
+                          
                           image: pw.DecorationImage(
                             image: pw.MemoryImage(photoData),
                             fit: pw.BoxFit.cover,

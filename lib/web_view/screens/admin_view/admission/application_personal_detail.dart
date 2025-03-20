@@ -44,14 +44,17 @@ class ApplicantPersonalDetail extends StatelessWidget {
             ),
             Align(
               alignment: Alignment.topRight,
-              child: Container(
-                height: 150.h,
-                width: 120.w,
-                decoration: BoxDecoration(
-                    border: Border.all(color: AppColors.colorBlack),
-                    image: DecorationImage(
-                        image: MemoryImage(memoryImagedata),
-                        fit: BoxFit.cover)),
+              child: Card(
+                elevation: 5.0,
+                child: Container(
+                  height: 150.h,
+                  width: 120.w,
+                  decoration: BoxDecoration(
+                     
+                      image: DecorationImage(
+                          image: MemoryImage(memoryImagedata),
+                          fit: BoxFit.cover)),
+                ),
               ),
             ),
             SizedBox(

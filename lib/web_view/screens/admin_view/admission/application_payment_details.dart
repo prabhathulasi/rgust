@@ -2,16 +2,22 @@ import 'dart:convert';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:rugst_alliance_academia/data/middleware/check_auth_middleware.dart';
 import 'package:rugst_alliance_academia/data/provider/admission_provider/admission_criminal_check_provider.dart';
 import 'package:rugst_alliance_academia/data/provider/admission_provider/admission_provider.dart';
+import 'package:rugst_alliance_academia/routes/named_routes.dart';
+import 'package:rugst_alliance_academia/util/toast_helper.dart';
 import 'package:rugst_alliance_academia/web_view/screens/admin_view/admission/pdf_generate/admission_pdf_print.dart';
+import 'package:rugst_alliance_academia/widgets/app_elevatedbutton.dart';
 import 'package:rugst_alliance_academia/widgets/app_richtext.dart';
 import 'package:rugst_alliance_academia/theme/app_colors.dart';
 import 'dart:html' as html;
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ApplicationPaymentDetails extends StatefulWidget {
-  const ApplicationPaymentDetails({super.key});
+  final int applicationId;
+
+  const ApplicationPaymentDetails({super.key, required this.applicationId});
 
   @override
   State<ApplicationPaymentDetails> createState() =>
@@ -149,14 +155,80 @@ class _ApplicationPaymentDetailsState extends State<ApplicationPaymentDetails> {
             SizedBox(
               height: 15.h,
             ),
-            Consumer<AdmissionCriminalCheckProvider>(
-              builder: (context, admissionCriminalCheckProvider, child) {
-                return Align(
-                  alignment: Alignment.bottomRight,
-                  child: OutlinedButton(onPressed: (){
-                    printApplication(admissionConsumer,admissionCriminalCheckProvider );
-                  }, child: const Text("Print")));
-              }
+            Row(
+              children: [
+                AppElevatedButon(
+                  title: "Accept",
+                  borderColor: AppColors.colorGreen,
+                  buttonColor: AppColors.colorWhite,
+                  height: 50.h,
+                  width: 120.w,
+                  onPressed: (context) async {
+                    var token = await getTokenAndUseIt();
+                    if (token == null) {
+                      if (context.mounted) {
+                        Navigator.pushNamed(context, RouteNames.login);
+                      }
+                    } else if (token == "Token Expired") {
+                      ToastHelper()
+                          .errorToast("Session Expired Please Login Again");
+
+                      if (context.mounted) {
+                        Navigator.pushNamed(context, RouteNames.login);
+                      }
+                    } else {
+                      admissionConsumer.updateApplicationApprovalStatus(
+                          widget.applicationId, token, "Accepted");
+                    }
+                  },
+                  textColor: AppColors.colorGreen,
+                ),
+                SizedBox(
+                  width: 20.w,
+                ),
+                AppElevatedButon(
+                  title: "Reject",
+                  borderColor: AppColors.colorRed,
+                  buttonColor: AppColors.colorWhite,
+                  height: 50.h,
+                  width: 120.w,
+                  onPressed: (context) async {
+                    var token = await getTokenAndUseIt();
+                    if (token == null) {
+                      if (context.mounted) {
+                        Navigator.pushNamed(context, RouteNames.login);
+                      }
+                    } else if (token == "Token Expired") {
+                      ToastHelper()
+                          .errorToast("Session Expired Please Login Again");
+
+                      if (context.mounted) {
+                        Navigator.pushNamed(context, RouteNames.login);
+                      }
+                    } else {
+                      admissionConsumer.updateApplicationApprovalStatus(
+                          widget.applicationId, token, "Rejected");
+                    }
+                  },
+                  textColor: AppColors.colorRed,
+                ),
+                Spacer(),
+                Consumer<AdmissionCriminalCheckProvider>(
+                    builder: (context, admissionCriminalCheckProvider, child) {
+                  return AppElevatedButon(
+                    title: "Print",
+                    borderColor: AppColors.color446,
+                    buttonColor: AppColors.colorWhite,
+                    height: 50.h,
+                    width: 120.w,
+                    onPressed: (context) {
+                      printApplication(
+                          admissionConsumer, admissionCriminalCheckProvider);
+                    },
+                    textColor: AppColors.color446,
+                  );
+                }),
+              ],
             )
           ],
         ),

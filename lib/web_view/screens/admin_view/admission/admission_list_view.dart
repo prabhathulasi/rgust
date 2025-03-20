@@ -8,6 +8,7 @@ import 'package:rugst_alliance_academia/routes/named_routes.dart';
 import 'package:rugst_alliance_academia/theme/app_colors.dart';
 import 'package:rugst_alliance_academia/util/toast_helper.dart';
 import 'package:rugst_alliance_academia/web_view/screens/admin_view/admission/admission_detail_view.dart';
+import 'package:rugst_alliance_academia/widgets/app_elevatedbutton.dart';
 import 'package:rugst_alliance_academia/widgets/app_richtext.dart';
 import 'package:rugst_alliance_academia/widgets/app_spining.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -130,8 +131,7 @@ class _AdmissionListViewState extends State<AdmissionListView> {
                                   0) {
                                 return Card(
                                   child: ListTile(
-                                  
-                                    leading: CircleAvatar(),
+                                    leading: const CircleAvatar(),
                                     title: Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.start,
@@ -153,7 +153,8 @@ class _AdmissionListViewState extends State<AdmissionListView> {
                                           },
                                           child: AppRichTextView(
                                             maxLines: 2,
-                                            title:applicationImage.emailAddress!,
+                                            title:
+                                                applicationImage.emailAddress!,
                                             fontSize: 14.sp,
                                             fontWeight: FontWeight.bold,
                                             textColor: AppColors.colorBlack,
@@ -232,6 +233,39 @@ class _AdmissionListViewState extends State<AdmissionListView> {
                                                   textColor:
                                                       AppColors.colorBlack,
                                                 ),
+                                              ),
+                                            ],
+                                          ),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            children: [
+                                              AppRichTextView(
+                                                maxLines: 2,
+                                                title: "Application Status: ",
+                                                fontSize: 14.sp,
+                                                fontWeight: FontWeight.w500,
+                                                textColor: AppColors.colorBlack,
+                                              ),
+                                              SizedBox(
+                                                width: 5.w,
+                                              ),
+                                              AppRichTextView(
+                                                maxLines: 2,
+                                                title:
+                                                    "${applicationImage.applicationStatus! * 10} %",
+                                                fontSize: 14.sp,
+                                                fontWeight: FontWeight.bold,
+                                                textColor: applicationImage
+                                                            .applicationStatus! <=
+                                                        4
+                                                    ? AppColors.colorRed
+                                                    : applicationImage
+                                                                .applicationStatus! <=
+                                                            8
+                                                        ? AppColors
+                                                            .contentColorOrange
+                                                        : AppColors.colorGreen,
                                               ),
                                             ],
                                           ),

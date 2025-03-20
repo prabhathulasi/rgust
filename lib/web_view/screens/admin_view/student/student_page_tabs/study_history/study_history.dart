@@ -127,7 +127,7 @@ class _StudyHistoryViewState extends State<StudyHistoryView> {
                                           color: AppColors.colorBlack),
                                     )),
                                     DataCell(Text(
-                                      item.year!.toString(),
+                                      item.batch!,
                                       style: const TextStyle(
                                           fontWeight: FontWeight.w500,
                                           color: AppColors.colorBlack),

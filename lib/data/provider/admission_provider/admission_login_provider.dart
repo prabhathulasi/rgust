@@ -65,11 +65,10 @@ class AdmissionLoginProvider extends ChangeNotifier {
 
   Future getApplicationStatus() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    status = prefs.getString('Status') ?? "0";
-    applicationId = prefs.getString("ApplicationId") ?? "0";
-    log(status.toString());
-    await setPageController(int.parse(status!));
-    notifyListeners();
+    status = prefs.getString('Status') ;
+    applicationId = prefs.getString("ApplicationId");
+
+    // notifyListeners();
   }
 
   setPageController(int value) async {

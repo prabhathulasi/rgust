@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:country_picker/country_picker.dart';
 import 'package:dotted_border/dotted_border.dart';
@@ -22,6 +23,7 @@ import 'package:rugst_alliance_academia/web_view/screens/admin_view/admission_fo
 import 'package:rugst_alliance_academia/widgets/app_elevatedbutton.dart';
 import 'package:rugst_alliance_academia/widgets/app_formfield.dart';
 import 'package:rugst_alliance_academia/widgets/app_richtext.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class PersonalDetailForm extends StatefulWidget {
   final PageController pageController;
@@ -292,9 +294,9 @@ class _PersonalDetailFormState extends State<PersonalDetailForm> {
                               height: 10.h,
                             ),
                             AppTextFormFieldWidget(
-                              onChanged: (p0) {
-                                admissionPersonalConsumer.setFirstName(p0);
-                              },
+                              // onChanged: (p0) {
+                              //   admissionPersonalConsumer.setFirstName(p0);
+                              // },
                               onSaved: (p0) =>
                                   admissionPersonalConsumer.firstName = p0,
                               inputFormatters: [
@@ -353,9 +355,9 @@ class _PersonalDetailFormState extends State<PersonalDetailForm> {
                               height: 10.h,
                             ),
                             AppTextFormFieldWidget(
-                              onChanged: (p0) {
-                                admissionPersonalConsumer.setLastName(p0);
-                              },
+                              // onChanged: (p0) {
+                              //   admissionPersonalConsumer.setLastName(p0);
+                              // },
                               onSaved: (p0) =>
                                   admissionPersonalConsumer.lastName = p0,
                               inputFormatters: [
@@ -484,9 +486,9 @@ class _PersonalDetailFormState extends State<PersonalDetailForm> {
                               height: 10.h,
                             ),
                             AppTextFormFieldWidget(
-                              onChanged: (p0) {
-                                admissionPersonalConsumer.setEmail(p0);
-                              },
+                              // onChanged: (p0) {
+                              //   admissionPersonalConsumer.setEmail(p0);
+                              // },
                               onSaved: (p0) =>
                                   admissionPersonalConsumer.email = p0,
                               autovalidateMode:
@@ -541,9 +543,9 @@ class _PersonalDetailFormState extends State<PersonalDetailForm> {
                               height: 10.h,
                             ),
                             AppTextFormFieldWidget(
-                              onChanged: (p0) {
-                                admissionPersonalConsumer.setContactNumber(p0);
-                              },
+                              // onChanged: (p0) {
+                              //   admissionPersonalConsumer.setContactNumber(p0);
+                              // },
                               onSaved: (p0) =>
                                   admissionPersonalConsumer.contactNumber = p0,
                               inputFormatters: [
@@ -1083,9 +1085,9 @@ class _PersonalDetailFormState extends State<PersonalDetailForm> {
                               height: 10.h,
                             ),
                             AppTextFormFieldWidget(
-                              onChanged: (p0) {
-                                admissionPersonalConsumer.setPassportNum(p0);
-                              },
+                              // onChanged: (p0) {
+                              //   admissionPersonalConsumer.setPassportNum(p0);
+                              // },
                               onSaved: (p0) =>
                                   admissionPersonalConsumer.passportNum = p0,
                               validator: (p0) =>
@@ -1142,9 +1144,9 @@ class _PersonalDetailFormState extends State<PersonalDetailForm> {
                               height: 10.h,
                             ),
                             AppTextFormFieldWidget(
-                              onChanged: (p0) {
-                                admissionPersonalConsumer.setHomeAddress(p0);
-                              },
+                              // onChanged: (p0) {
+                              //   admissionPersonalConsumer.setHomeAddress(p0);
+                              // },
                               onSaved: (p0) =>
                                   admissionPersonalConsumer.homeAddress = p0,
                               validator: (p0) => AddressValidator.validate(p0),
@@ -1196,9 +1198,9 @@ class _PersonalDetailFormState extends State<PersonalDetailForm> {
                               height: 10.h,
                             ),
                             AppTextFormFieldWidget(
-                              onChanged: (p0) {
-                                admissionPersonalConsumer.setMailingAddress(p0);
-                              },
+                              // onChanged: (p0) {
+                              //   admissionPersonalConsumer.setMailingAddress(p0);
+                              // },
                               onSaved: (p0) =>
                                   admissionPersonalConsumer.mailingAddress = p0,
                               validator: (p0) => AddressValidator.validate(p0),
@@ -1522,9 +1524,9 @@ class _PersonalDetailFormState extends State<PersonalDetailForm> {
                               child: AppTextFormFieldWidget(
                                 maxLines: 3,
                                 onFieldSubmitted: (p0) {
-                                  admissionPersonalConsumer
-                                      .setMoreLangValue(p0);
-                                  textcontroller.clear();
+                                  // admissionPersonalConsumer
+                                  //     .setMoreLangValue(p0);
+                                  // textcontroller.clear();
                                 },
                                 obscureText: false,
                                 inputDecoration: InputDecoration(
@@ -1558,12 +1560,15 @@ class _PersonalDetailFormState extends State<PersonalDetailForm> {
                               title: "Save & Continue",
                               buttonColor: AppColors.colorc7e,
                               onPressed: (context) async {
-                               await admissionLoginConsumer.getApplicationStatus();
                                 if (formKey.currentState!.validate()) {
                                   formKey.currentState!.save();
-                                  var applicationId =
-                                      admissionLoginConsumer.applicationId;
+                                  SharedPreferences prefs =
+                                      await SharedPreferences.getInstance();
 
+                                  var applicationId =
+                                      prefs.getString("ApplicationId");
+
+                                  log("applicationId$applicationId");
                                   var response = await admissionPersonalConsumer
                                       .postAdmissionPersonalDetails(
                                           int.parse(applicationId!));

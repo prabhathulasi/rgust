@@ -41,11 +41,10 @@ class AdmissionProvider extends ChangeNotifier {
     }
   }
 
-
-
-Future getApplicantDetailById(int applicationId, String token) async {
+  Future getApplicantDetailById(int applicationId, String token) async {
     try {
-      var result = await ApiHelper.get("admissionDetails/id=$applicationId", token);
+      var result =
+          await ApiHelper.get("admissionDetails/id=$applicationId", token);
 
       if (result.statusCode == 200) {
         var data = json.decode(result.body);
@@ -68,6 +67,34 @@ Future getApplicantDetailById(int applicationId, String token) async {
       return e.toString();
     }
   }
+
+  Future updateApplicationApprovalStatus(
+      int applicationId, String token, String status) async {
+    setLoading(true);
+    try {
+      var body = {
+        "AdmissionID": applicationId,
+        "Status": status,
+      };
+      var result = await ApiHelper.put("updateAdmissionStatus", body, token);
+
+      if (result.statusCode == 200) {
+        ToastHelper().sucessToast("Application Status Updated Successfully");
+      } else if (result.statusCode == 401) {
+        return "Invalid Token";
+      } else {
+        ToastHelper().errorToast("Unable to update Application Status details");
+        return null;
+      }
+    } on Exception catch (e) {
+      ToastHelper().errorToast(e.toString());
+      return e.toString();
+    } finally {
+      setLoading(false);
+      notifyListeners();
+    }
+  }
+
   void mailto(String email) async {
     final Uri params = Uri(
       scheme: 'mailto',

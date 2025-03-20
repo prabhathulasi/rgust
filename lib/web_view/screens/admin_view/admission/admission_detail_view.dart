@@ -179,7 +179,7 @@ class _AdmissionDetailViewState extends State<AdmissionDetailView> {
                         admissionConsumer.admissionDetailModel.data!.applicationStatus == 7 ||admissionConsumer.admissionDetailModel.data!.applicationStatus! >=7 ?   const ApplicationEngStandView():Container(),
                          admissionConsumer.admissionDetailModel.data!.applicationStatus == 8 ||admissionConsumer.admissionDetailModel.data!.applicationStatus! >=8 ?  const ApplicationRecommenationView():Container(),
                        admissionConsumer.admissionDetailModel.data!.applicationStatus == 9 ||admissionConsumer.admissionDetailModel.data!.applicationStatus! >=9 ?    const ApplicationBackgroundCheckView():Container(),
-                         admissionConsumer.admissionDetailModel.data!.applicationStatus == 10 ?  const ApplicationPaymentDetails():Container()
+                         admissionConsumer.admissionDetailModel.data!.applicationStatus == 10 ?   ApplicationPaymentDetails(applicationId: widget.applicantId, ):Container()
                       ],
                     ),
                   );

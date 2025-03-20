@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'dart:convert';
 
@@ -22,6 +24,7 @@ import 'package:rugst_alliance_academia/web_view/screens/admin_view/admission_fo
 import 'package:rugst_alliance_academia/widgets/app_elevatedbutton.dart';
 import 'package:rugst_alliance_academia/widgets/app_formfield.dart';
 import 'package:rugst_alliance_academia/widgets/app_richtext.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MobileApplicationPersonalDetail extends StatefulWidget {
   final PageController pageController;
@@ -66,7 +69,7 @@ class _MobileApplicationPersonalDetailState
           child: Form(
             key: formKey,
             child: Padding(
-              padding: EdgeInsets.only(left: 18.w, right: 18.w,bottom: 18.h),
+              padding: EdgeInsets.only(left: 18.w, right: 18.w, bottom: 18.h),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -178,7 +181,9 @@ class _MobileApplicationPersonalDetailState
                           decoration: BoxDecoration(
                               image: DecorationImage(
                                   fit: BoxFit.cover,
-                                  image: MemoryImage(base64Decode(admissionPersonalConsumer.selectedMediaFile!))
+                                  image: MemoryImage(base64Decode(
+                                          admissionPersonalConsumer
+                                              .selectedMediaFile!))
                                       as ImageProvider),
                               border: Border.all()),
                           child: InkWell(
@@ -1449,21 +1454,24 @@ class _MobileApplicationPersonalDetailState
                   allValuesNull == true ||
                           admissionPersonalConsumer.selectedMediaFile == null
                       ? Container()
-                      : 
-                      Center(
-                        child: Consumer<AdmissionLoginProvider>(
-                            builder: (context, admissionLoginConsumer, child) {
+                      : Center(
+                          child: Consumer<AdmissionLoginProvider>(builder:
+                              (context, admissionLoginConsumer, child) {
                             return AppElevatedButon(
                               loading: admissionPersonalConsumer.isLoading,
                               title: "Save & Continue",
                               buttonColor: AppColors.colorc7e,
                               onPressed: (context) async {
-                                admissionLoginConsumer.getApplicationStatus();
                                 if (formKey.currentState!.validate()) {
                                   formKey.currentState!.save();
+
+                                  SharedPreferences prefs =
+                                      await SharedPreferences.getInstance();
+
                                   var applicationId =
-                                      admissionLoginConsumer.applicationId;
-                        
+                                      prefs.getString("ApplicationId");
+
+                                  log("applicationId$applicationId");
                                   var response = await admissionPersonalConsumer
                                       .postAdmissionPersonalDetails(
                                           int.parse(applicationId!));
@@ -1486,8 +1494,7 @@ class _MobileApplicationPersonalDetailState
                               width: 200.w,
                             );
                           }),
-                      ),
-                 
+                        ),
                 ],
               ),
             ),

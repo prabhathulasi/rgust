@@ -222,7 +222,7 @@ class RegisteredCourse {
   String? status;
   String? approvedBy;
   int? courseCredits;
-  int? year;
+ 
 
   RegisteredCourse(
       {this.iD,
@@ -240,7 +240,7 @@ class RegisteredCourse {
       this.status,
       this.courseCredits,
       this.approvedBy,
-      this.year
+     
       });
 
   RegisteredCourse.fromJson(Map<String, dynamic> json) {
@@ -259,7 +259,7 @@ class RegisteredCourse {
     status = json['status'];
     approvedBy = json['approved_by'];
     courseCredits = json['course_credits'];
-    year = json['year'];
+ 
   }
 
   Map<String, dynamic> toJson() {
@@ -279,7 +279,7 @@ class RegisteredCourse {
     data['status'] = status;
     data['approved_by'] = approvedBy;
     data["course_credits"] = courseCredits;
-    data["year"] = year;
+
     return data;
   }
 }
