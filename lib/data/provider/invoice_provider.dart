@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_flavor/flutter_flavor.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
+import 'package:rugst_alliance_academia/data/model/invoice/invoice_model.dart';
 import 'package:rugst_alliance_academia/data/model/student/student_invoice_model.dart';
 import 'package:rugst_alliance_academia/data/provider/student_provider.dart';
 import 'package:rugst_alliance_academia/util/api_service.dart';
@@ -18,41 +19,44 @@ class InvoiceProvider extends ChangeNotifier {
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
-  double _usdConversion = 0;
-  double get usdConversion => _usdConversion;
+  final TextEditingController usdAmountController = TextEditingController();
+  final TextEditingController conversionRateController =
+      TextEditingController();
+  final TextEditingController gydAmountController = TextEditingController();
+  final TextEditingController invoiceDescriptionController =
+      TextEditingController();
+        final TextEditingController scholarshipController =
+      TextEditingController();
+            final TextEditingController customMsgController =
+      TextEditingController();
 
-  double _gydConversion = 0;
-  double get gydConversion => _gydConversion;
+
+      String ?customMessage ;
+
+ // Define a list of items for the dropdown
+  List<String> scholarShipItems = ['N/A', 'Partial', 'Full'];
+  String? selectedScholarshipItem; // To store the selected item
+
 
   String? dropdownvalue;
   String? selectedFileName;
   FilePickerResult? finalResult;
   StudentInvoiceListModel studentInvoiceListModel = StudentInvoiceListModel();
 
- 
+  List<InvoiceModel> invoiceList = [];
 
   var dropDownItems = ["Bank Payment", "Wire Transfer"];
-  List<String> pdfRules = [
-    "1. File size should not be more than 50KB.",
-    "2. File type should be PDF only.",
-    "3. The filename should not contain special characters, spaces, or symbols",
-    "4. Ensure the document is legible and not corrupted",
-    "5. Do not upload copyrighted or confidential materials",
-    "6. File names should be unique and descriptive",
-    "7. Do not upload offensive or inappropriate content.",
-    "8. Files should not contain viruses or malware.",
-    "9. File Name Must be in the Following Format(Receipt_your receipt last 4 numbers)"
+  List<String> importantNotes = [
+   
   ];
 
-  void uploadStudentInvoice(
-    BuildContext context, {
-    String? token,
-    int? studentId,
-    int? amountInGyd,
-    int? amountInUsd,
-    String? studentRegNo,
-    int? semfeeId
-  }) async {
+  void uploadStudentInvoice(BuildContext context,
+      {String? token,
+      int? studentId,
+      int? amountInGyd,
+      int? amountInUsd,
+      String? studentRegNo,
+      int? semfeeId}) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     var userName = sharedPreferences.getString("username");
     String flavorUrl = FlavorConfig.instance.variables["baseUrl"];
@@ -80,17 +84,17 @@ class InvoiceProvider extends ChangeNotifier {
         ..fields["AmountInUsd"] = amountInUsd.toString()
         ..fields["Status"] = "Approved"
         ..fields["UpdatedBy"] = userName!
-        ..fields["ClassId"]=semfeeId!.toString()
+        ..fields["ClassId"] = semfeeId!.toString()
         ..fields["ReceiptNumber"] =
             "RGUST/${DateFormat("yyyy/MMM-dd").format(DateTime.now())}/$randomNumber"
         ..headers.addAll(headers);
-        // ..files.add(
-          // http.MultipartFile.fromBytes(
-          //   'InvoiceData',
-          //   finalResult!.files.first.bytes!,
-          //   filename: "$studentRegNo-${DateFormat("yyyy-MM-HH:mm").format(DateTime.now())}-$randomNumber.pdf",
-          // ),
-        // );
+      // ..files.add(
+      // http.MultipartFile.fromBytes(
+      //   'InvoiceData',
+      //   finalResult!.files.first.bytes!,
+      //   filename: "$studentRegNo-${DateFormat("yyyy-MM-HH:mm").format(DateTime.now())}-$randomNumber.pdf",
+      // ),
+      // );
 
       final response = await request.send();
       var responseBody = await response.stream.bytesToString();
@@ -128,7 +132,6 @@ class InvoiceProvider extends ChangeNotifier {
 
         return studentInvoiceListModel;
       } else if (result.statusCode == 404) {
-        
         return null;
       } else if (result.statusCode == 401) {
         return "Invalid Token";
@@ -141,9 +144,6 @@ class InvoiceProvider extends ChangeNotifier {
       return e.toString();
     }
   }
-
-
-
 
   Future updateStudentInvoiceStatus(
       String token, int invoiceId, int studentId, String status) async {
@@ -173,18 +173,23 @@ class InvoiceProvider extends ChangeNotifier {
     }
   }
 
+  addInvoice(InvoiceModel invoice) {
+    invoiceList.add(invoice);
+    notifyListeners();
+  }
+
+  void updateConvertedAmount(String amount) {
+    // Check if the USD amount and conversion rate are not empty
+    final amountInUsd = int.tryParse(usdAmountController.text);
+  
+
+    // Calculate the converted amount
+    gydAmountController.text = (amountInUsd! * int.parse(amount)).toString();
+    notifyListeners();
+  }
+
   void setLoading(bool value) async {
     _isLoading = value;
-    notifyListeners();
-  }
-
-  void setUsdConversionValue(int value) async {
-    _usdConversion = value / 218;
-    notifyListeners();
-  }
-
-  void setGydConversionValue(int value) async {
-    _gydConversion = value * 218;
     notifyListeners();
   }
 
@@ -193,13 +198,15 @@ class InvoiceProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void setMediaFileValue(FilePickerResult value) async {
-    finalResult = value;
+ void setScholarshipValue(String value) async {
+    selectedScholarshipItem = value;
     notifyListeners();
   }
 
-  void setFileValue(String value) async {
-    selectedFileName = value;
+
+  void setCustomMessageValue(String value) async {
+    customMessage = value;
     notifyListeners();
   }
+
 }

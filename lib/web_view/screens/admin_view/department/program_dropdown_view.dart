@@ -53,7 +53,7 @@ class _ProgramDropdownState extends State<ProgramDropdown> {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Container(
                 decoration: BoxDecoration(
-                    border: Border.all(color: AppColors.colorc7e, width: 3.w),
+                    border: Border.all(color: AppColors.color446, width: 3.w),
                     borderRadius: BorderRadius.circular(8.sp)),
                 height: 60.h,
                 width: size.width * 0.2,
@@ -67,13 +67,13 @@ class _ProgramDropdownState extends State<ProgramDropdown> {
                 ? Container(
                     decoration: BoxDecoration(
                         border:
-                            Border.all(color: AppColors.colorc7e, width: 3.w),
+                            Border.all(color: AppColors.color446, width: 3.w),
                         borderRadius: BorderRadius.circular(8.sp)),
                     height: 60.h,
                     width: size.width * 0.2,
                     child: Center(
                         child: SpinKitSpinningLines(
-                      color: AppColors.colorc7e,
+                      color: AppColors.color446,
                       size: 20.sp,
                     )))
                 : Consumer<ProgramProvider>(
@@ -81,7 +81,7 @@ class _ProgramDropdownState extends State<ProgramDropdown> {
                     return Container(
                       decoration: BoxDecoration(
                           border:
-                              Border.all(color: AppColors.colorc7e, width: 3.w),
+                              Border.all(color: AppColors.color446, width: 3.w),
                           borderRadius: BorderRadius.circular(8.sp)),
                       height: 60.h,
                       width: size.width * 0.2,
@@ -90,7 +90,7 @@ class _ProgramDropdownState extends State<ProgramDropdown> {
                         child: DropdownButtonHideUnderline(
                           child: DropdownButton(
                             iconSize: 34.sp,
-                            iconEnabledColor: AppColors.colorc7e,
+                            iconEnabledColor: AppColors.color446,
                             dropdownColor: AppColors.colorWhite,
                             isExpanded: true,
                             value: programProvider.selectedDept,

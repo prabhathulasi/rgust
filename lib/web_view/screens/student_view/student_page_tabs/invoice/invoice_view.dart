@@ -10,11 +10,11 @@ import 'package:rugst_alliance_academia/data/provider/invoice_provider.dart';
 import 'package:rugst_alliance_academia/routes/named_routes.dart';
 import 'package:rugst_alliance_academia/theme/app_colors.dart';
 import 'package:rugst_alliance_academia/util/toast_helper.dart';
-import 'package:rugst_alliance_academia/web_view/screens/admin_view/student/student_page_tabs/invoice/generate_invoice/generate_invoice.dart';
-import 'package:rugst_alliance_academia/web_view/screens/admin_view/student/student_page_tabs/invoice/invoice_alerts/add_new_invoice_alert.dart';
+import 'package:rugst_alliance_academia/web_view/screens/admin_view/student/student_page_tabs/payment/generate_invoice/generate_invoice.dart';
+import 'package:rugst_alliance_academia/web_view/screens/admin_view/student/student_page_tabs/payment/payment_alerts/add_new_invoice_alert.dart';
 
-import 'package:rugst_alliance_academia/web_view/screens/admin_view/student/student_page_tabs/invoice/invoice_alerts/pending_invoice_alert.dart';
-import 'package:rugst_alliance_academia/web_view/screens/admin_view/student/student_page_tabs/invoice/invoice_alerts/rejected_invoice_alert.dart';
+import 'package:rugst_alliance_academia/web_view/screens/admin_view/student/student_page_tabs/payment/payment_alerts/pending_invoice_alert.dart';
+import 'package:rugst_alliance_academia/web_view/screens/admin_view/student/student_page_tabs/payment/payment_alerts/rejected_invoice_alert.dart';
 import 'package:rugst_alliance_academia/widgets/app_elevatedbutton.dart';
 import 'package:rugst_alliance_academia/widgets/app_richtext.dart';
 import 'package:rugst_alliance_academia/widgets/app_spining.dart';

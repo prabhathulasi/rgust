@@ -2,20 +2,15 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:rugst_alliance_academia/data/model/reg_course_model.dart';
+import 'package:rugst_alliance_academia/theme/app_colors.dart';
 import 'package:rugst_alliance_academia/util/api_service.dart';
 import 'package:rugst_alliance_academia/util/toast_helper.dart';
 
-class StudyHistoryProvider extends ChangeNotifier{
-     bool _isLoading = false;
+class StudyHistoryProvider extends ChangeNotifier {
+  bool _isLoading = false;
   bool get isLoading => _isLoading;
-
-
-RegistedCourseModel registedCourseModel = RegistedCourseModel();
-
-
-
-
-
+  Color chipColor = Colors.white;
+  RegistedCourseModel registedCourseModel = RegistedCourseModel();
 
   Future getRegCoursebyId(int studentId, String token) async {
     setLoading(true);
@@ -27,7 +22,6 @@ RegistedCourseModel registedCourseModel = RegistedCourseModel();
         var data = json.decode(result.body);
 
         registedCourseModel = RegistedCourseModel.fromJson(data);
-
 
         notifyListeners();
 
@@ -53,12 +47,16 @@ RegistedCourseModel registedCourseModel = RegistedCourseModel();
     }
   }
 
-
-
-
   // set loading value
   void setLoading(bool value) async {
     _isLoading = value;
+    notifyListeners();
+  }
+
+  void setChipColor() {
+    chipColor = chipColor == AppColors.colorWhite
+        ? AppColors.color446
+        : AppColors.colorWhite;
     notifyListeners();
   }
 }

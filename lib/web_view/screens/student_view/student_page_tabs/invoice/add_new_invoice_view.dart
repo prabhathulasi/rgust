@@ -20,7 +20,7 @@ import 'package:rugst_alliance_academia/util/image_path.dart';
 import 'package:rugst_alliance_academia/util/toast_helper.dart';
 import 'package:rugst_alliance_academia/util/validator.dart';
 
-import 'package:rugst_alliance_academia/web_view/screens/admin_view/student/student_page_tabs/invoice/sem_fee_dropdown.dart';
+import 'package:rugst_alliance_academia/web_view/screens/admin_view/student/student_page_tabs/payment/sem_fee_dropdown.dart';
 import 'package:rugst_alliance_academia/widgets/app_elevatedbutton.dart';
 import 'package:rugst_alliance_academia/widgets/app_formfield.dart';
 import 'package:rugst_alliance_academia/widgets/app_richtext.dart';

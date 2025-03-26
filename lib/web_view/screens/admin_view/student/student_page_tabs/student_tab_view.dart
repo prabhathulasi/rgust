@@ -6,8 +6,9 @@ import 'package:rugst_alliance_academia/data/model/student/student_detail_model.
 import 'package:rugst_alliance_academia/theme/app_colors.dart';
 
 import 'package:rugst_alliance_academia/web_view/screens/admin_view/faculty/faculty_checkin_view.dart';
+import 'package:rugst_alliance_academia/web_view/screens/admin_view/student/student_page_tabs/invoice/student_invoice_screen.dart';
 import 'package:rugst_alliance_academia/web_view/screens/admin_view/student/student_page_tabs/result/exam_result_view.dart';
-import 'package:rugst_alliance_academia/web_view/screens/admin_view/student/student_page_tabs/invoice/invoice_view.dart';
+import 'package:rugst_alliance_academia/web_view/screens/admin_view/student/student_page_tabs/payment/invoice_view.dart';
 import 'package:rugst_alliance_academia/web_view/screens/admin_view/student/student_page_tabs/settings/settings_tab_view.dart';
 import 'package:rugst_alliance_academia/web_view/screens/admin_view/student/student_page_tabs/documents/student_additional_info.dart';
 import 'package:rugst_alliance_academia/web_view/screens/admin_view/student/student_page_tabs/study_history/study_history.dart';
@@ -20,7 +21,7 @@ class StudentTabView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-        length: 6,
+        length: 7,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -46,6 +47,7 @@ class StudentTabView extends StatelessWidget {
                   Tab(text: "Attendance"),
                   Tab(text: "Study History"),
                   Tab(text: "Results"),
+                  Tab(text: "Invoice"),
                   Tab(text: "Payments"),
                   Tab(text: "Settings"),
                 ],
@@ -60,7 +62,8 @@ class StudentTabView extends StatelessWidget {
                     studentData: studentDetail,
                   ),
                   ExamResult(studentData: studentDetail),
-                  StudentInvoiceView(
+                   Studentinvoicescreen(studentData:studentDetail,),
+                  StudentPaymentView(
                     studentData: studentDetail,
                   ),
                   SettingsTabView(
