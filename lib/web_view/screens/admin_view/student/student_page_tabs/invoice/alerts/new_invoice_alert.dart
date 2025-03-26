@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
+import 'dart:html' as html;
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:pdf/pdf.dart';
 import 'package:provider/provider.dart';
 import 'package:rugst_alliance_academia/data/model/invoice/invoice_model.dart';
 import 'package:rugst_alliance_academia/data/model/student/student_detail_model.dart';
@@ -13,8 +14,9 @@ import 'package:rugst_alliance_academia/data/provider/program_provider.dart';
 import 'package:rugst_alliance_academia/theme/app_colors.dart';
 import 'package:rugst_alliance_academia/util/image_path.dart';
 import 'package:rugst_alliance_academia/util/toast_helper.dart';
-import 'package:rugst_alliance_academia/util/validator.dart';
 import 'package:rugst_alliance_academia/web_view/screens/admin_view/department/program_dropdown_view.dart';
+
+import 'package:rugst_alliance_academia/web_view/screens/admin_view/student/student_page_tabs/invoice/pdf_generate/student_invoice_generate.dart';
 
 import 'package:rugst_alliance_academia/widgets/app_elevatedbutton.dart';
 import 'package:rugst_alliance_academia/widgets/app_formfield.dart';
@@ -78,7 +80,7 @@ class AddNewInvoiceView extends StatelessWidget {
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(8.r),
                             border: Border.all(
-                                color: AppColors.color446, width: 2.w),
+                                color: AppColors.color446, width: 3.w),
                           ),
                           child: Padding(
                             padding: EdgeInsets.symmetric(horizontal: 10.w),
@@ -794,62 +796,74 @@ class AddNewInvoiceView extends StatelessWidget {
                                       SizedBox(
                                         height: 10.h,
                                       ),
-                                      invoiceConsumer.customMsgController.text.isEmpty?   Row(
-                                        children: [
-                                          Expanded(
-                                            flex: 2,
-                                            child: AppTextFormFieldWidget(
-                                              textEditingController:
-                                                  invoiceConsumer
-                                                      .customMsgController,
-                                              obscureText: false,
-                                              inputDecoration: InputDecoration(
-                                                  hintText:
-                                                      "Add Custom Message",
-                                                  hintStyle: GoogleFonts.roboto(
-                                                    fontSize: 15.sp,
-                                                    fontWeight: FontWeight.w500,
-                                                    color: AppColors.colorGrey,
-                                                  ),
-                                                  border:
-                                                      const OutlineInputBorder(),
-                                                  focusedBorder:
-                                                      OutlineInputBorder(
-                                                          borderSide: BorderSide(
+                                      invoiceConsumer
+                                              .customMsgController.text.isEmpty
+                                          ? Row(
+                                              children: [
+                                                Expanded(
+                                                  flex: 2,
+                                                  child: AppTextFormFieldWidget(
+                                                    textEditingController:
+                                                        invoiceConsumer
+                                                            .customMsgController,
+                                                    obscureText: false,
+                                                    inputDecoration:
+                                                        InputDecoration(
+                                                            hintText:
+                                                                "Add Custom Message",
+                                                            hintStyle:
+                                                                GoogleFonts
+                                                                    .roboto(
+                                                              fontSize: 15.sp,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500,
                                                               color: AppColors
-                                                                  .colorc7e,
-                                                              width: 3.w))),
+                                                                  .colorGrey,
+                                                            ),
+                                                            border:
+                                                                const OutlineInputBorder(),
+                                                            focusedBorder: OutlineInputBorder(
+                                                                borderSide: BorderSide(
+                                                                    color: AppColors
+                                                                        .colorc7e,
+                                                                    width:
+                                                                        3.w))),
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  width: 10.w,
+                                                ),
+                                                AppElevatedButon(
+                                                  title: "save",
+                                                  borderColor:
+                                                      AppColors.color446,
+                                                  buttonColor:
+                                                      AppColors.colorWhite,
+                                                  height: 50.h,
+                                                  width: 100.w,
+                                                  textColor: AppColors.color446,
+                                                  onPressed: (context) {
+                                                    invoiceConsumer
+                                                        .setCustomMessageValue(
+                                                            invoiceConsumer
+                                                                .customMsgController
+                                                                .text);
+                                                  },
+                                                )
+                                              ],
+                                            )
+                                          : Align(
+                                              alignment: Alignment.centerLeft,
+                                              child: AppRichTextView(
+                                                  maxLines: 10,
+                                                  title: invoiceConsumer
+                                                      .customMessage!,
+                                                  fontSize: 15.sp,
+                                                  fontWeight: FontWeight.w500,
+                                                  textColor:
+                                                      AppColors.colorBlack),
                                             ),
-                                          ),
-                                          SizedBox(
-                                            width: 10.w,
-                                          ),
-                                          AppElevatedButon(
-                                            title: "save",
-                                            borderColor: AppColors.color446,
-                                            buttonColor: AppColors.colorWhite,
-                                            height: 50.h,
-                                            width: 100.w,
-                                            textColor: AppColors.color446,
-                                            onPressed: (context) {
-                                              invoiceConsumer
-                                                  .setCustomMessageValue(
-                                                      invoiceConsumer
-                                                          .customMsgController
-                                                          .text);
-                                            },
-                                          )
-                                        ],
-                                      ): Align(
-                                        alignment: Alignment.centerLeft,
-                                        child: AppRichTextView(
-                                              
-                                              title:
-                                                  invoiceConsumer.customMessage!,
-                                              fontSize: 15.sp,
-                                              fontWeight: FontWeight.w500,
-                                              textColor: AppColors.colorBlack),
-                                      ),
                                       SizedBox(
                                         height: 20.h,
                                       ),
@@ -946,10 +960,39 @@ class AddNewInvoiceView extends StatelessWidget {
                                           fontSize: 15.sp,
                                           fontWeight: FontWeight.bold,
                                           textColor: AppColors.colorBlue),
+
+
+
+                                           SizedBox(
+                          height: 20.h,
+                        ),
+                      invoiceConsumer
+                                              .customMsgController.text.isEmpty
+                                          ?Container():  Align(
+                          alignment: Alignment.bottomRight,
+                          child: AppElevatedButon(
+                              title: "Generate",
+                              borderColor: AppColors.color446,
+                              buttonColor: AppColors.colorWhite,
+                              height: 50.h,
+                              width: 130.w,
+                              textColor: AppColors.color446,
+                              onPressed: (context) async{
+                           var result= await generateNewInvoice(PdfPageFormat.a4, studentData!, invoiceConsumer.invoiceList,);
+                                                 final blob = html.Blob(
+                                                [result], 'application/pdf');
+                                            final url = html.Url
+                                                .createObjectUrlFromBlob(blob);
+
+                                            // Open the blob URL in a new tab
+                                            html.window.open(url, '_blank');
+                              }),
+                        )
                                     ],
                                   ),
                                 ),
                               ),
+                       
                       ],
                     ),
                   ),

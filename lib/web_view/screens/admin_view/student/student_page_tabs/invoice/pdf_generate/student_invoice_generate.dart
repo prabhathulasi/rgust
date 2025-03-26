@@ -1,38 +1,24 @@
+import 'dart:math';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
+
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
+import 'package:rugst_alliance_academia/data/model/invoice/invoice_model.dart';
 import 'package:rugst_alliance_academia/data/model/student/student_detail_model.dart';
-import 'package:rugst_alliance_academia/data/model/student/student_invoice_model.dart';
 
-class GenerateStudentFeeInvoice extends StatelessWidget {
-  final StudentDetail? studentData;
-  final InvoiceList ?invoiceData;
-  const GenerateStudentFeeInvoice({super.key, this.studentData, this.invoiceData});
-
-  @override
-  Widget build(BuildContext context) {
-    return PdfPreview(
-      canChangeOrientation: false,
-      canChangePageFormat: false,
-      canDebug: false,
-      build: (format) => generateStudentInvoice(format, studentData,invoiceData!),
-    );
-  }
-}
-
-Future<Uint8List> generateStudentInvoice(
-    PdfPageFormat pageFormat, StudentDetail? studentData, InvoiceList invoiceData) async {
+Future<Uint8List> generateNewInvoice(PdfPageFormat pageFormat,
+    StudentDetail? studentData, List<InvoiceModel> invoiceData) async {
   final invoice = Invoice(
     baseColor: PdfColors.teal,
     accentColor: PdfColors.blueGrey900,
   );
 
-  return await invoice.buildPdf(pageFormat, studentData,invoiceData);
+  return await invoice.buildPdf(pageFormat, studentData, invoiceData);
 }
 
 class Invoice {
@@ -48,8 +34,8 @@ class Invoice {
   PdfColor get _baseTextColor => baseColor.isLight ? _lightColor : _darkColor;
   pw.Image? image1;
 
-  Future<Uint8List> buildPdf(
-      PdfPageFormat pageFormat, StudentDetail? studentData, InvoiceList invoiceData) async {
+  Future<Uint8List> buildPdf(PdfPageFormat pageFormat,
+      StudentDetail? studentData, List<InvoiceModel> invoiceData) async {
     // Create a PDF document.
     final doc = pw.Document();
 
@@ -74,8 +60,7 @@ class Invoice {
         build: (context) => [
           pw.Align(
               alignment: pw.Alignment.topRight,
-              child: pw.Text(
-                  "Receipt No: ${invoiceData.invoiceName}",
+              child: pw.Text("Receipt No:Rgust/${DateFormat("yyyy/MMM").format(DateTime.now())}/${Random().nextInt(10000) + 1}",
                   textAlign: pw.TextAlign.right,
                   style: pw.TextStyle(
                     color: PdfColor.fromHex("#000000"),
@@ -83,8 +68,10 @@ class Invoice {
                   ))),
           pw.Align(
               alignment: pw.Alignment.topRight,
-              child: pw.Text(
-                  "Receipt Date: ${DateFormat("yyyy-MMM-dd HH:mm").format(DateTime.parse(invoiceData.createdAt!))}",
+              child: pw.Text("Receipt Date: ${DateFormat(
+                                                      'yyyy-MM-dd – kk:mm')
+                                                  .format(DateTime.now())
+                                                  .toString()}",
                   textAlign: pw.TextAlign.right,
                   style: pw.TextStyle(
                     color: PdfColor.fromHex("#000000"),
@@ -97,13 +84,11 @@ class Invoice {
                       fontWeight: pw.FontWeight.bold, fontSize: 15.sp))),
           pw.SizedBox(height: 10.h),
           pw.Center(
-            child: pw.Text("Student Receipt",
+            child: pw.Text("Student Invoice",
                 style: pw.TextStyle(
                     fontWeight: pw.FontWeight.bold, fontSize: 13.sp)),
           ),
-          pw.Center(
-            child: _contentHeader(context, studentData!),
-          ),
+          _contentHeader(context, studentData!),
           pw.SizedBox(height: 20.h),
           pw.TableHelper.fromTextArray(
               border: pw.TableBorder.all(),
@@ -140,25 +125,58 @@ class Invoice {
               ),
               headers: [
                 "Details",
-                "Regular Tution\n(USD) Per Semester",
-                "Paid Tution\n(USD)",
-                "Amount to be Paid\nPer Year (USD)"
+                "Scholarship Amount\n(USD)",
+                "Total Amount (USD)",
               ],
-              data: [
-                [
-                  pw.Text("Tution Fee"),
-                  pw.Text("6500"),
-                  pw.Text(invoiceData.amountInUsd.toString()),
-                  pw.Text((6500 - invoiceData.amountInUsd!).toString()),
-                ]
-              ]),
+              data: invoiceData
+                  .map((e) => [
+                        e.description,
+                        e.scholarshipAmount.toString(),
+                        e.usd.toString(),
+                      ])
+                  .toList()),
           pw.SizedBox(height: 10.h),
-          pw.Align(
-            alignment: pw.Alignment.topRight,
-          child: pw.Text("Total Tuition: ${(6500 - invoiceData.amountInUsd!).toString()}",
+          pw.Row(
+            mainAxisAlignment: pw.MainAxisAlignment.end,
+            children: [
+              pw.Text("Total Amount: ",
+                  style: pw.TextStyle(
+                      fontWeight: pw.FontWeight.bold, fontSize: 12.sp)),
+              pw.SizedBox(width: 5.w),
+              pw.Text(
+                  invoiceData.fold(0, (sum, item) => sum + item.usd).toString(),
+                  style: pw.TextStyle(
+                      fontWeight: pw.FontWeight.normal, fontSize: 12.sp)),
+            ],
+          ),
+         pw.Row(
+           mainAxisAlignment: pw.MainAxisAlignment.end,
+          children: [
+            pw.Text("Scholarship Amount: ",
                 style: pw.TextStyle(
                     fontWeight: pw.FontWeight.bold, fontSize: 12.sp)),
-          ),
+            pw.SizedBox(width: 5.w),
+            pw.Text(invoiceData[0].scholarshipAmount.toString(),
+                style: pw.TextStyle(
+                    fontWeight: pw.FontWeight.normal, fontSize: 12.sp)),
+          ],
+         ),
+         pw.Row(
+           mainAxisAlignment: pw.MainAxisAlignment.end,
+          children: [
+            pw.Text("Payable Amount: ",
+                style: pw.TextStyle(
+                    fontWeight: pw.FontWeight.bold, fontSize: 12.sp)),
+            pw.SizedBox(width: 5.w),
+            pw.Text(
+                (invoiceData.fold(0, (sum, item) => sum + item.usd) -
+                        invoiceData[0].scholarshipAmount)
+                    .toString(),
+                style: pw.TextStyle(
+                    fontWeight: pw.FontWeight.normal, fontSize: 12.sp)),
+          ]
+         ),
+         
           pw.SizedBox(height: 5.h),
           pw.Align(
             alignment: pw.Alignment.topRight,
@@ -208,8 +226,7 @@ class Invoice {
   }
 
   pw.Widget _buildHeader(pw.Context context) {
-    return pw.Row(
-      children: [
+    return pw.Row(children: [
       pw.Container(
         alignment: pw.Alignment.center,
         height: 100,
@@ -274,54 +291,46 @@ class Invoice {
   }
 
   pw.Widget _contentHeader(pw.Context context, StudentDetail studentDetail) {
-    return 
-      
-       
-     pw.Column(
-                crossAxisAlignment: pw.CrossAxisAlignment.end,
-                children: [
-                  pw.SizedBox(
-                    height: 10.h,
-                  ),
-                  pw.Text("To",
-                      textAlign: pw.TextAlign.right,
-                      style: pw.TextStyle(
-                          color: PdfColor.fromHex("#000000"),
-                          fontSize: 13.sp,
-                          fontWeight: pw.FontWeight.bold)),
-                  pw.SizedBox(height: 10.h),
-                  pw.Text(
-                      "${studentDetail.firstName!} ${studentDetail.lastName!}",
-                      style: pw.TextStyle(
-                          color: PdfColor.fromHex("#000000"), fontSize: 10.sp)),
-                  pw.SizedBox(
-                    height: 5.h,
-                  ),
-                  pw.Text("${studentDetail.studentId}",
-                      style: pw.TextStyle(
-                          color: PdfColor.fromHex("#000000"), fontSize: 10.sp)),
-                  pw.SizedBox(
-                    height: 5.h,
-                  ),
-                  pw.Text("${studentDetail.currentProgramName}",
-                      style: pw.TextStyle(
-                          color: PdfColor.fromHex("#000000"), fontSize: 10.sp)),
-                  pw.SizedBox(
-                    height: 5.h,
-                  ),
-                  pw.Text("${studentDetail.email}",
-                      style: pw.TextStyle(
-                          color: PdfColor.fromHex("#000000"), fontSize: 10.sp)),
-                  pw.SizedBox(
-                    height: 5.h,
-                  ),
-                  pw.Text("${studentDetail.address}",
-                      style: pw.TextStyle(
-                          color: PdfColor.fromHex("#000000"), fontSize: 10.sp)),
-                ]
-                );
-                
-     
-    
+    return pw.Column(
+        crossAxisAlignment: pw.CrossAxisAlignment.start,
+        children: [
+          pw.SizedBox(
+            height: 10.h,
+          ),
+          pw.Text("To",
+              textAlign: pw.TextAlign.right,
+              style: pw.TextStyle(
+                  color: PdfColor.fromHex("#000000"),
+                  fontSize: 13.sp,
+                  fontWeight: pw.FontWeight.bold)),
+          pw.SizedBox(height: 10.h),
+          pw.Text("${studentDetail.firstName!} ${studentDetail.lastName!}",
+              style: pw.TextStyle(
+                  color: PdfColor.fromHex("#000000"), fontSize: 10.sp)),
+          pw.SizedBox(
+            height: 5.h,
+          ),
+          pw.Text("${studentDetail.studentId}",
+              style: pw.TextStyle(
+                  color: PdfColor.fromHex("#000000"), fontSize: 10.sp)),
+          pw.SizedBox(
+            height: 5.h,
+          ),
+          pw.Text("${studentDetail.currentProgramName}",
+              style: pw.TextStyle(
+                  color: PdfColor.fromHex("#000000"), fontSize: 10.sp)),
+          pw.SizedBox(
+            height: 5.h,
+          ),
+          pw.Text("${studentDetail.email}",
+              style: pw.TextStyle(
+                  color: PdfColor.fromHex("#000000"), fontSize: 10.sp)),
+          pw.SizedBox(
+            height: 5.h,
+          ),
+          pw.Text("${studentDetail.address}",
+              style: pw.TextStyle(
+                  color: PdfColor.fromHex("#000000"), fontSize: 10.sp)),
+        ]);
   }
 }
