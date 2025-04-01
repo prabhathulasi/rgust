@@ -8,7 +8,7 @@ import 'package:rugst_alliance_academia/theme/app_colors.dart';
 import 'package:rugst_alliance_academia/web_view/screens/admin_view/faculty/faculty_checkin_view.dart';
 import 'package:rugst_alliance_academia/web_view/screens/admin_view/student/student_page_tabs/invoice/student_invoice_screen.dart';
 import 'package:rugst_alliance_academia/web_view/screens/admin_view/student/student_page_tabs/result/exam_result_view.dart';
-import 'package:rugst_alliance_academia/web_view/screens/admin_view/student/student_page_tabs/payment/invoice_view.dart';
+import 'package:rugst_alliance_academia/web_view/screens/admin_view/student/student_page_tabs/payment/payment_view.dart';
 import 'package:rugst_alliance_academia/web_view/screens/admin_view/student/student_page_tabs/settings/settings_tab_view.dart';
 import 'package:rugst_alliance_academia/web_view/screens/admin_view/student/student_page_tabs/documents/student_additional_info.dart';
 import 'package:rugst_alliance_academia/web_view/screens/admin_view/student/student_page_tabs/study_history/study_history.dart';

@@ -175,6 +175,10 @@ class InvoiceProvider extends ChangeNotifier {
 
   addInvoice(InvoiceModel invoice) {
     invoiceList.add(invoice);
+    invoiceDescriptionController.clear();
+    usdAmountController.clear();
+    conversionRateController.clear();
+    gydAmountController.clear();
     notifyListeners();
   }
 
@@ -206,6 +210,12 @@ class InvoiceProvider extends ChangeNotifier {
 
   void setCustomMessageValue(String value) async {
     customMessage = value;
+    notifyListeners();
+  }
+
+  clearInvoiceList(){
+    scholarshipController.clear();
+    invoiceList.clear();
     notifyListeners();
   }
 

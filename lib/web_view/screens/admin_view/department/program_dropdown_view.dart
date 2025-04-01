@@ -11,7 +11,8 @@ import 'package:rugst_alliance_academia/widgets/app_richtext.dart';
 import 'package:rugst_alliance_academia/widgets/app_spining.dart';
 
 class ProgramDropdown extends StatefulWidget {
-  const ProgramDropdown({super.key});
+final bool isenabled;
+  const ProgramDropdown({super.key, this.isenabled = true});
 
   @override
   State<ProgramDropdown> createState() => _ProgramDropdownState();
@@ -113,7 +114,8 @@ class _ProgramDropdownState extends State<ProgramDropdown> {
                               textColor: AppColors.colorBlack,
                             ),
                             onChanged: (String? value) async {
-                              print(value);
+                              if(widget.isenabled == true){
+                                  print(value);
                               var token = await getTokenAndUseIt();
                               if (token == null) {
                                 if (context.mounted) {
@@ -131,6 +133,8 @@ class _ProgramDropdownState extends State<ProgramDropdown> {
                               } else {
                                 programProvider.setSelectedDept(value!, token);
                               }
+                              }
+                            
                             },
                           ),
                         ),

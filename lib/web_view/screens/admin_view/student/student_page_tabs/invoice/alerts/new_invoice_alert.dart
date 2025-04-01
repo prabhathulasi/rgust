@@ -64,7 +64,11 @@ class AddNewInvoiceView extends StatelessWidget {
                         SizedBox(
                           height: 10.h,
                         ),
-                        const ProgramDropdown(),
+                        ProgramDropdown(
+                          isenabled: invoiceConsumer.invoiceList.isEmpty
+                              ? true
+                              : false,
+                        ),
                         SizedBox(
                           height: 10.h,
                         ),
@@ -92,8 +96,10 @@ class AddNewInvoiceView extends StatelessWidget {
                                 hint: const Text(
                                     'Select an option'), // Hint text if no item is selected
                                 onChanged: (newValue) {
-                                  invoiceConsumer
-                                      .setScholarshipValue(newValue!);
+                                  if (invoiceConsumer.invoiceList.isEmpty) {
+                                    invoiceConsumer
+                                        .setScholarshipValue(newValue!);
+                                  }
                                 },
                                 items: invoiceConsumer.scholarShipItems
                                     .map((item) {
@@ -124,6 +130,9 @@ class AddNewInvoiceView extends StatelessWidget {
                                 invoiceConsumer.selectedScholarshipItem == "N/A"
                             ? Container()
                             : AppTextFormFieldWidget(
+                                enable: invoiceConsumer.invoiceList.isEmpty
+                                    ? true
+                                    : false,
                                 onChanged: (p0) {
                                   invoiceConsumer.gydAmountController.text =
                                       "0";
@@ -137,7 +146,7 @@ class AddNewInvoiceView extends StatelessWidget {
                                 ],
                                 obscureText: false,
                                 inputDecoration: InputDecoration(
-                                    hintText: "Amount in USD",
+                                    hintText: "Scholarship Amount in USD",
                                     hintStyle: GoogleFonts.roboto(
                                       fontSize: 15.sp,
                                       fontWeight: FontWeight.w500,
@@ -193,10 +202,9 @@ class AddNewInvoiceView extends StatelessWidget {
                               flex: 2,
                               child: AppTextFormFieldWidget(
                                 onChanged: (p0) {
-                                  invoiceConsumer.gydAmountController.text =
-                                      "0";
-                                  invoiceConsumer
-                                      .conversionRateController.text = "0";
+                                  invoiceConsumer.gydAmountController.clear();
+                                  invoiceConsumer.conversionRateController
+                                      .clear();
                                 },
                                 textEditingController:
                                     invoiceConsumer.usdAmountController,
@@ -299,56 +307,82 @@ class AddNewInvoiceView extends StatelessWidget {
                         ),
                         Consumer<ProgramProvider>(
                             builder: (context, programConsumer, child) {
-                          return AppElevatedButon(
-                            title: "Add",
-                            buttonColor: AppColors.colorWhite,
-                            textColor: AppColors.color582,
-                            borderColor: AppColors.color582,
-                            height: 50.h,
-                            width: 100.w,
-                            onPressed: (context) async {
-                              if (programConsumer.selectedDept == null) {
-                                ToastHelper()
-                                    .errorToast("Please Select Program");
-                              } else if (invoiceConsumer
-                                  .invoiceDescriptionController.text.isEmpty) {
-                                ToastHelper().errorToast(
-                                    "Please Enter Invoice Description");
-                              } else if (invoiceConsumer
-                                  .usdAmountController.text.isEmpty) {
-                                ToastHelper()
-                                    .errorToast("Please Enter Amount in USD");
-                              } else if (invoiceConsumer
-                                  .conversionRateController.text.isEmpty) {
-                                ToastHelper()
-                                    .errorToast("Please Enter Conversion Rate");
-                              } else {
-                                invoiceConsumer.addInvoice(
-                                  InvoiceModel(
-                                      scholarshipType: invoiceConsumer
-                                          .selectedScholarshipItem!,
-                                      scholarshipAmount: invoiceConsumer
-                                                  .selectedScholarshipItem ==
-                                              "N/A"
-                                          ? 0
-                                          : int.parse(invoiceConsumer
-                                              .scholarshipController.text),
-                                      title: programConsumer.selectedDept!,
-                                      description: invoiceConsumer
-                                          .invoiceDescriptionController.text,
-                                      usd: invoiceConsumer
-                                              .usdAmountController.text.isEmpty
-                                          ? 0
-                                          : int.parse(invoiceConsumer
-                                              .usdAmountController.text),
-                                      gyd: invoiceConsumer
-                                              .gydAmountController.text.isEmpty
-                                          ? 0
-                                          : int.parse(invoiceConsumer.gydAmountController.text),
-                                      studentId: studentData!.iD!),
-                                );
-                              }
-                            },
+                          return Row(
+                            children: [
+                              AppElevatedButon(
+                                title: "Add",
+                                buttonColor: AppColors.colorWhite,
+                                textColor: AppColors.color582,
+                                borderColor: AppColors.color582,
+                                height: 50.h,
+                                width: 100.w,
+                                onPressed: (context) async {
+                                  if (programConsumer.selectedDept == null) {
+                                    ToastHelper()
+                                        .errorToast("Please Select Program");
+                                  } else if (invoiceConsumer
+                                      .invoiceDescriptionController
+                                      .text
+                                      .isEmpty) {
+                                    ToastHelper().errorToast(
+                                        "Please Enter Invoice Description");
+                                  } else if (invoiceConsumer
+                                      .usdAmountController.text.isEmpty) {
+                                    ToastHelper().errorToast(
+                                        "Please Enter Amount in USD");
+                                  } else if (invoiceConsumer
+                                      .conversionRateController.text.isEmpty) {
+                                    ToastHelper().errorToast(
+                                        "Please Enter Conversion Rate");
+                                  } else {
+                                    invoiceConsumer.addInvoice(
+                                      InvoiceModel(
+                                          scholarshipType: invoiceConsumer
+                                              .selectedScholarshipItem!,
+                                          scholarshipAmount:
+                                              invoiceConsumer.selectedScholarshipItem ==
+                                                      "N/A"
+                                                  ? 0
+                                                  : int.parse(invoiceConsumer
+                                                      .scholarshipController
+                                                      .text),
+                                          title: programConsumer.selectedDept!,
+                                          description: invoiceConsumer
+                                              .invoiceDescriptionController
+                                              .text,
+                                          usd: invoiceConsumer
+                                                  .usdAmountController
+                                                  .text
+                                                  .isEmpty
+                                              ? 0
+                                              : int.parse(invoiceConsumer
+                                                  .usdAmountController.text),
+                                          gyd: invoiceConsumer
+                                                  .gydAmountController
+                                                  .text
+                                                  .isEmpty
+                                              ? 0
+                                              : int.parse(invoiceConsumer.gydAmountController.text),
+                                          studentId: studentData!.iD!),
+                                    );
+                                  }
+                                },
+                              ),
+                              SizedBox(
+                                width: 10.w,
+                              ),
+                             invoiceConsumer.invoiceList.isEmpty? Container(): AppElevatedButon(
+                                title: "Clear",
+                                buttonColor: AppColors.colorWhite,
+                                textColor: AppColors.colorRed,
+                                borderColor: AppColors.colorRed,
+                                height: 50.h,
+                                width: 100.w,
+                                onPressed: (context) async {
+                                  invoiceConsumer.clearInvoiceList();
+                                },
+                              ),
+                            ],
                           );
                         }),
                         SizedBox(
@@ -960,39 +994,47 @@ class AddNewInvoiceView extends StatelessWidget {
                                           fontSize: 15.sp,
                                           fontWeight: FontWeight.bold,
                                           textColor: AppColors.colorBlue),
-
-
-
-                                           SizedBox(
-                          height: 20.h,
-                        ),
-                      invoiceConsumer
+                                      SizedBox(
+                                        height: 20.h,
+                                      ),
+                                      invoiceConsumer
                                               .customMsgController.text.isEmpty
-                                          ?Container():  Align(
-                          alignment: Alignment.bottomRight,
-                          child: AppElevatedButon(
-                              title: "Generate",
-                              borderColor: AppColors.color446,
-                              buttonColor: AppColors.colorWhite,
-                              height: 50.h,
-                              width: 130.w,
-                              textColor: AppColors.color446,
-                              onPressed: (context) async{
-                           var result= await generateNewInvoice(PdfPageFormat.a4, studentData!, invoiceConsumer.invoiceList,);
-                                                 final blob = html.Blob(
-                                                [result], 'application/pdf');
-                                            final url = html.Url
-                                                .createObjectUrlFromBlob(blob);
+                                          ? Container()
+                                          : Align(
+                                              alignment: Alignment.bottomRight,
+                                              child: AppElevatedButon(
+                                                  title: "Generate",
+                                                  borderColor:
+                                                      AppColors.color446,
+                                                  buttonColor:
+                                                      AppColors.colorWhite,
+                                                  height: 50.h,
+                                                  width: 130.w,
+                                                  textColor: AppColors.color446,
+                                                  onPressed: (context) async {
+                                                    var result =
+                                                        await generateNewInvoice(
+                                                      PdfPageFormat.a4,
+                                                      studentData!,
+                                                      invoiceConsumer
+                                                          .invoiceList,
+                                                    );
+                                                    final blob = html.Blob(
+                                                        [result],
+                                                        'application/pdf');
+                                                    final url = html.Url
+                                                        .createObjectUrlFromBlob(
+                                                            blob);
 
-                                            // Open the blob URL in a new tab
-                                            html.window.open(url, '_blank');
-                              }),
-                        )
+                                                    // Open the blob URL in a new tab
+                                                    html.window
+                                                        .open(url, '_blank');
+                                                  }),
+                                            )
                                     ],
                                   ),
                                 ),
                               ),
-                       
                       ],
                     ),
                   ),
