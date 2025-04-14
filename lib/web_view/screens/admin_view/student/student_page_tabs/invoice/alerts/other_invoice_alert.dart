@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'dart:html' as html;
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:pdf/pdf.dart';
@@ -12,19 +9,17 @@ import 'package:rugst_alliance_academia/theme/app_colors.dart';
 import 'package:rugst_alliance_academia/util/image_path.dart';
 import 'package:rugst_alliance_academia/web_view/screens/admin_view/student/student_page_tabs/invoice/components/button_component.dart';
 import 'package:rugst_alliance_academia/web_view/screens/admin_view/student/student_page_tabs/invoice/components/form_component.dart';
-import 'package:rugst_alliance_academia/web_view/screens/admin_view/student/student_page_tabs/invoice/components/invoice_component.dart';
 import 'package:rugst_alliance_academia/web_view/screens/admin_view/student/student_page_tabs/invoice/components/program_component.dart';
-import 'package:rugst_alliance_academia/web_view/screens/admin_view/student/student_page_tabs/invoice/components/scholarship_component.dart';
-
+import 'package:rugst_alliance_academia/web_view/screens/admin_view/student/student_page_tabs/invoice/components/year_component.dart';
 import 'package:rugst_alliance_academia/web_view/screens/admin_view/student/student_page_tabs/invoice/pdf_generate/student_invoice_generate.dart';
-
 import 'package:rugst_alliance_academia/widgets/app_elevatedbutton.dart';
 import 'package:rugst_alliance_academia/widgets/app_formfield.dart';
 import 'package:rugst_alliance_academia/widgets/app_richtext.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class AddNewInvoiceView extends StatelessWidget {
+class OtherInvoiceAlert extends StatelessWidget {
   final StudentDetail? studentData;
-  const AddNewInvoiceView({super.key, this.studentData});
+  const OtherInvoiceAlert({super.key, this.studentData});
 
   @override
   Widget build(BuildContext context) {
@@ -54,8 +49,7 @@ class AddNewInvoiceView extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         const ProgramComponent(),
-                        const ScholarshipComponent(),
-                        const InvoiceComponent(),
+                        const InvoiceYearComponent(),
                         const FormComponent(),
                         InvoiceButtonComponent(
                           studentId: studentData!.iD!,
@@ -82,7 +76,7 @@ class AddNewInvoiceView extends StatelessWidget {
                             fontSize: 25.sp,
                             fontWeight: FontWeight.bold,
                             textColor: AppColors.colorBlack),
-                        invoiceConsumer.invoiceList.isEmpty
+                        invoiceConsumer.miscInvoiceList.isEmpty
                             ? SizedBox(
                                 height: size.height * 0.6,
                                 child: Center(
@@ -225,22 +219,8 @@ class AddNewInvoiceView extends StatelessWidget {
                                             width: 10.w,
                                           ),
                                           AppRichTextView(
-                                              title: "Pre-Medicine",
-                                              fontSize: 15.sp,
-                                              fontWeight: FontWeight.w500,
-                                              textColor: AppColors.colorBlack),
-                                          const Spacer(),
-                                          AppRichTextView(
-                                              title: "Scholarship Type:",
-                                              fontSize: 15.sp,
-                                              fontWeight: FontWeight.bold,
-                                              textColor: AppColors.colorBlack),
-                                          SizedBox(
-                                            width: 10.w,
-                                          ),
-                                          AppRichTextView(
-                                              title: invoiceConsumer
-                                                  .selectedScholarshipItem!,
+                                              title: studentData!
+                                                  .currentProgramName!,
                                               fontSize: 15.sp,
                                               fontWeight: FontWeight.w500,
                                               textColor: AppColors.colorBlack),
@@ -263,24 +243,6 @@ class AddNewInvoiceView extends StatelessWidget {
                                           Expanded(
                                             flex: 1,
                                             child: AppRichTextView(
-                                                title: "Regular Tution Fee",
-                                                fontSize: 15.sp,
-                                                fontWeight: FontWeight.bold,
-                                                textColor:
-                                                    AppColors.colorBlack),
-                                          ),
-                                          Expanded(
-                                            flex: 1,
-                                            child: AppRichTextView(
-                                                title: "Scholarship Amount",
-                                                fontSize: 15.sp,
-                                                fontWeight: FontWeight.bold,
-                                                textColor:
-                                                    AppColors.colorBlack),
-                                          ),
-                                          Expanded(
-                                            flex: 1,
-                                            child: AppRichTextView(
                                                 title: "Payable Amount",
                                                 fontSize: 15.sp,
                                                 fontWeight: FontWeight.bold,
@@ -294,8 +256,8 @@ class AddNewInvoiceView extends StatelessWidget {
                                       ),
                                       ListView.builder(
                                         shrinkWrap: true,
-                                        itemCount:
-                                            invoiceConsumer.invoiceList.length,
+                                        itemCount: invoiceConsumer
+                                            .miscInvoiceList.length,
                                         itemBuilder: (context, index) {
                                           return Padding(
                                             padding: EdgeInsets.symmetric(
@@ -303,8 +265,6 @@ class AddNewInvoiceView extends StatelessWidget {
                                             child: Column(
                                               children: [
                                                 Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.start,
                                                   children: [
                                                     Expanded(
                                                       flex: 1,
@@ -315,9 +275,9 @@ class AddNewInvoiceView extends StatelessWidget {
                                                         child: AppRichTextView(
                                                             maxLines: 3,
                                                             title: invoiceConsumer
-                                                                .invoiceList[
+                                                                .miscInvoiceList[
                                                                     index]
-                                                                .description,
+                                                                .description!,
                                                             fontSize: 12.sp,
                                                             fontWeight:
                                                                 FontWeight.w400,
@@ -328,31 +288,8 @@ class AddNewInvoiceView extends StatelessWidget {
                                                     Expanded(
                                                       flex: 1,
                                                       child: AppRichTextView(
-                                                          title: invoiceConsumer
-                                                              .regularTuitionFeeController
-                                                              .text,
-                                                          fontSize: 12.sp,
-                                                          fontWeight:
-                                                              FontWeight.w400,
-                                                          textColor: AppColors
-                                                              .colorBlack),
-                                                    ),
-                                                    Expanded(
-                                                      flex: 1,
-                                                      child: AppRichTextView(
                                                           title:
-                                                              "${invoiceConsumer.invoiceList[index].scholarshipAmount}",
-                                                          fontSize: 12.sp,
-                                                          fontWeight:
-                                                              FontWeight.w400,
-                                                          textColor: AppColors
-                                                              .colorBlack),
-                                                    ),
-                                                    Expanded(
-                                                      flex: 1,
-                                                      child: AppRichTextView(
-                                                          title:
-                                                              "${invoiceConsumer.invoiceList[index].usd}",
+                                                              "${invoiceConsumer.miscInvoiceList[index].usd}",
                                                           fontSize: 12.sp,
                                                           fontWeight:
                                                               FontWeight.w400,
@@ -369,45 +306,6 @@ class AddNewInvoiceView extends StatelessWidget {
                                       SizedBox(
                                         height: 30.h,
                                       ),
-                                      Row(
-                                        children: [
-                                          Expanded(flex: 2, child: Container()),
-                                          const Spacer(),
-                                          Expanded(
-                                            flex: 1,
-                                            child: AppRichTextView(
-                                                title: "Total USD",
-                                                fontSize: 15.sp,
-                                                fontWeight: FontWeight.bold,
-                                                textColor:
-                                                    AppColors.colorBlack),
-                                          )
-                                        ],
-                                      ),
-                                      SizedBox(
-                                        height: 10.h,
-                                      ),
-                                      Row(
-                                        children: [
-                                          Expanded(flex: 2, child: Container()),
-                                          const Spacer(),
-                                          Expanded(
-                                            flex: 1,
-                                            child: AppRichTextView(
-                                                title: (invoiceConsumer
-                                                        .invoiceList
-                                                        .fold(
-                                                            0,
-                                                            (sum, item) =>
-                                                                sum + item.usd))
-                                                    .toString(),
-                                                fontSize: 15.sp,
-                                                fontWeight: FontWeight.bold,
-                                                textColor:
-                                                    AppColors.colorBlack),
-                                          )
-                                        ],
-                                      ),
                                       SizedBox(
                                         height: 20.h,
                                       ),
@@ -422,31 +320,11 @@ class AddNewInvoiceView extends StatelessWidget {
                                               textColor: AppColors.colorBlack),
                                           AppRichTextView(
                                               title: (invoiceConsumer
-                                                      .invoiceList
+                                                      .miscInvoiceList
                                                       .fold(
                                                           0,
                                                           (sum, item) =>
-                                                              sum + item.usd))
-                                                  .toString(),
-                                              fontSize: 15.sp,
-                                              fontWeight: FontWeight.w500,
-                                              textColor: AppColors.colorBlack)
-                                        ],
-                                      ),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.end,
-                                        children: [
-                                          AppRichTextView(
-                                              title:
-                                                  "Scholarship Amount (USD): ",
-                                              fontSize: 15.sp,
-                                              fontWeight: FontWeight.bold,
-                                              textColor: AppColors.colorBlack),
-                                          AppRichTextView(
-                                              title: invoiceConsumer
-                                                  .invoiceList[0]
-                                                  .scholarshipAmount
+                                                              sum + item.usd!))
                                                   .toString(),
                                               fontSize: 15.sp,
                                               fontWeight: FontWeight.w500,
@@ -464,15 +342,11 @@ class AddNewInvoiceView extends StatelessWidget {
                                               textColor: AppColors.colorBlack),
                                           AppRichTextView(
                                               title: (invoiceConsumer
-                                                          .invoiceList
-                                                          .fold(
-                                                              0,
-                                                              (sum, item) =>
-                                                                  sum +
-                                                                  item.usd) -
-                                                      invoiceConsumer
-                                                          .invoiceList[0]
-                                                          .scholarshipAmount)
+                                                      .miscInvoiceList
+                                                      .fold(
+                                                          0,
+                                                          (sum, item) =>
+                                                              sum + item.usd!))
                                                   .toString(),
                                               fontSize: 15.sp,
                                               fontWeight: FontWeight.w500,
@@ -684,16 +558,16 @@ class AddNewInvoiceView extends StatelessWidget {
                                                       invoiceConsumer
                                                           .invoiceList,
                                                     );
-                                                    final blob = html.Blob(
-                                                        [result],
-                                                        'application/pdf');
-                                                    final url = html.Url
-                                                        .createObjectUrlFromBlob(
-                                                            blob);
+                                                    // final blob = html.Blob(
+                                                    //     [result],
+                                                    //     'application/pdf');
+                                                    // final url = html.Url
+                                                    //     .createObjectUrlFromBlob(
+                                                    //         blob);
 
-                                                    // Open the blob URL in a new tab
-                                                    html.window
-                                                        .open(url, '_blank');
+                                                    // // Open the blob URL in a new tab
+                                                    // html.window
+                                                    //     .open(url, '_blank');
                                                   }),
                                             )
                                     ],
@@ -711,7 +585,7 @@ class AddNewInvoiceView extends StatelessWidget {
   }
 }
 
-showAddInvoiceAlert(BuildContext context, StudentDetail? studentData) {
+showOtherInvoiceAlert(BuildContext context, StudentDetail? studentData) {
   // set up the AlertDialog
   AlertDialog alert = AlertDialog(
       backgroundColor: AppColors.colorWhite,
@@ -719,27 +593,22 @@ showAddInvoiceAlert(BuildContext context, StudentDetail? studentData) {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           AppRichTextView(
-              title: "Add New Invoice",
+              title: "Select Invoice Type",
               fontSize: 25.sp,
               fontWeight: FontWeight.bold,
               textColor: AppColors.colorBlack),
-          Consumer<InvoiceProvider>(
-            builder: (context, invoiceConsumer, child) {
-              return InkWell(
-                onTap: () {
-                  invoiceConsumer.clearInvoiceList();
-                  Navigator.pop(context);
-                },
-                child: const Icon(
-                  Icons.close,
-                  color: AppColors.colorRed,
-                ),
-              );
-            }
+          InkWell(
+            onTap: () {
+              Navigator.pop(context);
+            },
+            child: const Icon(
+              Icons.close,
+              color: AppColors.colorRed,
+            ),
           )
         ],
       ),
-      content: AddNewInvoiceView(studentData: studentData));
+      content: OtherInvoiceAlert(studentData: studentData));
 
   // show the dialog
   showDialog(

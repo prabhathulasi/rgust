@@ -39,6 +39,7 @@ class _AdmissionFormPagesState extends State<AdmissionFormPages> {
             scrollDirection: Axis.vertical,
             controller: admissionLoginConsumer.pageController,
             children: [
+              
               PersonalDetailForm(
                 pageController: admissionLoginConsumer.pageController
               ),

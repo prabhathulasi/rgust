@@ -6,6 +6,7 @@ class InvoiceModel {
   int studentId;
   String scholarshipType;
   int scholarshipAmount;
+  int regularTuitionFee ;
 
   // Constructor
   InvoiceModel({
@@ -16,6 +17,7 @@ class InvoiceModel {
     required this.studentId,
     required this.scholarshipType,
     required this.scholarshipAmount,
+    required this.regularTuitionFee,
   });
 
   // You can create a factory constructor to create an Item from a Map
@@ -28,6 +30,7 @@ class InvoiceModel {
       studentId: map['studentId'],
       scholarshipType: map['scholarshipType'],
       scholarshipAmount: map['scholarshipAmount'],
+      regularTuitionFee: map['regularTuitionFee'],
     );
   }
 
@@ -41,6 +44,38 @@ class InvoiceModel {
       'studentId': studentId,
       'scholarshipType': scholarshipType,
       'scholarshipAmount': scholarshipAmount,
+      'regularTuitionFee': regularTuitionFee,
     };
+  }
+}
+
+
+class MiscInvoiceModel {
+  String? year;
+  String? description;
+  int? usd;
+  int? conversionrate;
+  int? studentId;
+
+  MiscInvoiceModel(
+      {this.year, this.description, this.usd, this.conversionrate, this.studentId});
+
+  MiscInvoiceModel.fromJson(Map<String, dynamic> json) {
+    year = json['year'];
+    description = json['description'];
+    
+    usd = json['usd'];
+    conversionrate = json['conversionrate'];
+    studentId = json['studentId'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['year'] = year;
+    data['description'] = description;
+    data['usd'] = usd;
+    data['conversionrate'] = conversionrate;
+    data['studentId'] = studentId;
+    return data;
   }
 }

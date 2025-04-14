@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:rugst_alliance_academia/data/model/student/student_detail_model.dart';
 import 'package:rugst_alliance_academia/theme/app_colors.dart';
-import 'package:rugst_alliance_academia/web_view/screens/admin_view/student/student_page_tabs/invoice/alerts/new_invoice_alert.dart';
+import 'package:rugst_alliance_academia/web_view/screens/admin_view/student/student_page_tabs/invoice/alerts/fee_type_alert.dart';
+
 
 class Studentinvoicescreen extends StatefulWidget {
     final StudentDetail? studentData;
@@ -23,7 +24,7 @@ class _StudentinvoicescreenState extends State<Studentinvoicescreen> {
       floatingActionButton: FloatingActionButton(
         backgroundColor: AppColors.color446,
         onPressed: () {
-       showAddInvoiceAlert(context, widget.studentData);
+       showInvoiceTypeAlert(context, widget.studentData);
         },
         child: const Icon(Icons.attach_money,color: AppColors.colorWhite,),
       ),

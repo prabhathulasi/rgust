@@ -20,23 +20,34 @@ class InvoiceProvider extends ChangeNotifier {
   bool get isLoading => _isLoading;
 
   final TextEditingController usdAmountController = TextEditingController();
+  final TextEditingController regularTuitionFeeController =
+      TextEditingController();
   final TextEditingController conversionRateController =
       TextEditingController();
   final TextEditingController gydAmountController = TextEditingController();
   final TextEditingController invoiceDescriptionController =
       TextEditingController();
-        final TextEditingController scholarshipController =
-      TextEditingController();
-            final TextEditingController customMsgController =
-      TextEditingController();
+  final TextEditingController scholarshipController = TextEditingController();
+  final TextEditingController customMsgController = TextEditingController();
 
+  String? customMessage;
+  List<String> miscList = [
+    "Student Government Fee",
+    "One-Time Registration Fee",
+    "Application Fee",
+    "Matriculation Fee",
+    "Seat Deposit Fee",
+    "Health Insurance (optional)",
+    "Visa Application Fee",
+    "Examination Fee",
+    "Supplimental Exam Fee",
+  ];
 
-      String ?customMessage ;
+  String? selectedMiscItem; // To store the selected item
 
- // Define a list of items for the dropdown
+  // Define a list of items for the dropdown
   List<String> scholarShipItems = ['N/A', 'Partial', 'Full'];
   String? selectedScholarshipItem; // To store the selected item
-
 
   String? dropdownvalue;
   String? selectedFileName;
@@ -44,11 +55,13 @@ class InvoiceProvider extends ChangeNotifier {
   StudentInvoiceListModel studentInvoiceListModel = StudentInvoiceListModel();
 
   List<InvoiceModel> invoiceList = [];
+  List<MiscInvoiceModel> miscInvoiceList = [];
+  String? invoiceType;
+  String feeType = "tution";
+  String? semesterValue;
 
   var dropDownItems = ["Bank Payment", "Wire Transfer"];
-  List<String> importantNotes = [
-   
-  ];
+  List<String> importantNotes = [];
 
   void uploadStudentInvoice(BuildContext context,
       {String? token,
@@ -182,10 +195,18 @@ class InvoiceProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  addMiscInvoice(MiscInvoiceModel invoice) {
+    miscInvoiceList.add(invoice);
+    selectedMiscItem = null;
+    usdAmountController.clear();
+    conversionRateController.clear();
+    gydAmountController.clear();
+    notifyListeners();
+  }
+
   void updateConvertedAmount(String amount) {
     // Check if the USD amount and conversion rate are not empty
     final amountInUsd = int.tryParse(usdAmountController.text);
-  
 
     // Calculate the converted amount
     gydAmountController.text = (amountInUsd! * int.parse(amount)).toString();
@@ -202,21 +223,39 @@ class InvoiceProvider extends ChangeNotifier {
     notifyListeners();
   }
 
- void setScholarshipValue(String value) async {
+  void setScholarshipValue(String value) async {
     selectedScholarshipItem = value;
     notifyListeners();
   }
-
 
   void setCustomMessageValue(String value) async {
     customMessage = value;
     notifyListeners();
   }
 
-  clearInvoiceList(){
+  void setInvoiceType(String value) {
+    invoiceType = value;
+    notifyListeners();
+  }
+
+  void setFeeType(String value) {
+    feeType = value;
+    notifyListeners();
+  }
+
+  void setSemValue(String value) {
+    semesterValue = value;
+    notifyListeners();
+  }
+
+  void setSelectedMiscItem(String value) {
+    selectedMiscItem = value;
+    notifyListeners();
+  }
+
+  clearInvoiceList() {
     scholarshipController.clear();
     invoiceList.clear();
     notifyListeners();
   }
-
 }

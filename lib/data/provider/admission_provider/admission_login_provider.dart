@@ -67,6 +67,8 @@ class AdmissionLoginProvider extends ChangeNotifier {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     status = prefs.getString('Status') ;
     applicationId = prefs.getString("ApplicationId");
+    setPageController(int.parse(status!));
+
 
     // notifyListeners();
   }
