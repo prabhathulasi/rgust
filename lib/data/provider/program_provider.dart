@@ -342,7 +342,7 @@ List<Courses> filteredCourse = [];
     selectedClass = null;
     selectedCourse = null;
     newData.clear();
-    notifyListeners();
+    // notifyListeners();
     if (value != "300") {
       await getClasses(token);
     } else {

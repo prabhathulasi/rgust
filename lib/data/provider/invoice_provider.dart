@@ -6,6 +6,7 @@ import 'package:flutter_flavor/flutter_flavor.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:rugst_alliance_academia/data/model/invoice/invoice_model.dart';
+import 'package:rugst_alliance_academia/data/model/invoice/invoice_response_model.dart';
 import 'package:rugst_alliance_academia/data/model/student/student_invoice_model.dart';
 import 'package:rugst_alliance_academia/data/provider/student_provider.dart';
 import 'package:rugst_alliance_academia/util/api_service.dart';
@@ -53,6 +54,7 @@ class InvoiceProvider extends ChangeNotifier {
   String? selectedFileName;
   FilePickerResult? finalResult;
   StudentInvoiceListModel studentInvoiceListModel = StudentInvoiceListModel();
+  InvoiceResponseModel invoiceResponseModel = InvoiceResponseModel();
 
   List<InvoiceModel> invoiceList = [];
   List<MiscInvoiceModel> miscInvoiceList = [];
@@ -133,6 +135,72 @@ class InvoiceProvider extends ChangeNotifier {
     }
   }
 
+  Future postFeeInvoice(int studentId, String token, int year) async {
+    setLoading(true);
+    var body = {
+      "studentId": studentId,
+      "scholorshipType": invoiceList[0].scholarshipType,
+      "invoiceType": invoiceType,
+      "year": year,
+      "regularTutionFee": invoiceList[0].regularTuitionFee,
+      "scholarshipAmount": invoiceList[0].scholarshipAmount,
+      "invoiceDescription": invoiceList[0].description,
+      "amountInUsd": invoiceList[0].usd,
+      "currentConversionRate": int.parse(conversionRateController.text),
+      "customMessage": customMsgController.text,
+      "invoiceNumber":
+          "RGUST/${DateFormat("yyyy/MMM-dd").format(DateTime.now())}/${generateRandomString(5)}",
+    };
+
+    print(body.toString());
+    try {
+      var result = await ApiHelper.post("post-invoice-data", body, token);
+
+      if (result.statusCode == 201) {
+        var data = json.decode(result.body);
+
+        ToastHelper().sucessToast("Invoice Added Successfully");
+        return data;
+      } else if (result.statusCode == 400) {
+        var data = json.decode(result.body);
+        ToastHelper().errorToast(data.toString());
+        return null;
+      } else {
+        ToastHelper().errorToast("Internal Server Error");
+        return null;
+      }
+    } catch (e) {
+      ToastHelper().errorToast(e.toString());
+      return e.toString();
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  Future getFeeInvoice(String token, int studentId) async {
+    invoiceResponseModel.invoiceData?.clear();
+    try {
+      var result = await ApiHelper.get("get-invoice-data/id=$studentId", token);
+
+      if (result.statusCode == 200) {
+        var data = json.decode(result.body);
+
+        invoiceResponseModel = InvoiceResponseModel.fromJson(data);
+
+        return invoiceResponseModel;
+      } else if (result.statusCode == 400) {
+        ToastHelper().errorToast("No Invoice Details Found");
+        return null;
+      } else {
+        ToastHelper().errorToast("Internal Server Error");
+        return null;
+      }
+    } catch (e) {
+      ToastHelper().errorToast(e.toString());
+      return e.toString();
+    }
+  }
+
   Future getStudentInvoiceList(String token, int id) async {
     studentInvoiceListModel.invoiceList?.clear();
     try {
@@ -186,17 +254,31 @@ class InvoiceProvider extends ChangeNotifier {
     }
   }
 
+  String generateRandomString(int length) {
+    const chars = 'abcdefghijklmnopqrstuvwxy0123456789';
+    Random random = Random.secure();
+    return List.generate(length, (index) => chars[random.nextInt(chars.length)])
+        .join();
+  }
+
   addInvoice(InvoiceModel invoice) {
     invoiceList.add(invoice);
-    invoiceDescriptionController.clear();
-    usdAmountController.clear();
-    conversionRateController.clear();
-    gydAmountController.clear();
+    // invoiceDescriptionController.clear();
+    // usdAmountController.clear();
+
+    // gydAmountController.clear();
+    // regularTuitionFeeController.clear();
+    // scholarshipController.clear();
     notifyListeners();
   }
 
   addMiscInvoice(MiscInvoiceModel invoice) {
-    miscInvoiceList.add(invoice);
+    if (!miscInvoiceList
+        .any((item) => item.description == invoice.description)) {
+      miscInvoiceList.add(invoice);
+    } else {
+      ToastHelper().errorToast("Misc Fee Already Added");
+    }
     selectedMiscItem = null;
     usdAmountController.clear();
     conversionRateController.clear();

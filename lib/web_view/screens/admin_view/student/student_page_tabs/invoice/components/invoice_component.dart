@@ -158,10 +158,8 @@ class InvoiceComponent extends StatelessWidget {
                               Expanded(
                                 flex: 2,
                                 child: AppTextFormFieldWidget(
-                                  enable: invoiceConsumer.invoiceList.isEmpty
-                                      ? true
-                                      : false,
-                                  onChanged: (p0) {},
+                               
+                                  
                                   textEditingController: invoiceConsumer
                                       .regularTuitionFeeController,
                                   inputFormatters: [
@@ -244,10 +242,7 @@ class InvoiceComponent extends StatelessWidget {
                                     Expanded(
                                       flex: 2,
                                       child: AppTextFormFieldWidget(
-                                        enable:
-                                            invoiceConsumer.invoiceList.isEmpty
-                                                ? true
-                                                : false,
+                                        
                                         onChanged: (p0) {
                                           invoiceConsumer
                                               .gydAmountController.text = "0";

@@ -560,13 +560,13 @@ class MiscInvoiceAlert extends StatelessWidget {
                                                   width: 130.w,
                                                   textColor: AppColors.color446,
                                                   onPressed: (context) async {
-                                                    var result =
-                                                        await generateNewInvoice(
-                                                      PdfPageFormat.a4,
-                                                      studentData!,
-                                                      invoiceConsumer
-                                                          .invoiceList,
-                                                    );
+                                                    // var result =
+                                                    //     await generateNewInvoice(
+                                                    //   PdfPageFormat.a4,
+                                                    //   studentData!,
+                                                    //   invoiceConsumer
+                                                    //       .invoiceList,
+                                                    // );
                                                     // final blob = html.Blob(
                                                     //     [result],
                                                     //     'application/pdf');

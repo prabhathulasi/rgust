@@ -20,7 +20,8 @@ class InvoiceButtonComponent extends StatelessWidget {
           builder: (context, invoiceConsumer, child) {
         return Row(
           children: [
-            AppElevatedButon(
+           invoiceConsumer.invoiceList.isNotEmpty
+                ? Container():  AppElevatedButon(
               title: "Add",
               buttonColor: AppColors.colorWhite,
               textColor: AppColors.color582,

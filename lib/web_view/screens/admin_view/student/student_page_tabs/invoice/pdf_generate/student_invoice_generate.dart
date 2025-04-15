@@ -8,11 +8,11 @@ import 'package:intl/intl.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
-import 'package:rugst_alliance_academia/data/model/invoice/invoice_model.dart';
+import 'package:rugst_alliance_academia/data/model/invoice/invoice_response_model.dart';
 import 'package:rugst_alliance_academia/data/model/student/student_detail_model.dart';
 
 Future<Uint8List> generateNewInvoice(PdfPageFormat pageFormat,
-    StudentDetail? studentData, List<InvoiceModel> invoiceData) async {
+    StudentDetail? studentData, InvoiceData invoiceData) async {
   final invoice = Invoice(
     baseColor: PdfColors.teal,
     accentColor: PdfColors.blueGrey900,
@@ -35,7 +35,7 @@ class Invoice {
   pw.Image? image1;
 
   Future<Uint8List> buildPdf(PdfPageFormat pageFormat,
-      StudentDetail? studentData, List<InvoiceModel> invoiceData) async {
+      StudentDetail? studentData, InvoiceData invoiceData) async {
     // Create a PDF document.
     final doc = pw.Document();
 
@@ -60,7 +60,7 @@ class Invoice {
         build: (context) => [
           pw.Align(
               alignment: pw.Alignment.topRight,
-              child: pw.Text("Receipt No:Rgust/${DateFormat("yyyy/MMM").format(DateTime.now())}/${Random().nextInt(10000) + 1}",
+              child: pw.Text("Receipt No: ${invoiceData.invoiceNumber}",
                   textAlign: pw.TextAlign.right,
                   style: pw.TextStyle(
                     color: PdfColor.fromHex("#000000"),
@@ -68,10 +68,8 @@ class Invoice {
                   ))),
           pw.Align(
               alignment: pw.Alignment.topRight,
-              child: pw.Text("Receipt Date: ${DateFormat(
-                                                      'yyyy-MM-dd – kk:mm')
-                                                  .format(DateTime.now())
-                                                  .toString()}",
+              child: pw.Text(
+                  "Receipt Date: ${DateFormat('yyyy-MM-dd – kk:mm').format(DateTime.parse(invoiceData.createdAt!)).toString()}",
                   textAlign: pw.TextAlign.right,
                   style: pw.TextStyle(
                     color: PdfColor.fromHex("#000000"),
@@ -91,50 +89,51 @@ class Invoice {
           _contentHeader(context, studentData!),
           pw.SizedBox(height: 20.h),
           pw.TableHelper.fromTextArray(
-              border: pw.TableBorder.all(),
-              cellAlignment: pw.Alignment.centerLeft,
-              headerDecoration: pw.BoxDecoration(
-                borderRadius: const pw.BorderRadius.all(pw.Radius.circular(2)),
-                color: baseColor,
-              ),
-              headerHeight: 25,
-              cellHeight: 40,
-              cellAlignments: {
-                0: pw.Alignment.centerLeft,
-                1: pw.Alignment.centerLeft,
-                2: pw.Alignment.centerLeft,
-                3: pw.Alignment.centerLeft,
-                4: pw.Alignment.centerLeft,
-              },
-              headerStyle: pw.TextStyle(
-                color: _baseTextColor,
-                fontSize: 10,
-                fontWeight: pw.FontWeight.bold,
-              ),
-              cellStyle: const pw.TextStyle(
-                color: _darkColor,
-                fontSize: 10,
-              ),
-              rowDecoration: pw.BoxDecoration(
-                border: pw.Border(
-                  bottom: pw.BorderSide(
-                    color: accentColor,
-                    width: .5,
-                  ),
+            border: pw.TableBorder.all(),
+            cellAlignment: pw.Alignment.centerLeft,
+            headerDecoration: pw.BoxDecoration(
+              borderRadius: const pw.BorderRadius.all(pw.Radius.circular(2)),
+              color: baseColor,
+            ),
+            headerHeight: 25,
+            cellHeight: 40,
+            cellAlignments: {
+              0: pw.Alignment.centerLeft,
+              1: pw.Alignment.centerLeft,
+              2: pw.Alignment.centerLeft,
+              3: pw.Alignment.centerLeft,
+              4: pw.Alignment.centerLeft,
+            },
+            headerStyle: pw.TextStyle(
+              color: _baseTextColor,
+              fontSize: 10,
+              fontWeight: pw.FontWeight.bold,
+            ),
+            cellStyle: const pw.TextStyle(
+              color: _darkColor,
+              fontSize: 10,
+            ),
+            rowDecoration: pw.BoxDecoration(
+              border: pw.Border(
+                bottom: pw.BorderSide(
+                  color: accentColor,
+                  width: .5,
                 ),
               ),
-              headers: [
-                "Details",
-                "Scholarship Amount\n(USD)",
-                "Total Amount (USD)",
-              ],
-              data: invoiceData
-                  .map((e) => [
-                        e.description,
-                        e.scholarshipAmount.toString(),
-                        e.usd.toString(),
-                      ])
-                  .toList()),
+            ),
+            headers: [
+              "Details",
+              "Scholarship Amount\n(USD) per ${invoiceData.invoiceType}",
+              "Total Amount (USD)\nper ${invoiceData.invoiceType}",
+            ],
+            data: [
+              [
+                invoiceData.invoiceDescription!,
+                invoiceData.scholarhipAmount.toString(),
+                invoiceData.amountInUsd.toString(),
+              ]
+            ],
+          ),
           pw.SizedBox(height: 10.h),
           pw.Row(
             mainAxisAlignment: pw.MainAxisAlignment.end,
@@ -143,40 +142,34 @@ class Invoice {
                   style: pw.TextStyle(
                       fontWeight: pw.FontWeight.bold, fontSize: 12.sp)),
               pw.SizedBox(width: 5.w),
-              pw.Text(
-                  invoiceData.fold(0, (sum, item) => sum + item.usd).toString(),
+              pw.Text(invoiceData.amountInUsd!.toString(),
                   style: pw.TextStyle(
                       fontWeight: pw.FontWeight.normal, fontSize: 12.sp)),
             ],
           ),
-         pw.Row(
-           mainAxisAlignment: pw.MainAxisAlignment.end,
-          children: [
-            pw.Text("Scholarship Amount: ",
-                style: pw.TextStyle(
-                    fontWeight: pw.FontWeight.bold, fontSize: 12.sp)),
-            pw.SizedBox(width: 5.w),
-            pw.Text(invoiceData[0].scholarshipAmount.toString(),
-                style: pw.TextStyle(
-                    fontWeight: pw.FontWeight.normal, fontSize: 12.sp)),
-          ],
-         ),
-         pw.Row(
-           mainAxisAlignment: pw.MainAxisAlignment.end,
-          children: [
+          pw.Row(
+            mainAxisAlignment: pw.MainAxisAlignment.end,
+            children: [
+              pw.Text("Scholarship Amount: ",
+                  style: pw.TextStyle(
+                      fontWeight: pw.FontWeight.bold, fontSize: 12.sp)),
+              pw.SizedBox(width: 5.w),
+              pw.Text(invoiceData.scholarhipAmount.toString(),
+                  style: pw.TextStyle(
+                      fontWeight: pw.FontWeight.normal, fontSize: 12.sp)),
+            ],
+          ),
+          pw.Row(mainAxisAlignment: pw.MainAxisAlignment.end, children: [
             pw.Text("Payable Amount: ",
                 style: pw.TextStyle(
                     fontWeight: pw.FontWeight.bold, fontSize: 12.sp)),
             pw.SizedBox(width: 5.w),
             pw.Text(
-                (invoiceData.fold(0, (sum, item) => sum + item.usd) -
-                        invoiceData[0].scholarshipAmount)
+                ((invoiceData.amountInUsd!) - (invoiceData.scholarhipAmount!))
                     .toString(),
                 style: pw.TextStyle(
                     fontWeight: pw.FontWeight.normal, fontSize: 12.sp)),
-          ]
-         ),
-         
+          ]),
           pw.SizedBox(height: 5.h),
           pw.Align(
             alignment: pw.Alignment.topRight,
@@ -202,6 +195,8 @@ class Invoice {
               style: pw.TextStyle(fontSize: 10.sp)),
           pw.Text(
               "4. Students can download the digital invoice for their payment from the student app once the finance department has confirmed the payment.",
+              style: pw.TextStyle(fontSize: 10.sp)),
+          pw.Text(invoiceData.customMessage!,
               style: pw.TextStyle(fontSize: 10.sp)),
           pw.SizedBox(height: 10.h),
           pw.Row(crossAxisAlignment: pw.CrossAxisAlignment.start, children: [

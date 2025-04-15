@@ -1,25 +1,29 @@
 import 'package:flutter/material.dart';
-import 'dart:html' as html;
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+
 import 'package:intl/intl.dart';
-import 'package:pdf/pdf.dart';
+
 import 'package:provider/provider.dart';
+import 'package:rugst_alliance_academia/data/middleware/check_auth_middleware.dart';
 import 'package:rugst_alliance_academia/data/model/student/student_detail_model.dart';
 import 'package:rugst_alliance_academia/data/provider/invoice_provider.dart';
+import 'package:rugst_alliance_academia/data/provider/program_provider.dart';
+import 'package:rugst_alliance_academia/routes/named_routes.dart';
 import 'package:rugst_alliance_academia/theme/app_colors.dart';
 import 'package:rugst_alliance_academia/util/image_path.dart';
+import 'package:rugst_alliance_academia/util/toast_helper.dart';
 import 'package:rugst_alliance_academia/web_view/screens/admin_view/student/student_page_tabs/invoice/components/button_component.dart';
 import 'package:rugst_alliance_academia/web_view/screens/admin_view/student/student_page_tabs/invoice/components/form_component.dart';
 import 'package:rugst_alliance_academia/web_view/screens/admin_view/student/student_page_tabs/invoice/components/invoice_component.dart';
 import 'package:rugst_alliance_academia/web_view/screens/admin_view/student/student_page_tabs/invoice/components/program_component.dart';
 import 'package:rugst_alliance_academia/web_view/screens/admin_view/student/student_page_tabs/invoice/components/scholarship_component.dart';
 
-import 'package:rugst_alliance_academia/web_view/screens/admin_view/student/student_page_tabs/invoice/pdf_generate/student_invoice_generate.dart';
 
 import 'package:rugst_alliance_academia/widgets/app_elevatedbutton.dart';
 import 'package:rugst_alliance_academia/widgets/app_formfield.dart';
+
 import 'package:rugst_alliance_academia/widgets/app_richtext.dart';
 
 class AddNewInvoiceView extends StatelessWidget {
@@ -208,7 +212,7 @@ class AddNewInvoiceView extends StatelessWidget {
                                           ),
                                           AppRichTextView(
                                               title:
-                                                  "Rgust/${DateFormat("yyyy/MMM").format(DateTime.now())}/11",
+                                                  "Rgust/${DateFormat("yyyy/MMM").format(DateTime.now())}/${invoiceConsumer.generateRandomString(5)}",
                                               fontSize: 15.sp,
                                               fontWeight: FontWeight.w500,
                                               textColor: AppColors.colorBlack),
@@ -329,8 +333,10 @@ class AddNewInvoiceView extends StatelessWidget {
                                                       flex: 1,
                                                       child: AppRichTextView(
                                                           title: invoiceConsumer
-                                                              .regularTuitionFeeController
-                                                              .text,
+                                                              .invoiceList[
+                                                                  index]
+                                                              .regularTuitionFee
+                                                              .toString(),
                                                           fontSize: 12.sp,
                                                           fontWeight:
                                                               FontWeight.w400,
@@ -444,9 +450,13 @@ class AddNewInvoiceView extends StatelessWidget {
                                               fontWeight: FontWeight.bold,
                                               textColor: AppColors.colorBlack),
                                           AppRichTextView(
-                                              title: invoiceConsumer
-                                                  .invoiceList[0]
-                                                  .scholarshipAmount
+                                              title: (invoiceConsumer
+                                                      .invoiceList
+                                                      .fold(
+                                                          0,
+                                                          (sum, item) =>
+                                                              sum +
+                                                              item.scholarshipAmount))
                                                   .toString(),
                                               fontSize: 15.sp,
                                               fontWeight: FontWeight.w500,
@@ -470,9 +480,13 @@ class AddNewInvoiceView extends StatelessWidget {
                                                               (sum, item) =>
                                                                   sum +
                                                                   item.usd) -
-                                                      invoiceConsumer
-                                                          .invoiceList[0]
-                                                          .scholarshipAmount)
+                                                      (invoiceConsumer
+                                                          .invoiceList
+                                                          .fold(
+                                                              0,
+                                                              (sum, item) =>
+                                                                  sum +
+                                                                  item.scholarshipAmount)))
                                                   .toString(),
                                               fontSize: 15.sp,
                                               fontWeight: FontWeight.w500,
@@ -491,6 +505,53 @@ class AddNewInvoiceView extends StatelessWidget {
                                             fontSize: 15.sp,
                                             fontWeight: FontWeight.bold,
                                             textColor: AppColors.colorBlack),
+                                      ),
+                                      SizedBox(
+                                        height: 10.h,
+                                      ),
+                                      Align(
+                                        alignment: Alignment.topLeft,
+                                        child: AppRichTextView(
+                                          maxLines: 2,
+                                          fontSize: 13.sp,
+                                          fontWeight: FontWeight.w500,
+                                          textColor: AppColors.colorBlack,
+                                          title:
+                                              "1. This digital invoice is provided for record-keeping purposes only and is not intended to serve as an official or legal document.",
+                                        ),
+                                      ),
+                                      Align(
+                                        alignment: Alignment.topLeft,
+                                        child: AppRichTextView(
+                                          maxLines: 2,
+                                          fontSize: 13.sp,
+                                          fontWeight: FontWeight.w500,
+                                          textColor: AppColors.colorBlack,
+                                          title:
+                                              "2. Submit a hard copy of you deposit slip to the Administrative Office for record keeping.",
+                                        ),
+                                      ),
+                                      Align(
+                                        alignment: Alignment.topLeft,
+                                        child: AppRichTextView(
+                                          maxLines: 2,
+                                          fontSize: 13.sp,
+                                          fontWeight: FontWeight.w500,
+                                          textColor: AppColors.colorBlack,
+                                          title:
+                                              "3. This invoice reflects the annual tuition breakdown under the university's partial scholarship program.",
+                                        ),
+                                      ),
+                                      Align(
+                                        alignment: Alignment.topLeft,
+                                        child: AppRichTextView(
+                                          maxLines: 2,
+                                          fontSize: 13.sp,
+                                          fontWeight: FontWeight.w500,
+                                          textColor: AppColors.colorBlack,
+                                          title:
+                                              "4. Students can download the digital invoice for their payment from the student app once the finance department has confirmed the payment.",
+                                        ),
                                       ),
                                       SizedBox(
                                         height: 10.h,
@@ -667,34 +728,56 @@ class AddNewInvoiceView extends StatelessWidget {
                                           ? Container()
                                           : Align(
                                               alignment: Alignment.bottomRight,
-                                              child: AppElevatedButon(
-                                                  title: "Generate",
-                                                  borderColor:
-                                                      AppColors.color446,
-                                                  buttonColor:
-                                                      AppColors.colorWhite,
-                                                  height: 50.h,
-                                                  width: 130.w,
-                                                  textColor: AppColors.color446,
-                                                  onPressed: (context) async {
-                                                    var result =
-                                                        await generateNewInvoice(
-                                                      PdfPageFormat.a4,
-                                                      studentData!,
-                                                      invoiceConsumer
-                                                          .invoiceList,
-                                                    );
-                                                    final blob = html.Blob(
-                                                        [result],
-                                                        'application/pdf');
-                                                    final url = html.Url
-                                                        .createObjectUrlFromBlob(
-                                                            blob);
+                                              child: Consumer<ProgramProvider>(
+                                                  builder: (context,
+                                                      programconsumer, child) {
+                                                return AppElevatedButon(
+                                                  loading: invoiceConsumer.isLoading,
+                                                    title: "Generate",
+                                                    borderColor:
+                                                        AppColors.color446,
+                                                    buttonColor:
+                                                        AppColors.colorWhite,
+                                                    height: 50.h,
+                                                    width: 130.w,
+                                                    textColor:
+                                                        AppColors.color446,
+                                                    onPressed: (context) async {
+                                                      var token =
+                                                          await getTokenAndUseIt();
+                                                      if (token == null) {
+                                                        if (context.mounted) {
+                                                          Navigator.pushNamed(
+                                                              context,
+                                                              RouteNames.login);
+                                                        }
+                                                      } else if (token ==
+                                                          "Token Expired") {
+                                                        ToastHelper().errorToast(
+                                                            "Session Expired Please Login Again");
 
-                                                    // Open the blob URL in a new tab
-                                                    html.window
-                                                        .open(url, '_blank');
-                                                  }),
+                                                        if (context.mounted) {
+                                                          Navigator.pushNamed(
+                                                              context,
+                                                              RouteNames.login);
+                                                        }
+                                                      } else {
+                                                        var result =
+                                                            await invoiceConsumer
+                                                                .postFeeInvoice(
+                                                                    studentData!
+                                                                        .iD!,
+                                                                    token,
+                                                                    programconsumer
+                                                                        .selectedYear);
+                                                                        if(result!=null && context.mounted){
+                                                                          Navigator.pop(context);
+                                                                        }
+                                                       
+                                                      }
+                                                    
+                                                    });
+                                              }),
                                             )
                                     ],
                                   ),
@@ -723,20 +806,18 @@ showAddInvoiceAlert(BuildContext context, StudentDetail? studentData) {
               fontSize: 25.sp,
               fontWeight: FontWeight.bold,
               textColor: AppColors.colorBlack),
-          Consumer<InvoiceProvider>(
-            builder: (context, invoiceConsumer, child) {
-              return InkWell(
-                onTap: () {
-                  invoiceConsumer.clearInvoiceList();
-                  Navigator.pop(context);
-                },
-                child: const Icon(
-                  Icons.close,
-                  color: AppColors.colorRed,
-                ),
-              );
-            }
-          )
+          Consumer<InvoiceProvider>(builder: (context, invoiceConsumer, child) {
+            return InkWell(
+              onTap: () {
+                invoiceConsumer.clearInvoiceList();
+                Navigator.pop(context);
+              },
+              child: const Icon(
+                Icons.close,
+                color: AppColors.colorRed,
+              ),
+            );
+          })
         ],
       ),
       content: AddNewInvoiceView(studentData: studentData));

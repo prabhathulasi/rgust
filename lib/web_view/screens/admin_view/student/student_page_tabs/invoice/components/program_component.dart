@@ -11,30 +11,25 @@ class ProgramComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<InvoiceProvider>(
-        builder: (context, invoiceConsumer, child) {
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(
-            height: 10.h,
-          ),
-          AppRichTextView(
-              title: "Please Select Program",
-              fontSize: 15.sp,
-              fontWeight: FontWeight.bold,
-              textColor: AppColors.colorBlack),
-          SizedBox(
-            height: 10.h,
-          ),
-          ProgramDropdown(
-            isenabled: invoiceConsumer.invoiceList.isEmpty ? true : false,
-          ),
-          SizedBox(
-            height: 10.h,
-          ),
-        ],
-      );
-    });
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(
+          height: 10.h,
+        ),
+        AppRichTextView(
+            title: "Please Select Program",
+            fontSize: 15.sp,
+            fontWeight: FontWeight.bold,
+            textColor: AppColors.colorBlack),
+        SizedBox(
+          height: 10.h,
+        ),
+        const ProgramDropdown(),
+        SizedBox(
+          height: 10.h,
+        ),
+      ],
+    );
   }
 }
