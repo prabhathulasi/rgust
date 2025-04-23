@@ -3,10 +3,14 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:pdf/pdf.dart';
 import 'package:provider/provider.dart';
+import 'package:rugst_alliance_academia/data/middleware/check_auth_middleware.dart';
 import 'package:rugst_alliance_academia/data/model/student/student_detail_model.dart';
 import 'package:rugst_alliance_academia/data/provider/invoice_provider.dart';
+import 'package:rugst_alliance_academia/data/provider/program_provider.dart';
+import 'package:rugst_alliance_academia/routes/named_routes.dart';
 import 'package:rugst_alliance_academia/theme/app_colors.dart';
 import 'package:rugst_alliance_academia/util/image_path.dart';
+import 'package:rugst_alliance_academia/util/toast_helper.dart';
 import 'package:rugst_alliance_academia/web_view/screens/admin_view/student/student_page_tabs/invoice/components/button_component.dart';
 import 'package:rugst_alliance_academia/web_view/screens/admin_view/student/student_page_tabs/invoice/components/form_component.dart';
 import 'package:rugst_alliance_academia/web_view/screens/admin_view/student/student_page_tabs/invoice/components/program_component.dart';
@@ -550,34 +554,56 @@ class MiscInvoiceAlert extends StatelessWidget {
                                           ? Container()
                                           : Align(
                                               alignment: Alignment.bottomRight,
-                                              child: AppElevatedButon(
-                                                  title: "Generate",
-                                                  borderColor:
-                                                      AppColors.color446,
-                                                  buttonColor:
-                                                      AppColors.colorWhite,
-                                                  height: 50.h,
-                                                  width: 130.w,
-                                                  textColor: AppColors.color446,
-                                                  onPressed: (context) async {
-                                                    // var result =
-                                                    //     await generateNewInvoice(
-                                                    //   PdfPageFormat.a4,
-                                                    //   studentData!,
-                                                    //   invoiceConsumer
-                                                    //       .invoiceList,
-                                                    // );
-                                                    // final blob = html.Blob(
-                                                    //     [result],
-                                                    //     'application/pdf');
-                                                    // final url = html.Url
-                                                    //     .createObjectUrlFromBlob(
-                                                    //         blob);
-
-                                                    // // Open the blob URL in a new tab
-                                                    // html.window
-                                                    //     .open(url, '_blank');
-                                                  }),
+                                              child: Consumer<ProgramProvider>(
+                                                builder: (context, programConsumer, child) {
+                                                  return AppElevatedButon(
+                                                      title: "Generate",
+                                                      borderColor:
+                                                          AppColors.color446,
+                                                      buttonColor:
+                                                          AppColors.colorWhite,
+                                                      height: 50.h,
+                                                      width: 130.w,
+                                                      textColor: AppColors.color446,
+                                                      onPressed: (context) async {
+                                                      var token =
+                                                              await getTokenAndUseIt();
+                                                          if (token == null) {
+                                                            if (context.mounted) {
+                                                              Navigator.pushNamed(
+                                                                  context,
+                                                                  RouteNames.login);
+                                                            }
+                                                          } else if (token ==
+                                                              "Token Expired") {
+                                                            ToastHelper().errorToast(
+                                                                "Session Expired Please Login Again");
+                                                  
+                                                            if (context.mounted) {
+                                                              Navigator.pushNamed(
+                                                                  context,
+                                                                  RouteNames.login);
+                                                            }
+                                                          } else {
+                                                            var result =
+                                                                await invoiceConsumer
+                                                                    .postMiscInvoice(
+                                                                        studentData!
+                                                                            .iD!,
+                                                                        token,
+                                                                        programConsumer
+                                                                            .selectedYear);
+                                                            if (result != null &&
+                                                                context.mounted) {
+                                                              Navigator.pop(
+                                                                  context);
+                                                              Navigator.pop(
+                                                                  context);
+                                                            }
+                                                          }
+                                                      });
+                                                }
+                                              ),
                                             )
                                     ],
                                   ),

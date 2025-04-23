@@ -44,6 +44,8 @@ class InvoiceProvider extends ChangeNotifier {
     "Supplimental Exam Fee",
   ];
 
+  
+
   String? selectedMiscItem; // To store the selected item
 
   // Define a list of items for the dropdown
@@ -64,6 +66,10 @@ class InvoiceProvider extends ChangeNotifier {
 
   var dropDownItems = ["Bank Payment", "Wire Transfer"];
   List<String> importantNotes = [];
+  int ?selectedInvoiceIndex ;
+  int? selectedInvoiceId;
+  int ?selectedMiscIndex;
+  int? selectedMiscInvoiceId;
 
   void uploadStudentInvoice(BuildContext context,
       {String? token,
@@ -135,6 +141,9 @@ class InvoiceProvider extends ChangeNotifier {
     }
   }
 
+
+
+
   Future postFeeInvoice(int studentId, String token, int year) async {
     setLoading(true);
     var body = {
@@ -160,6 +169,7 @@ class InvoiceProvider extends ChangeNotifier {
         var data = json.decode(result.body);
 
         ToastHelper().sucessToast("Invoice Added Successfully");
+        getFeeInvoice(token, studentId);
         return data;
       } else if (result.statusCode == 400) {
         var data = json.decode(result.body);
@@ -176,6 +186,8 @@ class InvoiceProvider extends ChangeNotifier {
       setLoading(false);
     }
   }
+
+
 
   Future getFeeInvoice(String token, int studentId) async {
     invoiceResponseModel.invoiceData?.clear();
@@ -198,8 +210,108 @@ class InvoiceProvider extends ChangeNotifier {
     } catch (e) {
       ToastHelper().errorToast(e.toString());
       return e.toString();
+    } finally {
+      notifyListeners();
+    }
+    
+  }
+
+
+Future deleteTutionInvoice(int invoiceId, String token, int studentId ) async{
+  setLoading(true);
+  try {
+    var result = await ApiHelper.delete("delete-invoice-data/id=$invoiceId", token);
+
+    if (result.statusCode == 200) {
+      var data = json.decode(result.body);
+      getFeeInvoice(token, studentId);
+      
+      ToastHelper().sucessToast("Invoice Deleted Successfully");
+      return data;
+    } else if (result.statusCode == 400) {
+      var data = json.decode(result.body);
+      ToastHelper().errorToast(data.toString());
+      return null;
+    } else {
+      ToastHelper().errorToast("Internal Server Error");
+      return null;
+    }
+  } catch (e) {
+    ToastHelper().errorToast(e.toString());
+    return e.toString();
+  } finally {
+    setLoading(false);
+  }
+}
+
+Future deleteMiscInvoice(int invoiceId, String token, int studentId ) async{
+  setLoading(true);
+  try {
+    var result = await ApiHelper.delete("delete-misc-invoice-data/id=$invoiceId", token);
+
+    if (result.statusCode == 200) {
+      var data = json.decode(result.body);
+      getFeeInvoice(token, studentId);
+      
+      ToastHelper().sucessToast("Invoice Deleted Successfully");
+      return data;
+    } else if (result.statusCode == 400) {
+      var data = json.decode(result.body);
+      ToastHelper().errorToast(data.toString());
+      return null;
+    } else {
+      ToastHelper().errorToast("Internal Server Error");
+      return null;
+    }
+  } catch (e) {
+    ToastHelper().errorToast(e.toString());
+    return e.toString();
+  } finally {
+    setLoading(false);
+  }
+}
+
+  Future postMiscInvoice(int studentId, String token, int year) async {
+    setLoading(true);
+    var body = {
+      
+      "studentId": studentId,
+      "year": year,
+      "invoiceDescription": miscInvoiceList[0].description,
+      "amountInUsd": miscInvoiceList[0].usd,
+      "currentConversionRate": int.parse(conversionRateController.text),
+      "customMessage": customMsgController.text,
+      "invoiceNumber":
+          "RGUST/${DateFormat("yyyy/MMM-dd").format(DateTime.now())}/${generateRandomString(5)}",
+    };
+
+    print(body.toString());
+    try {
+      var result = await ApiHelper.post("post-misc-invoice-data", body, token);
+
+      if (result.statusCode == 201) {
+        var data = json.decode(result.body);
+
+        ToastHelper().sucessToast("Invoice Added Successfully");
+        getFeeInvoice(token, studentId);
+        return data;
+      } else if (result.statusCode == 400) {
+        var data = json.decode(result.body);
+        ToastHelper().errorToast(data.toString());
+        return null;
+      } else {
+        ToastHelper().errorToast("Internal Server Error");
+        return null;
+      }
+    } catch (e) {
+      ToastHelper().errorToast(e.toString());
+      return e.toString();
+    } finally {
+      setLoading(false);
     }
   }
+
+
 
   Future getStudentInvoiceList(String token, int id) async {
     studentInvoiceListModel.invoiceList?.clear();
@@ -263,12 +375,7 @@ class InvoiceProvider extends ChangeNotifier {
 
   addInvoice(InvoiceModel invoice) {
     invoiceList.add(invoice);
-    // invoiceDescriptionController.clear();
-    // usdAmountController.clear();
 
-    // gydAmountController.clear();
-    // regularTuitionFeeController.clear();
-    // scholarshipController.clear();
     notifyListeners();
   }
 
@@ -279,10 +386,7 @@ class InvoiceProvider extends ChangeNotifier {
     } else {
       ToastHelper().errorToast("Misc Fee Already Added");
     }
-    selectedMiscItem = null;
-    usdAmountController.clear();
-    conversionRateController.clear();
-    gydAmountController.clear();
+  
     notifyListeners();
   }
 
@@ -292,9 +396,23 @@ class InvoiceProvider extends ChangeNotifier {
 
     // Calculate the converted amount
     gydAmountController.text = (amountInUsd! * int.parse(amount)).toString();
-    notifyListeners();
-  }
+    }
 
+
+void setInvoiceIndex(int value, int invoiceId){
+  selectedInvoiceIndex = value;
+  selectedInvoiceId = invoiceId;
+  selectedMiscIndex = null;
+  notifyListeners();
+
+}
+
+void setMiscIndex(int value, int miscId){
+  selectedMiscIndex = value;
+  selectedMiscInvoiceId = miscId;
+  selectedInvoiceIndex = null;
+  notifyListeners();
+}
   void setLoading(bool value) async {
     _isLoading = value;
     notifyListeners();
@@ -303,11 +421,12 @@ class InvoiceProvider extends ChangeNotifier {
   void setDropDownValue(String value) async {
     dropdownvalue = value;
     notifyListeners();
+  
   }
 
   void setScholarshipValue(String value) async {
     selectedScholarshipItem = value;
-    notifyListeners();
+  notifyListeners();
   }
 
   void setCustomMessageValue(String value) async {
@@ -340,4 +459,6 @@ class InvoiceProvider extends ChangeNotifier {
     invoiceList.clear();
     notifyListeners();
   }
+
+
 }

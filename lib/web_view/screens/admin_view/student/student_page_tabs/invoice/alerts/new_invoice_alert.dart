@@ -20,7 +20,6 @@ import 'package:rugst_alliance_academia/web_view/screens/admin_view/student/stud
 import 'package:rugst_alliance_academia/web_view/screens/admin_view/student/student_page_tabs/invoice/components/program_component.dart';
 import 'package:rugst_alliance_academia/web_view/screens/admin_view/student/student_page_tabs/invoice/components/scholarship_component.dart';
 
-
 import 'package:rugst_alliance_academia/widgets/app_elevatedbutton.dart';
 import 'package:rugst_alliance_academia/widgets/app_formfield.dart';
 
@@ -732,7 +731,8 @@ class AddNewInvoiceView extends StatelessWidget {
                                                   builder: (context,
                                                       programconsumer, child) {
                                                 return AppElevatedButon(
-                                                  loading: invoiceConsumer.isLoading,
+                                                    loading: invoiceConsumer
+                                                        .isLoading,
                                                     title: "Generate",
                                                     borderColor:
                                                         AppColors.color446,
@@ -770,12 +770,14 @@ class AddNewInvoiceView extends StatelessWidget {
                                                                     token,
                                                                     programconsumer
                                                                         .selectedYear);
-                                                                        if(result!=null && context.mounted){
-                                                                          Navigator.pop(context);
-                                                                        }
-                                                       
+                                                        if (result != null &&
+                                                            context.mounted) {
+                                                          Navigator.pop(
+                                                              context);
+                                                          Navigator.pop(
+                                                              context);
+                                                        }
                                                       }
-                                                    
                                                     });
                                               }),
                                             )

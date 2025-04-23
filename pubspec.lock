@@ -709,6 +709,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "23.1.36"
+  syncfusion_flutter_gauges:
+    dependency: "direct main"
+    description:
+      name: syncfusion_flutter_gauges
+      sha256: a559712b476b05ad2506925b5031dbba3c9e7ce83f482191a8185a3de054e7e6
+      url: "https://pub.dev"
+    source: hosted
+    version: "23.2.7"
   tabbar_gradient_indicator:
     dependency: "direct main"
     description:

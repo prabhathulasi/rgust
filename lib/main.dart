@@ -27,6 +27,7 @@ import 'package:rugst_alliance_academia/data/provider/file_upload_provider.dart'
 import 'package:rugst_alliance_academia/data/provider/invoice_provider.dart';
 import 'package:rugst_alliance_academia/data/provider/login_provider.dart';
 import 'package:rugst_alliance_academia/data/provider/password_reset_provider.dart';
+import 'package:rugst_alliance_academia/data/provider/payment_provider.dart';
 import 'package:rugst_alliance_academia/data/provider/program_provider.dart';
 import 'package:rugst_alliance_academia/data/provider/result_provider.dart';
 import 'package:rugst_alliance_academia/data/provider/staff_provider.dart';
@@ -172,6 +173,9 @@ class MyApp extends StatelessWidget {
                       ),
                         ChangeNotifierProvider(
                         create: (context) => PasswordResetProvider(),
+                      ),
+                         ChangeNotifierProvider(
+                        create: (context) => PaymentProvider(),
                       ),
 
                     ],

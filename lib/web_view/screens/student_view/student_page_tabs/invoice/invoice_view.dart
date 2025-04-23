@@ -11,7 +11,7 @@ import 'package:rugst_alliance_academia/routes/named_routes.dart';
 import 'package:rugst_alliance_academia/theme/app_colors.dart';
 import 'package:rugst_alliance_academia/util/toast_helper.dart';
 import 'package:rugst_alliance_academia/web_view/screens/admin_view/student/student_page_tabs/payment/generate_invoice/generate_invoice.dart';
-import 'package:rugst_alliance_academia/web_view/screens/admin_view/student/student_page_tabs/payment/payment_alerts/add_new_invoice_alert.dart';
+import 'package:rugst_alliance_academia/web_view/screens/admin_view/student/student_page_tabs/payment/payment_alerts/add_new_payment_alert.dart';
 
 import 'package:rugst_alliance_academia/web_view/screens/admin_view/student/student_page_tabs/payment/payment_alerts/pending_invoice_alert.dart';
 import 'package:rugst_alliance_academia/web_view/screens/admin_view/student/student_page_tabs/payment/payment_alerts/rejected_invoice_alert.dart';
@@ -582,7 +582,7 @@ class StudentInvoiceView extends StatelessWidget {
                 color: AppColors.colorWhite,
               ),
               onPressed: () async {
-                showAddInvoiceDialog(context, studentData);
+                showAddPaymentDialog(context, studentData);
               },
             ),
     );

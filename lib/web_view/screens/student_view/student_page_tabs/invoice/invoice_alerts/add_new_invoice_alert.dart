@@ -5,7 +5,7 @@ import 'package:rugst_alliance_academia/data/model/student/student_detail_model.
 import 'package:rugst_alliance_academia/data/provider/fees_provider.dart';
 
 import 'package:rugst_alliance_academia/theme/app_colors.dart';
-import 'package:rugst_alliance_academia/web_view/screens/admin_view/student/student_page_tabs/payment/add_new_invoice_view.dart';
+import 'package:rugst_alliance_academia/web_view/screens/admin_view/student/student_page_tabs/payment/add_new_payment_view.dart';
 import 'package:rugst_alliance_academia/widgets/app_richtext.dart';
 
 

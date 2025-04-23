@@ -1,8 +1,9 @@
 class InvoiceResponseModel {
   List<InvoiceData>? invoiceData;
   String? message;
+  List<MiscData>? miscData;
 
-  InvoiceResponseModel({this.invoiceData, this.message});
+  InvoiceResponseModel({this.invoiceData, this.message, this.miscData});
 
   InvoiceResponseModel.fromJson(Map<String, dynamic> json) {
     if (json['invoiceData'] != null) {
@@ -12,6 +13,12 @@ class InvoiceResponseModel {
       });
     }
     message = json['message'];
+    if (json['miscData'] != null) {
+      miscData = <MiscData>[];
+      json['miscData'].forEach((v) {
+        miscData!.add(MiscData.fromJson(v));
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -20,6 +27,9 @@ class InvoiceResponseModel {
       data['invoiceData'] = invoiceData!.map((v) => v.toJson()).toList();
     }
     data['message'] = message;
+    if (miscData != null) {
+      data['miscData'] = miscData!.map((v) => v.toJson()).toList();
+    }
     return data;
   }
 }
@@ -93,6 +103,67 @@ class InvoiceData {
     data['AmountInUsd'] = amountInUsd;
     data['CurrentConversionRate'] = currentConversionRate;
     data['CustomMessage'] = customMessage;
+    return data;
+  }
+}
+
+class MiscData {
+  int? iD;
+  String? createdAt;
+  String? updatedAt;
+  String? deletedAt;
+  int? studentId;
+  String? invoiceNumber;
+  int? year;
+  String? miscInvoiceDescription;
+  int? amountInUsd;
+  int? currentConversionRate;
+  String? customMessage;
+  String? approvalStatus;
+
+  MiscData(
+      {this.iD,
+      this.createdAt,
+      this.updatedAt,
+      this.deletedAt,
+      this.studentId,
+      this.invoiceNumber,
+      this.year,
+      this.miscInvoiceDescription,
+      this.amountInUsd,
+      this.currentConversionRate,
+      this.customMessage,
+      this.approvalStatus});
+
+  MiscData.fromJson(Map<String, dynamic> json) {
+    iD = json['ID'];
+    createdAt = json['CreatedAt'];
+    updatedAt = json['UpdatedAt'];
+    deletedAt = json['DeletedAt'].toString();
+    studentId = json['StudentId'];
+    invoiceNumber = json['InvoiceNumber'];
+    year = json['Year'];
+    miscInvoiceDescription = json['MiscInvoiceDescription'];
+    amountInUsd = json['AmountInUsd'];
+    currentConversionRate = json['CurrentConversionRate'];
+    customMessage = json['CustomMessage'];
+    approvalStatus = json['ApprovalStatus'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['ID'] = iD;
+    data['CreatedAt'] = createdAt;
+    data['UpdatedAt'] = updatedAt;
+    data['DeletedAt'] = deletedAt;
+    data['StudentId'] = studentId;
+    data['InvoiceNumber'] = invoiceNumber;
+    data['Year'] = year;
+    data['MiscInvoiceDescription'] = miscInvoiceDescription;
+    data['AmountInUsd'] = amountInUsd;
+    data['CurrentConversionRate'] = currentConversionRate;
+    data['CustomMessage'] = customMessage;
+    data['ApprovalStatus'] = approvalStatus;
     return data;
   }
 }
