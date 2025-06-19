@@ -43,6 +43,7 @@ final String? Function(String?)? validator;
   Widget build(BuildContext context) {
     return TextFormField(
       autofocus: autofocus,
+      
       autovalidateMode: autovalidateMode ?? AutovalidateMode.disabled,
       inputFormatters: inputFormatters,
       controller: textEditingController,

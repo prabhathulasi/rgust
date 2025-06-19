@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:rugst_alliance_academia/data/model/student/student_detail_model.dart';
+
 import 'package:rugst_alliance_academia/data/provider/program_provider.dart';
 import 'package:rugst_alliance_academia/data/provider/student_provider.dart';
 import 'package:rugst_alliance_academia/theme/app_colors.dart';
@@ -30,21 +30,7 @@ class _CourseListState extends State<CourseList> {
             child: SpinKitSpinningLines(color: AppColors.colorc7e),
           );
         } else {
-          // List<RegisteredCourse>? registeredCourse = studentConsumer.studentDetailModel.studentDetail!.registeredCourse!;
-          //  bool isClassRegistred = registeredCourse.any((course) => course.classId.toString() == programConsumer.selectedClass);
-          //  if(isClassRegistred == true){
-          //   return Center(
-          //     child: AppRichTextView(
-          //             maxLines: 2,
-          //             title:
-          //                 "The student is already registered the selected class",
-          //             fontSize: 20.sp,
-          //             fontWeight: FontWeight.bold,
-          //             textColor: AppColors.colorRed,
-          //           ),
-          //   );
-          //  }
-          //  else{
+          
           return Column(
             children: [
               programConsumer.coursesModel.courses!.isEmpty

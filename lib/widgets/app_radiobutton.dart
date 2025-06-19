@@ -16,12 +16,13 @@ class _AppRadioButtonState extends State<AppRadioButton> {
   @override
   Widget build(BuildContext context) {
    return widget.gender!=null?  Row(
+    
       children: [
         Icon(Icons.circle,
             size: 15.sp,
             color: widget.gender!.isSelected
-                ? AppColors.color582
-                : AppColors.colorc7e),
+                ? AppColors.color446
+                : AppColors.colorGrey),
         const SizedBox(
           width: 10,
         ),
@@ -30,17 +31,18 @@ class _AppRadioButtonState extends State<AppRadioButton> {
           style: TextStyle(
             fontSize: 13.sp,
               color: widget.gender!.isSelected
-                  ? AppColors.color582
-                  : AppColors.colorc7e),
+                  ? AppColors.color446
+                  : AppColors.colorGrey),
         )
       ],
     ):Row(
+      
       children: [
         Icon(Icons.circle,
             size: 15.sp,
             color: widget.jobType!.isSelected
-                ? AppColors.color582
-                : AppColors.colorc7e),
+                ? AppColors.color446
+                : AppColors.colorGrey),
         const SizedBox(
           width: 10,
         ),
@@ -49,8 +51,8 @@ class _AppRadioButtonState extends State<AppRadioButton> {
           style: TextStyle(
             fontSize: 13.sp,
               color: widget.jobType!.isSelected
-                  ? AppColors.color582
-                  : AppColors.colorc7e),
+                  ? AppColors.color446
+                  : AppColors.colorGrey),
         )
       ],
     ) ;

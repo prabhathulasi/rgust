@@ -320,55 +320,8 @@ class MiscInvoiceAlert extends StatelessWidget {
                                       SizedBox(
                                         height: 20.h,
                                       ),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.end,
-                                        children: [
-                                          AppRichTextView(
-                                              title: "Total Amount (USD): ",
-                                              fontSize: 15.sp,
-                                              fontWeight: FontWeight.bold,
-                                              textColor: AppColors.colorBlack),
-                                          AppRichTextView(
-                                              title: (invoiceConsumer
-                                                      .miscInvoiceList
-                                                      .fold(
-                                                          0,
-                                                          (sum, item) =>
-                                                              sum + item.usd!))
-                                                  .toString(),
-                                              fontSize: 15.sp,
-                                              fontWeight: FontWeight.w500,
-                                              textColor: AppColors.colorBlack)
-                                        ],
-                                      ),
+                                    
                                       
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.end,
-                                        children: [
-                                          AppRichTextView(
-                                              title: "Payable Amount (USD): ",
-                                              fontSize: 15.sp,
-                                              fontWeight: FontWeight.bold,
-                                              textColor: AppColors.colorBlack),
-                                          AppRichTextView(
-                                              title: (invoiceConsumer
-                                                          .miscInvoiceList
-                                                          .fold(
-                                                              0,
-                                                              (sum, item) =>
-                                                                  sum +
-                                                                  item.usd!) )
-                                                  .toString(),
-                                              fontSize: 15.sp,
-                                              fontWeight: FontWeight.w500,
-                                              textColor: AppColors.colorBlack)
-                                        ],
-                                      ),
-                                      SizedBox(
-                                        height: 20.h,
-                                      ),
                                       Align(
                                         alignment: Alignment.centerLeft,
                                         child: AppRichTextView(
@@ -382,13 +335,13 @@ class MiscInvoiceAlert extends StatelessWidget {
                                       SizedBox(
                                         height: 10.h,
                                       ),
-                                      invoiceConsumer
-                                              .customMsgController.text.isEmpty
-                                          ? Row(
+                                    Row(
                                               children: [
                                                 Expanded(
                                                   flex: 2,
                                                   child: AppTextFormFieldWidget(
+                                                    maxLines: 5,
+                                                    keyboardType: TextInputType.multiline,
                                                     textEditingController:
                                                         invoiceConsumer
                                                             .customMsgController,
@@ -438,8 +391,10 @@ class MiscInvoiceAlert extends StatelessWidget {
                                                   },
                                                 )
                                               ],
-                                            )
-                                          : Align(
+                                            ),
+                                           invoiceConsumer
+                                              .customMsgController.text.isEmpty
+                                          ?  Container ():Align(
                                               alignment: Alignment.centerLeft,
                                               child: AppRichTextView(
                                                   maxLines: 10,

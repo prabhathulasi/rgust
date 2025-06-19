@@ -1,11 +1,12 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:rugst_alliance_academia/data/model/faculty_model.dart';
-import 'package:rugst_alliance_academia/data/provider/faculty_provider.dart';
+import 'package:rugst_alliance_academia/data/provider/faculty_provider/faculty_provider.dart';
 import 'package:rugst_alliance_academia/data/provider/program_provider.dart';
 import 'package:rugst_alliance_academia/theme/app_colors.dart';
 import 'package:rugst_alliance_academia/web_view/screens/admin_view/faculty/add_new_faculty_view.dart';
@@ -63,7 +64,7 @@ class _FacultyGridViewState extends State<FacultyGridView> {
       child: Container(
         height: MediaQuery.sizeOf(context).height,
         width: MediaQuery.sizeOf(context).width,
-        color: AppColors.color0ec,
+        color: AppColors.color446,
         child: Stack(
           children: [
             FacultyDetailView(facultyDetail: details),
@@ -141,7 +142,7 @@ class _FacultyGridViewState extends State<FacultyGridView> {
 
     return Scaffold(
       body: Container(
-        color: AppColors.color0ec,
+        color: AppColors.colorWhite,
         child: Column(
           children: [
             Row(
@@ -150,7 +151,8 @@ class _FacultyGridViewState extends State<FacultyGridView> {
                   width: 300.w,
                   height: 54.h,
                   decoration: BoxDecoration(
-                      color: AppColors.colorc7e,
+                      color: AppColors.colorWhite,
+                      border: Border.all(color: AppColors.color446, width: 2.w),
                       borderRadius: BorderRadius.circular(10.sp)),
                   child: Center(
                     child: Padding(
@@ -162,17 +164,17 @@ class _FacultyGridViewState extends State<FacultyGridView> {
                           facultyProvider.filterFaculty(p0);
                         },
                         textStyle: GoogleFonts.oswald(
-                            color: AppColors.colorWhite, fontSize: 15.sp),
+                            color: AppColors.color446, fontSize: 15.sp),
                         inputDecoration: InputDecoration(
                             suffixIcon: Icon(
                               Icons.search,
-                              color: AppColors.colorWhite,
+                              color: AppColors.colorGrey,
                               size: 25.sp,
                             ),
                             border: InputBorder.none,
                             hintText: "Search by Name",
                             hintStyle: GoogleFonts.oswald(
-                                color: AppColors.colorWhite, fontSize: 20.sp)),
+                                color: AppColors.colorGrey, fontSize: 18.sp)),
                       ),
                     ),
                   ),
@@ -244,25 +246,30 @@ class _FacultyGridViewState extends State<FacultyGridView> {
                     child: GridView.builder(
                       shrinkWrap: true,
                       itemCount: facultyProvider.filteredList.length,
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: size.width <= 1400 ? 4 : 6,
-                          //  childAspectRatio:
-                          childAspectRatio:
-                              size.width <= 1400 ? 1 / 1.3 : 1 / 1.2),
+                      gridDelegate:
+                          const SliverGridDelegateWithMaxCrossAxisExtent(
+                        maxCrossAxisExtent: 200, // Max width per item
+                        childAspectRatio: 3 / 2, // Width / Height ratio
+                        crossAxisSpacing: 10,
+                        mainAxisSpacing: 10,
+                      ),
                       itemBuilder: (context, index) {
                         var facultydata = facultyProvider.filteredList[index];
                         var memoryImagedata =
                             base64Decode(facultydata.userImage!);
                         return InkWell(
                           onTap: () {
+                               facultyProvider.clearCiriculumCourse();
+                               
                             showDetailAlertDialog(context, facultydata);
                           },
                           child: Card(
-                            color: AppColors.colorc7e,
+                            color: AppColors.color446,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(18.sp)),
                             child: FacultyCardWidget(
                                 onTap: () {
+                                 
                                   facultyProvider.updateJobType(false);
                                   facultyProvider.updateGender(false);
                                   showUpdateAlertDialog(context, facultydata);
@@ -283,7 +290,7 @@ class _FacultyGridViewState extends State<FacultyGridView> {
                                 dob: facultydata.dob!,
                                 registeredCourse: facultydata.registeredCourse,
                                 address: facultydata.address!,
-                                pasportNumber: facultydata.passportNumber!),
+                                employeeId: facultydata.facultyId!),
                           ),
                         );
                       },
@@ -294,11 +301,13 @@ class _FacultyGridViewState extends State<FacultyGridView> {
                       shrinkWrap: true,
                       itemCount:
                           facultyProvider.facultyModel.facultyList!.length,
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: size.width <= 1400 ? 4 : 6,
-                          //  childAspectRatio:
-                          childAspectRatio:
-                              size.width <= 1400 ? 1 / 1.3 : 1 / 1.2),
+                    gridDelegate:
+                          const SliverGridDelegateWithMaxCrossAxisExtent(
+                        maxCrossAxisExtent: 340, // Max width per item
+                        childAspectRatio: 3/ 3.6, // Width / Height ratio
+                        crossAxisSpacing: 5,
+                        mainAxisSpacing: 5,
+                      ),
                       itemBuilder: (context, index) {
                         var facultydata =
                             facultyProvider.facultyModel.facultyList![index];
@@ -306,35 +315,44 @@ class _FacultyGridViewState extends State<FacultyGridView> {
                             base64Decode(facultydata.userImage!);
                         return InkWell(
                           onTap: () {
+                               facultyProvider.clearCiriculumCourse();
+                                  log(facultyProvider.selectedCuriculumCourse.toString());
                             showDetailAlertDialog(context, facultydata);
                           },
                           child: Card(
-                            color: AppColors.colorc7e,
+                            color: AppColors.colorWhite,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(18.sp)),
-                            child: FacultyCardWidget(
-                                onTap: () {
-                                  facultyProvider.updateJobType(false);
-                                  facultyProvider.updateGender(false);
-                                  showUpdateAlertDialog(context, facultydata);
-                                },
-                                index: index,
-                                isMultipleCourse:
-                                    facultydata.registeredCourse!.length > 1
-                                        ? true
-                                        : false,
-                                userImage: memoryImagedata,
-                                facultyName: facultydata.firstName! +
-                                    facultydata.lastName!,
-                                facultyType: facultydata.jobType!,
-                                gender: facultydata.gender!,
-                                mobileNumber: facultydata.mobile!,
-                                email: facultydata.email!,
-                                citizenship: facultydata.citizenship!,
-                                dob: facultydata.dob!,
-                                registeredCourse: facultydata.registeredCourse,
-                                address: facultydata.address!,
-                                pasportNumber: facultydata.passportNumber!),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(18.sp),
+                                border: Border.all(
+                                    color: AppColors.color446, width: 2.w),
+                              ),
+                              child: FacultyCardWidget(
+                                  onTap: () {
+                                    
+                                    facultyProvider.updateJobType(false);
+                                    facultyProvider.updateGender(false);
+                                    showUpdateAlertDialog(context, facultydata);
+                                  },
+                                  index: index,
+                                  isMultipleCourse:
+                                      facultydata.registeredCourse!.length > 1
+                                          ? true
+                                          : false,
+                                  userImage: memoryImagedata,
+                                  facultyName:"${facultydata.firstName!} ${facultydata.lastName!}",
+                                  facultyType: facultydata.jobType!,
+                                  gender: facultydata.gender!,
+                                  mobileNumber: facultydata.mobile!,
+                                  email: facultydata.email!,
+                                  citizenship: facultydata.citizenship!,
+                                  dob: facultydata.dob!,
+                                  registeredCourse: facultydata.registeredCourse,
+                                  address: facultydata.address!,
+                                  employeeId: facultydata.facultyId!),
+                            ),
                           ),
                         );
                       },
@@ -343,21 +361,28 @@ class _FacultyGridViewState extends State<FacultyGridView> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-          backgroundColor: AppColors.colorc7e,
-          onPressed: () async {
-            programProvider.selectedDept = null;
-            programProvider.selectedClass = null;
-            programProvider.selectedBatch = null;
-            programProvider.selectedCourse = null;
-            facultyProvider.selectTile(-1);
-            programProvider.newData.clear();
-            showAddAlertDialog(context);
-          },
-          child: const Icon(
-            Icons.person_add_alt_1_outlined,
+      floatingActionButton: Container(
+        decoration: BoxDecoration(
             color: AppColors.colorWhite,
-          )),
+            border: Border.all(color: AppColors.color446, width: 3.w),
+            borderRadius: BorderRadius.circular(18.sp)
+            ),
+        child: FloatingActionButton(
+            backgroundColor: AppColors.colorWhite,
+            onPressed: () async {
+              programProvider.selectedDept = null;
+              programProvider.selectedClass = null;
+              programProvider.selectedBatch = null;
+              programProvider.selectedCourse = null;
+              facultyProvider.selectTile(-1);
+              programProvider.newData.clear();
+              showAddAlertDialog(context);
+            },
+            child: const Icon(
+              Icons.person_add_alt_1_outlined,
+              color: AppColors.color446,
+            )),
+      ),
     );
   }
 }

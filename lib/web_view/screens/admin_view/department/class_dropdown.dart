@@ -34,7 +34,7 @@ class _ClassDropdownState extends State<ClassDropdown> {
         : programProvider.programClassModel.programClass == null
             ? Container(
                 decoration: BoxDecoration(
-                    border: Border.all(color: AppColors.colorc7e, width: 3.w),
+                    border: Border.all(color: AppColors.color446, width: 3.w),
                     borderRadius: BorderRadius.circular(8.sp)),
                 height: 60.h,
                 width: size.width * 0.2,
@@ -50,7 +50,7 @@ class _ClassDropdownState extends State<ClassDropdown> {
                   return Container(
                     decoration: BoxDecoration(
                         border:
-                            Border.all(color: AppColors.colorc7e, width: 3.w),
+                            Border.all(color: AppColors.color446, width: 3.w),
                         borderRadius: BorderRadius.circular(8.sp)),
                     height: 60.h,
                     width: size.width * 0.2,
@@ -58,7 +58,7 @@ class _ClassDropdownState extends State<ClassDropdown> {
                       padding: EdgeInsets.all(8.0.sp),
                       child: DropdownButtonHideUnderline(
                         child: DropdownButton(
-                          iconEnabledColor: AppColors.colorc7e,
+                          iconEnabledColor: AppColors.color446,
                           iconSize: 34.sp,
                           dropdownColor: AppColors.colorWhite,
                           isExpanded: true,

@@ -10,6 +10,7 @@ import 'package:rugst_alliance_academia/theme/app_colors.dart';
 import 'package:rugst_alliance_academia/util/toast_helper.dart';
 import 'package:rugst_alliance_academia/web_view/screens/admin_view/student/student_page_tabs/invoice/alerts/fee_type_alert.dart';
 import 'package:rugst_alliance_academia/web_view/screens/admin_view/student/student_page_tabs/invoice/pdf_generate/student_invoice_generate.dart';
+import 'package:rugst_alliance_academia/web_view/screens/admin_view/student/student_page_tabs/invoice/pdf_generate/student_misc_generate.dart';
 import 'package:rugst_alliance_academia/widgets/app_richtext.dart';
 import 'package:rugst_alliance_academia/widgets/app_spining.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -280,20 +281,20 @@ class _StudentinvoicescreenState extends State<Studentinvoicescreen> {
                                                 Expanded(
                                                   child: InkWell(
                                                     onTap: () async {
-                                                      // var result = await generateNewInvoice(
-                                                      //   PdfPageFormat.a4,
-                                                      //   widget.studentData!,
-                                                      //   invoiceProvider.invoiceResponseModel
-                                                      //       .invoiceData![index],
-                                                      // );
-                                                      // final blob = html.Blob(
-                                                      //     [result], 'application/pdf');
-                                                      // final url =
-                                                      //     html.Url.createObjectUrlFromBlob(
-                                                      //         blob);
+                                                      var result = await generateNewMiscInvoice(
+                                                        PdfPageFormat.a4,
+                                                        widget.studentData!,
+                                                        invoiceProvider.invoiceResponseModel
+                                                            .miscData![index],
+                                                      );
+                                                      final blob = html.Blob(
+                                                          [result], 'application/pdf');
+                                                      final url =
+                                                          html.Url.createObjectUrlFromBlob(
+                                                              blob);
                       
-                                                      // // Open the blob URL in a new tab
-                                                      // html.window.open(url, '_blank');
+                                                      // Open the blob URL in a new tab
+                                                      html.window.open(url, '_blank');
                                                     },
                                                     child: Card(
                                                       elevation: 5.0,

@@ -52,7 +52,7 @@ class FormComponent extends StatelessWidget {
             height: 5.h,
           ),
           AppRichTextView(
-              title: "Amount in USD",
+              title: "Payable Amount in USD",
               fontSize: 15.sp,
               fontWeight: FontWeight.bold,
               textColor: AppColors.colorBlack),
@@ -72,7 +72,7 @@ class FormComponent extends StatelessWidget {
                   inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                   obscureText: false,
                   inputDecoration: InputDecoration(
-                      hintText: "Amount in USD",
+                      hintText: "Payable Amount in USD",
                       hintStyle: GoogleFonts.roboto(
                         fontSize: 15.sp,
                         fontWeight: FontWeight.w500,

@@ -148,6 +148,7 @@ class _StudentPaymentViewState extends State<StudentPaymentView> {
                                                   : AppColors.colorWhite,
                                               elevation: 5.0,
                                               child: ListTile(
+                                                
                                                 trailing: Icon(
                                                   Icons.chevron_right,
                                                   size: 30.sp,
@@ -193,6 +194,19 @@ class _StudentPaymentViewState extends State<StudentPaymentView> {
                                                                 .color446,
                                                         fontWeight:
                                                             FontWeight.w500),
+
+                                                           AppRichTextView(
+                                                        title: "Total Amount: ${invoiceConsumer.invoiceResponseModel.invoiceData![index].amountInUsd}",
+                                                        fontSize: 15.sp,
+                                                        textColor: invoiceConsumer
+                                                                    .selectedInvoiceIndex ==
+                                                                index
+                                                            ? AppColors
+                                                                .colorWhite
+                                                            : AppColors
+                                                                .color446,
+                                                        fontWeight:
+                                                            FontWeight.w500),   
                                                   ],
                                                 ),
                                               ),
@@ -399,8 +413,7 @@ class _StudentPaymentViewState extends State<StudentPaymentView> {
                                                     ),
                                                     paymentConsumer
                                                             .paymentReceiptModel
-                                                            .paymentdata!
-                                                            .isEmpty
+                                                            .paymentdata == null
                                                         ? Center(
                                                             child:
                                                                 AppRichTextView(
@@ -416,6 +429,7 @@ class _StudentPaymentViewState extends State<StudentPaymentView> {
                                                             ),
                                                           )
                                                         : Row(
+                                                          crossAxisAlignment: CrossAxisAlignment.start,
                                                             children: [
                                                               Expanded(
                                                                 flex: 2,
@@ -479,6 +493,8 @@ class _StudentPaymentViewState extends State<StudentPaymentView> {
                                                               Expanded(
                                                                   flex: 1,
                                                                   child: SfRadialGauge(
+                                                                    animationDuration: 2000,
+                                                                    enableLoadingAnimation: true,
                                                                       axes: <RadialAxis>[
                                                                         RadialAxis(
                                                                             minimum:

@@ -33,6 +33,7 @@ class Invoice {
   static const _lightColor = PdfColors.white;
   PdfColor get _baseTextColor => baseColor.isLight ? _lightColor : _darkColor;
   pw.Image? image1;
+  pw.Image? image2;
 
   Future<Uint8List> buildPdf(PdfPageFormat pageFormat,
       StudentDetail? studentData, InvoiceData invoiceData) async {
@@ -40,8 +41,11 @@ class Invoice {
     final doc = pw.Document();
 
     final img = await rootBundle.load('assets/rgust.png');
+    final img2 = await rootBundle.load("assets/stamp.png");
     final imageBytes = img.buffer.asUint8List();
+    final imageBytes2 = img2.buffer.asUint8List();
     image1 = pw.Image(pw.MemoryImage(imageBytes));
+    image2 = pw.Image(pw.MemoryImage(imageBytes2));
 
     // Add page to the PDF
     doc.addPage(
@@ -58,160 +62,157 @@ class Invoice {
         header: _buildHeader,
         footer: _buildFooter,
         build: (context) => [
-          pw.Align(
-              alignment: pw.Alignment.topRight,
-              child: pw.Text("Receipt No: ${invoiceData.invoiceNumber}",
-                  textAlign: pw.TextAlign.right,
-                  style: pw.TextStyle(
-                    color: PdfColor.fromHex("#000000"),
-                    fontSize: 10.sp,
-                  ))),
-          pw.Align(
-              alignment: pw.Alignment.topRight,
-              child: pw.Text(
-                  "Receipt Date: ${DateFormat('yyyy-MM-dd – kk:mm').format(DateTime.parse(invoiceData.createdAt!)).toString()}",
-                  textAlign: pw.TextAlign.right,
-                  style: pw.TextStyle(
-                    color: PdfColor.fromHex("#000000"),
-                    fontSize: 10.sp,
-                  ))),
-          pw.SizedBox(height: 10.h),
-          pw.Center(
-              child: pw.Text("Department of Finance",
-                  style: pw.TextStyle(
-                      fontWeight: pw.FontWeight.bold, fontSize: 15.sp))),
-          pw.SizedBox(height: 10.h),
-          pw.Center(
-            child: pw.Text("Student Invoice",
-                style: pw.TextStyle(
-                    fontWeight: pw.FontWeight.bold, fontSize: 13.sp)),
-          ),
-          _contentHeader(context, studentData!),
-          pw.SizedBox(height: 20.h),
-          pw.TableHelper.fromTextArray(
-            border: pw.TableBorder.all(),
-            cellAlignment: pw.Alignment.centerLeft,
-            headerDecoration: pw.BoxDecoration(
-              borderRadius: const pw.BorderRadius.all(pw.Radius.circular(2)),
-              color: baseColor,
-            ),
-            headerHeight: 25,
-            cellHeight: 40,
-            cellAlignments: {
-              0: pw.Alignment.centerLeft,
-              1: pw.Alignment.centerLeft,
-              2: pw.Alignment.centerLeft,
-              3: pw.Alignment.centerLeft,
-              4: pw.Alignment.centerLeft,
-            },
-            headerStyle: pw.TextStyle(
-              color: _baseTextColor,
-              fontSize: 10,
-              fontWeight: pw.FontWeight.bold,
-            ),
-            cellStyle: const pw.TextStyle(
-              color: _darkColor,
-              fontSize: 10,
-            ),
-            rowDecoration: pw.BoxDecoration(
-              border: pw.Border(
-                bottom: pw.BorderSide(
-                  color: accentColor,
-                  width: .5,
-                ),
+          pw.Stack(children: [
+            pw.Column(
+              crossAxisAlignment: pw.CrossAxisAlignment.start,
+              children: [
+              pw.Align(
+                  alignment: pw.Alignment.topRight,
+                  child: pw.Text("Receipt No: ${invoiceData.invoiceNumber}",
+                      textAlign: pw.TextAlign.right,
+                      style: pw.TextStyle(
+                        color: PdfColor.fromHex("#000000"),
+                        fontSize: 10.sp,
+                      ))),
+              pw.Align(
+                  alignment: pw.Alignment.topRight,
+                  child: pw.Text(
+                      "Receipt Date: ${DateFormat('yyyy-MM-dd – kk:mm').format(DateTime.parse(invoiceData.createdAt!)).toString()}",
+                      textAlign: pw.TextAlign.right,
+                      style: pw.TextStyle(
+                        color: PdfColor.fromHex("#000000"),
+                        fontSize: 10.sp,
+                      ))),
+              pw.SizedBox(height: 10.h),
+              pw.Center(
+                  child: pw.Text("Department of Finance",
+                      style: pw.TextStyle(
+                          fontWeight: pw.FontWeight.bold, fontSize: 15.sp))),
+              pw.SizedBox(height: 10.h),
+              pw.Center(
+                child: pw.Text("Student Invoice",
+                    style: pw.TextStyle(
+                        fontWeight: pw.FontWeight.bold, fontSize: 13.sp)),
               ),
-            ),
-            headers: [
-              "Details",
-              "Scholarship Amount\n(USD) per ${invoiceData.invoiceType}",
-              "Total Amount (USD)\nper ${invoiceData.invoiceType}",
-            ],
-            data: [
-              [
-                invoiceData.invoiceDescription!,
-                invoiceData.scholarhipAmount.toString(),
-                invoiceData.amountInUsd.toString(),
-              ]
-            ],
-          ),
-          pw.SizedBox(height: 10.h),
-          pw.Row(
-            mainAxisAlignment: pw.MainAxisAlignment.end,
-            children: [
-              pw.Text("Total Amount: ",
-                  style: pw.TextStyle(
-                      fontWeight: pw.FontWeight.bold, fontSize: 12.sp)),
-              pw.SizedBox(width: 5.w),
-              pw.Text(invoiceData.amountInUsd!.toString(),
-                  style: pw.TextStyle(
-                      fontWeight: pw.FontWeight.normal, fontSize: 12.sp)),
-            ],
-          ),
-          pw.Row(
-            mainAxisAlignment: pw.MainAxisAlignment.end,
-            children: [
-              pw.Text("Scholarship Amount: ",
-                  style: pw.TextStyle(
-                      fontWeight: pw.FontWeight.bold, fontSize: 12.sp)),
-              pw.SizedBox(width: 5.w),
-              pw.Text(invoiceData.scholarhipAmount.toString(),
-                  style: pw.TextStyle(
-                      fontWeight: pw.FontWeight.normal, fontSize: 12.sp)),
-            ],
-          ),
-          pw.Row(mainAxisAlignment: pw.MainAxisAlignment.end, children: [
-            pw.Text("Payable Amount: ",
-                style: pw.TextStyle(
-                    fontWeight: pw.FontWeight.bold, fontSize: 12.sp)),
-            pw.SizedBox(width: 5.w),
-            pw.Text(
-                ((invoiceData.amountInUsd!) - (invoiceData.scholarhipAmount!))
-                    .toString(),
-                style: pw.TextStyle(
-                    fontWeight: pw.FontWeight.normal, fontSize: 12.sp)),
-          ]),
-          pw.SizedBox(height: 5.h),
-          pw.Align(
-            alignment: pw.Alignment.topRight,
-            child: pw.Text(
-                "RGUST has a fixed exchange rate of GYD218 to USD1.00",
-                style: pw.TextStyle(fontSize: 10.sp)),
-          ),
-          pw.SizedBox(height: 10.h),
-          pw.Text("Important:",
-              style: pw.TextStyle(
+              _contentHeader(context, studentData!),
+              pw.SizedBox(height: 20.h),
+              pw.TableHelper.fromTextArray(
+                border: pw.TableBorder.all(),
+                cellAlignment: pw.Alignment.centerLeft,
+                headerDecoration: pw.BoxDecoration(
+                  borderRadius:
+                      const pw.BorderRadius.all(pw.Radius.circular(2)),
+                  color: baseColor,
+                ),
+                headerHeight: 25,
+                cellHeight: 40,
+                cellAlignments: {
+                  0: pw.Alignment.centerLeft,
+                  1: pw.Alignment.centerLeft,
+                  2: pw.Alignment.centerLeft,
+                  3: pw.Alignment.centerLeft,
+                  4: pw.Alignment.centerLeft,
+                },
+                headerStyle: pw.TextStyle(
+                  color: _baseTextColor,
+                  fontSize: 10,
                   fontWeight: pw.FontWeight.bold,
-                  fontSize: 11.sp,
-                  decoration: pw.TextDecoration.underline)),
-          pw.SizedBox(height: 10.h),
-          pw.Text(
-              "1. This digital invoice is provided for record-keeping purposes only and is not intended to serve as an official or legal document.",
-              style: pw.TextStyle(fontSize: 10.sp)),
-          pw.Text(
-              "2. Submit a hard copy of you deposit slip to the Administrative Office for record keeping.",
-              style: pw.TextStyle(fontSize: 10.sp)),
-          pw.Text(
-              "3. This invoice reflects the annual tuition breakdown under the university's partial scholarship program.",
-              style: pw.TextStyle(fontSize: 10.sp)),
-          pw.Text(
-              "4. Students can download the digital invoice for their payment from the student app once the finance department has confirmed the payment.",
-              style: pw.TextStyle(fontSize: 10.sp)),
-          pw.Text(invoiceData.customMessage!,
-              style: pw.TextStyle(fontSize: 10.sp)),
-          pw.SizedBox(height: 10.h),
-          pw.Row(crossAxisAlignment: pw.CrossAxisAlignment.start, children: [
-            pw.Text("Important: ",
-                style: pw.TextStyle(
-                    fontWeight: pw.FontWeight.bold,
-                    fontSize: 11.sp,
-                    decoration: pw.TextDecoration.underline)),
-            pw.Text(
-                "RGUST reserves the right to the change its tuition and fee structure per circumstances and needs under the\nrecommendation of its Board.",
-                style: pw.TextStyle(
-                  fontStyle: pw.FontStyle.italic,
-                  fontSize: 9.sp,
-                )),
-          ]),
+                ),
+                cellStyle: const pw.TextStyle(
+                  color: _darkColor,
+                  fontSize: 10,
+                ),
+                rowDecoration: pw.BoxDecoration(
+                  border: pw.Border(
+                    bottom: pw.BorderSide(
+                      color: accentColor,
+                      width: .5,
+                    ),
+                  ),
+                ),
+                headers: [
+                  "Details",
+                  "Scholarship Amount\n(USD) per ${invoiceData.invoiceType}",
+                  "Total Amount (USD)\nper ${invoiceData.invoiceType}",
+                ],
+                data: [
+                  [
+                    invoiceData.invoiceDescription!,
+                    invoiceData.scholarhipAmount.toString(),
+                    invoiceData.amountInUsd.toString(),
+                  ]
+                ],
+              ),
+              pw.SizedBox(height: 10.h),
+              pw.Row(
+                mainAxisAlignment: pw.MainAxisAlignment.end,
+                children: [
+                  pw.Text("Total Amount: ",
+                      style: pw.TextStyle(
+                          fontWeight: pw.FontWeight.bold, fontSize: 12.sp)),
+                  pw.SizedBox(width: 5.w),
+                  pw.Text(invoiceData.amountInUsd!.toString(),
+                      style: pw.TextStyle(
+                          fontWeight: pw.FontWeight.normal, fontSize: 12.sp)),
+                ],
+              ),
+              pw.SizedBox(height: 5.h),
+              pw.Align(
+                alignment: pw.Alignment.topRight,
+                child: pw.Text(
+                    "RGUST has a fixed exchange rate of GYD218 to USD1.00",
+                    style: pw.TextStyle(fontSize: 10.sp)),
+              ),
+              pw.SizedBox(height: 10.h),
+              pw.Text("Important:",
+                  style: pw.TextStyle(
+                      fontWeight: pw.FontWeight.bold,
+                      fontSize: 11.sp,
+                      decoration: pw.TextDecoration.underline)),
+              pw.SizedBox(height: 10.h),
+              pw.Text(
+                  "1. This digital invoice is provided for record-keeping purposes only and is not intended to serve as an official or legal document.",
+                  style: pw.TextStyle(fontSize: 10.sp)),
+              pw.Text(
+                  "2. Submit a hard copy of you deposit slip to the Administrative Office for record keeping.",
+                  style: pw.TextStyle(fontSize: 10.sp)),
+              pw.Text(
+                  "3. This invoice reflects the annual tuition breakdown under the university's partial scholarship program.",
+                  style: pw.TextStyle(fontSize: 10.sp)),
+              pw.Text(
+                  "4. Students can download the digital invoice for their payment from the student app once the finance department has confirmed the payment.",
+                  style: pw.TextStyle(fontSize: 10.sp)),
+              pw.Text(invoiceData.customMessage!,
+                  style: pw.TextStyle(fontSize: 10.sp)),
+              pw.SizedBox(height: 10.h),
+              pw.Row(
+                  crossAxisAlignment: pw.CrossAxisAlignment.start,
+                  children: [
+                    pw.Text("Important: ",
+                        style: pw.TextStyle(
+                            fontWeight: pw.FontWeight.bold,
+                            fontSize: 11.sp,
+                            decoration: pw.TextDecoration.underline)),
+                    pw.Text(
+                        "RGUST reserves the right to the change its tuition and fee structure per circumstances and needs under the\nrecommendation of its Board.",
+                        style: pw.TextStyle(
+                          fontStyle: pw.FontStyle.italic,
+                          fontSize: 9.sp,
+                        )),
+                  ]),
+                  pw.SizedBox(height: 80.h),
+            ]),
+            pw.Positioned(
+              top: 5,
+              bottom: 0,
+              right: 100,
+             
+              child: pw.Container(
+                width: 100.w,
+                child: image2,
+              ),
+            )
+          ])
         ],
       ),
     );

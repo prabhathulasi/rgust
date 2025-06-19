@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:rugst_alliance_academia/data/model/exam_result_model.dart'
@@ -81,6 +82,27 @@ class StudentProvider extends ChangeNotifier {
         .where((element) =>
             element.firstName!.toLowerCase().startsWith(query.toLowerCase()))
         .toList();
+    notifyListeners();
+  }
+
+  Future<void> clearAllTempData() async {
+    filteredEnable = false;
+    filteredList.clear();
+    selectedIndexes.clear();
+    notifyListeners();
+  }
+
+  // Keep track of selected student indexes
+  final Set<int> selectedIndexes = {};
+
+  bool isSelected(int index) => selectedIndexes.contains(index);
+
+  void toggleStudentSelection(int index) {
+    if (selectedIndexes.contains(index)) {
+      selectedIndexes.remove(index);
+    } else {
+      selectedIndexes.add(index);
+    }
     notifyListeners();
   }
 
@@ -435,6 +457,7 @@ class StudentProvider extends ChangeNotifier {
       return null;
     }
   }
+
 // TODO ADD Student Id in delete flow to delete all items in the id
   Future deleteCourseById(
     String token,
@@ -443,11 +466,36 @@ class StudentProvider extends ChangeNotifier {
   ) async {
     setLoading(true);
     try {
-      var result = await ApiHelper.delete("DeleteCourse/id=$id/studentid=$studentId", token);
+      var result = await ApiHelper.delete(
+          "DeleteCourse/id=$id/studentid=$studentId", token);
       if (result.statusCode == 200) {
         ToastHelper().sucessToast("Course Deleted Successfully");
         await getStudentDetailById(studentId, token);
         return 200;
+      } else {
+        ToastHelper().errorToast("Internal Server Error");
+        return null;
+      }
+    } catch (e) {
+      print(e);
+    } finally {
+      setLoading(false);
+      notifyListeners();
+    }
+  }
+
+  Future deleteRepeatedResult(
+    String token,
+    int id,
+    int studentId,
+  ) async {
+    setLoading(true);
+    try {
+      var result = await ApiHelper.delete("delete-result/id=$id", token);
+      if (result.statusCode == 200) {
+        ToastHelper().sucessToast("Result Deleted Successfully");
+        await getStudentResult(token, studentId);
+        return "200";
       } else {
         ToastHelper().errorToast("Internal Server Error");
         return null;

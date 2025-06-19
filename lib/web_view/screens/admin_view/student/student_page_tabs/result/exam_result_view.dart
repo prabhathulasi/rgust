@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
@@ -12,6 +13,7 @@ import 'package:rugst_alliance_academia/routes/named_routes.dart';
 import 'package:rugst_alliance_academia/theme/app_colors.dart';
 import 'package:rugst_alliance_academia/util/toast_helper.dart';
 import 'package:rugst_alliance_academia/web_view/screens/admin_view/pdf_generate/student_result_summary.dart';
+import 'package:rugst_alliance_academia/web_view/screens/admin_view/student/student_page_tabs/result/alerts/delete_alert.dart';
 import 'package:rugst_alliance_academia/web_view/screens/admin_view/student/student_page_tabs/result/update_result_view.dart';
 import 'package:rugst_alliance_academia/widgets/app_richtext.dart';
 import 'package:rugst_alliance_academia/widgets/app_spining.dart';
@@ -26,7 +28,6 @@ class ExamResult extends StatefulWidget {
 
 class _ExamResultState extends State<ExamResult> {
   updateResultAlert(BuildContext context) {
-    
     // set up the AlertDialog
     Dialog alert = Dialog(
       child: Card(
@@ -74,7 +75,7 @@ class _ExamResultState extends State<ExamResult> {
   @override
   void initState() {
     getStudentResult();
- 
+
     super.initState();
   }
 
@@ -262,36 +263,51 @@ class _ExamResultState extends State<ExamResult> {
                                   (item) => DataRow(
                                     cells: [
                                       DataCell(item.isRepeat == true
-                                          ? RichText(
-                                              text: TextSpan(
-                                                children: [
-                                                  TextSpan(
-                                                      text: item.courseName!
-                                                          .trim(),
-                                                      style: TextStyle(
-                                                          fontFamily:
-                                                              "Arial-Black",
-                                                          fontWeight:
-                                                              FontWeight.w500,
-                                                          color: AppColors
-                                                              .colorBlack,
-                                                          fontSize: 12.sp)),
-                                                  WidgetSpan(
-                                                    child: Transform.translate(
-                                                      offset:
-                                                          const Offset(0, -8),
-                                                      child: const Text(
-                                                        '(R)',
+                                          ? InkWell(
+                                              onTap: () {
+                                                if (studentConsumer
+                                                        .examResultModel
+                                                        .userType ==
+                                                    "COE") {
+                                                  resultDeleteDialog(
+                                                      context,
+                                                      item.iD!,
+                                                      item.studentId!);
+                                                }
+                                              },
+                                              child: RichText(
+                                                text: TextSpan(
+                                                  children: [
+                                                    TextSpan(
+                                                        text: item.courseName!
+                                                            .trim(),
                                                         style: TextStyle(
-                                                            fontSize: 12,
+                                                            fontFamily:
+                                                                "Arial-Black",
                                                             fontWeight:
-                                                                FontWeight.bold,
+                                                                FontWeight.w500,
                                                             color: AppColors
-                                                                .colorRed),
+                                                                .colorBlack,
+                                                            fontSize: 12.sp)),
+                                                    WidgetSpan(
+                                                      child:
+                                                          Transform.translate(
+                                                        offset:
+                                                            const Offset(0, -8),
+                                                        child: const Text(
+                                                          '(R)',
+                                                          style: TextStyle(
+                                                              fontSize: 12,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                              color: AppColors
+                                                                  .colorRed),
+                                                        ),
                                                       ),
                                                     ),
-                                                  ),
-                                                ],
+                                                  ],
+                                                ),
                                               ),
                                             )
                                           : Text(

@@ -11,7 +11,9 @@ import 'package:rugst_alliance_academia/data/provider/student_provider.dart';
 import 'package:rugst_alliance_academia/theme/app_colors.dart';
 
 import 'package:rugst_alliance_academia/web_view/screens/admin_view/student/add_new_student/add_student_view.dart';
+import 'package:rugst_alliance_academia/web_view/screens/admin_view/student/publish_notice.dart';
 import 'package:rugst_alliance_academia/web_view/screens/admin_view/student/student_detailed_layout/student_detail_view.dart';
+import 'package:rugst_alliance_academia/widgets/app_elevatedbutton.dart';
 import 'package:rugst_alliance_academia/widgets/app_formfield.dart';
 import 'package:rugst_alliance_academia/widgets/app_richtext.dart';
 import 'package:rugst_alliance_academia/widgets/student_card.dart';
@@ -272,6 +274,18 @@ class _StudentGridViewState extends State<StudentGridView> {
                           fontWeight: FontWeight.bold)
                     ],
                   ),
+                  const Spacer(),
+                  AppElevatedButon(
+                    borderColor: AppColors.color446,
+                    buttonColor: AppColors.colorWhite,
+                    textColor: AppColors.color446,
+                    title: "Publish Notice",
+                    height: 50.h,
+                    width: 200.w,
+                      onPressed: (context) {
+                 showNoticeAlert(context);
+                  }),
+
                 ],
               ),
               SizedBox(

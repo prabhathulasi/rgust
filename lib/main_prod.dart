@@ -21,7 +21,7 @@ import 'package:rugst_alliance_academia/data/provider/clincial_provider.dart';
 
 import 'package:rugst_alliance_academia/data/provider/common_provider.dart';
 import 'package:rugst_alliance_academia/data/provider/dashboard_provider.dart';
-import 'package:rugst_alliance_academia/data/provider/faculty_provider.dart';
+import 'package:rugst_alliance_academia/data/provider/faculty_provider/faculty_provider.dart';
 import 'package:rugst_alliance_academia/data/provider/fees_provider.dart';
 import 'package:rugst_alliance_academia/data/provider/file_upload_provider.dart';
 import 'package:rugst_alliance_academia/data/provider/invoice_provider.dart';
@@ -29,11 +29,11 @@ import 'package:rugst_alliance_academia/data/provider/login_provider.dart';
 import 'package:rugst_alliance_academia/data/provider/password_reset_provider.dart';
 import 'package:rugst_alliance_academia/data/provider/payment_provider.dart';
 import 'package:rugst_alliance_academia/data/provider/program_provider.dart';
+import 'package:rugst_alliance_academia/data/provider/publish_notice_provider.dart';
 import 'package:rugst_alliance_academia/data/provider/result_provider.dart';
 import 'package:rugst_alliance_academia/data/provider/staff_provider.dart';
 import 'package:rugst_alliance_academia/data/provider/student_provider.dart';
 import 'package:rugst_alliance_academia/data/provider/study_history_provider.dart';
-import 'package:rugst_alliance_academia/data/provider/timesheet_provider.dart';
 import 'package:rugst_alliance_academia/mobile_view/screens/application_form/mobile_application_form.dart';
 import 'package:rugst_alliance_academia/mobile_view/screens/mobile_home_screen/mobile_home_screen.dart';
 import 'package:rugst_alliance_academia/mobile_view/screens/mobile_login_screen.dart';
@@ -98,9 +98,7 @@ class MyApp extends StatelessWidget {
                   ChangeNotifierProvider(
                     create: (context) => FileUploadProvider(),
                   ),
-                  ChangeNotifierProvider(
-                    create: (context) => TimeSheetProvider(),
-                  ),
+               
                   ChangeNotifierProvider(
                     create: (context) => StaffProvider(),
                   ),
@@ -167,6 +165,8 @@ class MyApp extends StatelessWidget {
                       ),
                        ChangeNotifierProvider(
                         create: (context) => PaymentProvider(),
+                      ),  ChangeNotifierProvider(
+                        create: (context) => PublishNoticeProvider(),
                       ),
 
                 ],

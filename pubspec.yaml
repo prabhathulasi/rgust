@@ -48,7 +48,6 @@ dependencies:
   http: ^1.1.0
   textfield_datepicker: ^0.2.0
   image_picker_web: ^3.1.1
-  syncfusion_flutter_calendar: ^23.1.36
   shared_preferences: ^2.3.2
   jwt_decoder: ^2.0.1
   file_picker: ^6.0.0
@@ -70,6 +69,9 @@ dependencies:
   url_launcher: ^6.3.1
   flutter_pdfview: ^1.4.0
   syncfusion_flutter_gauges: ^23.2.7
+  flutter_timeline_calendar: ^1.0.9
+  quill_html_editor: ^2.2.8
+  cross_file: ^0.3.4+2
 
 
   

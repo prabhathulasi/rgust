@@ -5,7 +5,7 @@ import 'package:rugst_alliance_academia/data/model/student/student_detail_model.
 
 import 'package:rugst_alliance_academia/theme/app_colors.dart';
 
-import 'package:rugst_alliance_academia/web_view/screens/admin_view/faculty/faculty_checkin_view.dart';
+import 'package:rugst_alliance_academia/web_view/screens/admin_view/faculty/faculty_tab_views/faculty_checkin_view.dart';
 import 'package:rugst_alliance_academia/web_view/screens/admin_view/student/student_page_tabs/invoice/student_invoice_screen.dart';
 import 'package:rugst_alliance_academia/web_view/screens/admin_view/student/student_page_tabs/result/exam_result_view.dart';
 import 'package:rugst_alliance_academia/web_view/screens/admin_view/student/student_page_tabs/payment/payment_view.dart';
@@ -57,7 +57,8 @@ class StudentTabView extends StatelessWidget {
               child: TabBarView(
                 children: [
                   StudentAdditionalInfoView(studentDetail: studentDetail),
-                  const FacultyCheckInView(),
+                  Container(),
+                  // const FacultyCheckInView(),
                   StudyHistoryView(
                     studentData: studentDetail,
                   ),

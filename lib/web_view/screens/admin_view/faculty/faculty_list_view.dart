@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:provider/provider.dart';
 import 'package:rugst_alliance_academia/data/middleware/check_auth_middleware.dart';
-import 'package:rugst_alliance_academia/data/provider/faculty_provider.dart';
+import 'package:rugst_alliance_academia/data/provider/faculty_provider/faculty_provider.dart';
 import 'package:rugst_alliance_academia/routes/named_routes.dart';
 
 import 'package:rugst_alliance_academia/theme/app_colors.dart';
@@ -76,7 +76,7 @@ class _FacultyListViewState extends State<FacultyListView> {
           Navigator.pushNamed(context, RouteNames.login);
         }
       } else {
-        var result = await facultyProvider.getFaculty(token);
+        var result = await facultyProvider.getFacultyList(token);
          if(result =="Invalid Token"){
            ToastHelper().errorToast("Session Expired Please Login Again");
            if (context.mounted) {
@@ -86,7 +86,7 @@ class _FacultyListViewState extends State<FacultyListView> {
     }
 
     return Scaffold(
-      backgroundColor: AppColors.color0ec,
+      backgroundColor: AppColors.colorWhite,
       body: Padding(
         padding: EdgeInsets.all(18.0.sp),
         child: FutureBuilder(

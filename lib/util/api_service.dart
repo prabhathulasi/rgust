@@ -7,24 +7,37 @@ import 'package:rugst_alliance_academia/util/toast_helper.dart';
 
 class ApiHelper {
 
-  static Future<http.Response> get(String endpoint, String token) async {
+  static Future<http.Response> get(String endpoint, String token,{Map<String, String>? queryParams}) async {
      String flavorUrl = FlavorConfig.instance.variables["baseUrl"];
  String flavorName =FlavorConfig.instance.variables["flavorName"];
-    try {
+  try {
+      Uri uri;
+
+      if (flavorName == "dev") {
+        // For dev: assume baseUrl includes protocol (e.g., http://localhost:3000)
+        uri = Uri.parse('$flavorUrl/$endpoint');
+        if (queryParams != null && queryParams.isNotEmpty) {
+          uri = uri.replace(queryParameters: queryParams);
+        }
+      } else {
+        // For prod: using Uri.https to build secure URL
+        uri = Uri.https(flavorUrl, "/$endpoint", queryParams);
+      }
+
       final response = await http.get(
-        flavorName=="dev" ?Uri.parse('$flavorUrl/$endpoint') : Uri.https(flavorUrl, "/$endpoint"),
-          headers: {"Authorization": "Bearer $token"});
+        uri,
+        headers: {"Authorization": "Bearer $token"},
+      );
+
       return _handleResponse(response);
     } catch (e) {
       if (e is SocketException) {
-        //treat SocketException
-
-        return ToastHelper()
-            .errorToast("Please Check Your Server Connectivity");
+        return ToastHelper().errorToast("Please Check Your Server Connectivity");
       } else {
         return ToastHelper().errorToast("Internal Server Error");
       }
     }
+  
   }
 
   static Future<http.Response> post(

@@ -374,48 +374,8 @@ class AddNewInvoiceView extends StatelessWidget {
                                       SizedBox(
                                         height: 30.h,
                                       ),
-                                      Row(
-                                        children: [
-                                          Expanded(flex: 2, child: Container()),
-                                          const Spacer(),
-                                          Expanded(
-                                            flex: 1,
-                                            child: AppRichTextView(
-                                                title: "Total USD",
-                                                fontSize: 15.sp,
-                                                fontWeight: FontWeight.bold,
-                                                textColor:
-                                                    AppColors.colorBlack),
-                                          )
-                                        ],
-                                      ),
-                                      SizedBox(
-                                        height: 10.h,
-                                      ),
-                                      Row(
-                                        children: [
-                                          Expanded(flex: 2, child: Container()),
-                                          const Spacer(),
-                                          Expanded(
-                                            flex: 1,
-                                            child: AppRichTextView(
-                                                title: (invoiceConsumer
-                                                        .invoiceList
-                                                        .fold(
-                                                            0,
-                                                            (sum, item) =>
-                                                                sum + item.usd))
-                                                    .toString(),
-                                                fontSize: 15.sp,
-                                                fontWeight: FontWeight.bold,
-                                                textColor:
-                                                    AppColors.colorBlack),
-                                          )
-                                        ],
-                                      ),
-                                      SizedBox(
-                                        height: 20.h,
-                                      ),
+                                      
+                                 
                                       Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.end,
@@ -438,60 +398,8 @@ class AddNewInvoiceView extends StatelessWidget {
                                               textColor: AppColors.colorBlack)
                                         ],
                                       ),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.end,
-                                        children: [
-                                          AppRichTextView(
-                                              title:
-                                                  "Scholarship Amount (USD): ",
-                                              fontSize: 15.sp,
-                                              fontWeight: FontWeight.bold,
-                                              textColor: AppColors.colorBlack),
-                                          AppRichTextView(
-                                              title: (invoiceConsumer
-                                                      .invoiceList
-                                                      .fold(
-                                                          0,
-                                                          (sum, item) =>
-                                                              sum +
-                                                              item.scholarshipAmount))
-                                                  .toString(),
-                                              fontSize: 15.sp,
-                                              fontWeight: FontWeight.w500,
-                                              textColor: AppColors.colorBlack)
-                                        ],
-                                      ),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.end,
-                                        children: [
-                                          AppRichTextView(
-                                              title: "Payable Amount (USD): ",
-                                              fontSize: 15.sp,
-                                              fontWeight: FontWeight.bold,
-                                              textColor: AppColors.colorBlack),
-                                          AppRichTextView(
-                                              title: (invoiceConsumer
-                                                          .invoiceList
-                                                          .fold(
-                                                              0,
-                                                              (sum, item) =>
-                                                                  sum +
-                                                                  item.usd) -
-                                                      (invoiceConsumer
-                                                          .invoiceList
-                                                          .fold(
-                                                              0,
-                                                              (sum, item) =>
-                                                                  sum +
-                                                                  item.scholarshipAmount)))
-                                                  .toString(),
-                                              fontSize: 15.sp,
-                                              fontWeight: FontWeight.w500,
-                                              textColor: AppColors.colorBlack)
-                                        ],
-                                      ),
+                                      
+                                     
                                       SizedBox(
                                         height: 20.h,
                                       ),
@@ -555,16 +463,16 @@ class AddNewInvoiceView extends StatelessWidget {
                                       SizedBox(
                                         height: 10.h,
                                       ),
-                                      invoiceConsumer
-                                              .customMsgController.text.isEmpty
-                                          ? Row(
+                                       Row(
                                               children: [
                                                 Expanded(
                                                   flex: 2,
                                                   child: AppTextFormFieldWidget(
+                                                    maxLines: 5,
                                                     textEditingController:
                                                         invoiceConsumer
                                                             .customMsgController,
+                                                            keyboardType: TextInputType.multiline,
                                                     obscureText: false,
                                                     inputDecoration:
                                                         InputDecoration(
@@ -611,8 +519,10 @@ class AddNewInvoiceView extends StatelessWidget {
                                                   },
                                                 )
                                               ],
-                                            )
-                                          : Align(
+                                            ),
+                                          invoiceConsumer
+                                              .customMsgController.text.isEmpty
+                                          ? Container(): Align(
                                               alignment: Alignment.centerLeft,
                                               child: AppRichTextView(
                                                   maxLines: 10,

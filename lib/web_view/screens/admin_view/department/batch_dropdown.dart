@@ -9,7 +9,7 @@ import 'package:rugst_alliance_academia/util/toast_helper.dart';
 import 'package:rugst_alliance_academia/widgets/app_richtext.dart';
 
 class BatchDropdown extends StatefulWidget {
-   final bool isUpdatingStudent;
+  final bool isUpdatingStudent;
   const BatchDropdown({super.key, required this.isUpdatingStudent});
 
   @override
@@ -24,9 +24,9 @@ class _BatchDropdownState extends State<BatchDropdown> {
     return programProvider.selectedClass == null
         ? Container()
         : Container(
-             decoration: BoxDecoration(
-                    border: Border.all(color: AppColors.colorc7e, width: 3.w),
-                    borderRadius: BorderRadius.circular(8.sp)),
+            decoration: BoxDecoration(
+                border: Border.all(color: AppColors.color446, width: 3.w),
+                borderRadius: BorderRadius.circular(8.sp)),
             height: 60.h,
             width: size.width * 0.2,
             child: Padding(
@@ -34,7 +34,7 @@ class _BatchDropdownState extends State<BatchDropdown> {
               child: DropdownButtonHideUnderline(
                 child: DropdownButton(
                   iconSize: 34.sp,
-                  iconEnabledColor: AppColors.colorc7e,
+                  iconEnabledColor: AppColors.color446,
                   dropdownColor: AppColors.colorWhite,
                   isExpanded: true,
                   value: programProvider.selectedBatch,
@@ -73,7 +73,8 @@ class _BatchDropdownState extends State<BatchDropdown> {
                         Navigator.pushNamed(context, RouteNames.login);
                       }
                     } else {
-                      programProvider.setSelectedBatch(value!, token, widget.isUpdatingStudent);
+                      programProvider.setSelectedBatch(
+                          value!, token, widget.isUpdatingStudent);
                     }
                   },
                 ),

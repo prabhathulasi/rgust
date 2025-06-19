@@ -59,7 +59,7 @@ getPaymentReceipts(token, invoiceId, isMisc);
     paymentReceiptModel.paymentdata?.clear();
     try {
       var result =
-          await ApiHelper.get("get-payment-receipts/id=$invoiceId?isMisc=$isMisc", token);
+          await ApiHelper.get("get-payment-receipts/$invoiceId",token, queryParams: {"isMisc": isMisc.toString()});
 
       if (result.statusCode == 200) {
         var data = json.decode(result.body);
@@ -68,7 +68,7 @@ getPaymentReceipts(token, invoiceId, isMisc);
 
         return paymentReceiptModel;
       } else if (result.statusCode == 400) {
-        ToastHelper().errorToast("No Invoice Details Found");
+        ToastHelper().errorToast("No Payment Records Found");
         return null;
       } else {
         ToastHelper().errorToast("Internal Server Error");

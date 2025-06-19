@@ -29,7 +29,7 @@ class DynamicYearsDropdownState extends State<DynamicYearsDropdown> {
         ? Container()
         : Container(
             decoration: BoxDecoration(
-                    border: Border.all(color: AppColors.colorc7e, width: 3.w),
+                    border: Border.all(color: AppColors.color446, width: 3.w),
                     borderRadius: BorderRadius.circular(8.sp)),
             height: 60.h,
             width: size.width * 0.2,
@@ -37,7 +37,7 @@ class DynamicYearsDropdownState extends State<DynamicYearsDropdown> {
               padding: EdgeInsets.all(8.0.sp),
               child: DropdownButtonHideUnderline(
                 child: DropdownButton<int>(
-                  iconEnabledColor: AppColors.colorc7e,
+                  iconEnabledColor: AppColors.color446,
                 iconSize: 34.sp,
                   dropdownColor: AppColors.colorWhite,
                   isExpanded: true,

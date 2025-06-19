@@ -4,7 +4,7 @@ import 'package:lottie/lottie.dart';
 import 'package:rugst_alliance_academia/theme/app_colors.dart';
 import 'package:rugst_alliance_academia/util/index.dart';
 import 'package:rugst_alliance_academia/web_view/screens/admin_view/admission/admission_list_view.dart';
-import 'package:rugst_alliance_academia/web_view/screens/admin_view/admission_form/admission_form_view.dart';
+
 import 'package:rugst_alliance_academia/web_view/screens/admin_view/dashboard/overview_view.dart';
 import 'package:rugst_alliance_academia/web_view/screens/admin_view/department/program_view.dart';
 import 'package:rugst_alliance_academia/web_view/screens/admin_view/faculty/faculty_list_view.dart';

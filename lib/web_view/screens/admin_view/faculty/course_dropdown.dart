@@ -1,88 +1,137 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-
 import 'package:rugst_alliance_academia/data/provider/program_provider.dart';
+import 'package:rugst_alliance_academia/data/provider/student_provider.dart';
 import 'package:rugst_alliance_academia/theme/app_colors.dart';
+import 'package:rugst_alliance_academia/widgets/app_formfield.dart';
 import 'package:rugst_alliance_academia/widgets/app_richtext.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:rugst_alliance_academia/widgets/app_spining.dart';
 
-class CourseDropDown extends StatefulWidget {
-  const CourseDropDown({super.key});
+class FacultyCourseList extends StatefulWidget {
+  const FacultyCourseList({super.key});
 
   @override
-  State<CourseDropDown> createState() => _ClassDropdownState();
+  State<FacultyCourseList> createState() => _FacultyCourseListState();
 }
 
-class _ClassDropdownState extends State<CourseDropDown> {
+
+
+class _FacultyCourseListState extends State<FacultyCourseList> {
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.sizeOf(context);
-
-    final programProvider = Provider.of<ProgramProvider>(context);
-    return programProvider.newData.isEmpty
-        ? Container(
-            color: AppColors.colorc7e,
-            height: 60.h,
-            width: size.width * 0.2,
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: Padding(
-                padding: EdgeInsets.only(left: 8.0.w),
-                child: AppRichTextView(
-                  fontSize: 15.sp,
-                  fontWeight: FontWeight.w700,
-                  title: "Please Select the Course",
-                  textColor: AppColors.colorWhite,
-                ),
-              ),
-            ),
-          )
-        : Consumer<ProgramProvider>(builder: (context, programProvider, child) {
-            return Container(
-              color: AppColors.colorc7e,
-              height: 60.h,
-              width: size.width * 0.2,
-              child: Padding(
-                padding: EdgeInsets.all(8.0.sp),
-                child: DropdownButtonHideUnderline(
-                  child: DropdownButton(
-                    iconDisabledColor: AppColors.colorWhite,
-                    dropdownColor: AppColors.colorc7e,
-                    isExpanded: true,
-                    value: programProvider.selectedCourse,
-                    items: programProvider.newData.map((dynamic programClass) {
-                      return DropdownMenuItem<String>(
-                        value: programClass["coursecode"],
-                        child: Align(
-                          alignment: Alignment.topLeft,
-                          child: AppRichTextView(
-                            fontSize: 15.sp,
-                            fontWeight: FontWeight.w700,
-                            title: programClass["coursename"],
-                            textColor: AppColors.colorWhite,
+    return Consumer<ProgramProvider>(
+      builder: (context, programConsumer, child) {
+        if (programConsumer.isLoading == true) {
+          return const Center(
+            child: SpinKitSpinningLines(color: AppColors.colorc7e),
+          );
+        } else {
+          return Column(
+            children: [
+              programConsumer.coursesModel.courses!.isEmpty
+                  ? AppRichTextView(
+                      maxLines: 2,
+                      title:
+                          "No Course Found Kindly add the Course in the Department Section",
+                      fontSize: 20.sp,
+                      fontWeight: FontWeight.bold,
+                      textColor: AppColors.colorRed,
+                    )
+                  : AppRichTextView(
+                      title: "Course Pool",
+                      fontSize: 20.sp,
+                      fontWeight: FontWeight.bold,
+                      textColor: AppColors.colorc7e,
+                    ),
+              if (programConsumer.coursesModel.courses!.isNotEmpty)
+                SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      SizedBox(height: 10.w),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: AppTextFormFieldWidget(
+                          onChanged: (value) {
+                            programConsumer.setEnableFilter(true);
+                            programConsumer.filterCourses(value);
+                          },
+                          inputDecoration: const InputDecoration(
+                            hintText: "Search Course Name",
+                            prefixIcon: Icon(Icons.search),
+                            hintStyle: TextStyle(color: AppColors.colorGrey),
+                            enabled: true,
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: AppColors.colorc7e, width: 3),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: AppColors.colorc7e, width: 3),
+                            ),
                           ),
                         ),
-
-                        //  child: Text(programClass.className!,
-                        //      style: const TextStyle(
-                        //          color: AppColors.colorWhite)),
-                      );
-                    }).toList(),
-                    hint: AppRichTextView(
-                      fontSize: 15.sp,
-                      fontWeight: FontWeight.w700,
-                      title: "Please Select the Class",
-                      textColor: AppColors.colorWhite,
-                    ),
-                    onChanged: (String? value) {
-                      programProvider.setSelectedCourse(value!);
-
-                      // deptProvider.selectedBatch = null;
-                    },
+                      ),
+                      SizedBox(height: 10.h),
+                      ListView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: programConsumer.filteredEnable
+                            ? programConsumer.filteredCourse.length
+                            : programConsumer.coursesModel.courses!.length,
+                        itemBuilder: (context, index) {
+                          var course = programConsumer.filteredEnable
+                              ? programConsumer.filteredCourse[index]
+                              : programConsumer.coursesModel.courses![index];
+                          int itemId = course.iD!;
+    
+                          return Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: programConsumer.selectedFacultyCourseId == itemId
+                                    ? AppColors.colorc7e.withOpacity(0.3)
+                                    : AppColors.colorWhite,
+                                border: Border.all(
+                                  color: AppColors.colorc7e,
+                                  width: 3.w,
+                                ),
+                                borderRadius: BorderRadius.circular(8.sp),
+                              ),
+                              child: RadioListTile<int>(
+                                value: itemId,
+                                groupValue: programConsumer.selectedFacultyCourseId,
+                                onChanged: (value) {
+                               programConsumer.setSelectedFacultyCourseId(value!);
+                                  },
+                                title: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    AppRichTextView(
+                                      title: course.courseName!.trim(),
+                                      fontSize: 13.sp,
+                                      fontWeight: FontWeight.bold,
+                                      textColor: AppColors.colorc7e,
+                                    ),
+                                    AppRichTextView(
+                                      title: course.courseId!,
+                                      fontSize: 10.sp,
+                                      fontWeight: FontWeight.w500,
+                                      textColor: AppColors.colorc7e,
+                                    ),
+                                  ],
+                                ),
+                                activeColor: AppColors.colorc7e,
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    ],
                   ),
                 ),
-              ),
-            );
-          });
+            ],
+          );
+        }
+      },
+    );
   }
 }

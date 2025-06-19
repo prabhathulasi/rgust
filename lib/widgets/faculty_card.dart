@@ -25,7 +25,7 @@ class FacultyCardWidget extends StatelessWidget {
   final bool isMultipleCourse;
 
   final String address;
-  final String pasportNumber;
+  final String employeeId;
 
   const FacultyCardWidget(
       {super.key,
@@ -40,7 +40,7 @@ class FacultyCardWidget extends StatelessWidget {
       required this.gender,
       required this.registeredCourse,
       required this.address,
-      required this.pasportNumber,
+      required this.employeeId,
       required this.onTap,
       required this.isMultipleCourse});
 
@@ -104,39 +104,41 @@ class FacultyCardWidget extends StatelessWidget {
           SizedBox(
             height: 10.h,
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              AppRichTextView(
-                title: facultyName.toUpperCase(),
-                fontSize: 14.sp,
-                fontWeight: FontWeight.bold,
-                textColor: AppColors.color0ec,
-              ),
-              Icon(
-                gender == "Male" ? Icons.male : Icons.female,
-                color: AppColors.color0ec,
-              )
-            ],
+          Center(
+            child: AppRichTextView(
+              title: facultyName.toUpperCase(),
+              fontSize: 14.sp,
+              fontWeight: FontWeight.bold,
+              textColor: AppColors.color446,
+            ),
           ),
-          SizedBox(
+        
+          Center(
+            child: AppRichTextView(
+              title:gender,
+              fontSize: 14.sp,
+              fontWeight: FontWeight.w500,
+              textColor: AppColors.color446,
+            ),
+          ),
+            SizedBox(
             height: 10.h,
           ),
-          Expanded(
-              flex: 2,
-              child: ListView.builder(
-                shrinkWrap: true,
-                itemCount: registeredCourse!.length,
-                itemBuilder: (context, index) {
-                  return AppRichTextView(
-                    title:
-                        "${registeredCourse![index].courseName!} (${registeredCourse![index].batch})",
-                    fontSize: 12.sp,
-                    fontWeight: FontWeight.w800,
-                    textColor: AppColors.color0ec,
-                  );
-                },
-              )),
+          // Expanded(
+          //     flex: 2,
+          //     child: ListView.builder(
+          //       shrinkWrap: true,
+          //       itemCount: registeredCourse!.length,
+          //       itemBuilder: (context, index) {
+          //         return AppRichTextView(
+          //           title:
+          //               "${registeredCourse![index].courseName!} (${registeredCourse![index].batch})",
+          //           fontSize: 12.sp,
+          //           fontWeight: FontWeight.w800,
+          //           textColor: AppColors.color0ec,
+          //         );
+          //       },
+          //     )),
           Row(
             children: [
               Expanded(
@@ -145,7 +147,7 @@ class FacultyCardWidget extends StatelessWidget {
                     title: "Mobile Number: ",
                     fontSize: 12.sp,
                     fontWeight: FontWeight.w800,
-                    textColor: AppColors.color7ff,
+                    textColor: AppColors.color446,
                   )),
               Expanded(
                   flex: 2,
@@ -153,7 +155,7 @@ class FacultyCardWidget extends StatelessWidget {
                     title: mobileNumber,
                     fontSize: 12.sp,
                     fontWeight: FontWeight.w800,
-                    textColor: AppColors.color0ec,
+                    textColor: AppColors.colorBlack,
                   )),
             ],
           ),
@@ -165,7 +167,7 @@ class FacultyCardWidget extends StatelessWidget {
                     title: "Email Address: ",
                     fontSize: 12.sp,
                     fontWeight: FontWeight.w800,
-                    textColor: AppColors.color7ff,
+                    textColor: AppColors.color446,
                   )),
               Expanded(
                   flex: 2,
@@ -173,7 +175,7 @@ class FacultyCardWidget extends StatelessWidget {
                     title: email,
                     fontSize: 12.sp,
                     fontWeight: FontWeight.w500,
-                    textColor: AppColors.color0ec,
+                    textColor: AppColors.colorBlack,
                   )),
             ],
           ),
@@ -185,7 +187,7 @@ class FacultyCardWidget extends StatelessWidget {
                     title: "Citizenship: ",
                     fontSize: 12.sp,
                     fontWeight: FontWeight.w800,
-                    textColor: AppColors.color7ff,
+                    textColor: AppColors.color446,
                   )),
               Expanded(
                   flex: 2,
@@ -193,7 +195,7 @@ class FacultyCardWidget extends StatelessWidget {
                     title: citizenship,
                     fontSize: 12.sp,
                     fontWeight: FontWeight.w800,
-                    textColor: AppColors.color0ec,
+                    textColor: AppColors.colorBlack,
                   )),
             ],
           ),
@@ -205,7 +207,7 @@ class FacultyCardWidget extends StatelessWidget {
                     title: "DOB: ",
                     fontSize: 12.sp,
                     fontWeight: FontWeight.w800,
-                    textColor: AppColors.color7ff,
+                    textColor: AppColors.color446,
                   )),
               Expanded(
                   flex: 2,
@@ -213,7 +215,7 @@ class FacultyCardWidget extends StatelessWidget {
                     title: dob,
                     fontSize: 12.sp,
                     fontWeight: FontWeight.w800,
-                    textColor: AppColors.color0ec,
+                    textColor: AppColors.colorBlack,
                   )),
             ],
           ),
@@ -228,7 +230,7 @@ class FacultyCardWidget extends StatelessWidget {
                       title: "Address: ",
                       fontSize: 12.sp,
                       fontWeight: FontWeight.w800,
-                      textColor: AppColors.color7ff,
+                      textColor: AppColors.color446,
                     )),
                 Expanded(
                     flex: 2,
@@ -237,29 +239,29 @@ class FacultyCardWidget extends StatelessWidget {
                       maxLines: 3,
                       fontSize: 12.sp,
                       fontWeight: FontWeight.w800,
-                      textColor: AppColors.color0ec,
+                      textColor: AppColors.colorBlack,
                     )),
               ],
             ),
           ),
           const Divider(
-            color: AppColors.color0ec,
+            color: AppColors.colorBlack,
           ),
           Expanded(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 AppRichTextView(
-                  title: "Passport Number: ",
+                  title: "Employee Id: ",
                   fontSize: 12.sp,
                   fontWeight: FontWeight.w800,
-                  textColor: AppColors.color7ff,
+                  textColor: AppColors.color446,
                 ),
                 AppRichTextView(
-                  title: pasportNumber.toUpperCase(),
+                  title: employeeId,
                   fontSize: 12.sp,
                   fontWeight: FontWeight.w800,
-                  textColor: AppColors.color0ec,
+                  textColor: AppColors.colorBlack,
                 ),
               ],
             ),

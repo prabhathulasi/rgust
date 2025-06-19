@@ -30,6 +30,7 @@ class ProgramProvider extends ChangeNotifier {
   String? selectedBatch;
   String? selectedCourse;
   String? selectedCourseName;
+int ? selectedFacultyCourseId ;
 
   int _isNewStudent = 1;
   int get isNewStudent => _isNewStudent;
@@ -428,6 +429,11 @@ List<Courses> filteredCourse = [];
   // select core or elective rotation
   void selectRotationType(bool isNew) {
     _isCore = isNew;
+    notifyListeners();
+  }
+
+  void setSelectedFacultyCourseId(int value) {
+    selectedFacultyCourseId = value;
     notifyListeners();
   }
 }
